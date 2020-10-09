@@ -1,5 +1,4 @@
-import { BoundingBox } from "../BoundingBox";
-import { Vector } from "../Vector";
+import { Vector, BoundingBox } from "../misc";
 import { DrawItem } from "./DrawItem";
 
 export interface VisitDimAligned {

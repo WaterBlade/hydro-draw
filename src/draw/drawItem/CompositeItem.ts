@@ -1,11 +1,11 @@
-import { BoundingBox } from "../BoundingBox";
-import { Vector } from "../Vector";
+import { Vector, BoundingBox } from "../misc";
 import { VisitArc } from "./Arc";
 import { VisitArrow } from "./Arrow";
 import { VisitCircle } from "./Circle";
 import { VisitDimAligned } from "./DimAligned";
 import { DrawItem } from "./DrawItem";
 import { VisitLine } from "./Line";
+import { VisitMText } from "./MText";
 import { VisitText } from "./Text";
 
 export interface VisitComposite
@@ -14,7 +14,8 @@ export interface VisitComposite
     VisitCircle,
     VisitDimAligned,
     VisitLine,
-    VisitText {}
+    VisitText,
+    VisitMText {}
 
 export class CompositeItem extends DrawItem {
   itemList: DrawItem[] = [];

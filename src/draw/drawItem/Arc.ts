@@ -1,6 +1,5 @@
-import { BoundingBox } from "../BoundingBox";
+import { Vector, BoundingBox, polar } from "../misc";
 import { RotateDirection } from "../RotateDirection";
-import { polar, Vector } from "../Vector";
 import { DrawItem } from "./DrawItem";
 
 export interface VisitArc {

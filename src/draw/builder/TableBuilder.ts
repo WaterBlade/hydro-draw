@@ -1,8 +1,6 @@
-import { BoundingBox } from "../BoundingBox";
 import { CompositeItem, DrawItem, Line, Text } from "../drawItem";
-import { sum } from "../Misc";
+import { BoundingBox, sum, vec, Vector } from "../misc";
 import { TextAlign } from "../TextAlign";
-import { vec, Vector } from "../Vector";
 import { Builder } from "./Builder.interface";
 
 export class TableBuilder implements Builder<DrawItem> {

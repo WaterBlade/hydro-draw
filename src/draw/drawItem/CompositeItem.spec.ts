@@ -1,4 +1,4 @@
-import { vec, Vector } from "../Vector";
+import { Vector, vec } from "../misc";
 import { Circle } from "./Circle";
 import { CompositeItem } from "./CompositeItem";
 import { Line } from "./Line";
@@ -20,6 +20,7 @@ test("insert point", () => {
     visitCircle: jest.fn(),
     visitDimAligned: jest.fn(),
     visitLine: jest.fn(),
+    visitMText: jest.fn(),
     visitText: jest.fn(),
   };
   comp.accept(mock, new Vector(3, 4));

@@ -12,3 +12,7 @@ export function sum(...variables: number[]): number {
   }
   return variables.reduce((left, right) => left + right);
 }
+
+export function last<T>(array: Array<T>): T {
+  return array[array.length - 1];
+}

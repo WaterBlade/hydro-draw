@@ -1,8 +1,9 @@
 import { ScriptPaper } from "./ScriptPaper";
-import { vec } from "../Vector";
 import { Arc, Arrow, Circle, DimAligned, Line, Text } from "../drawItem";
 import { LineType } from "../LineType";
 import { RotateDirection } from "../RotateDirection";
+import { vec } from "../misc";
+import { MText } from "../drawItem/MText";
 
 test("push method", () => {
   const paper = new ScriptPaper();
@@ -17,6 +18,13 @@ test("pack", () => {
     scale: jest.fn(),
     move: jest.fn(),
     getBoundingBox: jest.fn(),
+    thinLine: jest.fn(),
+    middleLine: jest.fn(),
+    thickLine: jest.fn(),
+    thickerLine: jest.fn(),
+    dashedLine: jest.fn(),
+    centeredLine: jest.fn(),
+    greyLine: jest.fn(),
   };
   paper.push(mock);
   paper.pack();
@@ -234,6 +242,32 @@ test("line", () => {
     ScriptPaper.ESCChar + "line",
     "1.0000,1.0000",
     "2.0000,1.0000",
+    "",
+  ]);
+});
+test("mtext", () => {
+  const paper = new ScriptPaper();
+  const mtext = new MText(["hello", "world"], vec(0, 0), 2.5, 20);
+  paper.visitMText(mtext, vec(1, 2));
+  expect(paper.scriptList).toEqual([
+    ScriptPaper.ESCChar + "-layer",
+    "S",
+    "细线",
+    "",
+    ScriptPaper.ESCChar + "-mtext",
+    "1.0000,2.0000",
+    "s",
+    "hz",
+    "h",
+    "2.5000",
+    "l",
+    "e",
+    "3.7500",
+    "w",
+    "8.7500",
+    "hello",
+    "world",
+    "",
     "",
   ]);
 });

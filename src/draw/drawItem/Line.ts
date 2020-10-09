@@ -1,6 +1,5 @@
+import { Vector, BoundingBox } from "../misc";
 import { DrawItem } from "./DrawItem";
-import { Vector } from "../Vector";
-import { BoundingBox } from "../BoundingBox";
 
 export interface VisitLine {
   visitLine(line: Line, insertPoint: Vector): void;

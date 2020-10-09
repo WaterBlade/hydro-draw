@@ -1,4 +1,4 @@
-import { vec } from "../Vector";
+import { vec } from "../misc";
 import { Text } from "./Text";
 
 test("scale", () => {

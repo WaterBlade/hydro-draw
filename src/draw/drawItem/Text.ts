@@ -1,8 +1,6 @@
 import { DrawItem } from "./DrawItem";
-import { vec, Vector } from "../Vector";
 import { TextAlign } from "../TextAlign";
-import { BoundingBox } from "../BoundingBox";
-import { toRadian } from "../Misc";
+import { Vector, BoundingBox, vec, toRadian } from "../misc";
 
 export interface VisitText {
   visitText(text: Text, insertPoint: Vector): void;

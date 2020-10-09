@@ -1,5 +1,5 @@
 import { Line, Text } from "../drawItem";
-import { vec } from "../Vector";
+import { vec } from "../misc";
 import {
   Cell,
   HIntervals,

@@ -2,8 +2,9 @@ import { Arc, Arrow, Circle, DimAligned, Line, Text } from "../drawItem";
 import { LineType } from "../LineType";
 import { RotateDirection } from "../RotateDirection";
 import { TextAlign } from "../TextAlign";
-import { polar, Vector } from "../Vector";
+import { polar, Vector } from "../misc";
 import { Paper } from "./Paper";
+import { MText } from "../drawItem/MText";
 
 export class ScriptPaper extends Paper {
   static ESCChar = "\u001b";
@@ -38,8 +39,12 @@ export class ScriptPaper extends Paper {
     this.scriptList.push("-layer", "m", name, "c", color, name, "");
   }
 
+  private currentLineType = LineType.Grey;
   private setLayer(lineType: LineType): void {
-    this.scriptList.push(ScriptPaper.ESCChar + "-layer", "S", lineType, "");
+    if (this.currentLineType !== lineType) {
+      this.scriptList.push(ScriptPaper.ESCChar + "-layer", "S", lineType, "");
+      this.currentLineType = lineType;
+    }
   }
 
   dimStyleNameList: string[] = [];
@@ -239,6 +244,26 @@ export class ScriptPaper extends Paper {
       ScriptPaper.ESCChar + "line",
       line.start.add(insertPoint).toFixed(4),
       line.end.add(insertPoint).toFixed(4),
+      ""
+    );
+  }
+
+  visitMText(mtext: MText, insertPoint: Vector): void {
+    this.setLayer(mtext.lineType);
+    this.scriptList.push(
+      ScriptPaper.ESCChar + "-mtext",
+      mtext.insertPoint.add(insertPoint).toFixed(4),
+      "s",
+      "hz",
+      "h",
+      mtext.height.toFixed(4),
+      "l",
+      "e",
+      mtext.rowSpace.toFixed(4),
+      "w",
+      mtext.width.toFixed(4),
+      ...mtext.content,
+      "",
       ""
     );
   }
