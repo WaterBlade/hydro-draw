@@ -1,8 +1,8 @@
-import { CompositeItem, DrawItem, Line, Text } from "../../drawItem";
+import { CompositeItem, Line, Text } from "../../drawItem";
 import { MText } from "../../drawItem/MText";
 import { vec } from "../../misc";
 import { TextAlign } from "../../TextAlign";
-import { Border, Boundary } from "./Border";
+import { Boundary } from "./Border";
 import { BorderBuilder } from "./Builder";
 
 function presetA0A1Title(
@@ -186,8 +186,8 @@ abstract class HydroBorderBuilder extends BorderBuilder {
     return boundary;
   }
 
-  protected isFirstBorder = true;
-  composeBorder(border: Border): DrawItem {
+  composeBorder(rawContentList: CompositeItem[]): void {
+    let isFirstBorder = true;
     const textHeight = 3.5;
     const maxNoteWidth = 100;
 
@@ -200,69 +200,68 @@ abstract class HydroBorderBuilder extends BorderBuilder {
 
     const factor = this.drawScale / this.unitScale;
 
-    const comp = new CompositeItem();
-    comp.push(...border.items);
-    comp.push(
-      new Line(vec(0, 0), vec(w * factor, 0)),
-      new Line(vec(w * factor, 0), vec(w * factor, h * factor)),
-      new Line(vec(w * factor, h * factor), vec(0, h * factor)),
-      new Line(vec(0, h * factor), vec(0, 0)),
-      new Line(
-        vec(a * factor, c * factor),
-        vec((w - c) * factor, c * factor)
-      ).thickerLine(),
-      new Line(
-        vec((w - c) * factor, c * factor),
-        vec((w - c) * factor, (h - c) * factor)
-      ).thickerLine(),
-      new Line(
-        vec((w - c) * factor, (h - c) * factor),
-        vec(a * factor, (h - c) * factor)
-      ).thickerLine(),
-      new Line(
-        vec(a * factor, (h - c) * factor),
-        vec(a * factor, c * factor)
-      ).thickerLine()
-    );
-    if (this.isFirstBorder) {
-      this.isFirstBorder = false;
-      const mtext = new MText(
-        ["说明：", ...this.note],
-        vec(0, 0),
-        textHeight,
-        maxNoteWidth
+    for (const comp of rawContentList) {
+      comp.push(
+        new Line(vec(0, 0), vec(w * factor, 0)),
+        new Line(vec(w * factor, 0), vec(w * factor, h * factor)),
+        new Line(vec(w * factor, h * factor), vec(0, h * factor)),
+        new Line(vec(0, h * factor), vec(0, 0)),
+        new Line(
+          vec(a * factor, c * factor),
+          vec((w - c) * factor, c * factor)
+        ).thickerLine(),
+        new Line(
+          vec((w - c) * factor, c * factor),
+          vec((w - c) * factor, (h - c) * factor)
+        ).thickerLine(),
+        new Line(
+          vec((w - c) * factor, (h - c) * factor),
+          vec(a * factor, (h - c) * factor)
+        ).thickerLine(),
+        new Line(
+          vec(a * factor, (h - c) * factor),
+          vec(a * factor, c * factor)
+        ).thickerLine()
       );
-      const box = mtext.getBoundingBox();
-      if (box.height < th) {
+      if (isFirstBorder) {
+        isFirstBorder = false;
+        const mtext = new MText(
+          ["说明：", ...this.note],
+          vec(0, 0),
+          textHeight,
+          maxNoteWidth
+        );
+        const box = mtext.getBoundingBox();
+        if (box.height < th) {
+          mtext.move(
+            vec(w - c - tw - textHeight, c + textHeight).sub(box.bottomRight)
+          );
+        } else {
+          mtext.move(
+            vec(w - c - textHeight, th + textHeight).sub(box.bottomRight)
+          );
+        }
+        mtext.scale(factor);
+        comp.push(mtext);
+      } else {
+        const mtext = new MText(
+          ["说明：", "1.详见本套图中第一张图纸说明；"],
+          vec(0, 0),
+          textHeight,
+          maxNoteWidth
+        );
+        const box = mtext.getBoundingBox();
         mtext.move(
           vec(w - c - tw - textHeight, c + textHeight).sub(box.bottomRight)
         );
-      } else {
-        mtext.move(
-          vec(w - c - textHeight, th + textHeight).sub(box.bottomRight)
-        );
+        mtext.scale(factor);
+        comp.push(mtext);
       }
-      mtext.scale(factor);
-      comp.push(mtext);
-    } else {
-      const mtext = new MText(
-        ["说明：", "1.详见本套图中第一张图纸说明；"],
-        vec(0, 0),
-        textHeight,
-        maxNoteWidth
-      );
-      const box = mtext.getBoundingBox();
-      mtext.move(
-        vec(w - c - tw - textHeight, c + textHeight).sub(box.bottomRight)
-      );
-      mtext.scale(factor);
-      comp.push(mtext);
+      const title = this.getTitle();
+      title.move(vec(w - c, c));
+      title.scale(factor);
+      comp.push(title);
     }
-    const title = this.getTitle();
-    title.move(vec(w - c, c));
-    title.scale(factor);
-    comp.push(title);
-    return comp;
   }
 
   abstract getTitle(): CompositeItem;
