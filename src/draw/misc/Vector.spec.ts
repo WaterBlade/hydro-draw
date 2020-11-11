@@ -16,6 +16,10 @@ test("mul", () => {
   const a = vec(3, 4);
   expect(a.mul(3).toArray()).toEqual([9, 12]);
 });
+test('dot', ()=>{
+  const a = vec(3, 4);
+  expect(a.dot(vec(4, 3))).toEqual(24);
+})
 test("equal", () => {
   const a = vec(0, 0);
   const b = vec(1, 1);

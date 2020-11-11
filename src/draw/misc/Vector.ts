@@ -14,6 +14,9 @@ export class Vector {
   mul(factor: number): Vector {
     return new Vector(factor * this.x, factor * this.y);
   }
+  dot(right: Vector): number{
+    return this.x * right.x + this.y * right.y;
+  }
   length(): number {
     return Math.sqrt(this.x ** 2 + this.y ** 2);
   }
