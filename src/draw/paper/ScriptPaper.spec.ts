@@ -1,9 +1,14 @@
 import { ScriptPaper } from "./ScriptPaper";
-import { Arc, Arrow, Circle, DimAligned, Line, Text } from "../drawItem";
-import { LineType } from "../LineType";
-import { RotateDirection } from "../RotateDirection";
-import { vec } from "../misc";
-import { MText } from "../drawItem/MText";
+import {
+  Arc,
+  Arrow,
+  Circle,
+  DimAligned,
+  Line,
+  MText,
+  Text,
+} from "@/draw/drawItem";
+import { vec, LineType, RotateDirection } from "@/draw/misc";
 
 test("push method", () => {
   const paper = new ScriptPaper();
@@ -15,16 +20,6 @@ test("pack", () => {
   const mock = {
     lineType: LineType.Thick,
     accept: jest.fn(),
-    scale: jest.fn(),
-    move: jest.fn(),
-    getBoundingBox: jest.fn(),
-    thinLine: jest.fn(),
-    middleLine: jest.fn(),
-    thickLine: jest.fn(),
-    thickerLine: jest.fn(),
-    dashedLine: jest.fn(),
-    centeredLine: jest.fn(),
-    greyLine: jest.fn(),
   };
   paper.push(mock);
   paper.pack();
@@ -284,7 +279,7 @@ test("text", () => {
     "s",
     "hz",
     "j",
-    "LB",
+    "BL",
     "2.0000,1.0000",
     "2.5000",
     "0.0000",

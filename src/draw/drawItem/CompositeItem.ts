@@ -1,21 +1,6 @@
-import { Vector, BoundingBox } from "../misc";
-import { VisitArc } from "./Arc";
-import { VisitArrow } from "./Arrow";
-import { VisitCircle } from "./Circle";
-import { VisitDimAligned } from "./DimAligned";
+import { Vector, BoundingBox } from "@/draw/misc";
 import { DrawItem } from "./DrawItem";
-import { VisitLine } from "./Line";
-import { VisitMText } from "./MText";
-import { VisitText } from "./Text";
-
-export interface VisitComposite
-  extends VisitArc,
-    VisitArrow,
-    VisitCircle,
-    VisitDimAligned,
-    VisitLine,
-    VisitText,
-    VisitMText {}
+import { Paper } from "./Paper.interface";
 
 export class CompositeItem extends DrawItem {
   itemList: DrawItem[] = [];
@@ -25,7 +10,7 @@ export class CompositeItem extends DrawItem {
   push(...items: DrawItem[]): void {
     this.itemList.push(...items);
   }
-  accept(paper: VisitComposite, insertPoint: Vector): void {
+  accept(paper: Paper, insertPoint: Vector): void {
     const pt = this.insertPoint.add(insertPoint);
     for (const item of this.itemList) {
       item.accept(paper, pt);

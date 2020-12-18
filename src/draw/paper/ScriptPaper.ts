@@ -1,13 +1,33 @@
-import { Arc, Arrow, Circle, DimAligned, Line, Text } from "../drawItem";
-import { LineType } from "../LineType";
-import { RotateDirection } from "../RotateDirection";
-import { TextAlign } from "../TextAlign";
-import { polar, Vector } from "../misc";
-import { Paper } from "./Paper";
-import { MText } from "../drawItem/MText";
+import {
+  Paper,
+  PaperArc,
+  PaperArrow,
+  PaperCircle,
+  PaperContent,
+  PaperContentSpecial,
+  PaperContentString,
+  PaperDimAligned,
+  PaperDrawItem,
+  PaperLine,
+  PaperMText,
+  PaperPolyline,
+  PaperText,
+} from "@/draw/drawItem";
+import {
+  polar,
+  Vector,
+  LineType,
+  RotateDirection,
+  TextAlign,
+} from "@/draw/misc";
 
-export class ScriptPaper extends Paper {
+export class ScriptPaper implements Paper {
   static ESCChar = "\u001b";
+
+  itemList: PaperDrawItem[] = [];
+  push(...items: PaperDrawItem[]): void {
+    this.itemList.push(...items);
+  }
 
   scriptList: string[] = [];
   pack(): string {
@@ -142,38 +162,38 @@ export class ScriptPaper extends Paper {
   private setTextAlign(textAlign: TextAlign) {
     let align: string;
     switch (textAlign) {
-      case TextAlign.LeftBottom:
-        align = "LB";
+      case TextAlign.BottomLeft:
+        align = "BL";
         break;
-      case TextAlign.LeftCenter:
-        align = "LC";
+      case TextAlign.MiddleLeft:
+        align = "ML";
         break;
-      case TextAlign.LeftTop:
-        align = "LT";
+      case TextAlign.TopLeft:
+        align = "TL";
         break;
-      case TextAlign.MiddleBottom:
-        align = "MB";
+      case TextAlign.BottomCenter:
+        align = "BC";
         break;
       case TextAlign.MiddleCenter:
         align = "MC";
         break;
-      case TextAlign.MiddleTop:
-        align = "MT";
+      case TextAlign.TopCenter:
+        align = "TC";
         break;
-      case TextAlign.RightBottom:
-        align = "RB";
+      case TextAlign.BottomRight:
+        align = "BR";
         break;
-      case TextAlign.RightCenter:
-        align = "RC";
+      case TextAlign.MiddleRight:
+        align = "MR";
         break;
-      case TextAlign.RightTop:
-        align = "RT";
+      case TextAlign.TopRight:
+        align = "TR";
         break;
     }
     this.scriptList.push("j", align);
   }
 
-  visitArc(arc: Arc, insertPoint: Vector): void {
+  visitArc(arc: PaperArc, insertPoint: Vector): void {
     this.setLayer(arc.lineType);
     const c = arc.center.add(insertPoint);
     this.scriptList.push(ScriptPaper.ESCChar + "arc", "c", c.toFixed(4));
@@ -190,7 +210,7 @@ export class ScriptPaper extends Paper {
     }
   }
 
-  visitArrow(arrow: Arrow, insertPoint: Vector): void {
+  visitArrow(arrow: PaperArrow, insertPoint: Vector): void {
     arrow;
     insertPoint;
     this.setLayer(arrow.lineType);
@@ -207,7 +227,7 @@ export class ScriptPaper extends Paper {
     );
   }
 
-  visitCircle(circle: Circle, insertPoint: Vector): void {
+  visitCircle(circle: PaperCircle, insertPoint: Vector): void {
     this.setLayer(circle.lineType);
     this.scriptList.push(
       ScriptPaper.ESCChar + "circle",
@@ -216,7 +236,7 @@ export class ScriptPaper extends Paper {
     );
   }
 
-  visitDimAligned(dim: DimAligned, insertPoint: Vector): void {
+  visitDimAligned(dim: PaperDimAligned, insertPoint: Vector): void {
     this.setLayer(dim.lineType);
 
     if (this.isUsedDimStyle(dim.unitScale, dim.borderScale, dim.drawScale)) {
@@ -238,7 +258,7 @@ export class ScriptPaper extends Paper {
     this.scriptList.push(dim.textPoint.add(insertPoint).toFixed(4));
   }
 
-  visitLine(line: Line, insertPoint: Vector): void {
+  visitLine(line: PaperLine, insertPoint: Vector): void {
     this.setLayer(line.lineType);
     this.scriptList.push(
       ScriptPaper.ESCChar + "line",
@@ -248,7 +268,7 @@ export class ScriptPaper extends Paper {
     );
   }
 
-  visitMText(mtext: MText, insertPoint: Vector): void {
+  visitMText(mtext: PaperMText, insertPoint: Vector): void {
     this.setLayer(mtext.lineType);
     this.scriptList.push(
       ScriptPaper.ESCChar + "-mtext",
@@ -268,7 +288,13 @@ export class ScriptPaper extends Paper {
     );
   }
 
-  visitText(text: Text, insertPoint: Vector): void {
+  visitPolyline(pline: PaperPolyline, insertPoint: Vector): void {
+    for (const seg of pline.segments) {
+      seg.accept(this, insertPoint);
+    }
+  }
+
+  visitText(text: PaperText, insertPoint: Vector): void {
     this.setLayer(text.lineType);
     this.scriptList.push(ScriptPaper.ESCChar + "-text", "s", "hz");
     this.setTextAlign(text.textAlign);
@@ -276,7 +302,28 @@ export class ScriptPaper extends Paper {
       text.insertPoint.add(insertPoint).toFixed(4),
       text.height.toFixed(4),
       text.rotateAngle.toFixed(4),
-      text.content
+      text.content.accept(this)
     );
+  }
+
+  visitString(content: PaperContentString): string {
+    return content.content;
+  }
+
+  visitSpecial(content: PaperContentSpecial): string {
+    switch (content.content) {
+      case "HPB300":
+        return "%%c";
+      case "HRB400":
+        return "%%133";
+      default:
+        return "";
+    }
+  }
+
+  visitContent(content: PaperContent): string {
+    return content.contents
+      .map((c) => c.accept(this))
+      .reduce((pre, cur) => pre + cur);
   }
 }

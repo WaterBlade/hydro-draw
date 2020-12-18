@@ -1,6 +1,5 @@
-import { DrawItem } from "../..";
-import { CompositeItem } from "../../drawItem";
-import { BoundingBox } from "../../misc";
+import { CompositeItem, DrawItem } from "@/draw/drawItem";
+import { BoundingBox } from "@/draw/misc";
 import { Builder } from "../Builder.interface";
 import { Border, Boundary } from "./Border";
 

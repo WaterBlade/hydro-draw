@@ -1,7 +1,5 @@
-import { CompositeItem, Line, Text } from "../../drawItem";
-import { MText } from "../../drawItem/MText";
-import { vec } from "../../misc";
-import { TextAlign } from "../../TextAlign";
+import { CompositeItem, Line, Text, MText } from "@/draw/drawItem";
+import { vec, TextAlign } from "@/draw/misc";
 import { Boundary } from "./Border";
 import { BorderBuilder } from "./Builder";
 
@@ -234,11 +232,11 @@ abstract class HydroBorderBuilder extends BorderBuilder {
         const box = mtext.getBoundingBox();
         if (box.height < th) {
           mtext.move(
-            vec(w - c - tw - textHeight, c + textHeight).sub(box.bottomRight)
+            vec(w - c - tw - textHeight, c + textHeight).sub(box.BottomRight)
           );
         } else {
           mtext.move(
-            vec(w - c - textHeight, th + textHeight).sub(box.bottomRight)
+            vec(w - c - textHeight, th + textHeight).sub(box.BottomRight)
           );
         }
         mtext.scale(factor);
@@ -252,7 +250,7 @@ abstract class HydroBorderBuilder extends BorderBuilder {
         );
         const box = mtext.getBoundingBox();
         mtext.move(
-          vec(w - c - tw - textHeight, c + textHeight).sub(box.bottomRight)
+          vec(w - c - tw - textHeight, c + textHeight).sub(box.BottomRight)
         );
         mtext.scale(factor);
         comp.push(mtext);

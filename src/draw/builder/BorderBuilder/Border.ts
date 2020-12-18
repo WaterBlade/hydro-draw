@@ -53,7 +53,7 @@ export class Border extends BoxContainer {
   }
   fillBox(box: BoundingBox): boolean {
     const lastCol = last(this.columns);
-    const origin = box.center;
+    const origin = box.Center;
     if (lastCol !== undefined && lastCol.fill(box)) {
       this.origins.push(origin);
       return true;
@@ -252,7 +252,7 @@ export class Row extends BoxContainer {
     return Math.min(...this.boxs.map((b) => b.bottom));
   }
   getCenters(): Vector[] {
-    return this.boxs.map((b) => b.center);
+    return this.boxs.map((b) => b.Center);
   }
 
   move(vector: Vector): void {
@@ -262,7 +262,7 @@ export class Row extends BoxContainer {
     }
   }
   fill(box: BoundingBox): boolean {
-    const v = vec(this.right, this.top).sub(box.topLeft);
+    const v = vec(this.right, this.top).sub(box.TopLeft);
     box.move(v);
     this.boxs.push(box);
     if (!this.boundary.isInside(this)) {

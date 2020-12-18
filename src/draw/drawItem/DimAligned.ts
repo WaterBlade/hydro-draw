@@ -1,11 +1,8 @@
-import { Vector, BoundingBox } from "../misc";
+import { Vector, BoundingBox } from "@/draw/misc";
 import { DrawItem } from "./DrawItem";
+import { Paper, PaperDimAligned } from "./Paper.interface";
 
-export interface VisitDimAligned {
-  visitDimAligned(dim: DimAligned, insertPoint: Vector): void;
-}
-
-export class DimAligned extends DrawItem {
+export class DimAligned extends DrawItem implements PaperDimAligned {
   borderScale: number;
   constructor(
     public start: Vector,
@@ -18,7 +15,7 @@ export class DimAligned extends DrawItem {
     super();
     this.borderScale = this.drawScale;
   }
-  accept(paper: VisitDimAligned, insertPoint: Vector): void {
+  accept(paper: Paper, insertPoint: Vector): void {
     paper.visitDimAligned(this, insertPoint);
   }
   scale(factor: number): void {
@@ -40,7 +37,7 @@ export class DimAligned extends DrawItem {
 
     const dir = this.end
       .sub(this.start)
-      .perpend()
+      .norm()
       .unit()
       .mul((this.borderScale / this.unitScale) * 3);
 

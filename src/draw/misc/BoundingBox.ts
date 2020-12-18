@@ -43,31 +43,31 @@ export class BoundingBox {
     );
   }
 
-  get bottomLeft(): Vector {
+  get BottomLeft(): Vector {
     return vec(this.left, this.bottom);
   }
-  get bottomRight(): Vector {
+  get BottomRight(): Vector {
     return vec(this.right, this.bottom);
   }
-  get bottomCenter(): Vector {
+  get BottomCenter(): Vector {
     return vec((this.left + this.right) / 2.0, this.bottom);
   }
-  get topLeft(): Vector {
+  get TopLeft(): Vector {
     return vec(this.left, this.top);
   }
-  get topRight(): Vector {
+  get TopRight(): Vector {
     return vec(this.right, this.top);
   }
-  get topCenter(): Vector {
+  get TopCenter(): Vector {
     return vec((this.left + this.right) / 2.0, this.top);
   }
-  get center(): Vector {
+  get Center(): Vector {
     return vec((this.left + this.right) / 2.0, (this.top + this.bottom) / 2.0);
   }
-  get middleLeft(): Vector {
+  get MiddleLeft(): Vector {
     return vec(this.left, (this.top + this.bottom) / 2.0);
   }
-  get middleRight(): Vector {
+  get MiddleRight(): Vector {
     return vec(this.right, (this.top + this.bottom) / 2.0);
   }
   get width(): number {

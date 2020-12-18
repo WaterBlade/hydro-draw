@@ -1,24 +1,12 @@
-import { LineType } from "../LineType";
-import { Vector, BoundingBox } from "../misc";
+import { LineType, Vector, BoundingBox } from "@/draw/misc";
+import { Paper, PaperDrawItem } from "./Paper.interface";
 
-interface Paper {
-  visitArc(item: DrawItem, insertPoint: Vector): void;
-  visitArrow(item: DrawItem, insertPoint: Vector): void;
-  visitCircle(item: DrawItem, insertPoint: Vector): void;
-  visitDimAligned(item: DrawItem, insertPoint: Vector): void;
-  visitLine(item: DrawItem, insertPoint: Vector): void;
-  visitMText(item: DrawItem, insertPoint: Vector): void;
-  visitText(item: DrawItem, insertPoint: Vector): void;
-}
-
-export abstract class DrawItem {
+export abstract class DrawItem implements PaperDrawItem {
   lineType = LineType.Thin;
   abstract accept(paper: Paper, insertPoint: Vector): void;
   abstract scale(factor: number): void;
   abstract move(vec: Vector): void;
-  getBoundingBox(): BoundingBox {
-    return new BoundingBox(0, 0, 0, 0);
-  }
+  abstract getBoundingBox(): BoundingBox;
   thinLine(): this {
     this.lineType = LineType.Thin;
     return this;

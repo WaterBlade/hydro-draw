@@ -1,5 +1,5 @@
-import { Line, Text } from "../drawItem";
-import { vec } from "../misc";
+import { Line, Text } from "@/draw/drawItem";
+import { vec } from "@/draw/misc";
 import {
   Cell,
   HIntervals,
@@ -47,21 +47,21 @@ describe("cell", () => {
   test("center", () => {
     const c = new Cell(3.5, 1, 1);
     const v = c.getCellCenter([2, 1], [2, 1]);
-    expect(v.toArray()).toEqual([2.5, -2.5]);
+    expect(v).toEqual(vec(2.5, -2.5));
   });
   test("draw", () => {
     const c = new Cell(3.5, 0, 0);
     const l = new Line(vec(0, 0), vec(2, 2));
     c.push(l);
     c.draw([4], [10]);
-    expect(l.start.toArray()).toEqual([4, -3]);
-    expect(l.end.toArray()).toEqual([6, -1]);
+    expect(l.start).toEqual(vec(4, -3));
+    expect(l.end).toEqual(vec(6, -1));
   });
   test("text", () => {
     const c = new Cell(3.5, 0, 0);
     c.text("hello");
     expect(c.items.length).toEqual(1);
-    expect((c.items[0] as Text).insertPoint.toArray()).toEqual([0, 0]);
+    expect((c.items[0] as Text).insertPoint).toEqual(vec(0, 0));
     expect((c.items[0] as Text).height).toEqual(3.5);
   });
 });
@@ -125,10 +125,10 @@ describe("horizontal interval", () => {
     const h = new HIntervals(3, 2);
     const ls = h.draw([1, 2, 3], [1, 2]);
     expect(ls.length).toEqual(2);
-    expect((ls[0] as Line).start.toArray()).toEqual([0, -1]);
-    expect((ls[0] as Line).end.toArray()).toEqual([3, -1]);
-    expect((ls[1] as Line).start.toArray()).toEqual([0, -3]);
-    expect((ls[1] as Line).end.toArray()).toEqual([3, -3]);
+    expect((ls[0] as Line).start).toEqual(vec(0, -1));
+    expect((ls[0] as Line).end).toEqual(vec(3, -1));
+    expect((ls[1] as Line).start).toEqual(vec(0, -3));
+    expect((ls[1] as Line).end).toEqual(vec(3, -3));
   });
 });
 
@@ -154,11 +154,11 @@ describe("vertical interval", () => {
     const h = new VIntervals(3, 4);
     const ls = h.draw([1, 2, 3], [1, 2, 3, 4]);
     expect(ls.length).toEqual(3);
-    expect((ls[0] as Line).start.toArray()).toEqual([1, 0]);
-    expect((ls[0] as Line).end.toArray()).toEqual([1, -6]);
-    expect((ls[1] as Line).start.toArray()).toEqual([3, 0]);
-    expect((ls[1] as Line).end.toArray()).toEqual([3, -6]);
-    expect((ls[2] as Line).start.toArray()).toEqual([6, 0]);
-    expect((ls[2] as Line).end.toArray()).toEqual([6, -6]);
+    expect((ls[0] as Line).start).toEqual(vec(1, 0));
+    expect((ls[0] as Line).end).toEqual(vec(1, -6));
+    expect((ls[1] as Line).start).toEqual(vec(3, 0));
+    expect((ls[1] as Line).end).toEqual(vec(3, -6));
+    expect((ls[2] as Line).start).toEqual(vec(6, 0));
+    expect((ls[2] as Line).end).toEqual(vec(6, -6));
   });
 });

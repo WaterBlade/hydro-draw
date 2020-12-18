@@ -3,9 +3,9 @@ import { vec } from "./Vector";
 
 test("basic", () => {
   const box = new BoundingBox(0, 10, 2, 12);
-  expect(box.bottomLeft.toArray()).toEqual([0, 2]);
-  expect(box.topRight.toArray()).toEqual([10, 12]);
-  expect(box.center.toArray()).toEqual([5, 7]);
+  expect(box.BottomLeft).toEqual(vec(0, 2));
+  expect(box.TopRight).toEqual(vec(10, 12));
+  expect(box.Center).toEqual(vec(5, 7));
   expect(box.width).toEqual(10);
   expect(box.height).toEqual(10);
 });

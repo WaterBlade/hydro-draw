@@ -8,12 +8,12 @@
     "test:watch": "jest --watchAll",
     "test:cover": "jest --coverage",
     "clean": "trash dist",
-    "compile": "tsc",
+    "compile": "tsc --project tsconfig.build.json",
     "build": "run-s fix test:cover clean compile",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint ./src --ext .ts,.tsx",
-    "demo": "ts-node demo"
+    "demo": "ts-node -r tsconfig-paths/register demo"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +31,7 @@
     "trash-cli": "^3.1.0",
     "ts-jest": "^26.4.0",
     "ts-node": "^9.0.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.0.3"
   },
   "dependencies": {}

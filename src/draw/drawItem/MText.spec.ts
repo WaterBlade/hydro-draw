@@ -1,17 +1,17 @@
-import { vec } from "../misc";
+import { vec } from "@/draw/misc";
 import { MText } from "./MText";
 
 test("scale", () => {
   const t = new MText(["hello", "world"], vec(0, 0), 5, 30);
   t.scale(5);
-  expect(t.insertPoint.toArray()).toEqual([0, 0]);
+  expect(t.insertPoint).toEqual(vec(0, 0));
   expect(t.height).toEqual(25);
 });
 
 test("move", () => {
   const t = new MText(["hello", "world"], vec(0, 0), 5, 30);
   t.move(vec(10, 20));
-  expect(t.insertPoint.toArray()).toEqual([10, 20]);
+  expect(t.insertPoint).toEqual(vec(10, 20));
 });
 
 test("bounding box", () => {

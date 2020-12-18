@@ -1,5 +1,5 @@
-import { Circle } from "../drawItem";
-import { vec } from "../misc";
+import { Circle } from "@/draw/drawItem";
+import { vec } from "@/draw/misc";
 import { HLayoutBuilder } from "./HLayoutBuilder";
 
 test("generate", () => {

@@ -1,22 +1,28 @@
-import { CompositeItem, DrawItem, Line, Text } from "../drawItem";
-import { BoundingBox, sum, vec, Vector } from "../misc";
-import { TextAlign } from "../TextAlign";
+import { CompositeItem, DrawItem, Line, Text } from "@/draw/drawItem";
+import { BoundingBox, sum, vec, Vector, TextAlign } from "@/draw/misc";
+import { Content } from "../drawItem/Content";
 import { Builder } from "./Builder.interface";
 
-export class TableBuilder implements Builder<DrawItem> {
+export class TableBuilder implements Builder<CompositeItem> {
   cells: Cell[] = [];
   rowCount = 0;
   colCount = 0;
   heightList?: number[];
   widthList?: number[];
-  title?: string;
+  protected widthMap: Map<number, number> = new Map();
+  protected titleContent?: string | Content;
 
   unitSize: number;
   constructor(public textHeight = 3.5) {
     this.unitSize = (5 / 3.5) * textHeight;
   }
 
-  generate(): DrawItem {
+  title(content: string | Content): this {
+    this.titleContent = content;
+    return this;
+  }
+
+  generate(): CompositeItem {
     const comp = new CompositeItem();
 
     // 设定表格宽度与高度
@@ -60,10 +66,10 @@ export class TableBuilder implements Builder<DrawItem> {
     );
 
     // 绘制标题
-    if (this.title) {
+    if (this.titleContent) {
       comp.push(
         new Text(
-          this.title,
+          this.titleContent,
           vec(width / 2, this.unitSize * 1.25),
           this.unitSize,
           TextAlign.MiddleCenter
@@ -80,16 +86,27 @@ export class TableBuilder implements Builder<DrawItem> {
     this.colCount = Math.max(this.colCount, col + colSpan);
     return c;
   }
+  setWidth(col: number, width: number): this {
+    this.widthMap.set(col, width);
+    return this;
+  }
   computeCellWidth(width: number): number {
     return this.unitSize * (Math.round(width / this.unitSize) + 2);
   }
   computeWidthList(): number[] {
     const ws = Array(this.colCount).fill(0);
+    this.widthMap.forEach((value, key) => {
+      ws[key] = value;
+    });
+    const settled = Array.from(this.widthMap.keys());
     for (const c of this.cells) {
       if (c.colSpan > 1) continue;
-      const width = this.computeCellWidth(c.getBoundingBox().width);
       const id = c.col;
-      ws[id] = Math.max(ws[id], width);
+      if (settled.includes(id)) continue;
+      const width = this.computeCellWidth(c.getBoundingBox().width);
+      if (!isNaN(width)) {
+        ws[id] = Math.max(ws[id], width);
+      }
     }
     for (let i = 0; i < ws.length; i++) {
       ws[i] = Math.max(2 * this.unitSize, ws[i]);
@@ -130,7 +147,7 @@ export class Cell {
   }
 
   private insertPoint = vec(0, 0);
-  text(content: string): void {
+  text(content: string | Content): void {
     const t = new Text(
       content,
       this.insertPoint,
@@ -156,7 +173,7 @@ export class Cell {
   }
   draw(heightList: number[], widthList: number[]): DrawItem[] {
     const cellCenter = this.getCellCenter(heightList, widthList);
-    const itemsCenter = this.getBoundingBox().center;
+    const itemsCenter = this.getBoundingBox().Center;
     const vector = cellCenter.sub(itemsCenter);
     this.items.forEach((item) => item.move(vector));
     return this.items;

@@ -1,22 +1,66 @@
 import { DrawItem } from "./DrawItem";
-import { TextAlign } from "../TextAlign";
-import { Vector, BoundingBox, vec, toRadian } from "../misc";
+import { Vector, BoundingBox, vec, toRadian, TextAlign, polar } from "@/draw/misc";
+import { Paper, PaperText } from "./Paper.interface";
+import { Content } from "./Content";
 
-export interface VisitText {
-  visitText(text: Text, insertPoint: Vector): void;
-}
-
-export class Text extends DrawItem {
+export class Text extends DrawItem implements PaperText {
+  public content;
   constructor(
-    public content: string,
+    content: string | Content,
     public insertPoint: Vector,
     public height: number,
-    public textAlign = TextAlign.LeftBottom,
+    public textAlign = TextAlign.BottomLeft,
     public rotateAngle = 0
   ) {
     super();
+    if (typeof content === "string") {
+      this.content = new Content().text(content);
+    } else {
+      this.content = content;
+    }
   }
-  accept(paper: VisitText, insertPoint: Vector): void {
+  static properVector(v: Vector): Vector{
+    return polar(1, Text.properAngle(v.quadrantAngle()));
+  }
+  static properAngle(angle: number): number {
+    if (angle > 90 && angle <= 270) return (angle + 180) % 360;
+    return angle;
+  }
+  static properAlign(angle: number, align: TextAlign): TextAlign {
+    if (angle > 90 && angle <= 270) {
+      switch (align) {
+        case TextAlign.BottomRight:
+          return TextAlign.BottomLeft;
+          break;
+        case TextAlign.BottomLeft:
+          return TextAlign.BottomRight;
+          break;
+        case TextAlign.BottomCenter:
+          return TextAlign.BottomCenter;
+          break;
+        case TextAlign.TopRight:
+          return TextAlign.TopLeft;
+          break;
+        case TextAlign.TopLeft:
+          return TextAlign.TopRight;
+          break;
+        case TextAlign.TopCenter:
+          return TextAlign.TopCenter;
+          break;
+        case TextAlign.MiddleRight:
+          return TextAlign.MiddleLeft;
+          break;
+        case TextAlign.MiddleLeft:
+          return TextAlign.MiddleRight;
+          break;
+        case TextAlign.MiddleCenter:
+          return TextAlign.MiddleCenter;
+          break;
+      }
+    }
+    return align;
+  }
+  accept(paper: Paper, insertPoint: Vector): void {
     paper.visitText(this, insertPoint);
   }
   scale(factor: number): void {
@@ -27,7 +71,7 @@ export class Text extends DrawItem {
     this.insertPoint = this.insertPoint.add(vec);
   }
   getBoundingBox(): BoundingBox {
-    const l = this.content.length * this.height;
+    const l = Math.max(1, this.content.length) * this.height;
     const h = this.height;
 
     const b = this.insertPoint;
@@ -38,33 +82,33 @@ export class Text extends DrawItem {
     );
     const v2 = v.mul(0.5);
 
-    const n = v.perpend().unit().mul(h);
+    const n = v.norm().unit().mul(h);
     const n2 = n.mul(0.5);
 
     const corners: Vector[] = [];
     switch (this.textAlign) {
-      case TextAlign.LeftBottom:
+      case TextAlign.BottomLeft:
         corners.push(b, b.add(v), b.add(n), b.add(v).add(n));
         break;
-      case TextAlign.RightBottom:
+      case TextAlign.BottomRight:
         corners.push(b, b.sub(v), b.add(n), b.sub(v).add(n));
         break;
-      case TextAlign.MiddleBottom:
+      case TextAlign.BottomCenter:
         corners.push(b.add(v2), b.sub(v2), b.add(v2).add(n), b.sub(v2).add(n));
         break;
-      case TextAlign.LeftTop:
+      case TextAlign.TopLeft:
         corners.push(b, b.add(v), b.sub(n), b.add(v).sub(n));
         break;
-      case TextAlign.RightTop:
+      case TextAlign.TopRight:
         corners.push(b, b.sub(v), b.sub(n), b.sub(v).sub(n));
         break;
-      case TextAlign.MiddleTop:
+      case TextAlign.TopCenter:
         corners.push(b.add(v2), b.sub(v2), b.add(v2).sub(n), b.sub(v2).sub(n));
         break;
-      case TextAlign.LeftCenter:
+      case TextAlign.MiddleLeft:
         corners.push(b.add(n2), b.sub(n2), b.add(n2).add(v), b.sub(n2).add(v));
         break;
-      case TextAlign.RightCenter:
+      case TextAlign.MiddleRight:
         corners.push(b.add(n2), b.sub(n2), b.add(n2).sub(v), b.sub(n2).sub(v));
         break;
       case TextAlign.MiddleCenter:

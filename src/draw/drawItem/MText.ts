@@ -1,11 +1,8 @@
-import { BoundingBox, Vector } from "../misc";
+import { BoundingBox, Vector } from "@/draw/misc";
 import { DrawItem } from "./DrawItem";
+import { Paper, PaperMText } from "./Paper.interface";
 
-export interface VisitMText {
-  visitMText(mtext: MText, insertPoint: Vector): void;
-}
-
-export class MText extends DrawItem {
+export class MText extends DrawItem implements PaperMText {
   protected widthFactor = 0.7;
   protected rowSpaceFactor = 1.5;
   constructor(
@@ -27,7 +24,7 @@ export class MText extends DrawItem {
       ...this.content.map((c) => c.length * this.height * this.widthFactor)
     );
   }
-  accept(paper: VisitMText, insertPoint: Vector): void {
+  accept(paper: Paper, insertPoint: Vector): void {
     paper.visitMText(this, insertPoint);
   }
   scale(factor: number): void {

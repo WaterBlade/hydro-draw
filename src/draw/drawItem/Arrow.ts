@@ -1,15 +1,12 @@
-import { Vector, BoundingBox } from "../misc";
+import { Vector, BoundingBox } from "@/draw/misc";
 import { DrawItem } from "./DrawItem";
+import { Paper, PaperArrow } from "./Paper.interface";
 
-export interface VisitArrow {
-  visitArrow(arrow: Arrow, insertPoint: Vector): void;
-}
-
-export class Arrow extends DrawItem {
+export class Arrow extends DrawItem implements PaperArrow {
   constructor(public start: Vector, public end: Vector, public width: number) {
     super();
   }
-  accept(paper: VisitArrow, insertPoint: Vector): void {
+  accept(paper: Paper, insertPoint: Vector): void {
     paper.visitArrow(this, insertPoint);
   }
   scale(factor: number): void {
