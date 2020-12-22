@@ -73,11 +73,11 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     const { x: x0, y: y0 } = this.current;
     return this.arcTo(x + x0, y + y0, angle, direciton);
   }
-  removeStart(): this{
+  removeStart(): this {
     this.segments.shift();
     return this;
   }
-  removeEnd(): this{
+  removeEnd(): this {
     this.segments.pop();
     return this;
   }
@@ -100,38 +100,38 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     last(this.segments).resetEnd(pt);
     return this;
   }
-  distanceTo(pt: Vector): number{
-    return Math.min(...this.segments.map(s=>s.distanceTo(pt)));
+  distanceTo(pt: Vector): number {
+    return Math.min(...this.segments.map((s) => s.distanceTo(pt)));
   }
-  getNearestPt(pt: Vector): Vector{
+  getNearestPt(pt: Vector): Vector {
     const segs = this.segments;
     let nearPt = segs[0].getNearestPt(pt);
     let nearDist = nearPt.sub(pt).length();
-    for(let i =1; i < segs.length; i++){
+    for (let i = 1; i < segs.length; i++) {
       const p = segs[i].getNearestPt(pt);
       const d = p.sub(pt).length();
-      if(d < nearDist){
+      if (d < nearDist) {
         nearPt = p;
         nearDist = d;
       }
     }
     return nearPt;
   }
-  getNearestSegment(pt: Vector): PolylineSegment{
+  getNearestSegment(pt: Vector): PolylineSegment {
     const segs = this.segments;
     let nearSeg = segs[0];
     let nearDist = nearSeg.distanceTo(pt);
-    for(let i =1; i < segs.length; i++){
+    for (let i = 1; i < segs.length; i++) {
       const seg = segs[i];
       const d = seg.distanceTo(pt);
-      if(d < nearDist){
+      if (d < nearDist) {
         nearSeg = seg;
         nearDist = d;
       }
     }
     return nearSeg;
   }
-  
+
   offset(dist: number, side = Side.Left): Polyline {
     const p = new Polyline();
     const len = this.segments.length;
@@ -166,11 +166,11 @@ export class Polyline extends DrawItem implements PolylineGeometry {
   get points(): Vector[] {
     const res: Vector[] = [];
     const segs = this.segments;
-    for(let i =0; i < segs.length; i++){
+    for (let i = 0; i < segs.length; i++) {
       const seg = segs[i];
       res.push(...seg.points.slice(0, -1));
     }
-    if(!this.closed) res.push(last(last(segs).points));
+    if (!this.closed) res.push(last(last(segs).points));
 
     return res;
   }
@@ -187,8 +187,9 @@ export class Polyline extends DrawItem implements PolylineGeometry {
           proj.points.push(proj.getNeighbourPoint(pt));
         }
       }
-      if(pts[0].closeTo(origin.start, 1e-6)) proj.points[0] = proj.start;
-      if(last(pts).closeTo(origin.end, 1e-6)) proj.points[pts.length-1] = proj.end;
+      if (pts[0].closeTo(origin.start, 1e-6)) proj.points[0] = proj.start;
+      if (last(pts).closeTo(origin.end, 1e-6))
+        proj.points[pts.length - 1] = proj.end;
     }
     return p;
   }

@@ -46,6 +46,21 @@ test("unit", () => {
   expect(a.x).toEqual(0.6);
   expect(a.y).toEqual(0.8);
 });
+test("rotate", () => {
+  const a = vec(3, 4);
+  const b = a.rotate(90);
+  expect(b.x).toBeCloseTo(-4);
+  expect(b.y).toBeCloseTo(3);
+  const c = a.rotate(180);
+  expect(c.x).toBeCloseTo(-3);
+  expect(c.y).toBeCloseTo(-4);
+  const d = a.rotate(270);
+  expect(d.x).toBeCloseTo(4);
+  expect(d.y).toBeCloseTo(-3);
+  const f = a.rotate(360);
+  expect(f.x).toBeCloseTo(3);
+  expect(f.y).toBeCloseTo(4);
+});
 test("quadrant angle", () => {
   const a = vec(1, 1);
   expect(a.quadrantAngle()).toBeCloseTo(45);

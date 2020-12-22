@@ -1,3 +1,5 @@
+import { Side } from "./Enum";
+
 export function toRadian(degree: number): number {
   return (degree * Math.PI) / 180;
 }
@@ -63,4 +65,9 @@ export function removeDuplicate<T>(
     res.push(curr);
   }
   return res;
+}
+
+export function flip(side: Side): Side {
+  if (side === Side.Left) return Side.Right;
+  else return Side.Left;
 }

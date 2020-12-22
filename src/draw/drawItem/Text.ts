@@ -1,5 +1,12 @@
 import { DrawItem } from "./DrawItem";
-import { Vector, BoundingBox, vec, toRadian, TextAlign, polar } from "@/draw/misc";
+import {
+  Vector,
+  BoundingBox,
+  vec,
+  toRadian,
+  TextAlign,
+  polar,
+} from "@/draw/misc";
 import { Paper, PaperText } from "./Paper.interface";
 import { Content } from "./Content";
 
@@ -19,7 +26,7 @@ export class Text extends DrawItem implements PaperText {
       this.content = content;
     }
   }
-  static properVector(v: Vector): Vector{
+  static properVector(v: Vector): Vector {
     return polar(1, Text.properAngle(v.quadrantAngle()));
   }
   static properAngle(angle: number): number {

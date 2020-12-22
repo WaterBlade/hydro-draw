@@ -103,25 +103,25 @@ test("include", () => {
   expect(l.includeTest(vec(5, 0))).toBeTruthy();
   expect(l.includeTest(vec(11, 0))).toBeFalsy();
 });
-test('get point norm', ()=>{
+test("get point norm", () => {
   const l = new Line(vec(0, 0), vec(10, 0));
   const p = l.getPointNorm();
   expect(p.x).toBeCloseTo(0);
   expect(p.y).toBeCloseTo(1);
 });
-test('get point tangent', ()=>{
+test("get point tangent", () => {
   const l = new Line(vec(0, 0), vec(10, 0));
   const p = l.getPointTangent();
   expect(p.x).toEqual(1);
   expect(p.y).toEqual(0);
 });
-test('distance to', ()=>{
-  const l= new Line(vec(0, 0), vec(10, 0));
+test("distance to", () => {
+  const l = new Line(vec(0, 0), vec(10, 0));
   expect(l.distanceTo(vec(5, 2))).toEqual(2);
 });
-test('get nearest point', ()=>{
+test("get nearest point", () => {
   const l = new Line(vec(0, 0), vec(10, 0));
   const p = l.getNearestPt(vec(5, 2));
   expect(p.x).toBeCloseTo(5);
   expect(p.y).toBeCloseTo(0);
-})
+});

@@ -1,7 +1,7 @@
-import {CompositeItem, Line, ScriptPaper } from "../src/draw";
-import { RotateDirection, vec } from "../src/draw/misc";
+import {CompositeItem, Line, ScriptPaper } from "@/draw";
+import { RotateDirection, vec } from "@/draw/misc";
 import fs from "fs";
-import { HLayoutBuilder, RebarCircleForm, RebarSpec, ArrowNote, PathPointNote } from "../src/draw/builder";
+import { HLayoutBuilder, RebarCircleForm, RebarSpec, ArrowNote, PathPointNote, CirclePointNote, SparsePointNode, LayerPointNote } from "@/draw/builder";
 import { Polyline } from "@/draw/drawItem/Geometry/Polyline";
 
 export default function runNoteDemo():void{
@@ -64,6 +64,28 @@ export default function runNoteDemo():void{
     new Polyline().arcBy(1000, 0, 180).divide(50)
   ).offset(50).spec(r1, 10, 50).onlineNote(vec(500, -500));
 
+
+  const a8 = new PathPointNote(35, 2.5).path(
+    new Polyline().arcBy(1000, 0, 180).divide(50)
+  ).offset(50).spec(r1, 10, 50).leaderNote(vec(500, 200), vec(0, 1));
+
+
+  const a9 = new CirclePointNote(35, 2.5).circle(vec(0, 0), 300, 20).offset(50).spec(r1, 10, 50).onlineNote(vec(0, -50));
+
+  const a10 = new SparsePointNode().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).jointLeader(vec(200, 200), vec(200, 600));
+
+  const a11 = new SparsePointNode().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).parallelLeader(vec(1200, 600), vec(1, 0));
+
+  const a12 = new SparsePointNode().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).parallelLeader(vec(600, 200), vec(1, 0));
+
+  const a13 = new SparsePointNode().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).parrallelOnline(vec(200, 500), vec(1, 0));
+
+  const a14 = new LayerPointNote().layers(vec(0, 0), vec(100, 0), 9, 20, 5).spec(r1, 10, 30).leaderNote(vec(-20, -20), vec(1, 0));
+
+  const a15 = new LayerPointNote().layers(vec(0, 0), vec(100, 0), 9, 20, 5).spec(r1, 10, 30).onlineNote(vec(50, -20), vec(1, 0));
+
+  const a16 = new LayerPointNote().layers(vec(0, 0), vec(100, 0), 9, 20, 5).spec(r1, 10, 30).onlineNote(vec(50, 120), vec(1, 0));
+
   const layout = new HLayoutBuilder(10);
   layout.push(
     a0.generate(),
@@ -73,7 +95,16 @@ export default function runNoteDemo():void{
     a4.generate(),
     a5.generate(),
     a6.generate(),
-    a7.generate()
+    a7.generate(),
+    a8.generate(),
+    a9.generate(),
+    a10.generate(),
+    a11.generate(),
+    a12.generate(),
+    a13.generate(),
+    a14.generate(),
+    a15.generate(),
+    a16.generate()
   );
   paper.push(layout.generate());
   fs.writeFile('demoNote.txt', paper.pack(), ()=>{

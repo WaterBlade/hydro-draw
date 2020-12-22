@@ -7,7 +7,7 @@ import {
   PaperPolyline,
 } from "../Paper.interface";
 
-export interface Geometry extends DrawItem{
+export interface Geometry extends DrawItem {
   points: Vector[];
   includeTest(pt: Vector): boolean;
   calcLength(): number;

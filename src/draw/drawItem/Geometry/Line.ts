@@ -53,7 +53,7 @@ export class Line extends DrawItem implements LineGeometry {
   getPointTangent(): Vector {
     return this.end.sub(this.start).unit();
   }
-  getPointNorm(): Vector{
+  getPointNorm(): Vector {
     return this.end.sub(this.start).norm().unit();
   }
   checkAhead(left: Vector, right: Vector): boolean {
@@ -77,24 +77,24 @@ export class Line extends DrawItem implements LineGeometry {
     this.end = pt;
     return this;
   }
-  distanceTo(pt: Vector): number{
+  distanceTo(pt: Vector): number {
     const n = this.end.sub(this.start).norm();
     const iters = this.rayIntersect(pt, n);
     return Math.min(
-      ...iters.map(p => p.sub(pt).length()),
+      ...iters.map((p) => p.sub(pt).length()),
       pt.sub(this.start).length(),
       pt.sub(this.end).length()
-    )
+    );
   }
-  getNearestPt(pt: Vector): Vector{
+  getNearestPt(pt: Vector): Vector {
     const n = this.end.sub(this.start).norm();
     const iters = this.rayIntersect(pt, n);
-    if(iters.length > 0){
+    if (iters.length > 0) {
       return iters[0];
     }
-    if(pt.sub(this.start).length() < pt.sub(this.end).length()){
+    if (pt.sub(this.start).length() < pt.sub(this.end).length()) {
       return this.start;
-    }else{
+    } else {
       return this.end;
     }
   }

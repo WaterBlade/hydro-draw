@@ -114,7 +114,7 @@ export class Arc extends DrawItem implements ArcGeometry {
     const c = this.center;
     return pt.sub(c).norm().unit().mul(d);
   }
-  getPointNorm(pt: Vector): Vector{
+  getPointNorm(pt: Vector): Vector {
     const d = this.direction === RotateDirection.counterclockwise ? -1 : 1;
     const c = this.center;
     return pt.sub(c).unit().mul(d);
@@ -170,23 +170,23 @@ export class Arc extends DrawItem implements ArcGeometry {
     this.endAngle = pt.sub(this.center).quadrantAngle();
     return this;
   }
-  distanceTo(pt: Vector): number{
+  distanceTo(pt: Vector): number {
     const iters = this.rayIntersect(pt, pt.sub(this.center));
     return Math.min(
-      ...iters.map(p => p.sub(pt).length()),
+      ...iters.map((p) => p.sub(pt).length()),
       pt.sub(this.start).length(),
       pt.sub(this.end).length()
     );
   }
-  getNearestPt(pt: Vector): Vector{
+  getNearestPt(pt: Vector): Vector {
     const iters = this.rayIntersect(pt, pt.sub(this.center));
     const pts = [...iters, this.start, this.end];
 
     let nearId = 0;
     let nearDist = pts[0].sub(pt).length();
-    for(let i = 1; i < pts.length; i++){
+    for (let i = 1; i < pts.length; i++) {
       const d = pts[i].sub(pt).length();
-      if(d < nearDist){
+      if (d < nearDist) {
         nearId = i;
         nearDist = d;
       }

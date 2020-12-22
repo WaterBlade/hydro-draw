@@ -79,7 +79,7 @@ test("ray iter", () => {
     vec(100, -20),
   ]);
 });
-test('get nearest pt', ()=>{
+test("get nearest pt", () => {
   const p = new Polyline();
   p.lineTo(10, 0);
   p.arcTo(10, 4, 180);
@@ -87,20 +87,20 @@ test('get nearest pt', ()=>{
   expect(n.x).toBeCloseTo(2);
   expect(n.y).toBeCloseTo(0);
 });
-test('distance to', ()=>{
+test("distance to", () => {
   const p = new Polyline();
   p.lineTo(10, 0);
   p.arcTo(10, 4, 180);
   expect(p.distanceTo(vec(2, 4))).toBeCloseTo(4);
 });
-test('get nearest seg', ()=>{
+test("get nearest seg", () => {
   const p = new Polyline();
   p.lineTo(10, 0);
   p.arcTo(10, 4, 180);
   const seg = p.getNearestSegment(vec(2, 4));
   expect(seg).toBeInstanceOf(Line);
 });
-test('divide', ()=>{
+test("divide", () => {
   const p = new Polyline();
   p.lineBy(0, -50).lineBy(100, 0).lineBy(0, 50);
   p.divide(10);
@@ -109,10 +109,10 @@ test('divide', ()=>{
   expect(pts[0]).toEqual(vec(0, 0));
   expect(pts[1]).toEqual(vec(0, -10));
 });
-test('project', ()=>{
+test("project", () => {
   const p = new Polyline();
   p.lineBy(0, -50).lineBy(100, 0).lineBy(0, 50);
-  p.divide(10)
+  p.divide(10);
   const op = p.project(10);
   const pts = op.points;
   expect(pts.length).toEqual(21);

@@ -33,6 +33,14 @@ export class Vector {
     }
     return new Vector(this.x / len, this.y / len);
   }
+  rotate(angle: number): Vector {
+    // counterclockwise rotate
+    const rad = toRadian(angle);
+    const cos = Math.cos(rad);
+    const sin = Math.sin(rad);
+    const { x, y } = this;
+    return new Vector(x * cos - y * sin, x * sin + y * cos);
+  }
   quadrantAngle(): number {
     const angle = toDegree(Math.acos(this.x / this.length()));
     if (this.y >= 0) return angle;

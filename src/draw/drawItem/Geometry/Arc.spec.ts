@@ -76,35 +76,35 @@ test("check ahead", () => {
   const a = new Arc(vec(0, 0), 2, 0, 180, RotateDirection.counterclockwise);
   expect(a.checkAhead(vec(2, 0), vec(0, 2))).toBeTruthy();
 });
-test('get point norm counterclockwise', ()=>{
+test("get point norm counterclockwise", () => {
   const a = new Arc(vec(0, 0), 2, 0, 180, RotateDirection.counterclockwise);
   const p = a.getPointNorm(vec(0, 2));
   expect(p.x).toBeCloseTo(0);
   expect(p.y).toBeCloseTo(-1);
 });
-test('get point norm clockwise', ()=>{
+test("get point norm clockwise", () => {
   const a = new Arc(vec(0, 0), 2, 0, 180, RotateDirection.clockwise);
   const p = a.getPointNorm(vec(0, -2));
   expect(p.x).toBeCloseTo(0);
   expect(p.y).toBeCloseTo(-1);
 });
-test('get point tangent counterclockwise', ()=>{
+test("get point tangent counterclockwise", () => {
   const a = new Arc(vec(0, 0), 2, 0, 180, RotateDirection.counterclockwise);
   const p = a.getPointTangent(vec(0, 2));
   expect(p.x).toBeCloseTo(-1);
   expect(p.y).toBeCloseTo(0);
 });
-test('get point tangent clockwise', ()=>{
+test("get point tangent clockwise", () => {
   const a = new Arc(vec(0, 0), 2, 0, 180, RotateDirection.clockwise);
   const p = a.getPointTangent(vec(0, -2));
   expect(p.x).toBeCloseTo(-1);
   expect(p.y).toBeCloseTo(0);
 });
-test('distance to', ()=>{
+test("distance to", () => {
   const a = new Arc(vec(0, 0), 2, 0, 180, RotateDirection.counterclockwise);
   expect(a.distanceTo(vec(0, 4))).toBeCloseTo(2);
 });
-test('get nearest point', ()=>{
+test("get nearest point", () => {
   const a = new Arc(vec(0, 0), 2, 0, 180, RotateDirection.counterclockwise);
   const p = a.getNearestPt(vec(0, 4));
   expect(p.x).toEqual(0);
