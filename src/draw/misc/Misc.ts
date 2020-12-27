@@ -71,3 +71,8 @@ export function flip(side: Side): Side {
   if (side === Side.Left) return Side.Right;
   else return Side.Left;
 }
+
+export function angleMirrorByYAxis(angle: number): number {
+  if (angle <= 180) return 180 - angle;
+  return 540 - angle;
+}

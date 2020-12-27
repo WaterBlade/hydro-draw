@@ -1,5 +1,5 @@
 import { Arc, Circle, Line, Polyline } from "@/draw/drawItem";
-import { last, RotateDirection, Side, Vector } from "@/draw/misc";
+import { flip, last, RotateDirection, Side, Vector } from "@/draw/misc";
 import { PointNote } from "./PointNote";
 
 export class PathPointNote extends PointNote {
@@ -39,7 +39,7 @@ export class PathPointNote extends PointNote {
     return this;
   }
 
-  onlineNote(pt: Vector): this {
+  onlineNote(pt: Vector, flipText = false): this {
     const op = this._offsetLine;
     if (!op) {
       throw Error("online note error: path not specified or not offseted");
@@ -58,9 +58,11 @@ export class PathPointNote extends PointNote {
         d = segR - Math.sqrt(segR ** 2 - 0.25 * (l + 2 * r) ** 2);
       }
     }
+    const factor = flipText ? -1 : 1;
     const nearPt = nearSeg.getNearestPt(pt);
-    const dir = nearSeg.getPointTangent(nearPt);
-    this.notes.push(...this.genOnlineText(nearPt, dir, this._offsetSide, d));
+    const dir = nearSeg.getPointTangent(nearPt).mul(factor);
+    const side = flipText ? flip(this._offsetSide) : this._offsetSide;
+    this.notes.push(...this.genOnlineText(nearPt, dir, side, d));
 
     return this;
   }

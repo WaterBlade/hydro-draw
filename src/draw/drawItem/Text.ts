@@ -70,14 +70,14 @@ export class Text extends DrawItem implements PaperText {
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitText(this, insertPoint);
   }
-  scale(factor: number): void {
+  protected scaleItem(factor: number): void {
     this.insertPoint = this.insertPoint.mul(factor);
     this.height *= factor;
   }
-  move(vec: Vector): void {
+  protected moveItem(vec: Vector): void {
     this.insertPoint = this.insertPoint.add(vec);
   }
-  getBoundingBox(): BoundingBox {
+  calcBoundingBox(): BoundingBox {
     const l = Math.max(1, this.content.length) * this.height;
     const h = this.height;
 

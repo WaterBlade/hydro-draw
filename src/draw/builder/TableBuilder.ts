@@ -115,7 +115,7 @@ export class TableBuilder implements Builder<CompositeItem> {
   }
   computeCellHeight(height: number): number {
     return (
-      2 * this.unitSize * Math.max(Math.round(height / this.unitSize / 2), 1)
+      2 * this.unitSize * Math.max(Math.ceil(height / this.unitSize / 2), 1)
     );
   }
   computeHeightList(): number[] {

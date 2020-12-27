@@ -4,9 +4,42 @@ import { Paper, PaperDrawItem } from "./Paper.interface";
 export abstract class DrawItem implements PaperDrawItem {
   lineType = LineType.Thin;
   abstract accept(paper: Paper, insertPoint: Vector): void;
-  abstract scale(factor: number): void;
-  abstract move(vec: Vector): void;
-  abstract getBoundingBox(): BoundingBox;
+  scale(factor: number): void{
+    if(this._boundingBox) this._boundingBox.scale(factor);
+    this.scaleItem(factor);
+  }
+  protected abstract scaleItem(factor: number): void;
+  move(vec: Vector): void{
+    if(this._boundingBox) this._boundingBox.move(vec);
+    this.moveItem(vec);
+  }
+  protected abstract moveItem(v: Vector): void;
+  getBoundingBox(): BoundingBox{
+    if(this._boundingBox) return this._boundingBox;
+    const box = this.calcBoundingBox();
+    this._boundingBox = box;
+    return box;
+  }
+  protected abstract calcBoundingBox(): BoundingBox;
+  protected _boundingBox?: BoundingBox;
+  protected moveBoundingBox(v: Vector): void{
+    if(this._boundingBox) this._boundingBox.move(v);
+  }
+  protected scaleBoundingBox(factor: number): void{
+    if(this._boundingBox) this._boundingBox.scale(factor);
+  }
+  moveCenterTo(pt: Vector): this{
+    this.move(pt.sub(this.getBoundingBox().Center));
+    return this;
+  }
+  moveBottomCenterTo(pt: Vector): this{
+    this.move(pt.sub(this.getBoundingBox().BottomCenter));
+    return this;
+  }
+  moveTopCenterTo(pt: Vector): this{
+    this.move(pt.sub(this.getBoundingBox().TopCenter));
+    return this;
+  }
   thinLine(): this {
     this.lineType = LineType.Thin;
     return this;

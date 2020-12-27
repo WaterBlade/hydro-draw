@@ -1,3 +1,4 @@
+export * from "./Direction";
 export * from "./LineType";
 export * from "./RebarDiameter";
 export * from "./RotateDirection";

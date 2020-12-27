@@ -9,6 +9,7 @@ import {
   vec,
   remainIf,
   removeDuplicate,
+  angleMirrorByYAxis,
 } from "@/draw/misc";
 import { DrawItem } from "../DrawItem";
 import { Paper } from "../Paper.interface";
@@ -96,6 +97,18 @@ export class Arc extends DrawItem implements ArcGeometry {
   }
   get endTangent(): Vector {
     return this.endNorm.norm().mul(-1);
+  }
+  mirrorByYAxis(): Arc {
+    const c = this.center.mirrorByYAxis();
+    const start = angleMirrorByYAxis(this.startAngle);
+    const end = angleMirrorByYAxis(this.endAngle);
+    const dir =
+      this.direction === RotateDirection.counterclockwise
+        ? RotateDirection.clockwise
+        : RotateDirection.counterclockwise;
+    const a = new Arc(c, this.radius, start, end, dir);
+    a.points = this.points.map((p) => p.mirrorByYAxis());
+    return a;
   }
   offsetStart(dist: number, side: Side): Vector {
     return this.offsetPoint(this.start, dist, side);
@@ -374,14 +387,14 @@ export class Arc extends DrawItem implements ArcGeometry {
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitArc(this, insertPoint);
   }
-  scale(factor: number): void {
+  protected scaleItem(factor: number): void {
     this.center = this.center.mul(factor);
     this.radius *= factor;
   }
-  move(vector: Vector): void {
+  protected moveItem(vector: Vector): void {
     this.center = this.center.add(vector);
   }
-  getBoundingBox(): BoundingBox {
+  calcBoundingBox(): BoundingBox {
     const { x, y } = this.center;
     const pt1 = polar(this.radius, this.startAngle).add(this.center);
     const pt2 = polar(this.radius, this.endAngle).add(this.center);

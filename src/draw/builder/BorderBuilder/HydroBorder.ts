@@ -1,7 +1,8 @@
 import { CompositeItem, Line, Text, MText } from "@/draw/drawItem";
 import { vec, TextAlign } from "@/draw/misc";
-import { Boundary } from "./Border";
-import { BorderBuilder } from "./Builder";
+import { Boundary } from "./Boundary";
+import { BorderBuilder } from "./BorderBuilder";
+import { Container } from "./Container";
 
 function presetA0A1Title(
   company: string,
@@ -10,7 +11,8 @@ function presetA0A1Title(
   design: string,
   section: string,
   date: string,
-  drawingNumber: string
+  drawingNumber: string,
+  certificateNumber: string
 ): CompositeItem {
   const comp = new CompositeItem();
   comp.push(
@@ -42,7 +44,7 @@ function presetA0A1Title(
     new Text("描 图", vec(-170, 10.5), 3.5, TextAlign.MiddleCenter),
     new Text("CAD", vec(-142.5, 10.5), 3.5, TextAlign.MiddleCenter),
     new Text("设计证号", vec(-170, 3.5), 3.5, TextAlign.MiddleCenter),
-    new Text("(证号)", vec(-135, 3.5), 3.5, TextAlign.MiddleCenter),
+    new Text(certificateNumber, vec(-135, 3.5), 3.5, TextAlign.MiddleCenter),
     new Text(project, vec(-82.5, 49), 4, TextAlign.MiddleCenter),
     new Text(`${design} 设计`, vec(-27.5, 52.5), 3.5, TextAlign.MiddleCenter),
     new Text(`${section} 部分`, vec(-27.5, 45.5), 3.5, TextAlign.MiddleCenter),
@@ -64,7 +66,8 @@ function presetA2A3Title(
   design: string,
   section: string,
   date: string,
-  drawingNumber: string
+  drawingNumber: string,
+  certificateNumber: string
 ): CompositeItem {
   const comp = new CompositeItem();
   comp.push(
@@ -96,7 +99,7 @@ function presetA2A3Title(
     new Text("描 图", vec(-112.5, 10.5), 3.5, TextAlign.MiddleCenter),
     new Text("CAD", vec(-92.5, 10.5), 3.5, TextAlign.MiddleCenter),
     new Text("设计证号", vec(-112.5, 3.5), 3.5, TextAlign.MiddleCenter),
-    new Text("(证号)", vec(-87.5, 3.5), 3.5, TextAlign.MiddleCenter),
+    new Text(certificateNumber, vec(-87.5, 3.5), 3.5, TextAlign.MiddleCenter),
     new Text(project, vec(-50, 49), 4, TextAlign.MiddleCenter),
     new Text(`${design} 设计`, vec(-15, 52.5), 3.5, TextAlign.MiddleCenter),
     new Text(`${section} 部分`, vec(-15, 45.5), 3.5, TextAlign.MiddleCenter),
@@ -111,14 +114,16 @@ function presetA2A3Title(
   return comp;
 }
 
-abstract class HydroBorderBuilder extends BorderBuilder {
+export abstract class HydroBorderBuilder extends BorderBuilder {
   company = "（单位名称）";
   project = "（工程名）";
   drawingTitle = "（图名）";
   design = "技施";
   section = "水工";
   date = "（20XX.XX）";
-  drawingNumber = "（XX-XX）";
+  drawingNumberPrefix = "（XX-XX）";
+  drawingNumberStart = 1;
+  certificateNumber = "(设计证号)";
 
   note: string[] = ["图纸说明"];
 
@@ -134,7 +139,7 @@ abstract class HydroBorderBuilder extends BorderBuilder {
   }
 
   protected isFirstBoundary = true;
-  getBoundary(): Boundary {
+  protected genBoundary(): Boundary {
     const textHeight = 3.5;
     const rowHeight = 5.25;
     const maxNoteWidth = 100;
@@ -184,8 +189,17 @@ abstract class HydroBorderBuilder extends BorderBuilder {
     return boundary;
   }
 
-  composeBorder(rawContentList: CompositeItem[]): void {
+  genContainer(): Container{
+    return new Container(this.genBoundary());
+  }
+
+  protected isMultipleBorder = false;
+  protected totalBorderCount = 0;
+  protected borderCount = 1;
+  genBorder(itemsInContainer: CompositeItem[]): void {
     let isFirstBorder = true;
+    this.totalBorderCount = itemsInContainer.length;
+    this.isMultipleBorder = this.totalBorderCount > 1;
     const textHeight = 3.5;
     const maxNoteWidth = 100;
 
@@ -198,7 +212,8 @@ abstract class HydroBorderBuilder extends BorderBuilder {
 
     const factor = this.drawScale / this.unitScale;
 
-    for (const comp of rawContentList) {
+    for (let i = 0; i < itemsInContainer.length; i++) {
+      const comp = itemsInContainer[i];
       comp.push(
         new Line(vec(0, 0), vec(w * factor, 0)),
         new Line(vec(w * factor, 0), vec(w * factor, h * factor)),
@@ -270,14 +285,16 @@ export class HydroA1Builder extends HydroBorderBuilder {
     super(594, 841, 10, 25, 71, 180);
   }
   getTitle(): CompositeItem {
+    const title = this.isMultipleBorder ? this.drawingTitle + `(${this.borderCount++}/${this.totalBorderCount})` : this.drawingTitle;
     return presetA0A1Title(
       this.company,
       this.project,
-      this.drawingTitle,
+      title,
       this.design,
       this.section,
       this.date,
-      this.drawingNumber
+      `${this.drawingNumberPrefix}${this.drawingNumberStart++}`,
+      this.certificateNumber
     );
   }
 }
@@ -287,14 +304,35 @@ export class HydroA2Builder extends HydroBorderBuilder {
     super(420, 594, 10, 25, 68, 120);
   }
   getTitle(): CompositeItem {
+    const title = this.isMultipleBorder ? this.drawingTitle + `(${this.borderCount++}/${this.totalBorderCount})` : this.drawingTitle;
     return presetA2A3Title(
       this.company,
       this.project,
-      this.drawingTitle,
+      title,
       this.design,
       this.section,
       this.date,
-      this.drawingNumber
+      `${this.drawingNumberPrefix}${this.drawingNumberStart++}`,
+      this.certificateNumber
+    );
+  }
+}
+
+export class HydroA3Builder extends HydroBorderBuilder {
+  constructor() {
+    super(297, 420, 10, 25, 68, 120);
+  }
+  getTitle(): CompositeItem {
+    const title = this.isMultipleBorder ? this.drawingTitle + `(${this.borderCount++}/${this.totalBorderCount})` : this.drawingTitle;
+    return presetA2A3Title(
+      this.company,
+      this.project,
+      title,
+      this.design,
+      this.section,
+      this.date,
+      `${this.drawingNumberPrefix}${this.drawingNumberStart++}`,
+      this.certificateNumber
     );
   }
 }

@@ -33,6 +33,9 @@ export class Vector {
     }
     return new Vector(this.x / len, this.y / len);
   }
+  mirrorByYAxis(): Vector {
+    return new Vector(-this.x, this.y);
+  }
   rotate(angle: number): Vector {
     // counterclockwise rotate
     const rad = toRadian(angle);

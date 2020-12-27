@@ -27,15 +27,15 @@ export class MText extends DrawItem implements PaperMText {
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitMText(this, insertPoint);
   }
-  scale(factor: number): void {
+  protected scaleItem(factor: number): void {
     this.insertPoint = this.insertPoint.mul(factor);
     this.height *= factor;
     this.maxWidth *= factor;
   }
-  move(vector: Vector): void {
+  protected moveItem(vector: Vector): void {
     this.insertPoint = this.insertPoint.add(vector);
   }
-  getBoundingBox(): BoundingBox {
+  calcBoundingBox(): BoundingBox {
     const { x, y } = this.insertPoint;
     const w = this.width;
     const n = this.content.reduce((pre, cur) => {

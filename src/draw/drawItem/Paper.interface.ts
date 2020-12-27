@@ -46,7 +46,7 @@ export interface PaperDimAligned extends PaperDrawItem {
   start: Vector;
   end: Vector;
   textPoint: Vector;
-  override?: string;
+  override?: PaperContent;
 }
 
 export interface PaperLine extends PaperDrawItem {

@@ -12,30 +12,12 @@ import {
   RebarDiameter,
   RotateDirection,
   Side,
+  sum,
   TextAlign,
   vec,
   Vector,
 } from "@/draw/misc";
 import { Builder } from "../Builder.interface";
-
-type SpecLength =
-  | 0
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | -1
-  | -2
-  | -3
-  | -4
-  | -5
-  | -6
-  | -7
-  | -8;
 
 export abstract class RebarForm implements Builder<CompositeItem> {
   protected textHeight: number;
@@ -67,16 +49,20 @@ export abstract class RebarForm implements Builder<CompositeItem> {
   }
 
   get length(): number {
-    return this.totalLength;
+    return this._length;
   }
 
-  protected totalLength = 0;
+  setLength(length: number): this {
+    this._length = length;
+    return this;
+  }
+
+  protected _length = 0;
   protected addUp(length: number | number[]): void {
     if (typeof length === "number") {
-      this.totalLength += length;
+      this._length += length;
     } else {
-      this.totalLength +=
-        length.reduce((pre, cur) => pre + cur) / length.length;
+      this._length += sum(...length) / length.length;
     }
   }
 
@@ -212,19 +198,40 @@ export class RebarPathForm extends RebarForm {
   get entities(): DrawItem[] {
     return this.segments;
   }
+  static Line(dia: RebarDiameter, length: number): RebarPathForm {
+    return new RebarPathForm(dia).lineBy(8, 0).dimLength(length);
+  }
+  static LShape(dia: RebarDiameter, vLen: number, hLen: number): RebarPathForm {
+    return new RebarPathForm(dia)
+      .lineBy(0, -2)
+      .dimLength(vLen)
+      .lineBy(8, 0)
+      .dimLength(hLen);
+  }
+  static UShape(dia: RebarDiameter, vLen: number, hLen: number): RebarPathForm {
+    return new RebarPathForm(dia)
+      .lineBy(0, -2)
+      .dimLength(vLen)
+      .lineBy(8, 0)
+      .dimLength(hLen)
+      .lineBy(0, 2)
+      .dimLength(vLen, Side.Right);
+  }
   // generate rebar
-  lineBy(x: SpecLength, y: SpecLength): this {
+  lineBy(x: number, y: number): this {
+    if (Math.abs(x) > 8 || Math.abs(y) > 8) throw Error("tow large x or y");
     const end = vec(x, y).mul(this.baseUnit).add(this.pt);
     this.segments.push(new Line(this.pt, end).thickLine());
     this.pt = end;
     return this;
   }
   arcBy(
-    x: SpecLength,
-    y: SpecLength,
+    x: number,
+    y: number,
     angle: number,
     direction = RotateDirection.counterclockwise
   ): this {
+    if (Math.abs(x) > 8 || Math.abs(y) > 8) throw Error("tow large x or y");
     const end = vec(x, y).mul(this.baseUnit).add(this.pt);
     this.segments.push(
       Arc.createByEnds(this.pt, end, angle, direction).thickLine()
@@ -252,6 +259,7 @@ export class RebarPathForm extends RebarForm {
 
   // dim
   dimLength(length: number | number[], side = Side.Left): this {
+    if (length === undefined) throw Error("length is undefined");
     this.addUp(length);
     const content = this.genNumContent(length);
     const seg = last(this.segments);
@@ -273,12 +281,14 @@ export class RebarPathForm extends RebarForm {
     this.notes.push(this.genTextOnSeg(line, content, Side.Left));
     // angle;
     if (angle) {
-      this.notes.push(this.genTextOnSeg(line, `${angle}°`, Side.Right));
+      this.notes.push(
+        this.genTextOnSeg(line, `${angle.toFixed(2)}°`, Side.Right)
+      );
     }
     return this;
   }
   protected guideLine?: Line;
-  guideLineBy(x: SpecLength, y: SpecLength): this {
+  guideLineBy(x: number, y: number): this {
     const end = vec(x, y).mul(this.baseUnit).add(this.pt);
     this.guideLine = new Line(this.pt, end);
     return this;

@@ -25,6 +25,11 @@ export class Circle extends DrawItem implements CircleGeometry {
   constructor(public center: Vector, public radius: number) {
     super();
   }
+  mirrorByYAxis(): Circle {
+    const c = new Circle(this.center.mirrorByYAxis(), this.radius);
+    c.points = this.points.map((p) => p.mirrorByYAxis());
+    return c;
+  }
   includeTest(pt: Vector): boolean {
     if (Math.abs(pt.sub(this.center).length() - this.radius) > 1e-6)
       return false;
@@ -128,14 +133,14 @@ export class Circle extends DrawItem implements CircleGeometry {
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitCircle(this, insertPoint);
   }
-  scale(factor: number): void {
+  protected scaleItem(factor: number): void {
     this.center = this.center.mul(factor);
     this.radius *= factor;
   }
-  move(vec: Vector): void {
+  protected moveItem(vec: Vector): void {
     this.center = this.center.add(vec);
   }
-  getBoundingBox(): BoundingBox {
+  calcBoundingBox(): BoundingBox {
     const { x, y } = this.center;
     const r = this.radius;
     return new BoundingBox(x - r, x + r, y - r, y + r);

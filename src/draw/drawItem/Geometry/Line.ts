@@ -41,6 +41,11 @@ export class Line extends DrawItem implements LineGeometry {
   get endTangent(): Vector {
     return this.end.sub(this.start).unit();
   }
+  mirrorByYAxis(): Line {
+    const l = new Line(this.start.mirrorByYAxis(), this.end.mirrorByYAxis());
+    l.points = this.points.map((p) => p.mirrorByYAxis());
+    return l;
+  }
   offsetStart(dist: number, side: Side): Vector {
     return this.offsetPoint(this.start, dist, side);
   }
@@ -149,7 +154,7 @@ export class Line extends DrawItem implements LineGeometry {
     const space = this.calcLength() / count;
     const start = this.start;
     const dir = this.end.sub(this.start).unit();
-    for (let i = 1; i < count; i++) {
+    for (let i = 0; i < count + 1; i++) {
       this.points.push(start.add(dir.mul(i * space)));
     }
     return this;
@@ -240,15 +245,15 @@ export class Line extends DrawItem implements LineGeometry {
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitLine(this, insertPoint);
   }
-  scale(factor: number): void {
+  protected scaleItem(factor: number): void {
     this.start = this.start.mul(factor);
     this.end = this.end.mul(factor);
   }
-  move(vec: Vector): void {
+  protected moveItem(vec: Vector): void {
     this.start = this.start.add(vec);
     this.end = this.end.add(vec);
   }
-  getBoundingBox(): BoundingBox {
+  calcBoundingBox(): BoundingBox {
     const { x: x1, y: y1 } = this.start;
     const { x: x2, y: y2 } = this.end;
     return new BoundingBox(

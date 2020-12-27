@@ -1,30 +1,33 @@
 import { vec, Vector } from "./Vector";
 
 export class Boundary {
-  points: Vector[];
+  protected points: Vector[];
+  protected rightMost: number;
+  protected leftMost: number;
+  protected top: number;
+  protected bottom: number;
   constructor(...pts: Vector[]) {
     this.points = pts;
-  }
-  get RightMost(): number {
-    return Math.max(...this.points.map((pt) => pt.x));
-  }
-
-  get LeftMost(): number {
-    return Math.min(...this.points.map((pt) => pt.x));
+    this.rightMost = Math.max(...pts.map((pt) => pt.x));
+    this.leftMost = Math.min(...pts.map((pt) => pt.x));
+    this.top = Math.max(...pts.map(p=>p.y));
+    this.bottom = Math.min(...pts.map(p=>p.y));
   }
 
-  isInside(p0: Vector): boolean {
-    const p1 = vec(2 * this.RightMost - this.LeftMost, p0.y);
-    let count = 0;
+  insideTest(p0: Vector): boolean {
+    const {x, y} = p0;
+    if(x < this.leftMost || x > this.rightMost || y < this.bottom || y > this.top ) return false;
+    const p1 = vec(2 * this.rightMost - this.leftMost, p0.y);
+    let isInside = false;
     const length = this.points.length;
     for (let i = 1; i <= length; i++) {
       const start = (i - 1) % length;
       const end = i % length;
       if (intersectTest(p0, p1, this.points[start], this.points[end])) {
-        count++;
+        isInside = !isInside;
       }
     }
-    return count % 2 === 1;
+    return isInside;
   }
 }
 

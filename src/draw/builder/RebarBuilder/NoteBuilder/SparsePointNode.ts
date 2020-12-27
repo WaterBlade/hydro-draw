@@ -2,7 +2,7 @@ import { Circle, Line, rawInterLineAndLine } from "@/draw/drawItem";
 import { Side, Vector } from "@/draw/misc";
 import { PointNote } from "./PointNote";
 
-export class SparsePointNode extends PointNote {
+export class SparsePointNote extends PointNote {
   constructor(textHeight = 3.5, drawRadius = 0.3, public leaderAngle = 30) {
     super(textHeight, drawRadius);
   }

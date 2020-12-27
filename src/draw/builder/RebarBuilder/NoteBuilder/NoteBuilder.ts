@@ -7,7 +7,7 @@ import {
   Text,
 } from "@/draw/drawItem";
 import { Side, TextAlign, Vector } from "@/draw/misc";
-import { Builder } from "../../Builder.interface";
+import { Builder } from "@/draw/builder/Builder.interface";
 import { RebarSpec } from "../RebarSpec";
 
 export abstract class NoteBuilder implements Builder<CompositeItem> {

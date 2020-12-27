@@ -1,1 +1,2 @@
-export * from "./HydroBorderBuilder";
+export * from "./BorderBuilder";
+export * from "./HydroBorder";

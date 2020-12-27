@@ -1,7 +1,7 @@
 import {CompositeItem, Line, ScriptPaper } from "@/draw";
 import { RotateDirection, vec } from "@/draw/misc";
 import fs from "fs";
-import { HLayoutBuilder, RebarCircleForm, RebarSpec, ArrowNote, PathPointNote, CirclePointNote, SparsePointNode, LayerPointNote } from "@/draw/builder";
+import { HLayoutBuilder, RebarCircleForm, RebarSpec, ArrowNote, PathPointNote, CirclePointNote, SparsePointNote, LayerPointNote } from "@/draw/builder";
 import { Polyline } from "@/draw/drawItem/Geometry/Polyline";
 
 export default function runNoteDemo():void{
@@ -72,13 +72,13 @@ export default function runNoteDemo():void{
 
   const a9 = new CirclePointNote(35, 2.5).circle(vec(0, 0), 300, 20).offset(50).spec(r1, 10, 50).onlineNote(vec(0, -50));
 
-  const a10 = new SparsePointNode().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).jointLeader(vec(200, 200), vec(200, 600));
+  const a10 = new SparsePointNote().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).jointLeader(vec(200, 200), vec(200, 600));
 
-  const a11 = new SparsePointNode().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).parallelLeader(vec(1200, 600), vec(1, 0));
+  const a11 = new SparsePointNote().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).parallelLeader(vec(1200, 600), vec(1, 0));
 
-  const a12 = new SparsePointNode().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).parallelLeader(vec(600, 200), vec(1, 0));
+  const a12 = new SparsePointNote().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).parallelLeader(vec(600, 200), vec(1, 0));
 
-  const a13 = new SparsePointNode().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).parrallelOnline(vec(200, 500), vec(1, 0));
+  const a13 = new SparsePointNote().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).parrallelOnline(vec(200, 500), vec(1, 0));
 
   const a14 = new LayerPointNote().layers(vec(0, 0), vec(100, 0), 9, 20, 5).spec(r1, 10, 30).leaderNote(vec(-20, -20), vec(1, 0));
 

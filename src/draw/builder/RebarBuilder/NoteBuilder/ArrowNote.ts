@@ -87,6 +87,7 @@ export class ArrowNote extends NoteBuilder {
     const iters = [];
     for (const rebar of this._rebarDraw) {
       const pts = rebar.rayIntersect(pt, dir);
+      if (pts.length == 0) throw Error("gen iters error: no iters");
       let nearest = pts[0];
       let minDist = nearest.sub(pt).length();
       for (let i = 1; i < pts.length; i++) {

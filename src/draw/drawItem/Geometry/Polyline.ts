@@ -37,6 +37,11 @@ export class Polyline extends DrawItem implements PolylineGeometry {
   get end(): Vector {
     return last(this.segments).end;
   }
+  moveTo(x: number, y: number): this {
+    if (this.segments.length > 0) throw Error("move to forbidden");
+    this.current = vec(x, y);
+    return this;
+  }
   close(): this {
     this.closed = true;
     this.segments.push(new Line(this.current, this.segments[0].start));
@@ -44,8 +49,10 @@ export class Polyline extends DrawItem implements PolylineGeometry {
   }
   lineTo(x: number, y: number): this {
     const pt = vec(x, y);
-    this.segments.push(new Line(this.current, pt));
+    const l = new Line(this.current, pt);
+    this.segments.push(l);
     this.current = pt;
+    if(this._boundingBox) this._boundingBox.merge(l.getBoundingBox());
     return this;
   }
   lineBy(x: number, y: number): this {
@@ -62,6 +69,7 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     const arc = Arc.createByEnds(this.current, pt, angle, direction);
     this.segments.push(arc);
     this.current = pt;
+    if(this._boundingBox) this._boundingBox = this._boundingBox.merge(arc.getBoundingBox());
     return this;
   }
   arcBy(
@@ -73,12 +81,26 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     const { x: x0, y: y0 } = this.current;
     return this.arcTo(x + x0, y + y0, angle, direciton);
   }
+  mirrorByYAxis(): Polyline {
+    const p = new Polyline();
+    p.segments = this.segments.map((s) => s.mirrorByYAxis());
+    p.closed = this.closed;
+    return p;
+  }
   removeStart(): this {
     this.segments.shift();
     return this;
   }
   removeEnd(): this {
     this.segments.pop();
+    return this;
+  }
+  removeStartPt(): this {
+    this.segments[0].points.shift();
+    return this;
+  }
+  removeEndPt(): this {
+    last(this.segments).points.pop();
     return this;
   }
   calcLength(): number {
@@ -179,6 +201,7 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     for (let i = 0; i < this.segments.length; i++) {
       const origin = this.segments[i];
       const proj = p.segments[i];
+      const originPts = origin.points;
       const pts = origin.project(dist, side).points;
       for (const pt of pts) {
         if (proj.includeTest(pt)) {
@@ -187,8 +210,8 @@ export class Polyline extends DrawItem implements PolylineGeometry {
           proj.points.push(proj.getNeighbourPoint(pt));
         }
       }
-      if (pts[0].closeTo(origin.start, 1e-6)) proj.points[0] = proj.start;
-      if (last(pts).closeTo(origin.end, 1e-6))
+      if (originPts[0].closeTo(origin.start, 1e-6)) proj.points[0] = proj.start;
+      if (last(originPts).closeTo(origin.end, 1e-6))
         proj.points[pts.length - 1] = proj.end;
     }
     return p;
@@ -222,17 +245,17 @@ export class Polyline extends DrawItem implements PolylineGeometry {
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitPolyline(this, insertPoint);
   }
-  move(v: Vector): void {
+  protected moveItem(v: Vector): void {
     for (const seg of this.segments) {
       seg.move(v);
     }
   }
-  scale(factor: number): void {
+  protected scaleItem(factor: number): void {
     for (const seg of this.segments) {
       seg.scale(factor);
     }
   }
-  getBoundingBox(): BoundingBox {
+  calcBoundingBox(): BoundingBox {
     if (this.segments.length === 0) {
       throw Error("getBoundingBox error: polyline is empty");
     }

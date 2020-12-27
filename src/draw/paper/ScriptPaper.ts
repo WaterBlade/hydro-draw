@@ -252,7 +252,7 @@ export class ScriptPaper implements Paper {
     );
 
     if (dim.override) {
-      this.scriptList.push("T", dim.override);
+      this.scriptList.push("T", dim.override.accept(this));
     }
 
     this.scriptList.push(dim.textPoint.add(insertPoint).toFixed(4));
