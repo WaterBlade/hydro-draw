@@ -80,11 +80,11 @@ test("toFixed", () => {
   const a = new Vector(0, 1);
   expect(a.toFixed(4)).toEqual("0.0000,1.0000");
 });
-test('toLeft test', ()=>{
+test("toLeft test", () => {
   const a = vec(0, 0);
   const b = vec(10, 0);
   const c = vec(5, 2);
   const d = vec(5, -2);
   expect(toLeftTest(a, b, c)).toBeTruthy();
   expect(toLeftTest(a, b, d)).toBeFalsy();
-})
+});

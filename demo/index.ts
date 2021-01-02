@@ -3,7 +3,9 @@ import runNoteDemo from "./noteDemo";
 import runBorderDemo from "./borderDemo";
 import runUshellDemo from "./ushellDemo";
 
-runDimDemo();
-runNoteDemo();
-runBorderDemo();
+console.time();
+// runDimDemo();
+// runNoteDemo();
+// runBorderDemo();
 runUshellDemo();
+console.timeEnd();

@@ -131,3 +131,13 @@ test("mirror by y axis", () => {
   expect(p.start.x).toBeCloseTo(0);
   expect(p.end).toEqual(vec(-10, 0));
 });
+test("ray iter", () => {
+  const p = vec(-2550, -2825);
+  const l = new Line(vec(2100, -3265), vec(2100, -1130.5));
+  const iters = l.rayIntersect(p, vec(1, 0));
+  expect(iters.length).toBeGreaterThan(0);
+});
+test("include test", () => {
+  const l = new Line(vec(2100, -3265), vec(2100, -1130.5861311726762));
+  expect(l.includeTest(vec(2099.9999999990823, -2825))).toBeTruthy();
+});

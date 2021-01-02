@@ -11,8 +11,11 @@ export class CompositeItem extends DrawItem {
   }
   push(...items: DrawItem[]): void {
     this.itemList.push(...items);
-    if(this._boundingBox){
-      this._boundingBox = items.reduce((pre, cur)=> pre.merge(cur.getBoundingBox()), this._boundingBox);
+    if (this._boundingBox) {
+      this._boundingBox = items.reduce(
+        (pre, cur) => pre.merge(cur.getBoundingBox()),
+        this._boundingBox
+      );
     }
   }
   accept(paper: Paper, insertPoint: Vector): void {

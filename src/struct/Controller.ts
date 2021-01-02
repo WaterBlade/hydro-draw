@@ -33,8 +33,10 @@ export abstract class Controller implements Builder<DrawItem[]> {
     if (this.design) border.design = this.design;
     if (this.section) border.section = this.section;
     if (this.drawingTitle) border.drawingTitle = this.drawingTitle;
-    if (this.drawingNumberPrefix) border.drawingNumberPrefix = this.drawingNumberPrefix;
-    if (this.drawingNumberStart) border.drawingNumberStart = this.drawingNumberStart;
+    if (this.drawingNumberPrefix)
+      border.drawingNumberPrefix = this.drawingNumberPrefix;
+    if (this.drawingNumberStart)
+      border.drawingNumberStart = this.drawingNumberStart;
     if (this.certificateNumber)
       border.certificateNumber = this.certificateNumber;
     const date = new Date();

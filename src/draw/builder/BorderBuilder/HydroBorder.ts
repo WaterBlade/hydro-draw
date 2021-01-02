@@ -189,7 +189,7 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
     return boundary;
   }
 
-  genContainer(): Container{
+  genContainer(): Container {
     return new Container(this.genBoundary());
   }
 
@@ -285,7 +285,9 @@ export class HydroA1Builder extends HydroBorderBuilder {
     super(594, 841, 10, 25, 71, 180);
   }
   getTitle(): CompositeItem {
-    const title = this.isMultipleBorder ? this.drawingTitle + `(${this.borderCount++}/${this.totalBorderCount})` : this.drawingTitle;
+    const title = this.isMultipleBorder
+      ? this.drawingTitle + `(${this.borderCount++}/${this.totalBorderCount})`
+      : this.drawingTitle;
     return presetA0A1Title(
       this.company,
       this.project,
@@ -304,7 +306,9 @@ export class HydroA2Builder extends HydroBorderBuilder {
     super(420, 594, 10, 25, 68, 120);
   }
   getTitle(): CompositeItem {
-    const title = this.isMultipleBorder ? this.drawingTitle + `(${this.borderCount++}/${this.totalBorderCount})` : this.drawingTitle;
+    const title = this.isMultipleBorder
+      ? this.drawingTitle + `(${this.borderCount++}/${this.totalBorderCount})`
+      : this.drawingTitle;
     return presetA2A3Title(
       this.company,
       this.project,
@@ -323,7 +327,9 @@ export class HydroA3Builder extends HydroBorderBuilder {
     super(297, 420, 10, 25, 68, 120);
   }
   getTitle(): CompositeItem {
-    const title = this.isMultipleBorder ? this.drawingTitle + `(${this.borderCount++}/${this.totalBorderCount})` : this.drawingTitle;
+    const title = this.isMultipleBorder
+      ? this.drawingTitle + `(${this.borderCount++}/${this.totalBorderCount})`
+      : this.drawingTitle;
     return presetA2A3Title(
       this.company,
       this.project,

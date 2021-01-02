@@ -3,7 +3,6 @@ import { BoundingBox, vec } from "@/draw/misc";
 import { Builder } from "../Builder.interface";
 import { Container } from "./Container";
 
-
 export interface BorderItemBuilder {
   generate(): CompositeItem;
   unitScale: number;
@@ -20,14 +19,19 @@ class ItemWrapper {
   ) {}
 }
 
-class CenteredItemWrapper extends ItemWrapper{
+class CenteredItemWrapper extends ItemWrapper {
   constructor(
     item: DrawItem,
     unitScale: number,
     drawScale: number,
     title?: DrawItem
-  ){
-    super(new CenterAlignedComposite(vec(0, 0), item), unitScale, drawScale, title);
+  ) {
+    super(
+      new CenterAlignedComposite(vec(0, 0), item),
+      unitScale,
+      drawScale,
+      title
+    );
   }
 }
 
@@ -51,14 +55,16 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
     unitScale: number,
     drawScale: number,
     centerAligned = false,
-    title?: DrawItem,
+    title?: DrawItem
   ): void {
     if (centerAligned) {
       this.itemWrappers.push(
         new CenteredItemWrapper(item, unitScale, drawScale, title)
       );
     } else {
-      this.itemWrappers.push(new ItemWrapper(item, unitScale, drawScale, title));
+      this.itemWrappers.push(
+        new ItemWrapper(item, unitScale, drawScale, title)
+      );
     }
   }
   addItemBuilder(builder: BorderItemBuilder, centerAligned = false): void {
@@ -80,29 +86,28 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
     const allItems: DrawItem[] = [];
     const itemsInContainer: CompositeItem[] = [];
     for (const itemWrapper of this.itemWrappers) {
-
       const factor =
-        this.drawScale / itemWrapper.drawScale 
-        * itemWrapper.unitScale / this.unitScale;
+        ((this.drawScale / itemWrapper.drawScale) * itemWrapper.unitScale) /
+        this.unitScale;
       const item = itemWrapper.item;
       const title = itemWrapper.title;
-      if(Math.abs(factor - 1) > 1e-6){
+      if (Math.abs(factor - 1) > 1e-6) {
         item.scale(factor);
-        if(title) title.scale(factor);
+        if (title) title.scale(factor);
       }
 
       if (container.fill(item, title)) {
         continue;
-      }else{
-        if(!container.isEmpty()){
+      } else {
+        if (!container.isEmpty()) {
           const comp = container.generate();
           itemsInContainer.push(comp);
           allItems.push(comp);
         }
         container = this.genContainer();
-        if(container.fill(item, title)){
+        if (container.fill(item, title)) {
           continue;
-        }else{
+        } else {
           allItems.push(item);
         }
       }

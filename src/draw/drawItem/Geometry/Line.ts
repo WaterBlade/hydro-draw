@@ -65,14 +65,11 @@ export class Line extends DrawItem implements LineGeometry {
     return right.sub(left).dot(this.end.sub(this.start)) > 0;
   }
   includeTest(pt: Vector): boolean {
-    const v0 = this.end.sub(this.start);
-    const v1 = pt.sub(this.start);
-    const v2 = pt.sub(this.end);
-    if (Math.abs(v0.cross(v1)) > 1e-6) {
-      return false;
-    }
-    if (v1.dot(v2) < 0) return true;
-    return false;
+    const l = this.calcLength();
+    const l1 = pt.sub(this.start).length();
+    const l2 = pt.sub(this.end).length();
+    if (l1 + l2 - l > 1e-6) return false;
+    return true;
   }
   resetStart(pt: Vector): this {
     this.start = pt;
@@ -103,7 +100,7 @@ export class Line extends DrawItem implements LineGeometry {
       return this.end;
     }
   }
-  offset(dist: number, side: Side): Line {
+  offset(dist: number, side = Side.Left): Line {
     return new Line(
       this.offsetPoint(this.start, dist, side),
       this.offsetPoint(this.end, dist, side)
@@ -241,6 +238,14 @@ export class Line extends DrawItem implements LineGeometry {
     const end = this.end;
     if (pt.sub(start).length() > pt.sub(end).length()) return end;
     return start;
+  }
+  removeStartPt(): this {
+    this.points.shift();
+    return this;
+  }
+  removeEndPt(): this {
+    this.points.pop();
+    return this;
   }
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitLine(this, insertPoint);

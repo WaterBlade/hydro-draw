@@ -19,6 +19,8 @@ export default function runUshellDemo(): void{
   const u = ctrl.struct;
   // 长度
   u.len = 14960;
+  // 加密长度
+  u.denseL = 3740;
   // 内径
   u.r = 2300;
   // 直段高
@@ -47,7 +49,8 @@ export default function runUshellDemo(): void{
   u.waterStop.w = 130;
   u.waterStop.h = 50;
   // 端部
-  u.endSect.w = 560;
+  u.endSect.b = 560;
+  u.endSect.w = 770;
   u.endSect.hd = 2600;
   u.endSect.hs = 2300;
   u.trans = 500;
@@ -57,18 +60,28 @@ export default function runUshellDemo(): void{
 
   // 钢筋
   const bar = ctrl.rebar;
+  // 槽壳钢筋
   // 主筋
-  bar.main.set( 'HRB400', 28, 9, 2, 50);
+  bar.shell.main.set( 'HRB400', 28, 9, 2, 50);
   // 内侧纵向钢筋
-  bar.innerL.set('HRB400', 12, 200);
+  bar.shell.lInner.set('HRB400', 12, 200);
   // 外侧纵向钢筋
-  bar.outerL.set('HRB400', 12, 200);
+  bar.shell.lOuter.set('HRB400', 12, 200);
   // 内侧横向钢筋
-  bar.innerC.set('HRB400', 16, 200);
+  bar.shell.cInner.set('HRB400', 16, 200);
   // 外侧横向钢筋
-  bar.outerC.set('HRB400', 16, 200);
+  bar.shell.cOuter.set('HRB400', 16, 200);
   // 顶梁钢筋图
-  bar.beam.set('HRB400', 16, 200);
+  bar.shell.topBeam.set('HRB400', 16, 200);
+
+  // 端肋钢筋
+  bar.end.cOuter.set('HRB400', 20, 5, 2);
+  bar.end.cInner.set('HRB400', 20, 5, 2);
+  bar.end.bBot.set('HRB400', 28, 5, 2);
+  bar.end.bTop.set('HRB400', 20, 5, 2);
+  bar.end.bMid.set('HRB400', 12, 3, 4);
+  bar.end.bStir.set('HPB300', 10, 200);
+  bar.end.wStir.set('HPB300', 10, 200);
 
   // // 外弧转角
   // const angle0 = Math.atan(0.5*d0/(r0+t0+t));

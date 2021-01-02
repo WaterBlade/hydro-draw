@@ -8,6 +8,7 @@ import {
   Text,
 } from "@/draw/drawItem";
 import {
+  average,
   last,
   RebarDiameter,
   RotateDirection,
@@ -24,6 +25,7 @@ export abstract class RebarForm implements Builder<CompositeItem> {
   protected numberHeight: number;
   protected arrowSize: number;
   protected hookRadius: number;
+  protected hookRadiusStep = 0.15;
 
   protected pt = vec(0, 0);
   hooks: (Arc | Line)[] = [];
@@ -36,7 +38,7 @@ export abstract class RebarForm implements Builder<CompositeItem> {
     this.textHeight = (3.5 / 5) * baseUnit;
     this.numberHeight = (2.5 / 5) * baseUnit;
     this.arrowSize = (0.5 / 5) * baseUnit;
-    this.hookRadius = (0.2 / 5) * baseUnit;
+    this.hookRadius = this.hookRadiusStep * baseUnit;
   }
 
   generate(): CompositeItem {
@@ -73,7 +75,7 @@ export abstract class RebarForm implements Builder<CompositeItem> {
     side: Side
   ): [Arc, Line] {
     this.addUp(6.25 * this.diameter);
-    const r = 0.25 * this.numberHeight;
+    const r = this.hookRadius;
     const dir = side === Side.Left ? 1 : -1;
     norm = norm.mul(dir * r);
     tangent = tangent.mul(r);
@@ -105,9 +107,11 @@ export abstract class RebarForm implements Builder<CompositeItem> {
     if (typeof length === "number") {
       return `${pre}${Math.round(length).toFixed(fixed)}${suf}`;
     } else {
-      return `${pre}${Math.round(length[0]).toFixed(
-        fixed
-      )}${suf}~${pre}${Math.round(last(length)).toFixed(fixed)}${suf}`;
+      const min = Math.min(...length);
+      const max = Math.max(...length);
+      return `${pre}${Math.round(min).toFixed(fixed)}${suf}~${pre}${Math.round(
+        max
+      ).toFixed(fixed)}${suf}`;
     }
   }
 
@@ -198,7 +202,7 @@ export class RebarPathForm extends RebarForm {
   get entities(): DrawItem[] {
     return this.segments;
   }
-  static Line(dia: RebarDiameter, length: number): RebarPathForm {
+  static Line(dia: RebarDiameter, length: number | number[]): RebarPathForm {
     return new RebarPathForm(dia).lineBy(8, 0).dimLength(length);
   }
   static LShape(dia: RebarDiameter, vLen: number, hLen: number): RebarPathForm {
@@ -216,6 +220,28 @@ export class RebarPathForm extends RebarForm {
       .dimLength(hLen)
       .lineBy(0, 2)
       .dimLength(vLen, Side.Right);
+  }
+  static RectWidthHook(
+    dia: RebarDiameter,
+    vLen: number,
+    hLen: number | number[]
+  ): RebarPathForm {
+    let len = 2 * vLen + 12.5 * dia;
+    if (typeof hLen === "number") {
+      len += 2 * hLen;
+    } else {
+      len += 2 * average(...hLen);
+    }
+    const hookRadius = 0.15;
+    return new RebarPathForm(dia)
+      .lineBy(-4 + hookRadius, 0)
+      .lineBy(0, -1.6)
+      .dimLength(vLen, Side.Right)
+      .lineBy(4, 0)
+      .dimLength(hLen)
+      .lineBy(0, 1.6 - hookRadius)
+      .hook({ start: Side.Left, end: Side.Left })
+      .setLength(len);
   }
   // generate rebar
   lineBy(x: number, y: number): this {

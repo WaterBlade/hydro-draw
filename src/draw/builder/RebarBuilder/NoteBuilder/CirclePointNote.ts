@@ -1,12 +1,11 @@
 import { Circle, Line } from "@/draw/drawItem";
-import { Side, Vector } from "@/draw/misc";
+import { polar, Side, Vector } from "@/draw/misc";
 import { PointNote } from "./PointNote";
 
 export class CirclePointNote extends PointNote {
   protected _circle?: Circle;
-  circle(center: Vector, radius: number, count: number): this {
-    const c = new Circle(center, radius);
-    const pts = c.divideByCount(count).points;
+  circle(c: Circle): this {
+    const pts = c.points;
     const r = this.drawRadius;
     this.rebars = pts.map((p) => new Circle(p, r).thickLine());
     this._circle = c;
@@ -30,14 +29,17 @@ export class CirclePointNote extends PointNote {
     }
     notes.push(op);
     this._offsetCircle = op;
+    this._offsetSide = side;
     return this;
   }
 
-  onlineNote(pt: Vector): this {
+  onlineNote(angle = 90): this {
     const op = this._offsetCircle;
     if (!op) {
       throw Error("online note error: circle not specified or not offseted");
     }
+
+    const pt = polar(op.radius, angle).add(op.center);
 
     const l = this.genNoteLength();
     const r = this.textHeight;

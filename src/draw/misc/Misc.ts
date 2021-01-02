@@ -15,8 +15,15 @@ export function sum(...variables: number[]): number {
   return variables.reduce((left, right) => left + right);
 }
 
-export function last<T>(array: T[]): T {
-  return array[array.length - 1];
+export function average(...variables: number[]): number {
+  if (variables.length === 0) {
+    return 0;
+  }
+  return sum(...variables) / variables.length;
+}
+
+export function last<T>(array: T[], index = 1): T {
+  return array[array.length - index];
 }
 
 export function groupBy<T>(array: T[]): T[][] {

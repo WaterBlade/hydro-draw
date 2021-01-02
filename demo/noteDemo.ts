@@ -1,4 +1,4 @@
-import {CompositeItem, Line, ScriptPaper } from "@/draw";
+import {Circle, CompositeItem, Line, ScriptPaper } from "@/draw";
 import { RotateDirection, vec } from "@/draw/misc";
 import fs from "fs";
 import { HLayoutBuilder, RebarCircleForm, RebarSpec, ArrowNote, PathPointNote, CirclePointNote, SparsePointNote, LayerPointNote } from "@/draw/builder";
@@ -70,7 +70,7 @@ export default function runNoteDemo():void{
   ).offset(50).spec(r1, 10, 50).leaderNote(vec(500, 200), vec(0, 1));
 
 
-  const a9 = new CirclePointNote(35, 2.5).circle(vec(0, 0), 300, 20).offset(50).spec(r1, 10, 50).onlineNote(vec(0, -50));
+  const a9 = new CirclePointNote(35, 2.5).circle(new Circle(vec(0, 0), 300).divideByCount(20)).offset(50).spec(r1, 10, 50).onlineNote();
 
   const a10 = new SparsePointNote().points(vec(0, 0), vec(400, 0), vec(400, 400), vec(0, 400)).spec(r1, 10, 50).jointLeader(vec(200, 200), vec(200, 600));
 

@@ -21,6 +21,7 @@ export class MText extends DrawItem implements PaperMText {
   }
   getMaxContentWidth(): number {
     return Math.max(
+      0,
       ...this.content.map((c) => c.length * this.height * this.widthFactor)
     );
   }

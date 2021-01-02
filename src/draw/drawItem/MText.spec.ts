@@ -22,3 +22,12 @@ test("bounding box", () => {
   expect(b.right).toEqual(17.5);
   expect(b.bottom).toEqual(-15);
 });
+
+test("bounding box 0", () => {
+  const t = new MText([], vec(0, 0), 5, 30);
+  const b = t.getBoundingBox();
+  expect(b.left).toEqual(0);
+  expect(b.top).toEqual(0);
+  expect(b.right).toEqual(0);
+  expect(b.bottom).toEqual(0);
+});

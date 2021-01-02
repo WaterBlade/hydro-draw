@@ -37,6 +37,9 @@ export class Polyline extends DrawItem implements PolylineGeometry {
   get end(): Vector {
     return last(this.segments).end;
   }
+  get lengths(): number[] {
+    return this.segments.map((s) => s.calcLength());
+  }
   moveTo(x: number, y: number): this {
     if (this.segments.length > 0) throw Error("move to forbidden");
     this.current = vec(x, y);
@@ -52,7 +55,7 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     const l = new Line(this.current, pt);
     this.segments.push(l);
     this.current = pt;
-    if(this._boundingBox) this._boundingBox.merge(l.getBoundingBox());
+    if (this._boundingBox) this._boundingBox.merge(l.getBoundingBox());
     return this;
   }
   lineBy(x: number, y: number): this {
@@ -69,7 +72,8 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     const arc = Arc.createByEnds(this.current, pt, angle, direction);
     this.segments.push(arc);
     this.current = pt;
-    if(this._boundingBox) this._boundingBox = this._boundingBox.merge(arc.getBoundingBox());
+    if (this._boundingBox)
+      this._boundingBox = this._boundingBox.merge(arc.getBoundingBox());
     return this;
   }
   arcBy(
@@ -157,6 +161,10 @@ export class Polyline extends DrawItem implements PolylineGeometry {
   offset(dist: number, side = Side.Left): Polyline {
     const p = new Polyline();
     const len = this.segments.length;
+    if (len === 1) {
+      p.segments.push(this.segments[0].offset(dist, side));
+      return p;
+    }
     const first = this.segments[0];
     const last = this.segments[len - 1];
     let start: Vector;

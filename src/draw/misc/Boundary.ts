@@ -10,13 +10,19 @@ export class Boundary {
     this.points = pts;
     this.rightMost = Math.max(...pts.map((pt) => pt.x));
     this.leftMost = Math.min(...pts.map((pt) => pt.x));
-    this.top = Math.max(...pts.map(p=>p.y));
-    this.bottom = Math.min(...pts.map(p=>p.y));
+    this.top = Math.max(...pts.map((p) => p.y));
+    this.bottom = Math.min(...pts.map((p) => p.y));
   }
 
   insideTest(p0: Vector): boolean {
-    const {x, y} = p0;
-    if(x < this.leftMost || x > this.rightMost || y < this.bottom || y > this.top ) return false;
+    const { x, y } = p0;
+    if (
+      x < this.leftMost ||
+      x > this.rightMost ||
+      y < this.bottom ||
+      y > this.top
+    )
+      return false;
     const p1 = vec(2 * this.rightMost - this.leftMost, p0.y);
     let isInside = false;
     const length = this.points.length;

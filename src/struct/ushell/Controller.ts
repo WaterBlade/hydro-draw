@@ -1,32 +1,33 @@
-import { DrawItem, MaterialTable, RebarTable } from "@/draw";
+import { DrawItem } from "@/draw";
 import { Controller } from "../Controller";
-import { EndSectFigure } from "./EndSectFigure";
-import { InnerFigure } from "./InnerFigure";
-import { MidSectFigure } from "./MidSectFigure";
-import { OuterFigure } from "./OuterFigure";
+import { Drawing } from "../RebarBuilder";
+import { NoteBuilder } from "./NoteBuilder";
+import { OutlineBuilder } from "./OutlineBuilder";
+import { RebarInUShell } from "./rebar";
 import { UShell } from "./UShell";
+import { UShellFigure } from "./UShellFigure";
 import { UShellRebar } from "./UShellRebar";
 
 export class UShellController extends Controller {
   struct = new UShell();
-  rebar = new UShellRebar(this.struct);
+  rebar = new UShellRebar();
+  figure = new UShellFigure();
   generate(): DrawItem[] {
-    this.rebar.build();
+    new OutlineBuilder(this.struct, this.figure).build();
+    new RebarInUShell(this.struct, this.rebar, this.figure)
+      .buildRebar()
+      .buildFigure();
+    new NoteBuilder(this.struct, this.figure).build();
 
-    const border = this.genBorder("A1");
-
-    border.addItemBuilder(new OuterFigure(this.struct, this.rebar), true);
-    border.addItemBuilder(new InnerFigure(this.struct, this.rebar), true);
-    border.addItemBuilder(new MidSectFigure(this.struct, this.rebar), true);
-    border.addItemBuilder(new EndSectFigure(this.struct, this.rebar), true);
-
-    border.addItem(new RebarTable().push(...this.rebar.specs).generate(), 1, 1);
-    border.addItem(
-      new MaterialTable().push(...this.rebar.specs).generate(),
-      1,
-      1
+    const draw = new Drawing();
+    draw.push(
+      this.figure.lOuter,
+      this.figure.lInner,
+      this.figure.cMid,
+      this.figure.cEnd,
+      this.figure.rTable,
+      this.figure.mTable
     );
-
-    return border.generate();
+    return draw.generate();
   }
 }

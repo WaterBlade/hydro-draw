@@ -384,6 +384,14 @@ export class Arc extends DrawItem implements ArcGeometry {
     if (pt.sub(start).length() > pt.sub(end).length()) return end;
     return start;
   }
+  removeStartPt(): this {
+    this.points.shift();
+    return this;
+  }
+  removeEndPt(): this {
+    this.points.pop();
+    return this;
+  }
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitArc(this, insertPoint);
   }

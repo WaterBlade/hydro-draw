@@ -1,5 +1,6 @@
 import {
   BorderItemBuilder,
+  BoundingBox,
   Builder,
   CompositeItem,
   Content,
@@ -10,14 +11,22 @@ import {
   vec,
 } from "@/draw";
 
-export abstract class Figure implements Builder<CompositeItem>, BorderItemBuilder {
+export abstract class Figure
+  implements Builder<CompositeItem>, BorderItemBuilder {
   protected _unitScale = 1;
   protected _drawScale = 1;
   protected titleHeight = 1;
-  protected textHeight = 1;
-  protected numberHeight = 1;
-  protected drawRadius = 1;
+  textHeight = 1;
+  numberHeight = 1;
+  drawRadius = 1;
   protected composite = new CompositeItem();
+  push(...items: DrawItem[]): this {
+    this.composite.push(...items);
+    return this;
+  }
+  getBoundingBox(): BoundingBox {
+    return this.composite.getBoundingBox();
+  }
 
   protected resetHeight(): void {
     this.titleHeight = (5.0 * this._drawScale) / this._unitScale;
@@ -46,10 +55,7 @@ export abstract class Figure implements Builder<CompositeItem>, BorderItemBuilde
 
   abstract generate(): CompositeItem;
   title?: DrawItem;
-  setTitle(
-    content: string | Content,
-    displayScale = false,
-  ): void {
+  setTitle(content: string | Content, displayScale = false): void {
     const comp = new CompositeItem();
     const pt = vec(0, 0);
     const h0 = this.titleHeight;
@@ -65,22 +71,20 @@ export abstract class Figure implements Builder<CompositeItem>, BorderItemBuilde
     if (displayScale) {
       const h1 = this.textHeight;
       const p1 = p0.sub(vec(0, 0.45 * h0));
-      comp.push(
-        new Text(`1:${this.drawScale}`, p1, h1, TextAlign.TopCenter)
-      );
+      comp.push(new Text(`1:${this.drawScale}`, p1, h1, TextAlign.TopCenter));
     }
     this.title = comp;
   }
 }
 
 export abstract class RebarFigure<T, U> extends Figure {
-  constructor(protected struct: T, protected rebar: U) {
+  constructor(public struct: T, public rebar: U) {
     super();
   }
 }
 
 export abstract class StructFigure<T> extends Figure {
-  constructor(protected struct: T) {
+  constructor(public struct: T) {
     super();
   }
 }

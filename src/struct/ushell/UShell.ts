@@ -5,6 +5,7 @@ export class UShell {
   t = 0;
   hd = 0;
   len = 0;
+  denseL = 0;
   cantLeft = 0;
   cantRight = 0;
   as = 0;
@@ -29,6 +30,7 @@ export class UShell {
   };
   endSect = {
     w: 0,
+    b: 0,
     hd: 0,
     hs: 0,
   };
@@ -84,7 +86,7 @@ export class UShell {
       this.cantLeft -
       this.cantRight -
       2 * this.trans -
-      2 * this.endSect.w;
+      2 * this.endSect.b;
     if (this.cantRight > 0) {
       path
         .lineBy(0, -this.shellHeight)
@@ -94,14 +96,14 @@ export class UShell {
     } else {
       path.lineBy(0, -this.endHeight);
     }
-    path.lineBy(-this.endSect.w, 0);
+    path.lineBy(-this.endSect.b, 0);
     if (d > 0) path.lineBy(0, d);
     path
       .lineBy(-this.trans, this.oBeam.w)
       .lineBy(-l, 0)
       .lineBy(-this.trans, -this.oBeam.w);
     if (d > 0) path.lineBy(0, -d);
-    path.lineBy(-this.endSect.w, 0);
+    path.lineBy(-this.endSect.b, 0);
     if (this.cantLeft > 0) {
       if (d > 0) path.lineBy(0, d);
       path
@@ -112,5 +114,15 @@ export class UShell {
       path.lineBy(0, this.endHeight);
     }
     return path;
+  }
+  genEndLeftOutline(): Polyline {
+    return new Polyline(-this.r - this.t - this.oBeam.w, this.hd)
+      .lineBy(0, -this.endSect.hd)
+      .lineBy(this.endSect.w, -this.endSect.hs);
+  }
+  genLeftInnerOutline(): Polyline {
+    return new Polyline(-this.r, this.hd)
+      .lineBy(0, -this.hd)
+      .arcTo(0, -this.r, 90);
   }
 }

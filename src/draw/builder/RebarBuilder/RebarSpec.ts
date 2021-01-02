@@ -86,7 +86,7 @@ export class RebarSpec {
   }
 }
 
-export class CountRebar extends RebarSpec {
+export class CountRebarSpec extends RebarSpec {
   protected _singleCount = 0;
   get singleCount(): number {
     if (!this._singleCount) throw Error("single count not init");
@@ -112,7 +112,7 @@ export class CountRebar extends RebarSpec {
   }
 }
 
-export class SpaceRebar extends RebarSpec {
+export class SpaceRebarSpec extends RebarSpec {
   protected _space?: number;
   get space(): number {
     if (!this._space) throw Error("space not init");
@@ -128,7 +128,7 @@ export class SpaceRebar extends RebarSpec {
     this.setGrade(grade);
     this.setDiameter(dia);
     this._space = space;
-    this.denseSpace = denseSpace;
+    this.denseSpace = denseSpace ? denseSpace : space / 2;
     return this;
   }
 }
