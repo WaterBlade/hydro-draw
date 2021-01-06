@@ -138,12 +138,53 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
     super(0, 0);
   }
 
+  protected genFirstNote(): MText{
+    const textHeight = 3.5;
+    const maxNoteWidth = 100;
+    const mtext = new MText(
+      ["说明：", ...this.note.map((n, i) => `${i + 1}.` + n)],
+      vec(0, 0),
+      textHeight,
+      maxNoteWidth
+    );
+    const box = mtext.getBoundingBox();
+    const w = this.width;
+    const c = this.space;
+    const th = this.titleHeight;
+    const tw = this.titleWidth;
+    if (box.height < th) {
+      mtext.move(
+        vec(w - c - tw - textHeight, c + textHeight).sub(box.BottomRight)
+      );
+    } else {
+      mtext.move(
+        vec(w - c - textHeight, th + textHeight).sub(box.BottomRight)
+      );
+    }
+    return mtext;
+  }
+
+  protected genOtherNote(): MText{
+    const textHeight = 3.5;
+    const maxNoteWidth = 100;
+    const mtext = new MText(
+      ["说明：", "1.详见本套图中第一张图纸说明；"],
+      vec(0, 0),
+      textHeight,
+      maxNoteWidth
+    );
+    const box = mtext.getBoundingBox();
+    const w = this.width;
+    const c = this.space;
+    const tw = this.titleWidth;
+    mtext.move(
+      vec(w - c - tw - textHeight, c + textHeight).sub(box.BottomRight)
+    );
+    return mtext;
+  }
+
   protected isFirstBoundary = true;
   protected genBoundary(): Boundary {
-    const textHeight = 3.5;
-    const rowHeight = 5.25;
-    const maxNoteWidth = 100;
-
     const h = this.height;
     const w = this.width;
     const a = this.bindSpace;
@@ -153,34 +194,20 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
     const boundary = new Boundary(vec(a, c));
     if (this.isFirstBoundary) {
       this.isFirstBoundary = false;
-      const box = new MText(
-        this.note,
-        vec(0, 0),
-        textHeight,
-        maxNoteWidth
-      ).getBoundingBox();
-      const noteHeight = box.height + rowHeight;
-      const noteWidth = box.width;
-      if (noteHeight + textHeight < this.titleHeight) {
-        boundary.corner(
-          w - a - c - tw - noteWidth - textHeight,
-          noteHeight + textHeight
-        );
-        boundary.corner(noteWidth + textHeight, th - noteHeight - textHeight);
+      const box = this.genFirstNote().getBoundingBox();
+      if (box.top < c + this.titleHeight) {
+        boundary.corner(box.left - a, box.top - c);
+        boundary.corner(w-tw-c-box.left, th+c - box.top);
         boundary.corner(tw, h - 2 * c - th);
       } else {
         boundary.corner(w - a - c - tw, th);
-        boundary.corner(tw - noteWidth - textHeight, noteHeight + textHeight);
-        boundary.corner(
-          noteWidth + textHeight,
-          h - 2 * c - th - noteHeight - textHeight
-        );
+        boundary.corner(box.left - (w - tw - c), box.top - (c+th));
+        boundary.corner( w-c-box.left, h-c - box.top);
       }
     } else {
-      const noteHeight = 2 * rowHeight;
-      const noteWidth = 16 * textHeight * 0.7;
-      boundary.corner(w - a - c - tw - noteWidth, noteHeight + textHeight);
-      boundary.corner(noteWidth, th - noteHeight - textHeight);
+      const box = this.genOtherNote().getBoundingBox();
+      boundary.corner(box.left - a, box.top - c);
+      boundary.corner(w - tw - c - box.left, th + c - box.top);
       boundary.corner(tw, h - 2 * c - th);
     }
 
@@ -200,15 +227,11 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
     let isFirstBorder = true;
     this.totalBorderCount = itemsInContainer.length;
     this.isMultipleBorder = this.totalBorderCount > 1;
-    const textHeight = 3.5;
-    const maxNoteWidth = 100;
 
     const h = this.height;
     const w = this.width;
     const a = this.bindSpace;
     const c = this.space;
-    const th = this.titleHeight;
-    const tw = this.titleWidth;
 
     const factor = this.drawScale / this.unitScale;
 
@@ -238,35 +261,11 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
       );
       if (isFirstBorder) {
         isFirstBorder = false;
-        const mtext = new MText(
-          ["说明：", ...this.note],
-          vec(0, 0),
-          textHeight,
-          maxNoteWidth
-        );
-        const box = mtext.getBoundingBox();
-        if (box.height < th) {
-          mtext.move(
-            vec(w - c - tw - textHeight, c + textHeight).sub(box.BottomRight)
-          );
-        } else {
-          mtext.move(
-            vec(w - c - textHeight, th + textHeight).sub(box.BottomRight)
-          );
-        }
+        const mtext = this.genFirstNote();
         mtext.scale(factor);
         comp.push(mtext);
       } else {
-        const mtext = new MText(
-          ["说明：", "1.详见本套图中第一张图纸说明；"],
-          vec(0, 0),
-          textHeight,
-          maxNoteWidth
-        );
-        const box = mtext.getBoundingBox();
-        mtext.move(
-          vec(w - c - tw - textHeight, c + textHeight).sub(box.BottomRight)
-        );
+        const mtext = this.genOtherNote();
         mtext.scale(factor);
         comp.push(mtext);
       }

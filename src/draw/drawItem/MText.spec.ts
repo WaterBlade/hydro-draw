@@ -19,8 +19,8 @@ test("bounding box", () => {
   const b = t.getBoundingBox();
   expect(b.left).toEqual(0);
   expect(b.top).toEqual(0);
-  expect(b.right).toEqual(17.5);
-  expect(b.bottom).toEqual(-15);
+  expect(b.right).toEqual(25);
+  expect(b.bottom).toEqual(-20);
 });
 
 test("bounding box 0", () => {

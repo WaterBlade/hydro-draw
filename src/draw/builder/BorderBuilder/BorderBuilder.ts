@@ -1,5 +1,4 @@
 import { CompositeItem, DrawItem } from "@/draw/drawItem";
-import { BoundingBox, vec } from "@/draw/misc";
 import { Builder } from "../Builder.interface";
 import { Container } from "./Container";
 
@@ -15,34 +14,10 @@ class ItemWrapper {
     public item: DrawItem,
     public unitScale: number,
     public drawScale: number,
-    public title?: DrawItem
+    public title?: DrawItem,
+    public centerAligned = false,
+    public titlePosKeep = false
   ) {}
-}
-
-class CenteredItemWrapper extends ItemWrapper {
-  constructor(
-    item: DrawItem,
-    unitScale: number,
-    drawScale: number,
-    title?: DrawItem
-  ) {
-    super(
-      new CenterAlignedComposite(vec(0, 0), item),
-      unitScale,
-      drawScale,
-      title
-    );
-  }
-}
-
-class CenterAlignedComposite extends CompositeItem {
-  calcBoundingBox(): BoundingBox {
-    const box = super.calcBoundingBox();
-    const w = Math.max(Math.abs(box.left), Math.abs(box.right));
-    box.left = -w;
-    box.right = w;
-    return box;
-  }
 }
 
 export abstract class BorderBuilder implements Builder<DrawItem[]> {
@@ -54,26 +29,19 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
     item: DrawItem,
     unitScale: number,
     drawScale: number,
+    title?: DrawItem,
     centerAligned = false,
-    title?: DrawItem
+    titlePosKeep = false
   ): void {
-    if (centerAligned) {
-      this.itemWrappers.push(
-        new CenteredItemWrapper(item, unitScale, drawScale, title)
-      );
-    } else {
-      this.itemWrappers.push(
-        new ItemWrapper(item, unitScale, drawScale, title)
-      );
-    }
-  }
-  addItemBuilder(builder: BorderItemBuilder, centerAligned = false): void {
-    this.addItem(
-      builder.generate(),
-      builder.unitScale,
-      builder.drawScale,
-      centerAligned,
-      builder.title
+    this.itemWrappers.push(
+      new ItemWrapper(
+        item,
+        unitScale,
+        drawScale,
+        title,
+        centerAligned,
+        titlePosKeep
+      )
     );
   }
   abstract genContainer(): Container;
@@ -91,12 +59,15 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
         this.unitScale;
       const item = itemWrapper.item;
       const title = itemWrapper.title;
+      const centerAligned = itemWrapper.centerAligned;
+      const titlePosKeep = itemWrapper.titlePosKeep;
+
       if (Math.abs(factor - 1) > 1e-6) {
         item.scale(factor);
         if (title) title.scale(factor);
       }
 
-      if (container.fill(item, title)) {
+      if (container.fill(item, title, centerAligned, titlePosKeep)) {
         continue;
       } else {
         if (!container.isEmpty()) {
@@ -105,7 +76,7 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
           allItems.push(comp);
         }
         container = this.genContainer();
-        if (container.fill(item, title)) {
+        if (container.fill(item, title, centerAligned, titlePosKeep)) {
           continue;
         } else {
           allItems.push(item);

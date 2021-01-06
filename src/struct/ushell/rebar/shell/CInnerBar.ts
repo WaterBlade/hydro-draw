@@ -5,6 +5,8 @@ import {
   Polyline,
   RebarPathForm,
   Side,
+  SparsePointNote,
+  StrecthSide,
   vec,
 } from "@/draw";
 import { UShellRebarBuilder } from "../../UShellRebar";
@@ -38,6 +40,8 @@ export class CInnerBar extends UShellRebarBuilder {
     const bar = this.rebars.shell.cInner;
     this.drawCMid();
     this.drawLInner();
+    this.drawSEndBeam();
+    this.drawSEndWall();
     this.figures.rTable.push(bar);
     this.figures.mTable.push(bar);
     return this;
@@ -78,7 +82,8 @@ export class CInnerBar extends UShellRebarBuilder {
     res.push(
       new Line(vec(left, y), vec(midLeft, y))
         .offset(dist, Side.Right)
-        .divide(bar.denseSpace),
+        .divide(bar.denseSpace)
+        .removeStartPt(),
       new Line(vec(midLeft, y), vec(midRight, y))
         .offset(dist, Side.Right)
         .divide(bar.space)
@@ -87,6 +92,7 @@ export class CInnerBar extends UShellRebarBuilder {
       new Line(vec(midRight, y), vec(right, y))
         .offset(dist, Side.Right)
         .divide(bar.denseSpace)
+        .removeEndPt()
     );
     return res;
   }
@@ -131,5 +137,33 @@ export class CInnerBar extends UShellRebarBuilder {
         .onlineNote()
         .generate()
     );
+  }
+  protected drawSEndBeam(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndBeam;
+    const bar = this.rebars.shell.cInner;
+    const r = fig.drawRadius;
+    const right = u.endSect.b + u.trans + 1.25*(u.t + u.butt.h);
+    fig.push(
+      new SparsePointNote(fig.textHeight, r, 30)
+        .points(...new Line(vec(u.endSect.b, -u.as+r), vec(right, -u.as + r)).divide(bar.denseSpace, StrecthSide.tail).removeStartPt().removeEndPt().points)
+        .spec(bar, 0, bar.denseSpace)
+        .parallelLeader(vec(right + fig.textHeight, 2*fig.textHeight), vec(1, 0))
+        .generate()
+    )
+  }
+  protected drawSEndWall(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndWall;
+    const bar = this.rebars.shell.cInner;
+    const r = fig.drawRadius;
+    const right = u.endSect.b + u.trans + 1.25*u.t ;
+    fig.push(
+      new SparsePointNote(fig.textHeight, r, 30)
+        .points(...new Line(vec(u.endSect.b, -u.as+r), vec(right, -u.as + r)).divide(bar.denseSpace, StrecthSide.tail).removeStartPt().removeEndPt().points)
+        .spec(bar, 0, bar.denseSpace)
+        .parallelLeader(vec(right + fig.textHeight, 2*fig.textHeight), vec(1, 0))
+        .generate()
+    )
   }
 }

@@ -19,6 +19,7 @@ export class BeamStirBar extends UShellRebarBuilder {
     const bar = this.rebars.end.bStir;
     this.drawCEnd();
     this.drawLInner();
+    this.drawSEndBeam();
     this.figures.rTable.push(bar);
     this.figures.mTable.push(bar);
     return this;
@@ -55,19 +56,35 @@ export class BeamStirBar extends UShellRebarBuilder {
   protected drawLInner(): void {
     const u = this.struct;
     const fig = this.figures.lInner;
-    const h = u.endHeight - u.shellHeight - 2 * u.as;
+    const h = u.endHeight - u.hd - u.r - 2 * u.as - u.waterStop.h - u.support.h;
     const w = u.endSect.b - 2 * u.as;
     fig.push(
       new Polyline(-u.len / 2 + u.cantLeft + u.as, -u.r - u.waterStop.h - u.as)
         .lineBy(0, -h)
         .lineBy(w, 0)
         .lineBy(0, h)
-        .lineBy(-w, 0),
+        .lineBy(-w, 0).thickLine(),
       new Polyline(u.len / 2 - u.cantRight - u.as, -u.r - u.waterStop.h - u.as)
         .lineBy(0, -h)
         .lineBy(-w, 0)
         .lineBy(0, h)
-        .lineBy(w, 0)
+        .lineBy(w, 0).thickLine()
+    );
+  }
+  protected drawSEndBeam(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndBeam;
+    const bar = this.rebars.end.bStir;
+    const r = fig.drawRadius;
+    const w = u.endSect.b - 2*u.as;
+    const h = u.endHeight - u.hd - u.r - u.support.h - 2*u.as - u.waterStop.h;
+    const y = h / 2;
+    fig.push(
+      new ArrowNote(fig.textHeight)
+        .rebar(new Polyline(u.as, -u.waterStop.h - u.as).lineBy(w, 0).lineBy(0, -h).lineBy(-w, 0).lineBy(0, h))
+        .spec(bar, 0, bar.space)
+        .leaderNote(vec(-2*fig.textHeight, -u.waterStop.h - u.as - r - y), vec(1, 0))
+        .generate()
     );
   }
 }

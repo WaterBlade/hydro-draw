@@ -9,6 +9,9 @@ export class NoteBuilder {
     this.drawLInner();
     this.drawCMid();
     this.drawCEnd();
+    this.drawSEndBeam();
+    this.drawSEndWall();
+    this.drawSBar();
     return this;
   }
   protected drawLOuter(): void {
@@ -41,7 +44,6 @@ export class NoteBuilder {
     dim.next().dim(u.endHeight);
 
     fig.push(dim.generate());
-    fig.title("槽身外侧钢筋图", true);
   }
   protected drawLInner(): void {
     const u = this.struct;
@@ -73,8 +75,17 @@ export class NoteBuilder {
     if (d > 0) dim.dim(d);
     dim.next().dim(u.endHeight);
 
+    const pts = u.genBarCenters();
+    const {w} = u.bar;
+    
+    dim.hTop(-u.len/2, box.top + 2* fig.textHeight).dim(u.waterStop.w)
+    for(let i = 0; i < pts.length-1; i++){
+      const l = pts[i+1].x - pts[i].x;
+      dim.dim(w).dim(l-w)
+    }
+    dim.dim(w).dim(u.waterStop.w);
+
     fig.push(dim.generate());
-    fig.title("槽身纵剖钢筋图", true);
   }
   protected drawCMid(): void {
     const u = this.struct;
@@ -121,7 +132,6 @@ export class NoteBuilder {
     if (u.oBeam.w > 0) dim.dim(u.oBeam.w);
 
     fig.push(dim.generate());
-    fig.title("槽身跨中钢筋图", true);
   }
   protected drawCEnd(): void {
     const u = this.struct;
@@ -174,6 +184,50 @@ export class NoteBuilder {
     dim.dim(u.endSect.w);
 
     fig.push(dim.generate());
-    fig.title("槽身端肋钢筋图", true);
+  }
+  protected drawSEndBeam(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndBeam;
+    const box = fig.getBoundingBox();
+    
+    const dim = new DimensionBuilder(fig.unitScale, fig.drawScale)
+
+    dim.hBottom(0, box.bottom-2*fig.textHeight)
+      .dim(u.endSect.b).dim(u.trans)
+
+    dim.vRight(box.right + 2*fig.textHeight, 0)
+      .dim(u.t + u.butt.h).dim(u.oBeam.w)
+      .dim(u.endHeight - u.shellHeight - u.oBeam.w - u.support.h)
+    
+    if(u.support.h > 0){
+      dim.dim(u.support.h);
+    }
+    fig.push(dim.generate());
+  }
+  protected drawSEndWall(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndWall;
+    const box = fig.getBoundingBox();
+    
+    const dim = new DimensionBuilder(fig.unitScale, fig.drawScale)
+
+    dim.hBottom(0, box.bottom-2*fig.textHeight)
+      .dim(u.endSect.b).dim(u.trans)
+
+    dim.vRight(box.right + 2*fig.textHeight, 0)
+      .dim(u.t).dim(u.oBeam.w)
+    
+    fig.push(dim.generate());
+  }
+  protected drawSBar(): void{
+    const u = this.struct;
+    const fig = this.figures.sBar;
+    const box = fig.getBoundingBox();
+    const dim = new DimensionBuilder(fig.unitScale, fig.drawScale)
+
+    dim.hBottom(-u.bar.w/2, box.bottom - 2*fig.textHeight).dim(u.bar.w);
+    dim.vRight(box.right + 2*fig.textHeight, u.bar.h/2).dim(u.bar.h);
+
+    fig.push(dim.generate());
   }
 }

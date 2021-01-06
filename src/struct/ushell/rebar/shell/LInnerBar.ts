@@ -30,6 +30,8 @@ export class LInnerBar extends UShellRebarBuilder {
   buildFigure(): this {
     this.drawCMid();
     this.drawLInner();
+    this.drawSEndBeam();
+    this.drawSEndWall();
     const bar = this.rebars.shell.lInner;
     this.figures.rTable.push(bar);
     this.figures.mTable.push(bar);
@@ -76,7 +78,7 @@ export class LInnerBar extends UShellRebarBuilder {
         .generate()
     );
   }
-  drawLInner(): void {
+  protected drawLInner(): void {
     const u = this.struct;
     const bar = this.rebars.shell.lInner;
     const fig = this.figures.lInner;
@@ -95,6 +97,34 @@ export class LInnerBar extends UShellRebarBuilder {
           vec(0, -1),
           vec(1, 0)
         )
+        .generate()
+    );
+  }
+  protected drawSEndBeam(): void{
+    const u = this.struct;
+    const bar = this.rebars.shell.lInner;
+    const fig = this.figures.sEndBeam;
+    const y = -u.as - fig.drawRadius;
+    const right = u.endSect.b + u.trans + 1.25 * (u.t + u.butt.h);
+    fig.push(
+      new ArrowNote(fig.textHeight)
+        .rebar(new Line(vec(u.waterStop.w + u.as, y), vec(right, y)))
+        .spec(bar, 0, bar.space)
+        .leaderNote(vec(u.endSect.b + 25, 4*fig.textHeight), vec(0, 1), vec(-1, 0))
+        .generate()
+    );
+  }
+  protected drawSEndWall(): void{
+    const u = this.struct;
+    const bar = this.rebars.shell.lInner;
+    const fig = this.figures.sEndWall;
+    const y = -u.as - fig.drawRadius;
+    const right = u.endSect.b + u.trans + 1.25 * u.t;
+    fig.push(
+      new ArrowNote(fig.textHeight)
+        .rebar(new Line(vec(u.waterStop.w + u.as, y), vec(right, y)))
+        .spec(bar, 0, bar.space)
+        .leaderNote(vec(u.endSect.b + 25, 4*fig.textHeight), vec(0, 1), vec(-1, 0))
         .generate()
     );
   }

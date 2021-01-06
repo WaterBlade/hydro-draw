@@ -9,21 +9,23 @@ export class OutlineBuilder {
     this.drawLInner();
     this.drawCMid();
     this.drawCEnd();
+    this.drawSEndBeam();
+    this.drawSEndWall();
+    this.drawSBar();
     return this;
   }
   protected drawLOuter(): void {
-    this.figures.lOuter.reset(1, 50);
     this.figures.lOuter.push(this.struct.genLOuterLine().greyLine());
   }
   protected drawLInner(): void {
     const u = this.struct;
-    this.figures.lInner.reset(1, 50);
-    this.figures.lInner.push(this.struct.genLOuterLine().greyLine());
+    const fig = this.figures.lInner;
+    fig.push(this.struct.genLOuterLine().greyLine());
     const left = new Polyline(-u.len / 2 + u.waterStop.w, u.hd)
       .lineBy(0, -u.hd - u.r - u.waterStop.h)
       .lineBy(-u.waterStop.w, 0);
     const right = left.mirrorByYAxis();
-    this.figures.lInner.push(
+    fig.push(
       new Line(
         vec(-u.len / 2 + u.waterStop.w, -u.r),
         vec(u.len / 2 - u.waterStop.w, -u.r)
@@ -33,7 +35,7 @@ export class OutlineBuilder {
     );
     if (u.support.h > 0) {
       const y = u.hd - u.endHeight + u.support.h;
-      this.figures.lInner.push(
+      fig.push(
         new Line(
           vec(-u.len / 2 + u.cantLeft, y),
           vec(-u.len / 2 + u.cantLeft + u.endSect.b, y)
@@ -44,10 +46,15 @@ export class OutlineBuilder {
         ).greyLine()
       );
     }
+    const pts = u.genBarCenters();
+    const {w, h} = u.bar;
+    for(const p of pts){
+      const {x, y} = p;
+      fig.push(new Polyline(x-w/2, y + h/2).lineBy(w, 0).lineBy(0, -h).lineBy(-w, 0).lineBy(0, h).greyLine());
+    }
   }
   protected drawCMid(): void {
     const u = this.struct;
-    this.figures.cMid.reset(1, 50);
     const [transPt0, transPt1] = u.transPt;
     const angle = u.transAngle;
 
@@ -80,7 +87,6 @@ export class OutlineBuilder {
   }
   protected drawCEnd(): void {
     const u = this.struct;
-    this.figures.cEnd.reset(1, 50);
     const path = new Polyline(-u.r - u.t - u.oBeam.w, u.hd).lineBy(
       u.beamWidth,
       0
@@ -132,6 +138,55 @@ export class OutlineBuilder {
     this.figures.cEnd.push(
       path.greyLine(),
       inner.offset(u.waterStop.h, Side.Right).greyLine()
+    );
+  }
+  protected drawSEndBeam(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndBeam;
+    const right = u.endSect.b + u.trans + 1.25*(u.t + u.butt.h);
+    const h = u.endHeight - u.r - u.hd;
+    fig.push(
+      new Polyline(0, -u.waterStop.h)
+        .lineBy(u.waterStop.w, 0)
+        .lineBy(0, u.waterStop.h)
+        .lineTo(right, 0).greyLine(),
+      new Polyline(0, -u.waterStop.h)
+        .lineBy(0, -(h - u.waterStop.h))
+        .lineBy(u.endSect.b, 0)
+        .lineBy(0, h - u.t - u.butt.h - u.oBeam.w)
+        .lineBy(u.trans, u.oBeam.w)
+        .lineTo(right, -u.t-u.butt.h).greyLine()
+    )
+    if(u.support.h > 0){
+      const y = -h + u.support.h;
+      fig.push(
+        new Line(vec(0, y), vec(u.endSect.b, y)).greyLine()
+      );
+    }
+  }
+  protected drawSEndWall(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndWall;
+    const right = u.endSect.b + u.trans + 1.25 * u.t;
+    const h = u.t + u.oBeam.w;
+    fig.push(
+      new Polyline(0, -u.waterStop.h)
+        .lineBy(u.waterStop.w, 0)
+        .lineBy(0, u.waterStop.h)
+        .lineTo(right, 0).greyLine(),
+      new Polyline(0, -u.waterStop.h)
+        .lineBy(0, -h+u.waterStop.h)
+        .lineBy(u.endSect.b, 0)
+        .lineBy(u.trans, u.oBeam.w)
+        .lineTo(right, -u.t).greyLine()
+    )
+  }
+  protected drawSBar(): void{
+    const u = this.struct;
+    const fig = this.figures.sBar;
+    const {w, h} = u.bar;
+    fig.push(
+      new Polyline(-w/2, h/2).lineBy(w, 0).lineBy(0, -h).lineBy(-w, 0).lineBy(0, h).greyLine()
     );
   }
 }

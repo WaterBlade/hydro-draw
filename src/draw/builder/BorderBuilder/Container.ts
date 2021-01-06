@@ -30,7 +30,7 @@ export class Container extends BoxContainer {
     this.width = last(this.columns).right - this.topLeft.x;
     this.height = Math.max(...this.columns.map((c) => c.height));
   }
-  protected push(column: Column): void {
+  protected add(column: Column): void {
     this.columns.push(column);
     this.resetSize();
   }
@@ -41,17 +41,22 @@ export class Container extends BoxContainer {
   isEmpty(): boolean {
     return this.columns.length === 0;
   }
-  fill(item: DrawItem, title?: DrawItem): boolean {
+  fill(
+    item: DrawItem,
+    title?: DrawItem,
+    centerAligned = false,
+    titlePosKeep = false
+  ): boolean {
     if (this.columns.length !== 0) {
       const column = last(this.columns);
-      if (column.fill(item, title)) {
+      if (column.fill(item, title, centerAligned, titlePosKeep)) {
         this.resetSize();
         return true;
       }
     }
     const column = new Column(this.topLeft.add(vec(this.width, 0)), this);
-    if (column.fill(item, title)) {
-      this.push(column);
+    if (column.fill(item, title, centerAligned, titlePosKeep)) {
+      this.add(column);
       return true;
     } else {
       return false;
@@ -122,7 +127,7 @@ export class Column extends BoxContainer {
     super(topLeft);
   }
   rows: Row[] = [];
-  protected push(row: Row): void {
+  protected add(row: Row): void {
     this.rows.push(row);
     this.resetSize();
   }
@@ -134,17 +139,22 @@ export class Column extends BoxContainer {
     this.topLeft = this.topLeft.add(v);
     this.rows.forEach((r) => r.move(v));
   }
-  fill(item: DrawItem, title?: DrawItem): boolean {
+  fill(
+    item: DrawItem,
+    title?: DrawItem,
+    centerAligned = false,
+    titlePosKeep = false
+  ): boolean {
     if (this.rows.length !== 0) {
       const row = last(this.rows);
-      if (row.fill(item, title)) {
+      if (row.fill(item, title, centerAligned, titlePosKeep)) {
         this.resetSize();
         return true;
       }
     }
     const row = new Row(this.topLeft.add(vec(0, -this.height)), this);
-    if (row.fill(item, title)) {
-      this.push(row);
+    if (row.fill(item, title, centerAligned, titlePosKeep)) {
+      this.add(row);
       return true;
     } else {
       return false;
@@ -198,12 +208,15 @@ export class Row extends BoxContainer {
   get container(): Container {
     return this.column.container;
   }
+  get netWidth(): number {
+    return this.cells.reduce((pre, cur) => pre + cur.netWidth, 0);
+  }
   move(v: Vector): void {
     this.topLeft = this.topLeft.add(v);
     this.cells.forEach((c) => c.move(v));
   }
 
-  protected push(cell: Cell): void {
+  protected add(cell: Cell): void {
     this.cells.push(cell);
     this.resetSize();
   }
@@ -211,21 +224,38 @@ export class Row extends BoxContainer {
     this.width = last(this.cells).right - this.topLeft.x;
     this.height = Math.max(...this.cells.map((c) => c.height));
   }
-  fill(item: DrawItem, title?: DrawItem): boolean {
-    const cell = new Cell(this.topLeft.add(vec(this.width, 0)), this);
-    if (cell.fill(item, title)) {
-      if (
-        this.column.width > 0 &&
-        this.width > 0 &&
-        this.width + cell.width > this.column.width
-      ) {
-        return false;
-      } else {
-        this.push(cell);
+  fill(
+    item: DrawItem,
+    title?: DrawItem,
+    centerAligned = false,
+    titlePosKeep = false
+  ): boolean {
+    if (this.cells.length === 0) {
+      const cell = new Cell(this.topLeft.add(vec(this.width, 0)), this);
+      if (cell.fill(item, title, centerAligned, titlePosKeep)) {
+        this.add(cell);
         return true;
+      } else {
+        return false;
       }
     } else {
-      return false;
+      const cell = new Cell(this.topLeft.add(vec(this.netWidth, 0)), this);
+      if (cell.fill(item, title, false, titlePosKeep)) {
+        if (
+          this.column.width > 0 &&
+          this.netWidth + cell.width > this.column.width
+        ) {
+          return false;
+        } else {
+          if (this.cells.length === 1) {
+            this.cells[0].resetCenterAligned(false);
+          }
+          this.add(cell);
+          return true;
+        }
+      } else {
+        return false;
+      }
     }
   }
   resetCellsX(): void {
@@ -255,8 +285,10 @@ export class Row extends BoxContainer {
   }
 }
 export class Cell extends BoxContainer {
-  item?: DrawItem;
-  title?: DrawItem;
+  protected item?: DrawItem;
+  protected title?: DrawItem;
+  protected centerAligned = false;
+  protected titlePosKeep = false;
   constructor(topLeft: Vector, public row: Row) {
     super(topLeft);
   }
@@ -266,24 +298,66 @@ export class Cell extends BoxContainer {
   move(v: Vector): void {
     this.topLeft = this.topLeft.add(v);
   }
-  protected push(item: DrawItem, title?: DrawItem): void {
+  protected init(
+    item: DrawItem,
+    title?: DrawItem,
+    centerAligned = false,
+    titlePosKeep = false
+  ): void {
     this.item = item;
     this.title = title;
+    this.centerAligned = centerAligned;
+    this.titlePosKeep = titlePosKeep;
     this.resetSize();
   }
+  netWidth = 0;
   protected resetSize(): void {
     if (!this.item) throw Error("content in cell is undefined");
     const box = this.item.getBoundingBox();
     this.width = box.width;
+    this.netWidth = box.width;
     this.height = box.height;
+
+    if (this.centerAligned) {
+      this.width = 2 * Math.max(Math.abs(box.left), Math.abs(box.right));
+    }
     if (this.title) {
-      const box = this.title.getBoundingBox();
-      this.width = Math.max(this.width, box.width);
-      this.height += box.height * 2.5;
+      const titleBox = this.title.getBoundingBox();
+
+      if (this.titlePosKeep && this.centerAligned) {
+        this.width =
+          Math.max(this.width / 2, titleBox.right) -
+          Math.min(-this.width / 2, titleBox.left);
+      } else if (this.titlePosKeep) {
+        this.width =
+          Math.max(box.right, titleBox.right) -
+          Math.min(box.left, titleBox.left);
+      } else {
+        this.width = Math.max(this.width, titleBox.width);
+      }
+
+      if (this.titlePosKeep) {
+        this.netWidth =
+          Math.max(box.right, titleBox.right) -
+          Math.min(box.left, titleBox.left);
+      } else {
+        this.netWidth = Math.max(box.width, titleBox.width);
+      }
+      this.height += titleBox.height * 2.5;
     }
   }
-  fill(item: DrawItem, title?: DrawItem): boolean {
-    this.push(item, title);
+  resetCenterAligned(centerAligned = false): this {
+    this.centerAligned = centerAligned;
+    this.resetSize();
+    return this;
+  }
+  fill(
+    item: DrawItem,
+    title?: DrawItem,
+    centerAligned = false,
+    titlePosKeep = false
+  ): boolean {
+    this.init(item, title, centerAligned, titlePosKeep);
     const pt = vec(this.right, this.bottom);
     if (this.container.insideTest(pt)) {
       return true;
@@ -292,17 +366,26 @@ export class Cell extends BoxContainer {
     }
   }
   resetItemsCenter(): void {
+    if (!this.item) {
+      throw Error("item not init");
+    }
     const { bottom, top } = this.row;
     const xMid = (this.left + this.right) / 2;
-    if (this.item && this.title) {
-      this.title.moveBottomCenterTo(vec(xMid, bottom));
-      const yMid = (top + this.title.getBoundingBox().top) / 2;
-      this.item.moveCenterTo(vec(xMid, yMid));
-    } else if (this.item) {
-      const yMid = (top + bottom) / 2;
-      this.item.moveCenterTo(vec(xMid, yMid));
-    } else {
-      throw Error("item not init");
+    const yTitleTop =
+      bottom + (this.title ? this.title.getBoundingBox().height : 0);
+    const yMid = (top + yTitleTop) / 2;
+    const { x, y } = this.item.getBoundingBox().Center;
+
+    const xMove = this.centerAligned ? xMid : xMid - x;
+    const yMove = yMid - y;
+    this.item.move(vec(xMove, yMove));
+
+    if (this.title) {
+      const yTitleMid = (yTitleTop + bottom) / 2;
+      const { x: x0, y: y0 } = this.title.getBoundingBox().Center;
+      const xTitleMove = this.titlePosKeep ? xMove : xMid - x0;
+      const yTitleMove = yTitleMid - y0;
+      this.title.move(vec(xTitleMove, yTitleMove));
     }
   }
   getItems(): DrawItem[] {

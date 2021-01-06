@@ -29,7 +29,7 @@ export class WallStirBar extends UShellRebarBuilder {
     const y1 = -u.r - u.waterStop.h - u.as;
     const leftEdge = u.genEndLeftOutline().offset(u.as);
     const rightEdge = u
-      .genLeftInnerOutline()
+      .genEndLeftInner()
       .offset(u.waterStop.h + u.as, Side.Right);
 
     const pts = new Line(vec(0, y0), vec(0, y1)).divide(bar.space).removeEndPt()

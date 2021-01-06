@@ -1,4 +1,4 @@
-import { ArrowNote, Circle, Line, RebarPathForm, vec } from "@/draw";
+import { ArrowNote, Circle, Line, RebarPathForm, SparsePointNote, vec } from "@/draw";
 import { UShellRebarBuilder } from "../../UShellRebar";
 
 export class BeamTopBar extends UShellRebarBuilder {
@@ -14,6 +14,7 @@ export class BeamTopBar extends UShellRebarBuilder {
     const bar = this.rebars.end.bTop;
     this.drawCEnd();
     this.drawLInner();
+    this.drawSEndBeam();
     this.figures.rTable.push(bar);
     this.figures.mTable.push(bar);
     return this;
@@ -63,5 +64,19 @@ export class BeamTopBar extends UShellRebarBuilder {
     ).points;
     const rightBars = rightPts.map((p) => new Circle(p, r).thickLine());
     fig.push(...leftBars, ...rightBars);
+  }
+  protected drawSEndBeam(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndBeam;
+    const bar = this.rebars.end.bTop;
+    const r = fig.drawRadius;
+    const y = -u.waterStop.h - u.as - r ;
+    fig.push(
+      new SparsePointNote(fig.textHeight, r, 30)
+        .points(...new Line(vec(u.as + r, y), vec(u.endSect.b - u.as - r, y)).divideByCount(bar.singleCount-1).points)
+        .spec(bar, bar.singleCount)
+        .parallelLeader(vec(-2*fig.textHeight, y-2*fig.textHeight), vec(-1, 0))
+        .generate()
+    );
   }
 }

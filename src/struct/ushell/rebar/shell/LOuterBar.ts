@@ -29,6 +29,8 @@ export class LOuterBar extends UShellRebarBuilder {
   buildFigure(): this {
     this.drawCMid();
     this.drawLOuter();
+    this.drawSEndBeam();
+    this.drawSEndWall();
     const bar = this.rebars.shell.lOuter;
     this.figures.rTable.push(bar);
     this.figures.mTable.push(bar);
@@ -110,6 +112,34 @@ export class LOuterBar extends UShellRebarBuilder {
           vec(0, 1),
           vec(-1, 0)
         )
+        .generate()
+    );
+  }
+  protected drawSEndBeam(): void{
+    const u = this.struct;
+    const bar = this.rebars.shell.lOuter;
+    const fig = this.figures.sEndBeam;
+    const right = u.endSect.b + u.trans + 1.25*(u.t + u.butt.h);
+    const y = -u.t - u.butt.h + u.as + fig.drawRadius;
+    fig.push(
+      new ArrowNote(fig.textHeight)
+        .rebar(new Line(vec(u.as, y), vec(right, y)))
+        .spec(bar, 0, bar.space)
+        .leaderNote(vec(u.endSect.b + 75, 4*fig.textHeight), vec(0, 1), vec(1, 0))
+        .generate()
+    )
+  }
+  protected drawSEndWall(): void{
+    const u = this.struct;
+    const bar = this.rebars.shell.lOuter;
+    const fig = this.figures.sEndWall;
+    const right = u.endSect.b + u.trans + 1.25*(u.t + u.butt.h);
+    const y = -u.t - u.butt.h + u.as + fig.drawRadius;
+    fig.push(
+      new ArrowNote(fig.textHeight)
+        .rebar(new Line(vec(u.as, y), vec(right, y)))
+        .spec(bar, 0, bar.space)
+        .leaderNote(vec(u.endSect.b + 75, 4*fig.textHeight), vec(0, 1), vec(1, 0))
         .generate()
     );
   }

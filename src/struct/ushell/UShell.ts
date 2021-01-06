@@ -1,4 +1,4 @@
-import { polar, Polyline, toDegree, Vector } from "@/draw";
+import { Line, polar, Polyline, toDegree, vec, Vector } from "@/draw";
 
 export class UShell {
   r = 0;
@@ -38,6 +38,7 @@ export class UShell {
     h: 0,
     w: 0,
     s: 0,
+    as: 0,
   };
   support = {
     w: 0,
@@ -120,9 +121,15 @@ export class UShell {
       .lineBy(0, -this.endSect.hd)
       .lineBy(this.endSect.w, -this.endSect.hs);
   }
-  genLeftInnerOutline(): Polyline {
+  genEndLeftInner(): Polyline {
     return new Polyline(-this.r, this.hd)
       .lineBy(0, -this.hd)
       .arcTo(0, -this.r, 90);
+  }
+  genBarCenters(): Vector[]{
+    const x0 = -this.len/2 + this.waterStop.w + this.bar.w/2;
+    const x1 = this.len/2 - this.waterStop.w - this.bar.w/2;
+    const y = this.hd - this.bar.h/2;
+    return new Line(vec(x0, y), vec(x1, y)).divide(this.bar.s).points;
   }
 }

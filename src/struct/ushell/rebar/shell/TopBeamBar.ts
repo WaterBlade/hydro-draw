@@ -1,4 +1,4 @@
-import { ArrowNote, Polyline, RebarPathForm, Side, vec } from "@/draw";
+import { ArrowNote, Polyline, RebarPathForm, Side, toDegree, vec } from "@/draw";
 import { UShellRebarBuilder } from "../../UShellRebar";
 
 export class TopBeamBar extends UShellRebarBuilder {
@@ -13,10 +13,11 @@ export class TopBeamBar extends UShellRebarBuilder {
         .removeEnd().segments;
       let i = 0;
       if (u.oBeam.w > 0) {
+        const angle = 90+toDegree(Math.asin(u.oBeam.hs / u.oBeam.w));
         form
           .lineBy(-1.5, 1)
           .dimLength(segs[i++].calcLength())
-          .lineBy(0, 1)
+          .lineBy(0, 1.2).dimAngle(angle)
           .dimLength(segs[i++].calcLength())
           .lineBy(3.2, 0)
           .dimLength(segs[i++].calcLength());
@@ -28,10 +29,11 @@ export class TopBeamBar extends UShellRebarBuilder {
           .dimLength(segs[i++].calcLength());
       }
       if (u.iBeam.w > 0) {
+        const angle = 90+ toDegree(Math.asin(u.iBeam.hs / u.iBeam.w));
         form
-          .lineBy(0, -1)
+          .lineBy(0, -1.2)
           .dimLength(segs[i++].calcLength())
-          .lineBy(-1.5, -1)
+          .lineBy(-1.5, -1).dimAngle(angle)
           .dimLength(segs[i++].calcLength());
       } else {
         form.lineBy(0, 1.5).dimLength(segs[i++].calcLength());

@@ -3,17 +3,21 @@ import { BeamBotBar } from "./BeamBotBar";
 import { BeamMidBar } from "./BeamMidBar";
 import { BeamStirBar } from "./BeamStirBar";
 import { BeamTopBar } from "./BeamTopBar";
-import { CInnerBar } from "./CInnerBar";
 import { COuterBar } from "./COuterBar";
+import { TopBeamBar } from "./TopBeamBar";
 import { WallStirBar } from "./WallStirBar";
 
 export class RebarInEnd extends UShellCompositeRebarBuilder {
-  protected name = "端肋";
-  cOuter = new COuterBar(this.struct, this.rebars, this.figures, this);
-  cInner = new CInnerBar(this.struct, this.rebars, this.figures, this);
-  bBot = new BeamBotBar(this.struct, this.rebars, this.figures, this);
-  bTop = new BeamTopBar(this.struct, this.rebars, this.figures, this);
-  bMid = new BeamMidBar(this.struct, this.rebars, this.figures, this);
-  bStir = new BeamStirBar(this.struct, this.rebars, this.figures, this);
-  wStir = new WallStirBar(this.struct, this.rebars, this.figures, this);
+  init(): void{
+    this.push(
+      new COuterBar(this.struct, this.rebars, this.figures),
+      new BeamBotBar(this.struct, this.rebars, this.figures),
+      new BeamTopBar(this.struct, this.rebars, this.figures),
+      new BeamMidBar(this.struct, this.rebars, this.figures),
+      new BeamStirBar(this.struct, this.rebars, this.figures),
+      new WallStirBar(this.struct, this.rebars, this.figures),
+      new TopBeamBar(this.struct, this.rebars, this.figures),
+    )
+    this.setName('端肋');
+  }
 }

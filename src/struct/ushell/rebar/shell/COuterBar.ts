@@ -5,6 +5,8 @@ import {
   Polyline,
   RebarPathForm,
   Side,
+  SparsePointNote,
+  StrecthSide,
   vec,
   Vector,
 } from "@/draw";
@@ -45,6 +47,8 @@ export class COuterBar extends UShellRebarBuilder {
     this.drawCMid();
     this.drawLInner();
     this.drawLOuter();
+    this.drawSEndBeam();
+    this.drawSEndWall();
 
     const bar = this.rebars.shell.cOuter;
     this.figures.rTable.push(bar);
@@ -198,5 +202,35 @@ export class COuterBar extends UShellRebarBuilder {
         )
         .generate()
     );
+  }
+  protected drawSEndBeam(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndBeam;
+    const bar = this.rebars.shell.cOuter;
+    const r = fig.drawRadius;
+    const right = u.endSect.b + u.trans + 1.25*(u.t + u.butt.h);
+    const y = -u.t - u.butt.h + u.as;
+    fig.push(
+      new SparsePointNote(fig.textHeight, r, 30)
+        .points(...new Line(vec(u.endSect.b, y), vec(right, y)).divide(bar.denseSpace, StrecthSide.tail).removeStartPt().removeEndPt().points)
+        .spec(bar, 0, bar.denseSpace)
+        .parallelLeader(vec(right + fig.textHeight, y - 2*fig.textHeight), vec(1, 0))
+        .generate()
+    )
+  }
+  protected drawSEndWall(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndWall;
+    const bar = this.rebars.shell.cOuter;
+    const r = fig.drawRadius;
+    const right = u.endSect.b + u.trans + 1.25*u.t ;
+    const y = -u.t + u.as;
+    fig.push(
+      new SparsePointNote(fig.textHeight, r, 30)
+        .points(...new Line(vec(u.endSect.b, y), vec(right, y)).divide(bar.denseSpace, StrecthSide.tail).removeStartPt().removeEndPt().points)
+        .spec(bar, 0, bar.denseSpace)
+        .parallelLeader(vec(right + fig.textHeight, y-2*fig.textHeight), vec(1, 0))
+        .generate()
+    )
   }
 }

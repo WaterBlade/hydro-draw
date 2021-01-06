@@ -20,7 +20,7 @@ export default function runBorderDemo():void{
     '1.图中单位：尺寸为mm',
   ]
   for(let i = 0; i < 250; i++){
-    border.addItem(new Circle(vec(0, 0), 100*Math.random()), 1, 1, false, new Text('标题', vec(0, 0), 5, TextAlign.MiddleCenter));
+    border.addItem(new Circle(vec(0, 0), 100*Math.random()), 1, 1, new Text('标题', vec(0, 0), 5, TextAlign.MiddleCenter));
   }
 
   const layout = new HLayoutBuilder(10);

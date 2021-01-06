@@ -1,14 +1,27 @@
 import {
-  Builder,
   DrawItem,
+  HydroBorderBuilder,
   HydroA1Builder,
   HydroA2Builder,
   HydroA3Builder,
-  HydroBorderBuilder,
+  Builder,
 } from "@/draw";
+import { FigureInBorder } from "./Figure";
 
-export abstract class Controller implements Builder<DrawItem[]> {
-  abstract generate(): DrawItem[];
+export class Drawing implements Builder<DrawItem[]> {
+  protected figures: FigureInBorder[] = [];
+  push(...figures: FigureInBorder[]): this {
+    this.figures.push(...figures);
+    return this;
+  }
+  generate(): DrawItem[] {
+    const border = this.genBorder();
+    for (const figure of this.figures) {
+      figure.pushTo(border);
+    }
+    return border.generate();
+  }
+
   company?: string;
   project?: string;
   design?: string;
@@ -18,11 +31,12 @@ export abstract class Controller implements Builder<DrawItem[]> {
   drawingNumberStart?: number;
   certificateNumber?: string;
   note: string[] = [];
-  protected genBorder(size: "A1" | "A2" | "A3" = "A1"): HydroBorderBuilder {
+  size: "A1" | "A2" | "A3" = "A1";
+  protected genBorder(): HydroBorderBuilder {
     let border: HydroBorderBuilder;
-    if (size === "A1") {
+    if (this.size === "A1") {
       border = new HydroA1Builder();
-    } else if (size === "A2") {
+    } else if (this.size === "A2") {
       border = new HydroA2Builder();
     } else {
       border = new HydroA3Builder();

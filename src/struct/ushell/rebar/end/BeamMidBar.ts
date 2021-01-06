@@ -1,4 +1,4 @@
-import { ArrowNote, Circle, Line, RebarPathForm, vec } from "@/draw";
+import { ArrowNote, Circle, last, Line, RebarPathForm, SparsePointNote, vec } from "@/draw";
 import { UShellRebarBuilder } from "../../UShellRebar";
 
 export class BeamMidBar extends UShellRebarBuilder {
@@ -19,6 +19,7 @@ export class BeamMidBar extends UShellRebarBuilder {
     const bar = this.rebars.end.bMid;
     this.drawCEnd();
     this.drawLInner();
+    this.drawSEndBeam();
     this.figures.rTable.push(bar);
     this.figures.mTable.push(bar);
     return this;
@@ -76,5 +77,32 @@ export class BeamMidBar extends UShellRebarBuilder {
         .removeEndPt().points;
       fig.push(...pts.map((p) => new Circle(p, r).thickLine()));
     }
+  }
+  protected drawSEndBeam(): void{
+    const u = this.struct;
+    const bar = this.rebars.end.bMid;
+    const fig = this.figures.sEndBeam;
+    const r = fig.drawRadius;
+    const x0 = u.as + r;
+    const x1 = u.endSect.b - u.as - r;
+    const y0 = - u.waterStop.h - u.as - r;
+    const y1 = u.hd + u.r - u.endHeight + u.support.h + u.as + r;
+    const pts0 = new Line(vec(x0, y0), vec(x0, y1))
+      .divideByCount(bar.singleCount + 1)
+      .removeStartPt()
+      .removeEndPt().points;
+    const pts1 = new Line(vec(x1, y0), vec(x1, y1))
+      .divideByCount(bar.singleCount + 1)
+      .removeStartPt()
+      .removeEndPt().points;
+    const y2 = (last(pts0).y + y1)/2;
+    fig.push(
+      new SparsePointNote(fig.textHeight, r)
+        .points(...pts0, ...pts1)
+        .spec(bar, 2* bar.singleCount)
+        .jointLeader(vec(u.endSect.b/2, y2), vec(-2*fig.textHeight, y2))
+        .generate()
+    );
+
   }
 }

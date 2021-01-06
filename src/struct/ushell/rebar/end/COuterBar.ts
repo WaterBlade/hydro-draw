@@ -4,6 +4,7 @@ import {
   Polyline,
   RebarPathForm,
   Side,
+  SparsePointNote,
   toDegree,
   vec,
 } from "@/draw";
@@ -37,6 +38,7 @@ export class COuterBar extends UShellRebarBuilder {
   buildFigure(): this {
     this.drawCEnd();
     this.drawLOuter();
+    this.drawSEndWall();
     return this;
   }
   protected genShape(offDist?: number): Polyline {
@@ -116,5 +118,20 @@ export class COuterBar extends UShellRebarBuilder {
         )
         .generate()
     );
+  }
+  protected drawSEndWall(): void{
+    const u = this.struct;
+    const fig = this.figures.sEndWall;
+    const bar = this.rebars.end.cOuter;
+    const r = fig.drawRadius;
+    const y = -u.t - u.oBeam.w + u.as + r ;
+    fig.push(
+      new SparsePointNote(fig.textHeight, r, 30)
+        .points(...new Line(vec(u.as + r, y), vec(u.endSect.b - u.as - r, y)).divideByCount(bar.singleCount-1).points)
+        .spec(bar, bar.singleCount)
+        .parallelLeader(vec(-2*fig.textHeight, y-2*fig.textHeight - u.support.h), vec(-1, 0))
+        .generate()
+    );
+
   }
 }

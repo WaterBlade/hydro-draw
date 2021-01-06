@@ -3,8 +3,8 @@ import { DrawItem } from "./DrawItem";
 import { Paper, PaperMText } from "./Paper.interface";
 
 export class MText extends DrawItem implements PaperMText {
-  protected widthFactor = 0.7;
-  protected rowSpaceFactor = 1.5;
+  protected widthFactor = 1.0;
+  protected rowSpaceFactor = 2;
   constructor(
     public content: string[],
     public insertPoint: Vector,
