@@ -11,6 +11,13 @@ import {
   RebarTable,
   RebarSpec,
   MaterialTable,
+  PlaneRebar,
+  CirclePointRebar,
+  LayerPointRebar,
+  LinePointRebar,
+  PolylinePointRebar,
+  SparsePointRebar,
+  RebarDrawBuilder,
 } from "@/draw";
 
 
@@ -44,6 +51,44 @@ export class Figure implements FigureInBorder {
     content: string | Content,
   ): this {
     this._content = content;
+    return this;
+  }
+  // rebar note
+  protected rebarNotes: RebarDrawBuilder[] = [];
+  planeRebar(): PlaneRebar{
+    const t = new PlaneRebar(this.textHeight);
+    this.rebarNotes.push(t);
+    return t;
+  }
+  circlePointRebar(): CirclePointRebar{
+    const t = new CirclePointRebar(this.textHeight, this.drawRadius);
+    this.rebarNotes.push(t);
+    return t;
+  }
+  layerPointRebar(): LayerPointRebar{
+    const t = new LayerPointRebar(this.textHeight, this.drawRadius);
+    this.rebarNotes.push(t);
+    return t;
+  }
+  linePointRebar(): LinePointRebar{
+    const t = new LinePointRebar(this.textHeight, this.drawRadius);
+    this.rebarNotes.push(t);
+    return t;
+  }
+  polylinePointRebar(): PolylinePointRebar{
+    const t = new PolylinePointRebar(this.textHeight, this.drawRadius);
+    this.rebarNotes.push(t);
+    return t;
+  }
+  sparsePointRebar(angle=30): SparsePointRebar{
+    const t = new SparsePointRebar(this.textHeight, this.drawRadius, angle);
+    this.rebarNotes.push(t);
+    return t;
+  }
+  drawRebar(): this{
+    this.composite.push(
+      ...this.rebarNotes.map(r => r.generate())
+    )
     return this;
   }
   reset(unitScale = 1, drawScale = 1): this {
@@ -95,7 +140,7 @@ export class Figure implements FigureInBorder {
     return this;
   }
 
-  genTitle(): CompositeItem | undefined {
+  protected genTitle(): CompositeItem | undefined {
     const content = this._content;
     if (content) {
       const comp = new CompositeItem();

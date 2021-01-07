@@ -3,7 +3,7 @@ import { CompositeRebarBuilder, RebarBuilder } from "../RebarBuilder";
 import { UShell } from "./UShell";
 import { UShellFigure } from "./UShellFigure";
 
-export class UShellRebar {
+export class UShellRebarSpec {
   shell = new ShellRebar();
   end = new EndRebar();
   trans = new TransRebar();
@@ -42,11 +42,11 @@ class BarRebar{
 
 export abstract class UShellRebarBuilder extends RebarBuilder<
   UShell,
-  UShellRebar,
+  UShellRebarSpec,
   UShellFigure
 > {}
 export abstract class UShellCompositeRebarBuilder extends CompositeRebarBuilder<
   UShell,
-  UShellRebar,
+  UShellRebarSpec,
   UShellFigure
 > {}

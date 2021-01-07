@@ -1,11 +1,10 @@
-import { Figure, FigureInBorder, MaterialTableFigure, RebarTableFigure } from "../Figure";
+import { Figure, MaterialTableFigure, RebarTableFigure } from "../Figure";
 
 export class UShellFigure {
-  figures: FigureInBorder[] = [];
+  lOuter = new Figure();
+  lInner = new Figure();
   cMid = new Figure();
   cEnd = new Figure();
-  lInner = new Figure();
-  lOuter = new Figure();
   sEndBeam = new Figure();
   sEndWall = new Figure();
   sBar = new Figure();

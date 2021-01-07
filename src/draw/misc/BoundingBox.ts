@@ -77,3 +77,9 @@ export class BoundingBox {
     return this.top - this.bottom;
   }
 }
+
+export class EmptyBox extends BoundingBox{
+  constructor(){
+    super(Infinity, -Infinity, Infinity, -Infinity);
+  }
+}

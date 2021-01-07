@@ -1,4 +1,4 @@
-import { Vector, BoundingBox } from "@/draw/misc";
+import { Vector, BoundingBox, EmptyBox } from "@/draw/misc";
 import { DrawItem } from "./DrawItem";
 import { Paper } from "./Paper.interface";
 
@@ -35,7 +35,7 @@ export class CompositeItem extends DrawItem {
   }
   calcBoundingBox(): BoundingBox {
     if (this.itemList.length === 0) {
-      throw Error("empty composite try to compute bounding box");
+      return new EmptyBox();
     }
     const boxs = this.itemList.map((item) => item.getBoundingBox());
     boxs.forEach((b) => b.move(this.insertPoint));
