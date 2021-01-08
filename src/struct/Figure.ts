@@ -17,14 +17,37 @@ import {
   LinePointRebar,
   PolylinePointRebar,
   SparsePointRebar,
-  RebarDrawBuilder,
+  last,
+  DimensionBuilder,
 } from "@/draw";
+
+
+class PosGen{
+  xPos: number[] = [];
+  yPos: number[] = [];
+  findX(x: number): number{
+    return this.find(x, this.xPos);
+  }
+  findY(y: number): number{
+    return this.find(y, this.yPos);
+  }
+  protected find(k: number, array: number[]): number{
+    if(k < array[0] || k > last(array)) return k;
+    let i = 0;
+    while(array[i] < k){
+      i++;
+    }
+    return (array[i-1] + array[i])/2;
+  }
+}
+
 
 
 export interface FigureInBorder {
   pushTo(border: BorderBuilder): this;
 }
 export class Figure implements FigureInBorder {
+  pos = new PosGen();
   protected _unitScale = 1;
   protected _drawScale = 1;
   protected _titleHeight = 1;
@@ -47,49 +70,43 @@ export class Figure implements FigureInBorder {
     this._titlePosKeep = true;
     return this;
   }
-  title(
+  setTitle(
     content: string | Content,
   ): this {
     this._content = content;
     return this;
   }
-  // rebar note
-  protected rebarNotes: RebarDrawBuilder[] = [];
+  protected _outline = new CompositeItem();
+  addOutline(...items: DrawItem[]): this{
+    this._outline.push(...items);
+    this.push(...items);
+    return this;
+  }
+  get outline(): CompositeItem{
+    return this._outline;
+  }
+  // dim
+  dimBuilder(): DimensionBuilder{
+    return new DimensionBuilder(this.unitScale, this.drawScale);
+  }
+  // rebar
   planeRebar(): PlaneRebar{
-    const t = new PlaneRebar(this.textHeight);
-    this.rebarNotes.push(t);
-    return t;
+    return new PlaneRebar(this.textHeight);
   }
   circlePointRebar(): CirclePointRebar{
-    const t = new CirclePointRebar(this.textHeight, this.drawRadius);
-    this.rebarNotes.push(t);
-    return t;
+    return new CirclePointRebar(this.textHeight, this.drawRadius);
   }
   layerPointRebar(): LayerPointRebar{
-    const t = new LayerPointRebar(this.textHeight, this.drawRadius);
-    this.rebarNotes.push(t);
-    return t;
+    return new LayerPointRebar(this.textHeight, this.drawRadius);
   }
   linePointRebar(): LinePointRebar{
-    const t = new LinePointRebar(this.textHeight, this.drawRadius);
-    this.rebarNotes.push(t);
-    return t;
+    return new LinePointRebar(this.textHeight, this.drawRadius);
   }
   polylinePointRebar(): PolylinePointRebar{
-    const t = new PolylinePointRebar(this.textHeight, this.drawRadius);
-    this.rebarNotes.push(t);
-    return t;
+    return new PolylinePointRebar(this.textHeight, this.drawRadius);
   }
   sparsePointRebar(angle=30): SparsePointRebar{
-    const t = new SparsePointRebar(this.textHeight, this.drawRadius, angle);
-    this.rebarNotes.push(t);
-    return t;
-  }
-  drawRebar(): this{
-    this.composite.push(
-      ...this.rebarNotes.map(r => r.generate())
-    )
-    return this;
+    return new SparsePointRebar(this.textHeight, this.drawRadius, angle);
   }
   reset(unitScale = 1, drawScale = 1): this {
     this._unitScale = unitScale;
@@ -112,11 +129,17 @@ export class Figure implements FigureInBorder {
   get textHeight(): number {
     return this._textHeight;
   }
+  get h(): number{
+    return this.textHeight;
+  }
   get numberHeight(): number {
     return this._numberHeight;
   }
   get drawRadius(): number {
     return this._drawRadius;
+  }
+  get r(): number{
+    return this.drawRadius;
   }
 
   protected composite = new CompositeItem();

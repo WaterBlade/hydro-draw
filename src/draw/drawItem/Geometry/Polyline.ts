@@ -40,6 +40,30 @@ export class Polyline extends DrawItem implements PolylineGeometry {
   get lengths(): number[] {
     return this.segments.map((s) => s.calcLength());
   }
+  prepend(seg: Line | Arc | Polyline): Polyline{
+    const p = new Polyline();
+    if(!seg.end.closeTo(this.start, 1e-6)){
+      throw Error('cannot prepend to polyline');
+    }
+    if(seg instanceof Polyline){
+      p.segments.push(...seg.segments, ...this.segments);
+    }else{
+      p.segments.push(seg, ...this.segments);
+    }
+    return p;
+  }
+  append(seg: Line | Arc | Polyline): Polyline{
+    const p = new Polyline();
+    if(!seg.start.closeTo(this.end, 1e-6)){
+      throw Error('cannot prepend to polyline');
+    }
+    if(seg instanceof Polyline){
+      p.segments.push(...this.segments, ...seg.segments);
+    }else{
+      p.segments.push(...this.segments, seg);
+    }
+    return p;
+  }
   moveTo(x: number, y: number): this {
     if (this.segments.length > 0) throw Error("move to forbidden");
     this.current = vec(x, y);

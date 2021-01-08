@@ -132,4 +132,49 @@ export class UShell {
     const y = this.hd - this.bar.h/2;
     return new Line(vec(x0, y), vec(x1, y)).divide(this.bar.s).points;
   }
+  genCInner(): Polyline{
+    const path = new Polyline(-this.r + this.iBeam.w, this.hd)
+    if (this.iBeam.w > 0) {
+      path
+        .lineBy(0, -this.iBeam.hd)
+        .lineBy(-this.iBeam.w, -this.iBeam.hs);
+    }
+    path
+      .lineTo(-this.r, 0)
+      .arcTo(this.r, 0, 180)
+      .lineTo(this.r, this.hd - this.iBeam.hd - this.iBeam.hs);
+    if (this.iBeam.w > 0) {
+      path
+        .lineBy(-this.iBeam.w, this.iBeam.hs)
+        .lineBy(0, this.iBeam.hd);
+    }
+    return path;
+  }
+  genCOuter(): Polyline{
+    const [transPt0, transPt1] = this.transPt;
+    const angle = this.transAngle;
+    const path = new Polyline(-this.r + this.iBeam.w, this.hd);
+    path.lineBy(-this.beamWidth, 0)
+    if(this.oBeam.w > 0){
+      path
+        .lineBy(0, -this.oBeam.hd)
+        .lineBy(this.oBeam.w , -this.oBeam.hs)
+    }
+    path
+      .lineBy(0, -this.oWallH)
+      .arcTo(transPt0.x, transPt0.y, angle)
+      .lineTo(-this.butt.w / 2, -this.bottomRadius)
+      .lineBy(this.butt.w, 0)
+      .lineTo(transPt1.x, transPt1.y)
+      .arcTo(this.r + this.t, 0, angle)
+      .lineBy(0, this.oWallH)
+    if(this.oBeam.w > 0){
+      path
+        .lineBy(this.oBeam.w , this.oBeam.hs)
+        .lineBy(0, this.oBeam.hd)
+    }
+    path.lineBy(-this.beamWidth, 0)
+    
+    return path;
+  }
 }

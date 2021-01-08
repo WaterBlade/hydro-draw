@@ -1,13 +1,16 @@
-import { Figure, MaterialTableFigure, RebarTableFigure } from "../Figure";
+import { Figure, FigureInBorder} from "../Figure";
 
 export class UShellFigure {
-  lOuter = new Figure();
-  lInner = new Figure();
+  recordFigures: FigureInBorder[] = [];
+  record(fig: FigureInBorder): void{
+    this.recordFigures.push(fig);
+  }
   cMid = new Figure();
   cEnd = new Figure();
+  cTrans = new Figure();
+  lInner = new Figure();
+  lOuter = new Figure();
   sEndBeam = new Figure();
   sEndWall = new Figure();
   sBar = new Figure();
-  rTable = new RebarTableFigure();
-  mTable = new MaterialTableFigure();
 }

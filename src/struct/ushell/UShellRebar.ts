@@ -1,9 +1,10 @@
 import { CountRebarSpec, RebarSpec, SpaceRebarSpec } from "@/draw";
-import { CompositeRebarBuilder, RebarBuilder } from "../RebarBuilder";
-import { UShell } from "./UShell";
-import { UShellFigure } from "./UShellFigure";
 
-export class UShellRebarSpec {
+export class UShellRebar {
+  recordRebars: RebarSpec[] = [];
+  record(spec: RebarSpec): void{
+    this.recordRebars.push(spec);
+  }
   shell = new ShellRebar();
   end = new EndRebar();
   trans = new TransRebar();
@@ -39,14 +40,3 @@ class BarRebar{
   stir = new SpaceRebarSpec();
   main = new CountRebarSpec();
 }
-
-export abstract class UShellRebarBuilder extends RebarBuilder<
-  UShell,
-  UShellRebarSpec,
-  UShellFigure
-> {}
-export abstract class UShellCompositeRebarBuilder extends CompositeRebarBuilder<
-  UShell,
-  UShellRebarSpec,
-  UShellFigure
-> {}

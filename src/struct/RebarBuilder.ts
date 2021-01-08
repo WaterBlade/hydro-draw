@@ -5,23 +5,14 @@ export class IdGenerator {
   }
 }
 
-export function item<T, U, P, Q extends RebarBuilder<T, U, P>>(builder: {new(t: T, u: U, p: P): Q}, composite: CompositeRebarBuilder<T, U, P>): Q{
-  const i = new builder(composite.struct, composite.rebars, composite.figures);
-  composite.push(i);
-  i.setIdGen(composite.idGen);
-  if(composite.name !== '') i.setName(composite.name);
-  return i;
-}
-
 export abstract class RebarBuilder<T, U, P> {
   idGen = new IdGenerator();
   name = "";
   constructor(
-    public struct: T,
-    public rebars: U,
-    public figures: P,
+    protected struct: T,
+    protected specs: U,
+    protected figures: P,
   ) {}
-  abstract build(): this;
   setIdGen(idGen: IdGenerator): this{
     this.idGen = idGen;
     return this;
@@ -33,6 +24,11 @@ export abstract class RebarBuilder<T, U, P> {
   id(): string {
     return `${this.idGen.gen()}`;
   }
+  abstract buildSpec(): this;
+  abstract buildFigure(): this;
+  buildPos(): this{
+    return this;
+  }
 }
 
 export abstract class CompositeRebarBuilder<T, U, P> 
@@ -40,19 +36,39 @@ export abstract class CompositeRebarBuilder<T, U, P>
   protected builders: RebarBuilder<T, U, P>[] = [];
   constructor( struct: T, rebars: U, figures: P) {
     super(struct, rebars, figures);
+    this.init();
   }
-  push(...builders: RebarBuilder<T, U, P>[]): void {
-    this.builders.push(...builders);
+  abstract init(): void;
+  push(...builders: (new(t: T, u: U, p: P) => RebarBuilder<T, U, P>)[]): void{
+    for(const builder of builders){
+      this.builders.push(new builder(this.struct, this.specs, this.figures));
+    }
   }
   build(): this {
-    this.builders.forEach((f) => f.build());
+    this.buildSpec();
+    this.buildPos();
+    this.buildFigure();
+    return this;
+  }
+  buildSpec(): this{
+    this.builders.forEach(b => b.buildSpec());
+    return this;
+  }
+  buildPos(): this{
+    this.builders.forEach(b => b.buildPos());
+    return this;
+  }
+  buildFigure(): this{
+    this.builders.forEach(b => b.buildFigure());
     return this;
   }
   setIdGen(idGen: IdGenerator): this{
+    this.idGen = idGen;
     this.builders.forEach(b => b.setIdGen(idGen));
     return this;
   }
   setName(name: string): this{
+    this.name = name;
     this.builders.forEach(b => b.setName(name));
     return this;
   }

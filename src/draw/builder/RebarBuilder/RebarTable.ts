@@ -21,7 +21,7 @@ export class RebarTable implements Builder<CompositeItem> {
     const t = new TableBuilder(this.textHeight);
     const title = this._content ? this._content : "钢 筋 表";
     t.title(title);
-    const withStructure = this.rebarSpecs[0].structure !== "";
+    const withStructure = this.rebarSpecs[0] ? this.rebarSpecs[0].structure !== "" : false;
     const start = withStructure ? 1 : 0;
 
     const h = (this.textHeight / 3.5) * 5;
