@@ -163,6 +163,7 @@ export class Column extends BoxContainer {
   resetRowsY(): void {
     const boundary = this.container.boundary;
     const boundaryTop = this.topLeft.y;
+    const colFloor = boundary.getBottom(this.left, this.right);
     const rows = this.rows;
     const rowCount = rows.length;
     for (let i = 0; i < rowCount; i++) {
@@ -170,9 +171,10 @@ export class Column extends BoxContainer {
       const top = i === 0 ? boundaryTop : rows[i - 1].bottom;
       for (let j = i; j < rowCount; j++) {
         const bottomRow = rows[j];
-        const bottom = boundary.getBottom(bottomRow.left, bottomRow.right);
+        const rowFloor =boundary.getBottom(bottomRow.left, bottomRow.right);
+        const floor = bottomRow.bottom > colFloor ? colFloor : rowFloor;
         const totalHeight = sum(...rows.slice(i, j + 1).map((r) => r.height));
-        const space = top - bottom - totalHeight;
+        const space = top - floor - totalHeight;
         const count = j - i + 2;
         yList.push(top - space / count);
       }
