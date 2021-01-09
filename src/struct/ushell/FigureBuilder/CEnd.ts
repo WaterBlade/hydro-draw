@@ -1,4 +1,4 @@
-import { Polyline, Side } from "@/draw";
+import { Line, Polyline, Side, vec } from "@/draw";
 import { FigureBase } from "./Base";
 
 export class CEnd extends FigureBase{
@@ -63,7 +63,9 @@ export class CEnd extends FigureBase{
 
     this.figures.cEnd.addOutline(
       path.greyLine(),
-      inner.offset(u.waterStop.h, Side.Right).greyLine()
+      inner.offset(u.waterStop.h, Side.Right).greyLine(),
+      new Line(vec(-u.r + u.iBeam.w, u.hd), vec(u.r - u.iBeam.w, u.hd)),
+      new Line(vec(-u.r + u.iBeam.w, u.hd-u.bar.h), vec(u.r - u.iBeam.w, u.hd - u.bar.h)),
     );
     return this;
   }

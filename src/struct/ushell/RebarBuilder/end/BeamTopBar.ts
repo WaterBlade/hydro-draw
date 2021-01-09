@@ -19,7 +19,7 @@ export class BeamTopBar extends RebarBase {
   }
   protected genShape(): Line {
     const u = this.struct;
-    const leftEdge = u.genEndLeftOutline().offset(u.as);
+    const leftEdge = u.genEndCOuterLeft().offset(u.as);
     const rightEdge = leftEdge.mirrorByYAxis();
 
     const y = -u.r - u.waterStop.h - u.as;

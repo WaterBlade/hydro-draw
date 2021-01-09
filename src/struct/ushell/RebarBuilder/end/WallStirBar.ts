@@ -26,9 +26,9 @@ export class WallStirBar extends RebarBase {
     const bar = this.specs.end.wStir;
     const y0 = u.hd - u.as;
     const y1 = -u.r - u.waterStop.h - u.as;
-    const leftEdge = u.genEndLeftOutline().offset(u.as);
+    const leftEdge = u.genEndCOuterLeft().offset(u.as);
     const rightEdge = u
-      .genEndLeftInner()
+      .genEndCInnerLeft()
       .offset(u.waterStop.h + u.as, Side.Right);
 
     const pts = new Line(vec(0, y0), vec(0, y1)).divide(bar.space).removeEndPt()

@@ -20,7 +20,7 @@ export class BeamBotBar extends RebarBase {
   protected genShape(): Line {
     const u = this.struct;
     const y = u.hd - u.endHeight + u.support.h + u.as;
-    const leftEdge = u.genEndLeftOutline().offset(u.as);
+    const leftEdge = u.genEndCOuterLeft().offset(u.as);
     const rightEdge = leftEdge.mirrorByYAxis();
     const left = leftEdge.rayIntersect(vec(0, y), vec(1, 0))[0];
     const right = rightEdge.rayIntersect(vec(0, y), vec(1, 0))[0];

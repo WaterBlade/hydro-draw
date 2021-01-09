@@ -31,7 +31,7 @@ export class BeamMidBar extends RebarBase {
       .divideByCount(bar.singleCount + 1)
       .removeStartPt()
       .removeEndPt().points;
-    const leftEdge = u.genEndLeftOutline().offset(u.as);
+    const leftEdge = u.genEndCOuterLeft().offset(u.as);
     const rightEdge = leftEdge.mirrorByYAxis();
     return pts.map(
       (p) =>

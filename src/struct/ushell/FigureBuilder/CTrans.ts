@@ -1,3 +1,4 @@
+import { Line, vec } from "@/draw";
 import { FigureBase } from "./Base";
 
 export class CTrans extends FigureBase{
@@ -15,7 +16,10 @@ export class CTrans extends FigureBase{
     const u = this.struct;
     this.figures.cTrans.addOutline(
       u.genCInner().greyLine(),
-      u.genCOuter().greyLine()
+      u.genTransCOuter().greyLine(),
+      u.genEndCOuter().greyLine(),
+      new Line(vec(-u.r + u.iBeam.w, u.hd), vec(-u.r -u.t - u.oBeam.w, u.hd)).greyLine(),
+      new Line(vec(u.r - u.iBeam.w, u.hd), vec(u.r +u.t + u.oBeam.w, u.hd)).greyLine(),
     )
     return this;
   }

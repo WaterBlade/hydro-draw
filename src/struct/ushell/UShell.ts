@@ -1,4 +1,4 @@
-import { Line, polar, Polyline, toDegree, vec, Vector } from "@/draw";
+import { Line, polar, Polyline, Side, toDegree, vec, Vector } from "@/draw";
 
 export class UShell {
   r = 0;
@@ -116,12 +116,34 @@ export class UShell {
     }
     return path;
   }
-  genEndLeftOutline(): Polyline {
+  genEndCOuterLeft(): Polyline {
     return new Polyline(-this.r - this.t - this.oBeam.w, this.hd)
       .lineBy(0, -this.endSect.hd)
       .lineBy(this.endSect.w, -this.endSect.hs);
   }
-  genEndLeftInner(): Polyline {
+  genEndCOuter(): Polyline{
+    const path = new Polyline(-this.r - this.t - this.oBeam.w, this.hd);
+    path
+      .lineBy(0, -this.endSect.hd)
+      .lineBy(this.endSect.w, -this.endSect.hs);
+    if(this.support.h > 0){
+      const {w, h} = this.support;
+      path
+        .lineBy(w, 0)
+        .lineBy(h, h)
+        .lineBy(2*this.r + 2* this.t + 2*this.oBeam.w - 2* this.endSect.w - 2*w - 2*h, 0)
+        .lineBy(h, -h)
+        .lineBy(w, 0);
+    }else{
+      path.lineBy(2*this.r + 2*this.t + 2*this.oBeam.w - 2*this.endSect.w, 0);
+    }
+    path
+      .lineBy(this.endSect.w, this.endSect.hs)
+      .lineBy(0, this.endSect.hd);
+    
+    return path;
+  }
+  genEndCInnerLeft(): Polyline {
     return new Polyline(-this.r, this.hd)
       .lineBy(0, -this.hd)
       .arcTo(0, -this.r, 90);
@@ -149,6 +171,21 @@ export class UShell {
         .lineBy(0, this.iBeam.hd);
     }
     return path;
+  }
+  genCOuterArc(): Polyline{
+    const [transPt0, transPt1] = this.transPt;
+    const angle = this.transAngle;
+    const path = new Polyline(-this.r - this.t, 0);
+    path
+      .arcTo(transPt0.x, transPt0.y, angle)
+      .lineTo(-this.butt.w / 2, -this.bottomRadius)
+      .lineBy(this.butt.w, 0)
+      .lineTo(transPt1.x, transPt1.y)
+      .arcTo(this.r + this.t, 0, angle)
+    return path;
+  }
+  genTransCOuter(): Polyline{
+    return this.genCOuterArc().offset(this.oBeam.w, Side.Right);
   }
   genCOuter(): Polyline{
     const [transPt0, transPt1] = this.transPt;

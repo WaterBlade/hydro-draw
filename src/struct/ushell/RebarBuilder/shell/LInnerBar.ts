@@ -102,7 +102,7 @@ export class LInnerBar extends RebarBase {
     const u = this.struct;
     const bar = this.specs.shell.lInner;
     const fig = this.figures.sEndBeam;
-    const y = -u.as - fig.drawRadius;
+    const y = -u.as;
     const right = fig.outline.getBoundingBox().right;
     fig.push(
       new PlaneRebar(fig.textHeight)
@@ -116,7 +116,7 @@ export class LInnerBar extends RebarBase {
     const u = this.struct;
     const bar = this.specs.shell.lInner;
     const fig = this.figures.sEndWall;
-    const y = -u.as - fig.drawRadius;
+    const y = -u.as;
     const right = fig.outline.getBoundingBox().right;
     fig.push(
       new PlaneRebar(fig.textHeight)
