@@ -19,7 +19,10 @@ import {
   SparsePointRebar,
   last,
   DimensionBuilder,
+  Vector,
+  Note,
 } from "@/draw";
+import { Sym } from "@/draw/preset/SymbolPreset";
 
 class PosGen {
   xPos: number[] = [];
@@ -82,7 +85,7 @@ export interface FigureInBorder {
   pushTo(border: BorderBuilder): this;
 }
 export class Figure implements FigureInBorder {
-  id = "";
+  id = "图";
   setId(id: string): this {
     this.id = id;
     return this;
@@ -122,6 +125,32 @@ export class Figure implements FigureInBorder {
   }
   get outline(): CompositeItem {
     return this._outline;
+  }
+  // note
+  leader(content: string | Content, start: Vector, end: Vector): this{
+    this.composite.push(
+      Note.leader(content, start, end, this.textHeight)
+    );
+    return this;
+  }
+  leaderSpec(content: string | Content, center: Vector, radius: number, end: Vector): this{
+    this.composite.push(
+      Note.leaderSpec(content, center, radius, end, this.textHeight)
+    );
+    return this;
+  }
+  // symbol
+  breakline(start: Vector, end: Vector): this{
+    this.composite.push(
+      Sym.breakline(start, end, this.textHeight)
+    );
+    return this;
+  }
+  sectSymbol(content: string | Content, start: Vector, end: Vector): this{
+    this.composite.push(
+      Sym.sectSymbol(content, start, end, this.textHeight)
+    );
+    return this;
   }
   // dim
   dimBuilder(): DimensionBuilder {

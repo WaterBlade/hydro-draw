@@ -7,7 +7,7 @@ import {
   vec,
   Vector,
 } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { RebarBase } from "../Base";
 
 export class WallStirBar extends RebarBase {
@@ -15,10 +15,10 @@ export class WallStirBar extends RebarBase {
     return this.struct.hasUnCant();
   }
   protected isLeftExist(): boolean {
-    return this.struct.isLeftExist();
+    return this.struct.isLeftFigureExist();
   }
   protected isRightExist(): boolean {
-    return this.struct.isRightExist();
+    return this.struct.isRightFigureExist();
   }
   protected getEndFigure(): Figure {
     return this.figures.cEnd;

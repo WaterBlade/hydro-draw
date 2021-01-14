@@ -21,8 +21,8 @@ export default function runUshellDemo(): void{
   const u = ctrl.struct;
   // 长度
   u.len = 14960;
-  u.cantLeft = 1000;
-  u.cantRight = 0;
+  u.cantLeft = 0;
+  u.cantRight = 1000;
   // 内径
   u.shell.r = 2300;
   // 直段高

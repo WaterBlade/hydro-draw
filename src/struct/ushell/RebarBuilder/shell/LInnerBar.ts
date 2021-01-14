@@ -7,7 +7,7 @@ import {
   Side,
   vec,
 } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { RebarBase } from "../Base";
 
 export class LInnerBar extends RebarBase {
@@ -33,19 +33,19 @@ export class LInnerBar extends RebarBase {
   buildFigure(): this {
     this.drawCMid();
     this.drawLInner();
-    if (this.struct.isLeftExist()) {
+    if (this.struct.isLeftFigureExist()) {
       this.drawSEndBeam(this.figures.sEndBLeft);
       this.drawSEndWall(this.figures.sEndWLeft);
     }
-    if (this.struct.isRightExist()) {
+    if (this.struct.isRightFigureExist()) {
       this.drawSEndBeam(this.figures.sEndBRight);
       this.drawSEndWall(this.figures.sEndWRight);
     }
-    if (this.struct.isLeftCantExist()) {
+    if (this.struct.isLeftCantFigureExist()) {
       this.drawSEndBeam(this.figures.sEndCantBLeft);
       this.drawSEndWall(this.figures.sEndCantWLeft);
     }
-    if (this.struct.isRightCantExist()) {
+    if (this.struct.isRightCantFigureExist()) {
       this.drawSEndBeam(this.figures.sEndCantBRight);
       this.drawSEndWall(this.figures.sEndCantWRight);
     }

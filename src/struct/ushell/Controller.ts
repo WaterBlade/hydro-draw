@@ -1,6 +1,5 @@
 import { DrawItem } from "@/draw";
-import { Drawing } from "../Drawing";
-import { MaterialTableFigure, RebarTableFigure } from "../Figure";
+import { Drawing, MaterialTableFigure, RebarTableFigure } from "../utils";
 import { UShellFigureBuilder } from "./FigureBuilder";
 import { UShellRebarBuilder } from "./RebarBuilder";
 import { UShell } from "./UShell";
@@ -24,6 +23,7 @@ export class UShellController {
     figBuilder.initFigure();
     figBuilder.buildOutline();
     rebarBuilder.build();
+    figBuilder.buildNote();
     figBuilder.buildDim();
 
     this.drawing.push(

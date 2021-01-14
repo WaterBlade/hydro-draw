@@ -1,4 +1,4 @@
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { SEndBLeft } from "./SEndBLeft";
 
 export class SEndBRight extends SEndBLeft {

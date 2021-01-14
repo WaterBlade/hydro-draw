@@ -1,5 +1,5 @@
 import { CountRebarSpec, RebarSpec, SpaceRebarSpec } from "@/draw";
-import { IdGenerator } from "../RebarBuilder";
+import { IdGenerator } from "../utils/RebarBuilder";
 
 export class UShellRebar {
   id = new IdGenerator();

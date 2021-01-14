@@ -1,4 +1,4 @@
-import { CompositeRebarBuilder, RebarBuilder } from "@/struct/RebarBuilder";
+import { CompositeRebarBuilder, RebarBuilder } from "@/struct/utils/RebarBuilder";
 import { UShell } from "../UShell";
 import { UShellFigure } from "../UShellFigure";
 import { UShellRebar } from "../UShellRebar";

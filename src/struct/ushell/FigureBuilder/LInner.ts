@@ -56,6 +56,41 @@ export class LInner extends FigureBase {
     }
     return this;
   }
+  buildNote(): this{
+    const u = this.struct;
+    const fig = this.figures.lInner;
+    const h = u.endHeight - u.shell.hd - u.shell.r - u.shell.tb;
+    const bot = u.shell.hd - u.endHeight;
+    const y = -u.shell.r-u.shell.tb - 0.25*h;
+    const r = 0.75*h;
+    // end beam
+    if(u.isLeftFigureExist()){
+      const id = this.figures.sEndBLeft.id;
+      const x = -u.len/2+u.endSect.b/2
+      fig.leaderSpec(`大样${id}`, vec(x, y), r, vec(x-fig.h, bot-2*fig.h))
+    }
+    if(u.isLeftCantFigureExist()){
+      const id = this.figures.sEndCantBLeft.id;
+      const x = -u.len/2+u.endSect.b/2 + u.cantLeft;
+      fig.leaderSpec(`大样${id}`, vec(x, y), r, vec(x+fig.h, bot-2*fig.h))
+    }
+    if(u.isRightFigureExist()){
+      const id = this.figures.sEndBRight.id;
+      const x = u.len/2-u.endSect.b/2
+      fig.leaderSpec(`大样${id}`, vec(x, y), r, vec(x+fig.h, bot-2*fig.h))
+    }
+    if(u.isRightCantFigureExist()){
+      const id = this.figures.sEndCantBRight.id;
+      const x = u.len/2-u.endSect.b/2 - u.cantRight;
+      fig.leaderSpec(`大样${id}`, vec(x, y), r, vec(x-fig.h, bot-2*fig.h))
+    }
+    // bar
+    const pts = u.genBarCenters();
+    const pt = pts[Math.floor(pts.length/2)];
+    const id = this.figures.sBar.id;
+    fig.leaderSpec(`大样${id}`, pt, 1.5*u.bar.w, pt.add(vec(3*fig.h, -5*fig.h)));
+    return this;
+  }
   buildDim(): this {
     const u = this.struct;
     const fig = this.figures.lInner;

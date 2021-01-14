@@ -49,16 +49,16 @@ export class UShell {
   get bottomRadius(): number {
     return this.shell.r + this.shell.t + this.shell.hb;
   }
-  isLeftExist(): boolean {
+  isLeftFigureExist(): boolean {
     return this.cantLeft === 0;
   }
-  isLeftCantExist(): boolean {
+  isLeftCantFigureExist(): boolean {
     return this.cantLeft !== 0;
   }
-  isRightExist(): boolean {
+  isRightFigureExist(): boolean {
     return this.cantLeft !== 0 && this.cantRight === 0;
   }
-  isRightCantExist(): boolean {
+  isRightCantFigureExist(): boolean {
     return (
       this.cantRight !== 0 && Math.abs(this.cantLeft - this.cantRight) > 1e-6
     );

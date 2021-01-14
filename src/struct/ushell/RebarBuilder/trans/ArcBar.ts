@@ -1,5 +1,5 @@
 import { Arc, Line, Polyline, RebarFormPreset, Side, vec } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { RebarBase } from "../Base";
 
 export class ArcBar extends RebarBase {
@@ -33,11 +33,11 @@ export class ArcBar extends RebarBase {
   }
   buildFigure(): this {
     this.drawCTrans();
-    if (this.struct.isLeftExist()) this.drawSEndBeam(this.figures.sEndBLeft);
-    if (this.struct.isRightExist()) this.drawSEndBeam(this.figures.sEndBRight);
-    if (this.struct.isLeftCantExist())
+    if (this.struct.isLeftFigureExist()) this.drawSEndBeam(this.figures.sEndBLeft);
+    if (this.struct.isRightFigureExist()) this.drawSEndBeam(this.figures.sEndBRight);
+    if (this.struct.isLeftCantFigureExist())
       this.drawSEndBeam(this.figures.sEndCantBLeft, true);
-    if (this.struct.isRightCantExist())
+    if (this.struct.isRightCantFigureExist())
       this.drawSEndBeam(this.figures.sEndCantBRight, true);
     this.drawLOuter();
     this.drawLInner();

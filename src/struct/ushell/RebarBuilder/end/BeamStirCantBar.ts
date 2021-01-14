@@ -1,5 +1,5 @@
 import { SpaceRebarSpec, vec, Vector } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { BeamStirBar } from "./BeamStirBar";
 
 export class BeamStirCantBar extends BeamStirBar {
@@ -7,10 +7,16 @@ export class BeamStirCantBar extends BeamStirBar {
     return this.struct.hasCant();
   }
   protected isLeftExist(): boolean {
-    return this.struct.isLeftCantExist();
+    return this.struct.cantLeft > 0;
   }
   protected isRightExist(): boolean {
-    return this.struct.isRightCantExist();
+    return this.struct.cantRight > 0;
+  }
+  protected isLeftFigureExist(): boolean {
+    return this.struct.isLeftCantFigureExist();
+  }
+  protected isRightFigureExist(): boolean {
+    return this.struct.isRightCantFigureExist();
   }
   protected getEndFigure(): Figure {
     return this.figures.cEndCant;

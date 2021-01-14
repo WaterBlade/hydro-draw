@@ -7,7 +7,7 @@ import {
   toDegree,
   vec,
 } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { RebarBase } from "../Base";
 
 export class TopBeamBar extends RebarBase {

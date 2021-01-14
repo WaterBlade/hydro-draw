@@ -8,7 +8,7 @@ import {
   Vector,
   RebarPathForm,
 } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { RebarBase } from "../Base";
 
 export class COuterBar extends RebarBase {
@@ -57,19 +57,19 @@ export class COuterBar extends RebarBase {
     this.drawCMid();
     this.drawLInner();
     this.drawLOuter();
-    if (this.struct.isLeftExist()) {
+    if (this.struct.isLeftFigureExist()) {
       this.drawSEndBeam(this.figures.sEndBLeft);
       this.drawSEndWall(this.figures.sEndWLeft);
     }
-    if (this.struct.isRightExist()) {
+    if (this.struct.isRightFigureExist()) {
       this.drawSEndBeam(this.figures.sEndBRight);
       this.drawSEndWall(this.figures.sEndWRight);
     }
-    if (this.struct.isLeftCantExist()) {
+    if (this.struct.isLeftCantFigureExist()) {
       this.drawSEndBeam(this.figures.sEndCantBLeft, true);
       this.drawSEndWall(this.figures.sEndCantWLeft, true);
     }
-    if (this.struct.isRightCantExist()) {
+    if (this.struct.isRightCantFigureExist()) {
       this.drawSEndBeam(this.figures.sEndCantBRight, true);
       this.drawSEndWall(this.figures.sEndCantWRight, true);
     }

@@ -1,4 +1,4 @@
-import { Figure, FigureInBorder, SectIdGen, SpecIdGen } from "../Figure";
+import { Figure, FigureInBorder, SectIdGen, SpecIdGen } from "../utils/Figure";
 
 export class UShellFigure {
   recordFigures: FigureInBorder[] = [];

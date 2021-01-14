@@ -1,4 +1,4 @@
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { CEnd } from "./CEnd";
 
 export class CEndCant extends CEnd {
@@ -17,5 +17,8 @@ export class CEndCant extends CEnd {
   }
   protected getInnerGap(): number {
     return 0;
+  }
+  protected getSectSymbolId(): string{
+    return this.struct.isLeftCantFigureExist() ? this.figures.sEndCantWLeft.id : this.figures.sEndCantWRight.id;
   }
 }

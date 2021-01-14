@@ -1,4 +1,4 @@
-import { CompositeFigureBuilder, FigureBuilder } from "@/struct/FigureBuilder";
+import { CompositeFigureBuilder, FigureBuilder } from "@/struct/utils/FigureBuilder";
 import { UShell } from "../UShell";
 import { UShellFigure } from "../UShellFigure";
 import { UShellRebar } from "../UShellRebar";

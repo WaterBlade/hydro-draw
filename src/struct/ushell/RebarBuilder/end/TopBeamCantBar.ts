@@ -1,5 +1,5 @@
 import { RebarSpec } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { TopBeamBar } from "./TopBeamBar";
 
 export class TopBeamCantBar extends TopBeamBar {

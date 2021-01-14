@@ -1,5 +1,5 @@
 import { Line, Polyline, Side, vec } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { FigureBase } from "./Base";
 
 export class CEnd extends FigureBase {
@@ -100,6 +100,18 @@ export class CEnd extends FigureBase {
 
         fig.addOutline(inner.offset(gap, Side.Right).greyLine());
       }
+    }
+    return this;
+  }
+  protected getSectSymbolId(): string{
+    return this.struct.isLeftFigureExist() ? this.figures.sEndWLeft.id : this.figures.sEndWRight.id;
+  }
+  buildNote(): this{
+    if(this.isExist()){
+      const u = this.struct;
+      const fig = this.getFigure();
+      const id = this.getSectSymbolId();
+      fig.sectSymbol(id, vec(-u.shell.r-u.shell.t-u.oBeam.w-0.5*fig.h, fig.h), vec(-u.shell.r + 0.5*fig.h, fig.h));
     }
     return this;
   }

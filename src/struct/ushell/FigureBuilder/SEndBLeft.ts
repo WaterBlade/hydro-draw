@@ -1,5 +1,5 @@
 import { Line, Polyline, vec } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { FigureBase } from "./Base";
 
 export class SEndBLeft extends FigureBase {
@@ -36,6 +36,16 @@ export class SEndBLeft extends FigureBase {
         const y = -h + u.support.h;
         fig.addOutline(new Line(vec(0, y), vec(u.endSect.b, y)).greyLine());
       }
+    }
+    return this;
+  }
+  buildNote(): this{
+    if(this.isExist()){
+      const u = this.struct;
+      const fig = this.getFigure();
+      const right = fig.outline.getBoundingBox().right;
+      fig.breakline(vec(right, 0), vec(right, -u.shell.tb))
+
     }
     return this;
   }

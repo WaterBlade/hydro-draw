@@ -1,5 +1,5 @@
-import { Polyline } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Polyline, vec } from "@/draw";
+import { Figure } from "@/struct/utils/Figure";
 import { FigureBase } from "./Base";
 
 export class SEndWLeft extends FigureBase {
@@ -34,6 +34,15 @@ export class SEndWLeft extends FigureBase {
     }
     return this;
   }
+  buildNote(): this{
+    if(this.isExist()){
+      const u = this.struct;
+      const fig = this.getFigure();
+      const right = fig.outline.getBoundingBox().right;
+      fig.breakline(vec(right, 0), vec(right, -u.shell.t))
+    }
+    return this;
+  }
   buildDim(): this {
     if (this.isExist()) {
       const fig = this.getFigure();
@@ -64,5 +73,5 @@ export class SEndWLeft extends FigureBase {
   protected getFigure(): Figure {
     return this.figures.sEndWLeft;
   }
-  protected postProcess(): void {}
+  protected postProcess(): void {;}
 }

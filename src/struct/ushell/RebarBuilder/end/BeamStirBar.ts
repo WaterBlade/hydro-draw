@@ -8,7 +8,7 @@ import {
   SpaceRebarSpec,
   Vector,
 } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { RebarBase } from "../Base";
 
 export class BeamStirBar extends RebarBase {
@@ -16,10 +16,16 @@ export class BeamStirBar extends RebarBase {
     return this.struct.hasUnCant();
   }
   protected isLeftExist(): boolean {
-    return this.struct.isLeftExist();
+    return this.struct.cantLeft === 0;
   }
   protected isRightExist(): boolean {
-    return this.struct.isRightExist();
+    return this.struct.cantRight === 0;
+  }
+  protected isLeftFigureExist(): boolean {
+    return this.struct.isLeftFigureExist();
+  }
+  protected isRightFigureExist(): boolean {
+    return this.struct.isRightFigureExist();
   }
   protected getEndFigure(): Figure {
     return this.figures.cEnd;
@@ -67,8 +73,8 @@ export class BeamStirBar extends RebarBase {
   buildFigure(): this {
     this.drawCEnd();
     this.drawLInner();
-    if (this.isLeftExist()) this.drawSEndBeam(this.getLeftFigure());
-    if (this.isRightExist()) this.drawSEndBeam(this.getRightFigure());
+    if (this.isLeftFigureExist()) this.drawSEndBeam(this.getLeftFigure());
+    if (this.isRightFigureExist()) this.drawSEndBeam(this.getRightFigure());
     return this;
   }
   protected genMulShape(): Line[] {

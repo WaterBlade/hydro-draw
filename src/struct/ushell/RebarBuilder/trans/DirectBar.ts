@@ -1,5 +1,5 @@
 import { Line, Polyline, RebarFormPreset, vec } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { RebarBase } from "../Base";
 
 export class DirectBar extends RebarBase {
@@ -31,11 +31,11 @@ export class DirectBar extends RebarBase {
   }
   buildFigure(): this {
     this.drawCTrans();
-    if (this.struct.isLeftExist()) this.drawSEndWall(this.figures.sEndWLeft);
-    if (this.struct.isRightExist()) this.drawSEndWall(this.figures.sEndWRight);
-    if (this.struct.isLeftCantExist())
+    if (this.struct.isLeftFigureExist()) this.drawSEndWall(this.figures.sEndWLeft);
+    if (this.struct.isRightFigureExist()) this.drawSEndWall(this.figures.sEndWRight);
+    if (this.struct.isLeftCantFigureExist())
       this.drawSEndWall(this.figures.sEndCantWLeft, true);
-    if (this.struct.isRightCantExist())
+    if (this.struct.isRightCantFigureExist())
       this.drawSEndWall(this.figures.sEndCantWRight, true);
     return this;
   }

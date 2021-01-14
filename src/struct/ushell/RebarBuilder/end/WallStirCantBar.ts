@@ -1,5 +1,5 @@
 import { SpaceRebarSpec, vec, Vector } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { WallStirBar } from "./WallStirBar";
 
 export class WallStirCantBar extends WallStirBar {
@@ -7,10 +7,10 @@ export class WallStirCantBar extends WallStirBar {
     return this.struct.hasCant();
   }
   protected isLeftExist(): boolean {
-    return this.struct.isLeftCantExist();
+    return this.struct.isLeftCantFigureExist();
   }
   protected isRightExist(): boolean {
-    return this.struct.isRightCantExist();
+    return this.struct.isRightCantFigureExist();
   }
   protected getEndFigure(): Figure {
     return this.figures.cEndCant;

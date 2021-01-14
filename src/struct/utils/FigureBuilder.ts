@@ -35,6 +35,7 @@ export abstract class CompositeFigureBuilder<T, U, P> extends FigureBuilder<
     return this;
   }
   buildNote(): this {
+    this.builders.forEach((b) => b.buildNote());
     return this;
   }
 }

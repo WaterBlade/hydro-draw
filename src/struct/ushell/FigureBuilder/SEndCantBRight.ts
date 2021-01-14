@@ -1,4 +1,4 @@
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { SEndCantBLeft } from "./SEndCantBLeft";
 
 export class SEndCantBRight extends SEndCantBLeft {

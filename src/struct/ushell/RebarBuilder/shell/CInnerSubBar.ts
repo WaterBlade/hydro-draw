@@ -1,15 +1,11 @@
 import {
-  PlaneRebar,
-  Circle,
   Line,
-  LinePointRebar,
   Polyline,
   Side,
-  SparsePointRebar,
   vec,
   RebarPathForm,
 } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { RebarBase } from "../Base";
 
 export class CInnerSubBar extends RebarBase {
@@ -54,13 +50,21 @@ export class CInnerSubBar extends RebarBase {
   buildFigure(): this {
     this.drawCEnd();
     this.drawLInner();
-    if (this.struct.isLeftExist()) {
+    if (this.struct.isLeftFigureExist()) {
       this.drawSEndBeam(this.figures.sEndBLeft);
       this.drawSEndWall(this.figures.sEndWLeft);
     }
-    if (this.struct.isRightExist()) {
+    if (this.struct.isRightFigureExist()) {
       this.drawSEndBeam(this.figures.sEndBRight);
       this.drawSEndWall(this.figures.sEndWRight);
+    }
+    if (this.struct.isLeftCantFigureExist()) {
+      this.drawSEndBeam(this.figures.sEndCantBLeft, true);
+      this.drawSEndWall(this.figures.sEndCantWLeft, true);
+    }
+    if (this.struct.isRightCantFigureExist()) {
+      this.drawSEndBeam(this.figures.sEndCantBRight, true);
+      this.drawSEndWall(this.figures.sEndCantWRight, true);
     }
     return this;
   }
@@ -84,7 +88,7 @@ export class CInnerSubBar extends RebarBase {
       const bar = this.specs.shell.cInnerSub;
       const fig = this.figures.cEnd;
       fig.push(
-        new PlaneRebar(fig.textHeight)
+        fig.planeRebar()
           .rebar(this.genShape())
           .spec(bar)
           .leaderNote(vec(u.shell.r - 2 * fig.textHeight, 0), vec(1, 0))
@@ -102,10 +106,16 @@ export class CInnerSubBar extends RebarBase {
     const y = -u.shell.r - u.waterStop.h - as;
     const x0 = -u.len / 2 + as + r;
     if (u.cantLeft > 0) {
-      fig.push(new Circle(vec(x0, y), r).thickLine());
+      fig.push(
+        fig.sparsePointRebar(30)
+          .points(vec(x0, y))
+          .spec(bar)
+          .parallelLeader(vec(-u.len/2 -fig.h, y+2*fig.h), vec(1, 0))
+          .generate()
+        );
     } else {
       fig.push(
-        new LinePointRebar(fig.textHeight, fig.drawRadius)
+        fig.linePointRebar()
           .line(
             new Line(
               vec(x0, y),
@@ -120,10 +130,16 @@ export class CInnerSubBar extends RebarBase {
     }
     const x1 = u.len / 2 - as - r;
     if (u.cantRight > 0) {
-      fig.push(new Circle(vec(x1, y), r).thickLine());
+      fig.push(
+        fig.sparsePointRebar(30)
+          .points(vec(x1, y))
+          .spec(bar)
+          .parallelLeader(vec(u.len / 2 + fig.h, y + 2 * fig.h), vec(1, 0))
+          .generate()
+      );
     } else {
       fig.push(
-        new LinePointRebar(fig.textHeight, fig.drawRadius)
+        fig.linePointRebar()
           .line(
             new Line(
               vec(x1 - u.endSect.b + 2 * as + 2 * r, y),
@@ -137,38 +153,49 @@ export class CInnerSubBar extends RebarBase {
       );
     }
   }
-  protected drawSEndBeam(fig: Figure): void {
+  protected drawSEndBeam(fig: Figure, isCant=false): void {
     const u = this.struct;
     const bar = this.specs.shell.cInnerSub;
     const r = fig.drawRadius;
     const as = this.specs.as;
     const y = -u.waterStop.h - as + r;
     const count = this.specs.end.cOuter.singleCount;
-    fig.push(
-      new SparsePointRebar(fig.textHeight, r, 30)
+    const rebar = fig.sparsePointRebar()
+    const left = fig.outline.getBoundingBox().left;
+    if(isCant){
+      rebar.points(vec(left + as + r, y)).spec(bar)
+    }else{
+      rebar
         .points(
           ...new Line(
-            vec(as + r, y),
+            vec(left + as + r, y),
             vec(u.endSect.b - as - r, y)
           ).divideByCount(count - 1).points
         )
         .spec(bar, count)
+    }
+    fig.push(
+      rebar
         .parallelLeader(
-          vec(-2 * fig.textHeight, y + 2 * fig.textHeight + u.waterStop.h),
+          vec(left-2 * fig.textHeight, y + 2 * fig.textHeight + u.waterStop.h),
           vec(-1, 0)
         )
         .generate()
     );
   }
-  protected drawSEndWall(fig: Figure): void {
+  protected drawSEndWall(fig: Figure, isCant=false): void {
     const u = this.struct;
     const bar = this.specs.shell.cInnerSub;
     const r = fig.drawRadius;
     const as = this.specs.as;
     const y = -u.waterStop.h - as - r;
     const count = this.specs.end.cOuter.singleCount;
-    fig.push(
-      new SparsePointRebar(fig.textHeight, r, 30)
+    const rebar = fig.sparsePointRebar()
+    const left = fig.outline.getBoundingBox().left;
+    if(isCant){
+      rebar.points(vec(left+as+r, y)).spec(bar);
+    }else{
+      rebar
         .points(
           ...new Line(
             vec(as + r, y),
@@ -176,8 +203,11 @@ export class CInnerSubBar extends RebarBase {
           ).divideByCount(count - 1).points
         )
         .spec(bar, count)
+    }
+    fig.push(
+      rebar
         .parallelLeader(
-          vec(-2 * fig.textHeight, y + 2 * fig.textHeight + u.waterStop.h),
+          vec(left-2 * fig.textHeight, y + 2 * fig.textHeight + u.waterStop.h),
           vec(-1, 0)
         )
         .generate()

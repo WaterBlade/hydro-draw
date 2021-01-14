@@ -9,7 +9,7 @@ import {
   vec,
   RebarPathForm,
 } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { RebarBase } from "../Base";
 
 export class CInnerBar extends RebarBase {
@@ -43,19 +43,19 @@ export class CInnerBar extends RebarBase {
     this.drawCMid();
     this.drawCEndCant();
     this.drawLInner();
-    if (this.struct.isLeftExist()) {
+    if (this.struct.isLeftFigureExist()) {
       this.drawSEndBeam(this.figures.sEndBLeft);
       this.drawSEndWall(this.figures.sEndWLeft);
     }
-    if (this.struct.isRightExist()) {
+    if (this.struct.isRightFigureExist()) {
       this.drawSEndBeam(this.figures.sEndBRight);
       this.drawSEndWall(this.figures.sEndWRight);
     }
-    if (this.struct.isLeftCantExist()) {
+    if (this.struct.isLeftCantFigureExist()) {
       this.drawSEndCantBeam(this.figures.sEndCantBLeft);
       this.drawSEndCantWall(this.figures.sEndCantWLeft);
     }
-    if (this.struct.isRightCantExist()) {
+    if (this.struct.isRightCantFigureExist()) {
       this.drawSEndCantBeam(this.figures.sEndCantBRight);
       this.drawSEndCantWall(this.figures.sEndCantWRight);
     }
@@ -98,8 +98,7 @@ export class CInnerBar extends RebarBase {
     res.push(
       new Line(vec(left, y), vec(midLeft, y))
         .offset(dist, Side.Right)
-        .divide(bar.denseSpace)
-        .removeStartPt(),
+        .divide(bar.denseSpace),
       new Line(vec(midLeft, y), vec(midRight, y))
         .offset(dist, Side.Right)
         .divide(bar.space)
@@ -108,8 +107,9 @@ export class CInnerBar extends RebarBase {
       new Line(vec(midRight, y), vec(right, y))
         .offset(dist, Side.Right)
         .divide(bar.denseSpace)
-        .removeEndPt()
     );
+    if(u.cantLeft === 0) res[0].removeStartPt();
+    if(u.cantRight === 0) res[2].removeEndPt();
     return res;
   }
   protected drawCMid(): void {
@@ -123,7 +123,7 @@ export class CInnerBar extends RebarBase {
       .removeEnd();
     const pt = vec(-u.shell.r + 3 * fig.textHeight, u.shell.hd / 5);
     fig.push(
-      new PlaneRebar(fig.textHeight)
+      fig.planeRebar()
         .spec(bar, 0, bar.space)
         .rebar(path)
         .leaderNote(pt, vec(1, 0))
@@ -140,7 +140,7 @@ export class CInnerBar extends RebarBase {
         .offset(as, Side.Right)
         .removeStart()
         .removeEnd();
-      const pt = vec(-u.shell.r + 3 * fig.textHeight, u.shell.hd / 5);
+      const pt = vec(u.shell.r - 3 * fig.textHeight, u.shell.hd / 5);
       fig.push(
         new PlaneRebar(fig.textHeight)
           .spec(bar, 0, bar.space)

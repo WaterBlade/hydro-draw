@@ -6,7 +6,7 @@ import {
   SparsePointRebar,
   vec,
 } from "@/draw";
-import { Figure } from "@/struct/Figure";
+import { Figure } from "@/struct/utils/Figure";
 import { RebarBase } from "../Base";
 
 export class BeamBotBar extends RebarBase {
@@ -23,11 +23,11 @@ export class BeamBotBar extends RebarBase {
     if (this.struct.hasUnCant()) this.drawCEnd(this.figures.cEnd);
     if (this.struct.hasCant()) this.drawCEnd(this.figures.cEndCant);
     this.drawLInner();
-    if (this.struct.isLeftExist()) this.drawSEndBeam(this.figures.sEndBLeft);
-    if (this.struct.isRightExist()) this.drawSEndBeam(this.figures.sEndBRight);
-    if (this.struct.isLeftCantExist())
+    if (this.struct.isLeftFigureExist()) this.drawSEndBeam(this.figures.sEndBLeft);
+    if (this.struct.isRightFigureExist()) this.drawSEndBeam(this.figures.sEndBRight);
+    if (this.struct.isLeftCantFigureExist())
       this.drawSEndBeam(this.figures.sEndCantBLeft);
-    if (this.struct.isRightCantExist())
+    if (this.struct.isRightCantFigureExist())
       this.drawSEndBeam(this.figures.sEndCantBRight);
     return this;
   }
