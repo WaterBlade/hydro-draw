@@ -1,4 +1,4 @@
-import { Vector, BoundingBox, EmptyBox } from "@/draw/misc";
+import { Vector, BoundingBox } from "@/draw/misc";
 import { DrawItem } from "./DrawItem";
 import { Paper } from "./Paper.interface";
 
@@ -24,6 +24,13 @@ export class CompositeItem extends DrawItem {
       item.accept(paper, pt);
     }
   }
+  mirrorByVAxis(x = 0): CompositeItem {
+    const comp = new CompositeItem();
+    comp.insertPoint = this.insertPoint.mirrorByVAxis(x);
+    comp.push(...this.itemList.map((item) => item.mirrorByVAxis(0)));
+    comp.lineType = this.lineType;
+    return comp;
+  }
   protected scaleItem(factor: number): void {
     this.insertPoint = this.insertPoint.mul(factor);
     for (const item of this.itemList) {
@@ -35,7 +42,7 @@ export class CompositeItem extends DrawItem {
   }
   calcBoundingBox(): BoundingBox {
     if (this.itemList.length === 0) {
-      return new EmptyBox();
+      throw Error("cannot calculate empty composite bounding box");
     }
     const boxs = this.itemList.map((item) => item.getBoundingBox());
     boxs.forEach((b) => b.move(this.insertPoint));

@@ -127,7 +127,7 @@ test("get nearest point", () => {
 });
 test("mirror by y axis", () => {
   const l = new Line(vec(0, 0), vec(10, 0));
-  const p = l.mirrorByYAxis();
+  const p = l.mirrorByVAxis();
   expect(p.start.x).toBeCloseTo(0);
   expect(p.end).toEqual(vec(-10, 0));
 });

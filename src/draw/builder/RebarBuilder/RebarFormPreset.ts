@@ -1,0 +1,46 @@
+import { average, RebarDiameter, Side } from "@/draw/misc";
+import { RebarPathForm } from "./RebarForm";
+
+export const RebarFormPreset = {
+  Line(dia: RebarDiameter, length: number | number[]): RebarPathForm {
+    return new RebarPathForm(dia).lineBy(8, 0).dimLength(length);
+  },
+  LShape(dia: RebarDiameter, vLen: number, hLen: number): RebarPathForm {
+    return new RebarPathForm(dia)
+      .lineBy(0, -2)
+      .dimLength(vLen)
+      .lineBy(8, 0)
+      .dimLength(hLen);
+  },
+  UShape(dia: RebarDiameter, vLen: number, hLen: number): RebarPathForm {
+    return new RebarPathForm(dia)
+      .lineBy(0, -2)
+      .dimLength(vLen)
+      .lineBy(8, 0)
+      .dimLength(hLen)
+      .lineBy(0, 2)
+      .dimLength(vLen, Side.Right);
+  },
+  RectWidthHook(
+    dia: RebarDiameter,
+    vLen: number,
+    hLen: number | number[]
+  ): RebarPathForm {
+    let len = 2 * vLen + 12.5 * dia;
+    if (typeof hLen === "number") {
+      len += 2 * hLen;
+    } else {
+      len += 2 * average(...hLen);
+    }
+    const hookRadius = 0.15;
+    return new RebarPathForm(dia)
+      .lineBy(-4 + hookRadius, 0)
+      .lineBy(0, -1.6)
+      .dimLength(vLen, Side.Right)
+      .lineBy(4, 0)
+      .dimLength(hLen)
+      .lineBy(0, 1.6 - hookRadius)
+      .hook({ start: Side.Left, end: Side.Left })
+      .setLength(len);
+  },
+};

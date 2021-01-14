@@ -112,7 +112,7 @@ test("get nearest point", () => {
 });
 test("mirror by y axis", () => {
   const a = new Arc(vec(1, 0), 2, 0, 180, RotateDirection.counterclockwise);
-  const b = a.mirrorByYAxis();
+  const b = a.mirrorByVAxis();
   expect(b.center).toEqual(vec(-1, 0));
   expect(b.startAngle).toEqual(180);
   expect(b.endAngle).toEqual(0);

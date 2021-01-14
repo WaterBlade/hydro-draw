@@ -1,14 +1,19 @@
 import { CountRebarSpec, RebarSpec, SpaceRebarSpec } from "@/draw";
+import { IdGenerator } from "../RebarBuilder";
 
 export class UShellRebar {
+  id = new IdGenerator();
   recordRebars: RebarSpec[] = [];
-  record(spec: RebarSpec): void{
+  record(spec: RebarSpec): void {
     this.recordRebars.push(spec);
   }
   shell = new ShellRebar();
   end = new EndRebar();
   trans = new TransRebar();
   bar = new BarRebar();
+  denseL = 0;
+  as = 0;
+  asBar = 0;
 }
 
 class ShellRebar {
@@ -28,15 +33,14 @@ class EndRebar {
   bStir = new SpaceRebarSpec();
   cOuter = new CountRebarSpec();
   wStir = new SpaceRebarSpec();
-  topBeam = new RebarSpec();
 }
 
-class TransRebar{
+class TransRebar {
   direct = new SpaceRebarSpec();
   arc = new SpaceRebarSpec();
 }
 
-class BarRebar{
+class BarRebar {
   stir = new SpaceRebarSpec();
   main = new CountRebarSpec();
 }

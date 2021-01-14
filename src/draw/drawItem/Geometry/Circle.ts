@@ -25,9 +25,10 @@ export class Circle extends DrawItem implements CircleGeometry {
   constructor(public center: Vector, public radius: number) {
     super();
   }
-  mirrorByYAxis(): Circle {
-    const c = new Circle(this.center.mirrorByYAxis(), this.radius);
-    c.points = this.points.map((p) => p.mirrorByYAxis());
+  mirrorByVAxis(x = 0): Circle {
+    const c = new Circle(this.center.mirrorByVAxis(x), this.radius);
+    c.points = this.points.map((p) => p.mirrorByVAxis(x));
+    c.lineType = this.lineType;
     return c;
   }
   includeTest(pt: Vector): boolean {

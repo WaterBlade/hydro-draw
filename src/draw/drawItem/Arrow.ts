@@ -9,6 +9,13 @@ export class Arrow extends DrawItem implements PaperArrow {
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitArrow(this, insertPoint);
   }
+  mirrorByVAxis(x = 0): Arrow {
+    const start = this.start.mirrorByVAxis(x);
+    const end = this.end.mirrorByVAxis(x);
+    const a = new Arrow(start, end, this.width);
+    a.lineType = this.lineType;
+    return a;
+  }
   protected scaleItem(factor: number): void {
     this.start = this.start.mul(factor);
     this.end = this.end.mul(factor);

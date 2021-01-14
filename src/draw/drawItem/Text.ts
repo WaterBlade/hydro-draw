@@ -6,6 +6,7 @@ import {
   toRadian,
   TextAlign,
   polar,
+  angleMirrorByYAxis,
 } from "@/draw/misc";
 import { Paper, PaperText } from "./Paper.interface";
 import { Content } from "./Content";
@@ -38,37 +39,71 @@ export class Text extends DrawItem implements PaperText {
       switch (align) {
         case TextAlign.BottomRight:
           return TextAlign.BottomLeft;
-          break;
         case TextAlign.BottomLeft:
           return TextAlign.BottomRight;
-          break;
         case TextAlign.BottomCenter:
           return TextAlign.BottomCenter;
-          break;
         case TextAlign.TopRight:
           return TextAlign.TopLeft;
-          break;
         case TextAlign.TopLeft:
           return TextAlign.TopRight;
-          break;
         case TextAlign.TopCenter:
           return TextAlign.TopCenter;
-          break;
         case TextAlign.MiddleRight:
           return TextAlign.MiddleLeft;
-          break;
         case TextAlign.MiddleLeft:
           return TextAlign.MiddleRight;
-          break;
         case TextAlign.MiddleCenter:
           return TextAlign.MiddleCenter;
-          break;
       }
     }
     return align;
   }
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitText(this, insertPoint);
+  }
+  mirrorByVAxis(x = 0): Text {
+    const insertPoint = this.insertPoint.mirrorByVAxis(x);
+    // let align: TextAlign;
+    // switch (this.textAlign) {
+    //     case TextAlign.BottomRight:
+    //       align = TextAlign.BottomLeft;
+    //       break;
+    //     case TextAlign.BottomLeft:
+    //       align = TextAlign.BottomRight;
+    //       break;
+    //     case TextAlign.BottomCenter:
+    //       align = TextAlign.BottomCenter;
+    //       break;
+    //     case TextAlign.TopRight:
+    //       align = TextAlign.TopLeft;
+    //       break;
+    //     case TextAlign.TopLeft:
+    //       align = TextAlign.TopRight;
+    //       break;
+    //     case TextAlign.TopCenter:
+    //       align = TextAlign.TopCenter;
+    //       break;
+    //     case TextAlign.MiddleRight:
+    //       align = TextAlign.MiddleLeft;
+    //       break;
+    //     case TextAlign.MiddleLeft:
+    //       align = TextAlign.MiddleRight;
+    //       break;
+    //     case TextAlign.MiddleCenter:
+    //       align = TextAlign.MiddleCenter;
+    //       break;
+    // }
+    const angle = angleMirrorByYAxis(this.rotateAngle);
+    const t = new Text(
+      this.content,
+      insertPoint,
+      this.height,
+      Text.properAlign(angle, this.textAlign),
+      Text.properAngle(angle)
+    );
+    t.lineType = this.lineType;
+    return t;
   }
   protected scaleItem(factor: number): void {
     this.insertPoint = this.insertPoint.mul(factor);

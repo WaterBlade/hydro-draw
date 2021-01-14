@@ -171,7 +171,7 @@ export class Column extends BoxContainer {
       const top = i === 0 ? boundaryTop : rows[i - 1].bottom;
       for (let j = i; j < rowCount; j++) {
         const bottomRow = rows[j];
-        const rowFloor =boundary.getBottom(bottomRow.left, bottomRow.right);
+        const rowFloor = boundary.getBottom(bottomRow.left, bottomRow.right);
         const floor = bottomRow.bottom > colFloor ? colFloor : rowFloor;
         const totalHeight = sum(...rows.slice(i, j + 1).map((r) => r.height));
         const space = top - floor - totalHeight;

@@ -1,0 +1,2699 @@
+{
+  "program": {
+    "fileInfos": {
+      "./node_modules/typescript/lib/lib.es6.d.ts": {
+        "version": "721cec59c3fef87aaf480047d821fb758b3ec9482c4129a54631e6e25e432a31",
+        "signature": "721cec59c3fef87aaf480047d821fb758b3ec9482c4129a54631e6e25e432a31",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "c9a1f03d6ba0fe3c871eb0dd81622e78fbb61ade70878b34d48a341a690c59e9",
+        "signature": "c9a1f03d6ba0fe3c871eb0dd81622e78fbb61ade70878b34d48a341a690c59e9",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2015.d.ts": {
+        "version": "dc47c4fa66b9b9890cf076304de2a9c5201e94b740cffdf09f87296d877d71f6",
+        "signature": "dc47c4fa66b9b9890cf076304de2a9c5201e94b740cffdf09f87296d877d71f6",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/typescript/lib/lib.es2016.d.ts": {
+        "version": "7a387c58583dfca701b6c85e0adaf43fb17d590fb16d5b2dc0a2fbd89f35c467",
+        "signature": "7a387c58583dfca701b6c85e0adaf43fb17d590fb16d5b2dc0a2fbd89f35c467",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/typescript/lib/lib.es2017.d.ts": {
+        "version": "8a12173c586e95f4433e0c6dc446bc88346be73ffe9ca6eec7aa63c8f3dca7f9",
+        "signature": "8a12173c586e95f4433e0c6dc446bc88346be73ffe9ca6eec7aa63c8f3dca7f9",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/typescript/lib/lib.es2018.d.ts": {
+        "version": "5f4e733ced4e129482ae2186aae29fde948ab7182844c3a5a51dd346182c7b06",
+        "signature": "5f4e733ced4e129482ae2186aae29fde948ab7182844c3a5a51dd346182c7b06",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/typescript/lib/lib.dom.d.ts": {
+        "version": "38130cdd16bd2318b9362f9d60dd9670f7e38708bb6131cf11fc78a41b2c34a0",
+        "signature": "38130cdd16bd2318b9362f9d60dd9670f7e38708bb6131cf11fc78a41b2c34a0",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.dom.iterable.d.ts": {
+        "version": "fb0c09b697dc42afa84d1587e3c994a2f554d2a45635e4f0618768d16a86b69a",
+        "signature": "fb0c09b697dc42afa84d1587e3c994a2f554d2a45635e4f0618768d16a86b69a",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.webworker.importscripts.d.ts": {
+        "version": "7fac8cb5fc820bc2a59ae11ef1c5b38d3832c6d0dfaec5acdb5569137d09a481",
+        "signature": "7fac8cb5fc820bc2a59ae11ef1c5b38d3832c6d0dfaec5acdb5569137d09a481",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.scripthost.d.ts": {
+        "version": "097a57355ded99c68e6df1b738990448e0bf170e606707df5a7c0481ff2427cd",
+        "signature": "097a57355ded99c68e6df1b738990448e0bf170e606707df5a7c0481ff2427cd",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2015.core.d.ts": {
+        "version": "46ee15e9fefa913333b61eaf6b18885900b139867d89832a515059b62cf16a17",
+        "signature": "46ee15e9fefa913333b61eaf6b18885900b139867d89832a515059b62cf16a17",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2015.collection.d.ts": {
+        "version": "43fb1d932e4966a39a41b464a12a81899d9ae5f2c829063f5571b6b87e6d2f9c",
+        "signature": "43fb1d932e4966a39a41b464a12a81899d9ae5f2c829063f5571b6b87e6d2f9c",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2015.generator.d.ts": {
+        "version": "cdccba9a388c2ee3fd6ad4018c640a471a6c060e96f1232062223063b0a5ac6a",
+        "signature": "cdccba9a388c2ee3fd6ad4018c640a471a6c060e96f1232062223063b0a5ac6a",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2015.iterable.d.ts": {
+        "version": "42f5e41e5893da663dbf0394268f54f1da4b43dc0ddd2ea4bf471fe5361d6faf",
+        "signature": "42f5e41e5893da663dbf0394268f54f1da4b43dc0ddd2ea4bf471fe5361d6faf",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2015.promise.d.ts": {
+        "version": "0b7a905675e6cb4211c128f0a3aa47d414b275180a299a9aad5d3ec298abbfc4",
+        "signature": "0b7a905675e6cb4211c128f0a3aa47d414b275180a299a9aad5d3ec298abbfc4",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2015.proxy.d.ts": {
+        "version": "dfff68b3c34338f6b307a25d4566de15eed7973b0dc5d69f9fde2bcac1c25315",
+        "signature": "dfff68b3c34338f6b307a25d4566de15eed7973b0dc5d69f9fde2bcac1c25315",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2015.reflect.d.ts": {
+        "version": "cb609802a8698aa28b9c56331d4b53f590ca3c1c3a255350304ae3d06017779d",
+        "signature": "cb609802a8698aa28b9c56331d4b53f590ca3c1c3a255350304ae3d06017779d",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2015.symbol.d.ts": {
+        "version": "3013574108c36fd3aaca79764002b3717da09725a36a6fc02eac386593110f93",
+        "signature": "3013574108c36fd3aaca79764002b3717da09725a36a6fc02eac386593110f93",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts": {
+        "version": "4670208dd7da9d6c774ab1b75c1527a810388c7989c4905de6aaea8561cb9dce",
+        "signature": "4670208dd7da9d6c774ab1b75c1527a810388c7989c4905de6aaea8561cb9dce",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2016.array.include.d.ts": {
+        "version": "3be5a1453daa63e031d266bf342f3943603873d890ab8b9ada95e22389389006",
+        "signature": "3be5a1453daa63e031d266bf342f3943603873d890ab8b9ada95e22389389006",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2017.object.d.ts": {
+        "version": "17bb1fc99591b00515502d264fa55dc8370c45c5298f4a5c2083557dccba5a2a",
+        "signature": "17bb1fc99591b00515502d264fa55dc8370c45c5298f4a5c2083557dccba5a2a",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts": {
+        "version": "b5e4c2d67aa844ed503b29cd4ca2ede1a229ac7fe874613b2c996fa9c581a25f",
+        "signature": "b5e4c2d67aa844ed503b29cd4ca2ede1a229ac7fe874613b2c996fa9c581a25f",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2017.string.d.ts": {
+        "version": "6a6b173e739a6a99629a8594bfb294cc7329bfb7b227f12e1f7c11bc163b8577",
+        "signature": "6a6b173e739a6a99629a8594bfb294cc7329bfb7b227f12e1f7c11bc163b8577",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2017.intl.d.ts": {
+        "version": "12a310447c5d23c7d0d5ca2af606e3bd08afda69100166730ab92c62999ebb9d",
+        "signature": "12a310447c5d23c7d0d5ca2af606e3bd08afda69100166730ab92c62999ebb9d",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2017.typedarrays.d.ts": {
+        "version": "b0124885ef82641903d232172577f2ceb5d3e60aed4da1153bab4221e1f6dd4e",
+        "signature": "b0124885ef82641903d232172577f2ceb5d3e60aed4da1153bab4221e1f6dd4e",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts": {
+        "version": "0eb85d6c590b0d577919a79e0084fa1744c1beba6fd0d4e951432fa1ede5510a",
+        "signature": "0eb85d6c590b0d577919a79e0084fa1744c1beba6fd0d4e951432fa1ede5510a",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2018.asynciterable.d.ts": {
+        "version": "a40c4d82bf13fcded295ac29f354eb7d40249613c15e07b53f2fc75e45e16359",
+        "signature": "a40c4d82bf13fcded295ac29f354eb7d40249613c15e07b53f2fc75e45e16359",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2018.intl.d.ts": {
+        "version": "df9c8a72ca8b0ed62f5470b41208a0587f0f73f0a7db28e5a1272cf92537518e",
+        "signature": "df9c8a72ca8b0ed62f5470b41208a0587f0f73f0a7db28e5a1272cf92537518e",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2018.promise.d.ts": {
+        "version": "bb2d3fb05a1d2ffbca947cc7cbc95d23e1d053d6595391bd325deb265a18d36c",
+        "signature": "bb2d3fb05a1d2ffbca947cc7cbc95d23e1d053d6595391bd325deb265a18d36c",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2018.regexp.d.ts": {
+        "version": "c80df75850fea5caa2afe43b9949338ce4e2de086f91713e9af1a06f973872b8",
+        "signature": "c80df75850fea5caa2afe43b9949338ce4e2de086f91713e9af1a06f973872b8",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.es2020.bigint.d.ts": {
+        "version": "7b5a10e3c897fabece5a51aa85b4111727d7adb53c2734b5d37230ff96802a09",
+        "signature": "7b5a10e3c897fabece5a51aa85b4111727d7adb53c2734b5d37230ff96802a09",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.esnext.intl.d.ts": {
+        "version": "89bf2b7a601b73ea4311eda9c41f86a58994fec1bee3b87c4a14d68d9adcdcbd",
+        "signature": "89bf2b7a601b73ea4311eda9c41f86a58994fec1bee3b87c4a14d68d9adcdcbd",
+        "affectsGlobalScope": true
+      },
+      "./src/draw/misc/enum/direction.ts": {
+        "version": "4cd6dcfcc620426d1ec7289210ec3a1468055a3f5400b3b6690ff517b02b92e1",
+        "signature": "eedac2c423b0747e4814cf2351d8be8f9b13ed13a0d6b95ad8000a18330ce334",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/enum/linetype.ts": {
+        "version": "c1190762f16dc6b8c1c4590c55fcc9b61beff50e549d489643d74d7bfdb3437b",
+        "signature": "fada1126c7809453c8d406d75bdf61a1be5abecd4d19b6dd34ed9fd0615001ed",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/enum/rebardiameter.ts": {
+        "version": "05493ce590dea0457f7d27d42c5cd7117466109d05dab2fe13e492f488b78856",
+        "signature": "b6aa30cc70c37959d5a60e8c155d2adf6aa1a3c73e45896d6284e9b742cb4ed9",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/enum/rotatedirection.ts": {
+        "version": "d895754a8973128485f31c5c31c3de9d498838b49b2180a19472ff8a7743baf3",
+        "signature": "bf87f28aad7140813ef064a5d8f2c98181cf3d9c7b719a0243f43f826a4509a1",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/enum/side.ts": {
+        "version": "ed944c1d02a84d65acc48c5a6a85366f99537cb1dc4d50ce00a8e304c00744aa",
+        "signature": "2cff607ae7181be1f5a18fe88e7a9310160efc0beb5e29931569f452abc39cb4",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/enum/stretchside.ts": {
+        "version": "17c9197df2bbd9e0d68747f4ac4a6ae8936a99deda3e39c24a92f9dfa924fac9",
+        "signature": "928d6a80e5666dc812e5dc36291074f2cb95602208568dbdc9bbf52804fca682",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/enum/textalign.ts": {
+        "version": "22a84f26f194425beeb7cd5f4a1a34ef1a8ad25004a31dce3aaffcd7c546eaf5",
+        "signature": "ce19c4cb3f1881629e45f252c8edf2c07ddcc3d77350164d5d006320c864e334",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/enum/index.ts": {
+        "version": "6c363f8424bae40ed755f84bca0d2ba6f5c38158cd5462ae00676d6b8d42ac0c",
+        "signature": "fb46a277142c11fd094a24234fe3cb572569173983de55771558318ec9f84f10",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/misc.ts": {
+        "version": "4f3cfdd5b45408afdc30def6af6d25f4aaed35aa987d003d6f4b4bceeddca4c8",
+        "signature": "2076a9df51706f208b1a3940d1f02b5aac501d3361c8073067af43d4fa6732b1",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/vector.ts": {
+        "version": "96a112d73b36d68719257d0978e58fe351d05902d1cf22151a5a0afdc8c4ef6b",
+        "signature": "0608f8d527874ce647deedbb8ad6e5d5e2bbadd5a28706af86198ffff71123bb",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/boundingbox.ts": {
+        "version": "f3f75fed9bebb0ef9b59482c65f83716809fb209bca7e0cab247812184846058",
+        "signature": "808e28d98083b88421a10ca37180e5f31d6a9989aa27de3f76379b51d29a42be",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/pos.ts": {
+        "version": "47d22aa9714a35bac5eed1ff34117ecd58cd4f4c65f19923bc6d92d795056bd3",
+        "signature": "3f269714cdb39147807dda6fa7c31a645f3ce7ccd235cb31404a0a37852c6bf7",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/range.ts": {
+        "version": "d43b607d43bc8d53a30dcd40d8452ff919db2db28ae7353568e50ac39e0fa912",
+        "signature": "9568ad4c8bb073fc7cc88a1fe09c66a27355f1c777fc0bb3c15c95a412e6dd7b",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/index.ts": {
+        "version": "508c2382e2bf000526a63aee5eea7ecc0c93330c82a865655f97acd918bd8718",
+        "signature": "0c43e3aa5e33744488cf1eb09ee2a5dc8c1fb662b4074fffabda4c7fd7497537",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/paper.interface.ts": {
+        "version": "07cd6d570ce4f7402cfae6dd5d046418cc1f2d5291c79342648403c05f4be805",
+        "signature": "39d9844dd66c5e69e2e37b99ae1190a4e2eed07abad513aedbdc61b530dc014e",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/drawitem.ts": {
+        "version": "6249d5b5851c8da92eb6f04c39c83a29a833dccad61a17c615325ea9a3382fb9",
+        "signature": "1a7657198f836de4945fedfffca3ab480515bc10d252e00053be8dd078d1fa8c",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/geometry/geometry.ts": {
+        "version": "217de8f3a4aa05b99dba0f5db8902d78fe0b26d3012800bd1e8c1f5cd38ec87b",
+        "signature": "6a6ed9c9387ca2405fff4e56045d35cd4dedbd51cb2ce38986688c519f256430",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/geometry/rawintersect.function.ts": {
+        "version": "d0c2dbf346833769b8eaef42e1a97a59110c1ee50a89092f4cda167a92a1ad8f",
+        "signature": "4a5d230cce47cb70d1c803a33619e143754d340190ddc709d0c15f7cad6d20cf",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/geometry/arc.ts": {
+        "version": "36c5abbe622b331766d981c3f07cddfbbbe2701336d0213185110c54e8fe06d7",
+        "signature": "d1c438cc92ad9db5e33fbe87861ffc074d91041cbb4dc4be83dbfc5133689c1f",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/geometry/circle.ts": {
+        "version": "4a94564f82864f42a68d730a4a80650a0db793641d0737a2fa1500a8e4c0f33c",
+        "signature": "3e510a19f40b09cdd73eafdee360734152ebb4e65b1dc1206ee135e82b5142bd",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/geometry/line.ts": {
+        "version": "ba7ec7a01dac63645bd81305931be2fa933cfccdaecbc4c0d0dff4fee597aca7",
+        "signature": "14866a56b04e1ecccf16346eed44a6200b139ff3c134b83f082388bf03635634",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/geometry/offsetpoint.function.ts": {
+        "version": "ec38e45f6ce57b7d5c6d21d3fb70ebf840127a3eebbf435031583495d268169e",
+        "signature": "be2c50bd5676805f63d3ce248132ff2e0d6cfce5b3766f458ccce826df176d36",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/geometry/polyline.ts": {
+        "version": "396372f84cad447ddf0fd4c1193a5e1b1b7a27d61cffa101d9ab0e8881c2b50a",
+        "signature": "36502c58556e8c83433cf99757d88f5ccc5d46d87cc66462c85bc1f505412df7",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/geometry/index.ts": {
+        "version": "0ae366f4c79ce8a6b7e3f3d38e57c6c2f74a8f61c5d25d0c2f1a643732ca7390",
+        "signature": "b4421bd8d7a59402b535a87a805c783364e710a4ffc0647251781d760f24f920",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/arrow.ts": {
+        "version": "8640b04240b4c668aac6419946b69320d5a0b76b9a55595ea07d12e2d741ea3c",
+        "signature": "b17c79dc1fafcef30329334184de0eaec4f562f8785d7b8ec66d099c72bbb42b",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/compositeitem.ts": {
+        "version": "ffde02ed0968ce4a4279f9dc0589373231841474e038ba9a9c1c69142a7ce29c",
+        "signature": "48aa707afbec382a846fcdd308b115716957f20a891dc1c08e4e0368c0e7c819",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/content.ts": {
+        "version": "692125ec0a49b32e6b469307a4889f761014ec66f07eed4addc6c16e627fb400",
+        "signature": "cf8d72b3dbc9aa40ef20056ed6d0232a2cda70d1e0d08090946cce4f101d99c7",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/dimaligned.ts": {
+        "version": "5f7b5d1aa0c7a506f4a0d24362502eab49f5b5e8461ca8a262303b6fe01c6687",
+        "signature": "5573e5550fcb1aaf3863098220257fc0db962e3264be5ecbaba784de92fd38e7",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/mtext.ts": {
+        "version": "06e9112bdd532535663bb3459c03e044deddf4a23dd56631516689c1ab645c69",
+        "signature": "5ebe07f0ba2cc8978fe3006b8e168f2ad33f03131e1405b3b7f1465c951e3ed3",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/text.ts": {
+        "version": "da1b5104745b5050a0a7d6e378a96a6d2d9d0932e04c0c8953ade6cf33ac0ac5",
+        "signature": "6825bf91ba7ecfae08c5fc874ade1b900981a38ae163a6e7110d72650c588b21",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/drawitem/index.ts": {
+        "version": "20b513cfc8ffabe4c0c3d0aa1aebe635878260e99cbd3fc5fefac903f9432ad4",
+        "signature": "b280443093bf0c8e28651bcc189de9b6c3a578033a17b7f9e346447ca8c176d9",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/builder.interface.ts": {
+        "version": "53f049e6bb60ba74c35d3718750280d40e0ab9a191f62ad4f8de0ed5569c84f5",
+        "signature": "d9776a340bb56ce4bb467cb4975cf1e1327bce9bfdf36fc7fcdb25acbcdfcbda",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/borderbuilder/boundary.ts": {
+        "version": "27ec416739902aa79772239ca35fab688900187473f19f4d70e108619159f5cb",
+        "signature": "5aea1bad6c4fd116e53d9c38aadcdcd31dd1acfe8846eacc5e23b9d4397725fb",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/borderbuilder/container.ts": {
+        "version": "ce0197aa96e30229eb3542d30bb52246dbad69348e59b7f7aeba7803a4679c2b",
+        "signature": "ca30b3e5dd59eaedafcbf1b4059599924499b6e4274d2ec34e812faa24d2f7ae",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/borderbuilder/borderbuilder.ts": {
+        "version": "409d08954e42d0469c5b89f0dcdcac4e2ccd6e86db4f2997a11864b3d15f1656",
+        "signature": "d0c34a27b9df6fe95e7476a5b9820b69fbde01ce48cfcbc4d4098763f143269c",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/borderbuilder/hydroborder.ts": {
+        "version": "a01981622768c8da829cb8d0b3f4ea471cc28af5b23e0d0445df2186db741c2b",
+        "signature": "f910ddeca32d252acde7cb0ef347a8442ab62c587743c4fa51e708f58bd71175",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/borderbuilder/index.ts": {
+        "version": "244dee16a8f6bd201f2ce63a2139ef6d51619b0230da5cc083b59b9691c64120",
+        "signature": "f44c4d11913976f64994979a287183c16fec40e25ee6fb354635f0bbc8b9e5f8",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/rebarform.ts": {
+        "version": "af56979ba2dbe7e62fab8585aa23ec5ebc7bdda4dbab158094ad112e154f053c",
+        "signature": "cead55bd99576698141f557224528c6267ce96c5b2c57a935d94ad979434d8dd",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/rebarspec.ts": {
+        "version": "e418dfc124fb51579589f8403efc5bd7c1623be2068d4f7dfcb605cafbf6c9e3",
+        "signature": "470e55fb12bb7b6cbc356519427ebc83c4cb26522dbbf81a1e5ce05d4e4186ae",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/notebuilder/rebardrawbuilder.ts": {
+        "version": "65677f4433c23ffe27098d6ecd9a957013d5822a04bcde8af7b5d5366709d76a",
+        "signature": "23f6f66df563cc63b4deaed2d8d5c23f08657eeee1ab3251d22817e77cff60d2",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/notebuilder/planerebar.ts": {
+        "version": "9fd9b9963959753765917fca8753fd833abad8e05e08da923d5e5093e69561c2",
+        "signature": "ac8db58c136231354cf0afda43e023c5b0e4a66198b2317f55338bce62be70e9",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts": {
+        "version": "25aed6d86632a400c48d62bc315a27696f10bc0a110a4963cc30e74c0e9a13cc",
+        "signature": "acd64ef0e63742bd91418710bbfcd85d059d2b86bad2f5c41e9a3aa02e987514",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/notebuilder/circlepointrebar.ts": {
+        "version": "3c53be0fd12fbe6ce1fc7810595cbd66aa41d17cd6e5860a5144d77cded4876b",
+        "signature": "2c2b93dccd6b6d49e8b8aaef04c50dc0e23bdf5b7f56ee1dbf6d7ba2289da6bf",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/notebuilder/layerpointrebar.ts": {
+        "version": "1b8a894507ef5011832ffaf2675ad630d083ca107622a11d2ba632379c081591",
+        "signature": "1611d9a13a4b4454428eafb9a02fc952b6cecd7acb9122586d490ed26d73f3fd",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/notebuilder/linepointrebar.ts": {
+        "version": "8b48b9fa42fbf7f1af30a6648b1587b66e20672d74e60be702ae661a406b1ae5",
+        "signature": "bdc3fef53a01961af2212809f8aa197f4a182f0901ee05087c05187464a058f9",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/notebuilder/polylinepointrebar.ts": {
+        "version": "2cfdc217572823f7de01c7b06a83f52120058132300487739f0445b1cd8222c9",
+        "signature": "bcf7acd2480625151d7686f372e23ce307df083707c5836d06741cd226b9d736",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/notebuilder/sparsepointrebar.ts": {
+        "version": "1fa147f185d955b46da47343ac9e7800e8ee6c0c502910b6a275d38b34c847ee",
+        "signature": "faf383968be76e70c6c7510c7117f69ebe49fc3e5430584d4a07aa3c03cbbfcc",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/notebuilder/index.ts": {
+        "version": "f24e50863a0d5a323d5d511291d9deeb898fa287f256dd62c80c000587907127",
+        "signature": "6219e170c4bae63923cbc3b09af2a748ab3482e69fd646364f9059f1ac05b9d9",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/tablebuilder.ts": {
+        "version": "3291e9b78fba125cdeb4c535b7309d3b6b205e33e63f98adb101a3f8ab8a46cb",
+        "signature": "aa27447ffa5536a6f26334814b4d1b16d27814a4e22977e43144a1eda4a08edd",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/materialtable.ts": {
+        "version": "5439129f31a75525fcdaef05c3d23c76c5bc3496028c1b18d47228262f8f69dd",
+        "signature": "b90822c870bcec2f47187a344b8e8d30d6e245553c05c1547cb91418594aeb23",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/rebartable.ts": {
+        "version": "264292b41bfb18c234a54c52600f61f9e160e872c5ab7bfdbe2c9b75f9f09cea",
+        "signature": "64f9dca3cbfb75f2e6bebb7eaf69ee2382d1e040288b285d57e95e28348039a0",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/rebarbuilder/index.ts": {
+        "version": "47ce65312c4637a51cc7fa7c2eada525a6bb12e8d9461321eb2e272fdb63b8f2",
+        "signature": "5865c19f19e8c984ec224641507da35cf5bb09fb93ab9143949d9c40e8c85183",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/dimensionbuilder.ts": {
+        "version": "6aede5e768619ef236ec86ddc34ce49415189f89b7b940718c8b6af0dc6cb79f",
+        "signature": "444532fad9ee976235680efb883db6cff11dc44d337cb641d0038aef9730c6c6",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/hlayoutbuilder.ts": {
+        "version": "79f5538ba3b54d5a27b5399f043728262d3ba7d1740e664b353df47cc56201b3",
+        "signature": "d176af2d0175846c78109fe6a65baee9900df20ec2a588e3cba93b9a1de20f21",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/builder/index.ts": {
+        "version": "7b09d6adc11f4c5e201bcc33906bf3652bcb2738e40ff75a2a638bce94d2847a",
+        "signature": "412c444704b80ef5837a2e1fe4ac099070de104d6e0d413dbc94e1e21c9235f8",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/paper/scriptpaper.ts": {
+        "version": "736d7733e55aca7c705f748854fb66b2f2ad04538bc8b46590543fb2aa15a1c5",
+        "signature": "47ebfdf835bc57f37f1cae7cc80d46e5b05da3417f6928cbd149d47639e4ffa5",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/paper/index.ts": {
+        "version": "028460a6763a24c1898d03f3de882dc57ce8434a38527d5683d42e9668ece578",
+        "signature": "dd8ef1a7a13feb328e5b18514d7871369b5f3d3a97c0fe7763fbf6358a073cb3",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/index.ts": {
+        "version": "b02dab057d06c42f649bc15021d57b74c4cb7d643b4bff5f0d10c207cdc324e0",
+        "signature": "59c6fc4d770f3c483d99dc820f89bb7e3e879fd82b36a10cc5db82f4df54d6fa",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/figure.ts": {
+        "version": "aab115d9bfb871ca4222dda53631046da18c6a069f48e3d0547c01d378eef0ad",
+        "signature": "a7183cda22e029b5005d05614ab31cc6b9a669b82a183d2bdda5773321975e24",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/drawing.ts": {
+        "version": "9ac2a9549766a659e1aff7bd4ee8e00f78956d6a7f21dd72fd29294e01cfaa45",
+        "signature": "c97b98ee72e2301a66f7b604c83a2ccd8b5f422e42d50d282f5d9b1836d2f7e7",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/figurebuilder.ts": {
+        "version": "c96f528510be5098062c375603dd2f2682f27b91d16d259ae9d28049d04dbc11",
+        "signature": "231f25876a2a0929f89e5b139b0e4f6c15760f88bdf2b28566e6bf46d0a3f78d",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/ushell.ts": {
+        "version": "953dbdb7f9f92d65f53c26af09204155cf67a2d74fe6ce77a3f70180dc55ad8e",
+        "signature": "de003bb33a2282808b1ba9226737ac01fb94a78a8d56a31d0d8f43e0d0d24442",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/ushellfigure.ts": {
+        "version": "3ffc40e049bdcdb0fcb6cb7a1e3af7535904b46d77647f2ffea8d4f9537a8d9e",
+        "signature": "c49b69d9994d997057625dce1b7e048dea4b922e3eb9d1bdb8ae6482a7712863",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/ushellrebar.ts": {
+        "version": "5cd7c32fc0d08cef252df0162a29a741d41fda362129833bc7197ff7131ca024",
+        "signature": "a97f1e90674f79ba1af3502cac0b81e9a4bb50a12c3d8b441750c04a6508ac9f",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/base.ts": {
+        "version": "f84a8e8def3fefe60582043e611dfc7cb98d4f177b37556ee8df393e44ad9d1a",
+        "signature": "74f0e0335df5298336b0566462ce349887ef472f3a5bba63b0fe9444d1d1e3df",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/cend.ts": {
+        "version": "df8827841747c290b8505f78d7b0562ea86140b5ec6724ebf20962e5e4a45cca",
+        "signature": "32ac00153f9f7dbd6affa72883b6f4e2ad8e5f0d6a8f558b7a21c3cfbad2ed2f",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/cmid.ts": {
+        "version": "2ce11f3cd7cea6ef6e55837c9925a7df5b7b6ed55228976bb4316095fe4553b5",
+        "signature": "386c39ea607d5dc5458d97b119e9e0f2768773d00c4d2fe44dfc62c1988fc3f0",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/ctrans.ts": {
+        "version": "40c586f547f4d2c90532b3eea7b69384bea0d94d79fae28793db29bf324dd211",
+        "signature": "1622517966f5bdfb75fa13363dd269dd06bb0e1de555f83815dc0a4a3699e2d9",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/linner.ts": {
+        "version": "06ace8843ed64af5ba4e099cd2a315885238154630b6b9f0d083da9888c17b3b",
+        "signature": "d9ccaafe7c44c79fb0cb858dd490f4d46975f14efc553a5ea7a2bf673797c4df",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/louter.ts": {
+        "version": "3852e4310d2c493ab35124099a8527e9e954c94d341ac8a3b677dd52741f8a76",
+        "signature": "dd661a792e085c74f29f7940608e1cc7446239c5dfa8c7195bfc35caf6bf8717",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/sbar.ts": {
+        "version": "13f835c69d6c6a16a65c441b2b27439b44056e8491b2c62befb89b04af938190",
+        "signature": "3d1091188ba59567f866192bebdc26c24c8532163f5faee9d760c2f85e3b3db6",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/sendbeam.ts": {
+        "version": "bcf6f184285050128d81001b3dc13a122038cf60e07b9d85ba27ae1bc22703c1",
+        "signature": "1579135c543c0ed5922bfb0e8a2b8471d366f8263f9668a102d89a22e2cb8b6b",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/sendwall.ts": {
+        "version": "6aa1d0bc59200e18f495f4d8dc284a2f1890fb7cce95ee7e0c7950f73b381852",
+        "signature": "9dcec7fdfd5a861f21606f25f063efef8dd877adc5628b1dd4ef4517664ef92d",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/ushellfigurebuilder.ts": {
+        "version": "3044b5cc9927c2d331722f5df02422191e7dc7710a391e5b0666c0c0c9ddfc2d",
+        "signature": "4606fc949ceb210f401e986668f7e20a8762056c96e0c015e3d0247d878c74f5",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/figurebuilder/index.ts": {
+        "version": "9e78dde924aa079884608c3f545905efaef3e068105409fbeab91383d88c44d2",
+        "signature": "7eb1ea6f5895bef755f349d5c4aae2f7ea4d6e2bdf66204e034fb59388703ecc",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/rebarbuilder.ts": {
+        "version": "8d519e08861963dbdace72743c49026332ca3ea059564c6f439cb136a9bb0f58",
+        "signature": "d645955f2c2d2699237decfa48684843da1bbcc98046decb5ac7ffdaebbac620",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/base.ts": {
+        "version": "8d3224830bb446d6e29ecce1347910abb81a92f8a3691181bdc0b3207f939464",
+        "signature": "dd987752ddaf7777d3e05c8abba52dcc7362c761ec4f3a0eb5844727ce4fa655",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/bar/mainbar.ts": {
+        "version": "84a98a08cac1a61ed7af389e3d39597303e7da1c59e30e98fe1de9dfa76a7ed4",
+        "signature": "a85a24f017a1276018c67d5838066d537ca7d499cb3dd55bfd20d0f8f9e69d1e",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/bar/stirbar.ts": {
+        "version": "3a1c20ad040ebd5b70e98418f61a4d04d21b4e0a090ece7355ce8001334ef6f8",
+        "signature": "7a93fa57d341e02474e4b412bb835743fa4b582e4acb399a1fc557eb2c6f7d10",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/bar/barrebarbuilder.ts": {
+        "version": "b0d02aed63484bf1d4c2b94dfe735a8b8933af812a50b219c85d86257005552b",
+        "signature": "0f0c561d794ea255e7f9c5bdaa6d91101fc9b79749c5469cb494cf6e8d3a0382",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/bar/index.ts": {
+        "version": "bf2f2d1e33733b1cc9cb67e6c61e7c29024284266e9c7e4eddf6f47e0a821063",
+        "signature": "2716b8da66dd7876c0a5b7562bc412342f2f2fb918394b35262b9fb461314bf3",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/end/beambotbar.ts": {
+        "version": "b5063050f38f8e037f28a4460d34ab461fba345e5f88c844692fbd121cac1c96",
+        "signature": "5445d59edaf5426de8c80ba1d0adf2df5d0f37558a29dc15e77c2d2c50074ca0",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/end/beammidbar.ts": {
+        "version": "5a2d9469ddb44545dc7021f524f380c8df9f825ecd2b8eb8cd04840476f0b99e",
+        "signature": "2046e5c965eb8672d490dece0f07b69efb0e107cb5cbf424b2d525e0c85e95a6",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/end/beamstirbar.ts": {
+        "version": "e9e038bee16939367fa848396fb410bddd9b231af3a661133ed306a3058e7dd7",
+        "signature": "da919d9df117ee7ab608406a9dc7d917232d76db4a5a2372a7bb3b23a7f75a2b",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/end/beamtopbar.ts": {
+        "version": "566887ae0554b377549f63466abed36209133fc578c206ed8f47ad754877ed86",
+        "signature": "c11e936944d5970d03c094b4b79f30ca2d84d87ea50c1bb8133177617dd102d4",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/end/couterbar.ts": {
+        "version": "907c8bf785ebb46ded5bd7e4042277e8cde04bc29f76329a108d7f504b436a2e",
+        "signature": "ac0bb4ea8f1af36f7005f1a6e26e9579732ea23915936c04dab3a3a07d43f66a",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/end/topbeambar.ts": {
+        "version": "4bd86dcafb060e10a3d6aef02c1b920679b236e8479510953f2e02cd16a2ddd7",
+        "signature": "d735b843ce75908526b8b8405b36d134a31439e023459f40ed113f98aff5750d",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/end/wallstirbar.ts": {
+        "version": "b11b5d13117b9e8a47a583bc8dbe8601cee6fc59eb106ba46d9265340a9268ae",
+        "signature": "15a4e7db7d2fff38724e00edca08ef0a69325f12761d4af8f8c457433fb99dcd",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/end/endrebarbuilder.ts": {
+        "version": "c9774db640397e43e201afc5253be717b41685d2c70f436b79f50043418eb510",
+        "signature": "e38720c4a140fa8c964e2816f8270d599710531e6c669738151c040ef9c98c11",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/end/index.ts": {
+        "version": "add76ccf015f4f679adb09be60553d288ea53ce6511b641db5cea34c70fdc456",
+        "signature": "4a960e78f29647b9a619bd643e75aafcdf420fb0fa2e789741423b054434abf2",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/shell/cinnerbar.ts": {
+        "version": "c3ef5348dab11f4bc6252d54516f91f6d4c1aed7b44ce4c8b013414599d708c4",
+        "signature": "1ba08bfe0c582d9829b450a31ff5091e565577b967e619f0e1e0891ada44e4f7",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/shell/cinnersubbar.ts": {
+        "version": "35701bad729682cae0e9ff29b3e54601f884aca1333077841c94bbc1db49d9aa",
+        "signature": "36838cef46a141adf3279d4ea487aee478b2daf11eb36590c2e899dac33a0156",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/shell/couterbar.ts": {
+        "version": "947fa628439a411389736ef54c6f4e69e409ea4b64ef66eecef259f4c5263bfe",
+        "signature": "19a6e19b28929f3ff014d5e1ff49a131d8fdfb76bde5285cbb630024ac4356d7",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/shell/linnerbar.ts": {
+        "version": "08e7d1bb2d3179dc87fad47b35383286691992bbc6d39b5d10bea4956000dcd0",
+        "signature": "33be6a76936689ddae4783d22918b0e59f7504495650b5e672d6cfe947db993c",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/shell/louterbar.ts": {
+        "version": "9a2953ed914b55b69ec3e38f701d0489d05b288199e1950c5686af0d4443ac42",
+        "signature": "4d1623d4b125ae661a0df351f66561bf093f4be6e12108b3543b8482e6ce9e4d",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/shell/mainbar.ts": {
+        "version": "3fedd175a081060c84f0b46b6c1446eb6f4400708cb21f35e528c3fc31d914dc",
+        "signature": "5a0e9bb6be0c25fe51d799394a27943c48ada91cbe877210e417eb13a9cd69a1",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/shell/topbeambar.ts": {
+        "version": "518a8238e6ae85d8b9592688c418e8fedd6f11916b9e544fdabc794f2249e6dd",
+        "signature": "e3410d1844e31807ad85b5ca74c5b69445dd723dbc89b3756e5c0859d15ee9fd",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/shell/shellrebarbuilder.ts": {
+        "version": "f054d17deaa6b8e00c5b18986c36fcaa28c7f5229c820a56bbf2348081ab4e02",
+        "signature": "90bdb349364677d919decc1e4d76a997d681292ff87a86d7bde4122ae2b6d267",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/shell/index.ts": {
+        "version": "9d2b55bb426a330a69031fb5330c1aee96da35203796c5998d0ea4baa3240bc8",
+        "signature": "36d21703fb278840b6ade616442b4391c5c2c0a10102ccb750d804dfab790545",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/trans/arcbar.ts": {
+        "version": "d12ee1230f6c86f5c0e86b6c596399ac22c485f6fec3576403c642d6b7799d32",
+        "signature": "0752b937c6e5cda913ac69a03e78a2e190823a4c368dd9658efa20abebb2f351",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/trans/directbar.ts": {
+        "version": "5851ed137f222fc2dc5d4f5d44b78d9ef817d94b285cd29ba9b691d6e5cdc948",
+        "signature": "c8af47e749801e63b9f3b3576aaab26bd4de8d43c78cea70ea297b5e68174b11",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/trans/transbarbuilder.ts": {
+        "version": "a1ab76765d9e57ec54a372e4e6ed5138be535af5aa7a0e947acd01a6a660d405",
+        "signature": "f4d5b55e1636365c882d2dab5ab1b49bf3930c093c89a41b65d1dcdf25553447",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/trans/index.ts": {
+        "version": "e96656a1ff001c7800b1de3185c0ab883fe51300398e810ad82f319c60c7d20c",
+        "signature": "3f1c9d8bd37e3fb45dedb3e8e554db0181a55231e24983d8e299a0b3504afcc6",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/ushellrebarbuilder.ts": {
+        "version": "70efe455001ef1bcbacfbfa2237127367bfa3cb27b94a7f56752b56075ac8268",
+        "signature": "c153c0cc89dff9e58c9265ff02bc34aefa6cbb8ade80cf995bacbea75f5692ab",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/rebarbuilder/index.ts": {
+        "version": "f6ee1714dfd4dffa762ce183d51e8b4aa834a1373b6252a081c5ae1b55d3913c",
+        "signature": "20fa09664f731720737b755199b721238cc0ddba01dea123093b6a1ac367d70d",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/controller.ts": {
+        "version": "8a165dde907a35ba62dea047d8ba62d129bd223ba165fe0f4dcdff5227582016",
+        "signature": "b9baf0c33293508b5bd014c8668a5bf440e653ab62691b16d40c770b85904431",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/ushell/index.ts": {
+        "version": "d10b51e91a077196c2caeee1d2430f5e1900c0eabcb6b20112d4c203c561dac8",
+        "signature": "1f4c295371c91bfc9fad48a4d9dd5c1ab198751916d33faee962783aa43a740b",
+        "affectsGlobalScope": false
+      },
+      "./src/struct/index.ts": {
+        "version": "30501ec78d4012903bb9f40ae6460122c4365319ec1b65019ad694dee26903e5",
+        "signature": "b76579926928bc595ccd83347a42d996ab722223795265e2d15857fa24572525",
+        "affectsGlobalScope": false
+      },
+      "./src/index.ts": {
+        "version": "5036423168dbe5143032f2eb7396b46e20c40057c7172a026c98f50842d1cd8f",
+        "signature": "2b0512d4cca0ca5287a450a0659032e13959e021ec0417aea2063c9771d53ebd",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/misc/boundary.ts": {
+        "version": "4b7575cae719589a782af8fc01b83c7cc4a2414a9d84afecef958b4cda8ff54b",
+        "signature": "bb20370df866d08ab572a2a528514ab0dcd0e47cfc6e846b8de9a6a061e7a341",
+        "affectsGlobalScope": false
+      },
+      "./src/draw/preset/index.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@babel/types/lib/index.d.ts": {
+        "version": "f4d27b39be5d82eb94f12c54a15e61f65decb27fb289353d11ef238de49bf5c2",
+        "signature": "f4d27b39be5d82eb94f12c54a15e61f65decb27fb289353d11ef238de49bf5c2",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/babel__generator/index.d.ts": {
+        "version": "b25c5f2970d06c729f464c0aeaa64b1a5b5f1355aa93554bb5f9c199b8624b1e",
+        "signature": "b25c5f2970d06c729f464c0aeaa64b1a5b5f1355aa93554bb5f9c199b8624b1e",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/babel__traverse/index.d.ts": {
+        "version": "ef91066d2057cca50511e3af2d4aa54e07913a15f9cee1748f256139318eb413",
+        "signature": "ef91066d2057cca50511e3af2d4aa54e07913a15f9cee1748f256139318eb413",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@babel/parser/typings/babel-parser.d.ts": {
+        "version": "04467c3822f065aee977f9e1225b86b9ac0e976cb42b0c8da0b893a3290920e1",
+        "signature": "04467c3822f065aee977f9e1225b86b9ac0e976cb42b0c8da0b893a3290920e1",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/babel__template/index.d.ts": {
+        "version": "3e0a34f7207431d967dc32d593d1cda0c23975e9484bc8895b39d96ffca4a0d8",
+        "signature": "3e0a34f7207431d967dc32d593d1cda0c23975e9484bc8895b39d96ffca4a0d8",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/babel__core/index.d.ts": {
+        "version": "7df3163944694feeac63067632a8dc2e2dea1350119ec8b43df277af69198369",
+        "signature": "7df3163944694feeac63067632a8dc2e2dea1350119ec8b43df277af69198369",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/color-name/index.d.ts": {
+        "version": "f0cb4b3ab88193e3e51e9e2622e4c375955003f1f81239d72c5b7a95415dad3e",
+        "signature": "f0cb4b3ab88193e3e51e9e2622e4c375955003f1f81239d72c5b7a95415dad3e",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/globals.d.ts": {
+        "version": "68aba9c37b535b42ce96b78a4cfa93813bf4525f86dceb88a6d726c5f7c6c14f",
+        "signature": "68aba9c37b535b42ce96b78a4cfa93813bf4525f86dceb88a6d726c5f7c6c14f",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/@types/node/async_hooks.d.ts": {
+        "version": "c438b413e94ff76dfa20ae005f33a1c84f2480d1d66e0fd687501020d0de9b50",
+        "signature": "c438b413e94ff76dfa20ae005f33a1c84f2480d1d66e0fd687501020d0de9b50",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/buffer.d.ts": {
+        "version": "bc6a78961535181265845bf9b9e8a147ffd0ca275097ceb670a9b92afa825152",
+        "signature": "bc6a78961535181265845bf9b9e8a147ffd0ca275097ceb670a9b92afa825152",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/child_process.d.ts": {
+        "version": "1fc4b0908c44f39b1f2e5a728d472670a0ea0970d2c6b5691c88167fe541ff82",
+        "signature": "1fc4b0908c44f39b1f2e5a728d472670a0ea0970d2c6b5691c88167fe541ff82",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/cluster.d.ts": {
+        "version": "123ec69e4b3a686eb49afd94ebe3292a5c84a867ecbcb6bb84bdd720a12af803",
+        "signature": "123ec69e4b3a686eb49afd94ebe3292a5c84a867ecbcb6bb84bdd720a12af803",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/console.d.ts": {
+        "version": "51851805d06a6878796c3a00ccf0839fe18111a38d1bae84964c269f16bcc2b7",
+        "signature": "51851805d06a6878796c3a00ccf0839fe18111a38d1bae84964c269f16bcc2b7",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/@types/node/constants.d.ts": {
+        "version": "90c85ddbb8de82cd19198bda062065fc51b7407c0f206f2e399e65a52e979720",
+        "signature": "90c85ddbb8de82cd19198bda062065fc51b7407c0f206f2e399e65a52e979720",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/crypto.d.ts": {
+        "version": "dab288a3d92e6a3323566256ba56987b78b100341866fa3cc245c9cd2fd55706",
+        "signature": "dab288a3d92e6a3323566256ba56987b78b100341866fa3cc245c9cd2fd55706",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/dgram.d.ts": {
+        "version": "7ecfe97b43aa6c8b8f90caa599d5648bb559962e74e6f038f73a77320569dd78",
+        "signature": "7ecfe97b43aa6c8b8f90caa599d5648bb559962e74e6f038f73a77320569dd78",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/dns.d.ts": {
+        "version": "7db7569fbb3e2b01ba8751c761cdd3f0debd104170d5665b7dc20a11630df3a9",
+        "signature": "7db7569fbb3e2b01ba8751c761cdd3f0debd104170d5665b7dc20a11630df3a9",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/domain.d.ts": {
+        "version": "cde4d7f6274468180fa39847b183aec22626e8212ff885d535c53f4cd7c225fd",
+        "signature": "cde4d7f6274468180fa39847b183aec22626e8212ff885d535c53f4cd7c225fd",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/@types/node/events.d.ts": {
+        "version": "072b0ac82ae8fe05b0d4f2eadb7f6edd0ebd84175ecad2f9e09261290a86bcee",
+        "signature": "072b0ac82ae8fe05b0d4f2eadb7f6edd0ebd84175ecad2f9e09261290a86bcee",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/@types/node/fs.d.ts": {
+        "version": "f6eedd1053167b8a651d8d9c70b1772e1b501264a36dfa881d7d4b30d623a9bc",
+        "signature": "f6eedd1053167b8a651d8d9c70b1772e1b501264a36dfa881d7d4b30d623a9bc",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/fs/promises.d.ts": {
+        "version": "fb28748ff8d015f52e99daee4f454e57cec1a22141f1257c317f3630a15edeb7",
+        "signature": "fb28748ff8d015f52e99daee4f454e57cec1a22141f1257c317f3630a15edeb7",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/http.d.ts": {
+        "version": "d0280b7e9e5a11bfd381c8ffbb12bb1007ab2967e06d8af114f4140444abb631",
+        "signature": "d0280b7e9e5a11bfd381c8ffbb12bb1007ab2967e06d8af114f4140444abb631",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/http2.d.ts": {
+        "version": "5d9394b829cfd504b2fe17287aaad8ce1dcfb2a2183c962a90a85b96da2c1c90",
+        "signature": "5d9394b829cfd504b2fe17287aaad8ce1dcfb2a2183c962a90a85b96da2c1c90",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/https.d.ts": {
+        "version": "c969bf4c7cdfe4d5dd28aa09432f99d09ad1d8d8b839959646579521d0467d1a",
+        "signature": "c969bf4c7cdfe4d5dd28aa09432f99d09ad1d8d8b839959646579521d0467d1a",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/inspector.d.ts": {
+        "version": "6c3857edaeeaaf43812f527830ebeece9266b6e8eb5271ab6d2f0008306c9947",
+        "signature": "6c3857edaeeaaf43812f527830ebeece9266b6e8eb5271ab6d2f0008306c9947",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/module.d.ts": {
+        "version": "bc6a77e750f4d34584e46b1405b771fb69a224197dd6bafe5b0392a29a70b665",
+        "signature": "bc6a77e750f4d34584e46b1405b771fb69a224197dd6bafe5b0392a29a70b665",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/net.d.ts": {
+        "version": "46cac76114704902baa535b30fb66a26aeaf9430f3b3ab44746e329f12e85498",
+        "signature": "46cac76114704902baa535b30fb66a26aeaf9430f3b3ab44746e329f12e85498",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/os.d.ts": {
+        "version": "ed4ae81196cccc10f297d228bca8d02e31058e6d723a3c5bc4be5fb3c61c6a34",
+        "signature": "ed4ae81196cccc10f297d228bca8d02e31058e6d723a3c5bc4be5fb3c61c6a34",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/path.d.ts": {
+        "version": "84044697c8b3e08ef24e4b32cfe6440143d07e469a5e34bda0635276d32d9f35",
+        "signature": "84044697c8b3e08ef24e4b32cfe6440143d07e469a5e34bda0635276d32d9f35",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/perf_hooks.d.ts": {
+        "version": "6999f789ed86a40f3bc4d7e644e8d42ffda569465969df8077cd6c4e3505dd76",
+        "signature": "6999f789ed86a40f3bc4d7e644e8d42ffda569465969df8077cd6c4e3505dd76",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/process.d.ts": {
+        "version": "0c9f2b308e5696d0802b613aff47c99f092add29408e654f7ab6026134250c18",
+        "signature": "0c9f2b308e5696d0802b613aff47c99f092add29408e654f7ab6026134250c18",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/@types/node/punycode.d.ts": {
+        "version": "30ec6f9c683b988c3cfaa0c4690692049c4e7ed7dc6f6e94f56194c06b86f5e1",
+        "signature": "30ec6f9c683b988c3cfaa0c4690692049c4e7ed7dc6f6e94f56194c06b86f5e1",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/querystring.d.ts": {
+        "version": "884560fda6c3868f925f022adc3a1289fe6507bbb45adb10fa1bbcc73a941bb0",
+        "signature": "884560fda6c3868f925f022adc3a1289fe6507bbb45adb10fa1bbcc73a941bb0",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/readline.d.ts": {
+        "version": "6b2bb67b0942bcfce93e1d6fad5f70afd54940a2b13df7f311201fba54b2cbe9",
+        "signature": "6b2bb67b0942bcfce93e1d6fad5f70afd54940a2b13df7f311201fba54b2cbe9",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/repl.d.ts": {
+        "version": "dd3706b25d06fe23c73d16079e8c66ac775831ef419da00716bf2aee530a04a4",
+        "signature": "dd3706b25d06fe23c73d16079e8c66ac775831ef419da00716bf2aee530a04a4",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/stream.d.ts": {
+        "version": "1298327149e93a60c24a3b5db6048f7cc8fd4e3259e91d05fc44306a04b1b873",
+        "signature": "1298327149e93a60c24a3b5db6048f7cc8fd4e3259e91d05fc44306a04b1b873",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/string_decoder.d.ts": {
+        "version": "d67e08745494b000da9410c1ae2fdc9965fc6d593fe0f381a47491f75417d457",
+        "signature": "d67e08745494b000da9410c1ae2fdc9965fc6d593fe0f381a47491f75417d457",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/timers.d.ts": {
+        "version": "b40652bf8ce4a18133b31349086523b219724dca8df3448c1a0742528e7ad5b9",
+        "signature": "b40652bf8ce4a18133b31349086523b219724dca8df3448c1a0742528e7ad5b9",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/tls.d.ts": {
+        "version": "3181290a158e54a78c1a57c41791ec1cbdc860ae565916daa1bf4e425b7edac7",
+        "signature": "3181290a158e54a78c1a57c41791ec1cbdc860ae565916daa1bf4e425b7edac7",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/trace_events.d.ts": {
+        "version": "a77fdb357c78b70142b2fdbbfb72958d69e8f765fd2a3c69946c1018e89d4638",
+        "signature": "a77fdb357c78b70142b2fdbbfb72958d69e8f765fd2a3c69946c1018e89d4638",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/tty.d.ts": {
+        "version": "3c2ac350c3baa61fd2b1925844109e098f4376d0768a4643abc82754fd752748",
+        "signature": "3c2ac350c3baa61fd2b1925844109e098f4376d0768a4643abc82754fd752748",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/url.d.ts": {
+        "version": "826d48e49c905cedb906cbde6ccaf758827ff5867d4daa006b5a79e0fb489357",
+        "signature": "826d48e49c905cedb906cbde6ccaf758827ff5867d4daa006b5a79e0fb489357",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/util.d.ts": {
+        "version": "5ef157fbb39494a581bd24f21b60488fe248d452c479738b5e41b48720ea69b8",
+        "signature": "5ef157fbb39494a581bd24f21b60488fe248d452c479738b5e41b48720ea69b8",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/v8.d.ts": {
+        "version": "289be113bad7ee27ee7fa5b1e373c964c9789a5e9ed7db5ddcb631371120b953",
+        "signature": "289be113bad7ee27ee7fa5b1e373c964c9789a5e9ed7db5ddcb631371120b953",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/vm.d.ts": {
+        "version": "a1136cf18dbe1b9b600c65538fd48609a1a4772d115a0c1d775839fe6544487c",
+        "signature": "a1136cf18dbe1b9b600c65538fd48609a1a4772d115a0c1d775839fe6544487c",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/worker_threads.d.ts": {
+        "version": "e8482f41c6e001657302dcb3a1ba30359a0983574caee9405ef863cb9eac3b95",
+        "signature": "e8482f41c6e001657302dcb3a1ba30359a0983574caee9405ef863cb9eac3b95",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/zlib.d.ts": {
+        "version": "f409183966a1dd93d3a9cd1d54fbeb85c73101e87cd5b19467c5e37b252f3fd8",
+        "signature": "f409183966a1dd93d3a9cd1d54fbeb85c73101e87cd5b19467c5e37b252f3fd8",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/ts3.4/base.d.ts": {
+        "version": "d44028ae0127eb3e9fcfa5f55a8b81d64775ce15aca1020fe25c511bbb055834",
+        "signature": "d44028ae0127eb3e9fcfa5f55a8b81d64775ce15aca1020fe25c511bbb055834",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/globals.global.d.ts": {
+        "version": "2708349d5a11a5c2e5f3a0765259ebe7ee00cdcc8161cb9990cb4910328442a1",
+        "signature": "2708349d5a11a5c2e5f3a0765259ebe7ee00cdcc8161cb9990cb4910328442a1",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/@types/node/wasi.d.ts": {
+        "version": "0b3fef11ea6208c4cb3715c9aa108766ce98fc726bfba68cc23b25ce944ce9c0",
+        "signature": "0b3fef11ea6208c4cb3715c9aa108766ce98fc726bfba68cc23b25ce944ce9c0",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/ts3.6/base.d.ts": {
+        "version": "0f04bc8950ad634ac8ac70f704f200ef06f8852af9017f97c446de4def5b3546",
+        "signature": "0f04bc8950ad634ac8ac70f704f200ef06f8852af9017f97c446de4def5b3546",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/assert.d.ts": {
+        "version": "08d15b727da0c4f0870d98159311b5d4de1f0293dbb9f1261b6752962d2aa239",
+        "signature": "08d15b727da0c4f0870d98159311b5d4de1f0293dbb9f1261b6752962d2aa239",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/base.d.ts": {
+        "version": "d20072cb51d8baad944bedd935a25c7f10c29744e9a648d2c72c215337356077",
+        "signature": "d20072cb51d8baad944bedd935a25c7f10c29744e9a648d2c72c215337356077",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/node/index.d.ts": {
+        "version": "35cbbc58882d2c158032d7f24ba8953d7e1caeb8cb98918d85819496109f55d2",
+        "signature": "35cbbc58882d2c158032d7f24ba8953d7e1caeb8cb98918d85819496109f55d2",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/graceful-fs/index.d.ts": {
+        "version": "2c7dca525f4e2e5f2b357dacb58ab6c8777995e6d505ef652bcbbf9789ac558f",
+        "signature": "2c7dca525f4e2e5f2b357dacb58ab6c8777995e6d505ef652bcbbf9789ac558f",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/istanbul-lib-coverage/index.d.ts": {
+        "version": "de18acda71730bac52f4b256ce7511bb56cc21f6f114c59c46782eff2f632857",
+        "signature": "de18acda71730bac52f4b256ce7511bb56cc21f6f114c59c46782eff2f632857",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/istanbul-lib-report/index.d.ts": {
+        "version": "7eb06594824ada538b1d8b48c3925a83e7db792f47a081a62cf3e5c4e23cf0ee",
+        "signature": "7eb06594824ada538b1d8b48c3925a83e7db792f47a081a62cf3e5c4e23cf0ee",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/istanbul-reports/index.d.ts": {
+        "version": "029769d13d9917e3284cb2356ed28a6576e8b07ae6a06ee1e672518adf21a102",
+        "signature": "029769d13d9917e3284cb2356ed28a6576e8b07ae6a06ee1e672518adf21a102",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/jest-diff/build/cleanupsemantic.d.ts": {
+        "version": "e222104af6cb9415238ad358488b74d76eceeff238c1268ec6e85655b05341da",
+        "signature": "e222104af6cb9415238ad358488b74d76eceeff238c1268ec6e85655b05341da",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/jest-diff/build/types.d.ts": {
+        "version": "69da61a7b5093dac77fa3bec8be95dcf9a74c95a0e9161edb98bb24e30e439d2",
+        "signature": "69da61a7b5093dac77fa3bec8be95dcf9a74c95a0e9161edb98bb24e30e439d2",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/jest-diff/build/difflines.d.ts": {
+        "version": "eba230221317c985ab1953ccc3edc517f248b37db4fef7875cb2c8d08aff7be7",
+        "signature": "eba230221317c985ab1953ccc3edc517f248b37db4fef7875cb2c8d08aff7be7",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/jest-diff/build/printdiffs.d.ts": {
+        "version": "b83e796810e475da3564c6515bc0ae9577070596a33d89299b7d99f94ecfd921",
+        "signature": "b83e796810e475da3564c6515bc0ae9577070596a33d89299b7d99f94ecfd921",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/jest-diff/build/index.d.ts": {
+        "version": "b4439890c168d646357928431100daac5cbdee1d345a34e6bf6eca9f3abe22bc",
+        "signature": "b4439890c168d646357928431100daac5cbdee1d345a34e6bf6eca9f3abe22bc",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/pretty-format/build/types.d.ts": {
+        "version": "5d72971a459517c44c1379dab9ed248e87a61ba0a1e0f25c9d67e1e640cd9a09",
+        "signature": "5d72971a459517c44c1379dab9ed248e87a61ba0a1e0f25c9d67e1e640cd9a09",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/pretty-format/build/index.d.ts": {
+        "version": "02d734976af36f4273d930bea88b3e62adf6b078cf120c1c63d49aa8d8427c5c",
+        "signature": "02d734976af36f4273d930bea88b3e62adf6b078cf120c1c63d49aa8d8427c5c",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/jest/index.d.ts": {
+        "version": "f2b73fbe0e4e473289046067e91303cd1b0994206edc6d38b80aa45692afa6b8",
+        "signature": "f2b73fbe0e4e473289046067e91303cd1b0994206edc6d38b80aa45692afa6b8",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/@types/json-schema/index.d.ts": {
+        "version": "b2be568d8ce95fcb26eebd04c035d94825655fdf689bf67d799f5ff8cbbb1024",
+        "signature": "b2be568d8ce95fcb26eebd04c035d94825655fdf689bf67d799f5ff8cbbb1024",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/json5/index.d.ts": {
+        "version": "96d14f21b7652903852eef49379d04dbda28c16ed36468f8c9fa08f7c14c9538",
+        "signature": "96d14f21b7652903852eef49379d04dbda28c16ed36468f8c9fa08f7c14c9538",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/normalize-package-data/index.d.ts": {
+        "version": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
+        "signature": "c9ad058b2cc9ce6dc2ed92960d6d009e8c04bef46d3f5312283debca6869f613",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/prettier/index.d.ts": {
+        "version": "38433e50f876a09a45b665837a2954003ae14606270a157491f2bb52edf10382",
+        "signature": "38433e50f876a09a45b665837a2954003ae14606270a157491f2bb52edf10382",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/stack-utils/index.d.ts": {
+        "version": "41422586881bcd739b4e62d9b91cd29909f8572aa3e3cdf316b7c50f14708d49",
+        "signature": "41422586881bcd739b4e62d9b91cd29909f8572aa3e3cdf316b7c50f14708d49",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/yargs-parser/index.d.ts": {
+        "version": "fdfbe321c556c39a2ecf791d537b999591d0849e971dd938d88f460fea0186f6",
+        "signature": "fdfbe321c556c39a2ecf791d537b999591d0849e971dd938d88f460fea0186f6",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/yargs/index.d.ts": {
+        "version": "27d92f477d76685eff84f9cc352f8a56d024b6bfdac426e37c2c5ece37c4d733",
+        "signature": "27d92f477d76685eff84f9cc352f8a56d024b6bfdac426e37c2c5ece37c4d733",
+        "affectsGlobalScope": false
+      }
+    },
+    "options": {
+      "target": 2,
+      "module": 1,
+      "declaration": true,
+      "sourceMap": true,
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "composite": true,
+      "strict": true,
+      "baseUrl": "./",
+      "paths": {
+        "@/*": [
+          "src/*"
+        ]
+      },
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "project": "./tsconfig.build.json",
+      "configFilePath": "./tsconfig.build.json"
+    },
+    "referencedMap": {
+      "./node_modules/@babel/parser/typings/babel-parser.d.ts": [
+        "./node_modules/@babel/types/lib/index.d.ts"
+      ],
+      "./node_modules/@types/babel__core/index.d.ts": [
+        "./node_modules/@babel/parser/typings/babel-parser.d.ts",
+        "./node_modules/@babel/types/lib/index.d.ts",
+        "./node_modules/@types/babel__generator/index.d.ts",
+        "./node_modules/@types/babel__template/index.d.ts",
+        "./node_modules/@types/babel__traverse/index.d.ts"
+      ],
+      "./node_modules/@types/babel__generator/index.d.ts": [
+        "./node_modules/@babel/types/lib/index.d.ts"
+      ],
+      "./node_modules/@types/babel__template/index.d.ts": [
+        "./node_modules/@babel/parser/typings/babel-parser.d.ts",
+        "./node_modules/@babel/types/lib/index.d.ts"
+      ],
+      "./node_modules/@types/babel__traverse/index.d.ts": [
+        "./node_modules/@babel/types/lib/index.d.ts"
+      ],
+      "./node_modules/@types/graceful-fs/index.d.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/index.d.ts"
+      ],
+      "./node_modules/@types/istanbul-lib-report/index.d.ts": [
+        "./node_modules/@types/istanbul-lib-coverage/index.d.ts"
+      ],
+      "./node_modules/@types/istanbul-reports/index.d.ts": [
+        "./node_modules/@types/istanbul-lib-coverage/index.d.ts",
+        "./node_modules/@types/istanbul-lib-report/index.d.ts"
+      ],
+      "./node_modules/@types/jest/index.d.ts": [
+        "./node_modules/jest-diff/build/index.d.ts",
+        "./node_modules/pretty-format/build/index.d.ts"
+      ],
+      "./node_modules/@types/node/base.d.ts": [
+        "./node_modules/@types/node/assert.d.ts",
+        "./node_modules/@types/node/ts3.6/base.d.ts"
+      ],
+      "./node_modules/@types/node/child_process.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/net.d.ts",
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/cluster.d.ts": [
+        "./node_modules/@types/node/child_process.d.ts",
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/net.d.ts"
+      ],
+      "./node_modules/@types/node/console.d.ts": [
+        "./node_modules/@types/node/util.d.ts"
+      ],
+      "./node_modules/@types/node/constants.d.ts": [
+        "./node_modules/@types/node/crypto.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/os.d.ts"
+      ],
+      "./node_modules/@types/node/crypto.d.ts": [
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/dgram.d.ts": [
+        "./node_modules/@types/node/dns.d.ts",
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/net.d.ts"
+      ],
+      "./node_modules/@types/node/domain.d.ts": [
+        "./node_modules/@types/node/events.d.ts"
+      ],
+      "./node_modules/@types/node/fs.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/fs/promises.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "./node_modules/@types/node/fs/promises.d.ts": [
+        "./node_modules/@types/node/fs.d.ts"
+      ],
+      "./node_modules/@types/node/http.d.ts": [
+        "./node_modules/@types/node/net.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "./node_modules/@types/node/http2.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/net.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/tls.d.ts",
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "./node_modules/@types/node/https.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/tls.d.ts",
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "./node_modules/@types/node/index.d.ts": [
+        "./node_modules/@types/node/base.d.ts"
+      ],
+      "./node_modules/@types/node/inspector.d.ts": [
+        "./node_modules/@types/node/events.d.ts"
+      ],
+      "./node_modules/@types/node/module.d.ts": [
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "./node_modules/@types/node/net.d.ts": [
+        "./node_modules/@types/node/dns.d.ts",
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/perf_hooks.d.ts": [
+        "./node_modules/@types/node/async_hooks.d.ts"
+      ],
+      "./node_modules/@types/node/process.d.ts": [
+        "./node_modules/@types/node/tty.d.ts"
+      ],
+      "./node_modules/@types/node/readline.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/repl.d.ts": [
+        "./node_modules/@types/node/readline.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/vm.d.ts"
+      ],
+      "./node_modules/@types/node/stream.d.ts": [
+        "./node_modules/@types/node/events.d.ts"
+      ],
+      "./node_modules/@types/node/tls.d.ts": [
+        "./node_modules/@types/node/crypto.d.ts",
+        "./node_modules/@types/node/dns.d.ts",
+        "./node_modules/@types/node/net.d.ts",
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/ts3.4/base.d.ts": [
+        "./node_modules/@types/node/async_hooks.d.ts",
+        "./node_modules/@types/node/buffer.d.ts",
+        "./node_modules/@types/node/child_process.d.ts",
+        "./node_modules/@types/node/cluster.d.ts",
+        "./node_modules/@types/node/console.d.ts",
+        "./node_modules/@types/node/constants.d.ts",
+        "./node_modules/@types/node/crypto.d.ts",
+        "./node_modules/@types/node/dgram.d.ts",
+        "./node_modules/@types/node/dns.d.ts",
+        "./node_modules/@types/node/domain.d.ts",
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/fs/promises.d.ts",
+        "./node_modules/@types/node/globals.d.ts",
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/http2.d.ts",
+        "./node_modules/@types/node/https.d.ts",
+        "./node_modules/@types/node/inspector.d.ts",
+        "./node_modules/@types/node/module.d.ts",
+        "./node_modules/@types/node/net.d.ts",
+        "./node_modules/@types/node/os.d.ts",
+        "./node_modules/@types/node/path.d.ts",
+        "./node_modules/@types/node/perf_hooks.d.ts",
+        "./node_modules/@types/node/process.d.ts",
+        "./node_modules/@types/node/punycode.d.ts",
+        "./node_modules/@types/node/querystring.d.ts",
+        "./node_modules/@types/node/readline.d.ts",
+        "./node_modules/@types/node/repl.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/string_decoder.d.ts",
+        "./node_modules/@types/node/timers.d.ts",
+        "./node_modules/@types/node/tls.d.ts",
+        "./node_modules/@types/node/trace_events.d.ts",
+        "./node_modules/@types/node/tty.d.ts",
+        "./node_modules/@types/node/url.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/v8.d.ts",
+        "./node_modules/@types/node/vm.d.ts",
+        "./node_modules/@types/node/worker_threads.d.ts",
+        "./node_modules/@types/node/zlib.d.ts"
+      ],
+      "./node_modules/@types/node/ts3.6/base.d.ts": [
+        "./node_modules/@types/node/globals.global.d.ts",
+        "./node_modules/@types/node/ts3.4/base.d.ts",
+        "./node_modules/@types/node/wasi.d.ts"
+      ],
+      "./node_modules/@types/node/tty.d.ts": [
+        "./node_modules/@types/node/net.d.ts"
+      ],
+      "./node_modules/@types/node/url.d.ts": [
+        "./node_modules/@types/node/querystring.d.ts"
+      ],
+      "./node_modules/@types/node/v8.d.ts": [
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/worker_threads.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/url.d.ts",
+        "./node_modules/@types/node/vm.d.ts"
+      ],
+      "./node_modules/@types/node/zlib.d.ts": [
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/yargs/index.d.ts": [
+        "./node_modules/@types/yargs-parser/index.d.ts"
+      ],
+      "./node_modules/jest-diff/build/difflines.d.ts": [
+        "./node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "./node_modules/jest-diff/build/types.d.ts"
+      ],
+      "./node_modules/jest-diff/build/index.d.ts": [
+        "./node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "./node_modules/jest-diff/build/difflines.d.ts",
+        "./node_modules/jest-diff/build/printdiffs.d.ts",
+        "./node_modules/jest-diff/build/types.d.ts"
+      ],
+      "./node_modules/jest-diff/build/printdiffs.d.ts": [
+        "./node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "./node_modules/jest-diff/build/types.d.ts"
+      ],
+      "./node_modules/pretty-format/build/index.d.ts": [
+        "./node_modules/pretty-format/build/types.d.ts"
+      ],
+      "./src/draw/builder/borderbuilder/borderbuilder.ts": [
+        "./src/draw/builder/borderbuilder/container.ts",
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/drawitem/index.ts"
+      ],
+      "./src/draw/builder/borderbuilder/boundary.ts": [
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/borderbuilder/container.ts": [
+        "./src/draw/builder/borderbuilder/boundary.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/borderbuilder/hydroborder.ts": [
+        "./src/draw/builder/borderbuilder/borderbuilder.ts",
+        "./src/draw/builder/borderbuilder/boundary.ts",
+        "./src/draw/builder/borderbuilder/container.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/borderbuilder/index.ts": [
+        "./src/draw/builder/borderbuilder/borderbuilder.ts",
+        "./src/draw/builder/borderbuilder/hydroborder.ts"
+      ],
+      "./src/draw/builder/dimensionbuilder.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/hlayoutbuilder.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/index.ts": [
+        "./src/draw/builder/borderbuilder/index.ts",
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/builder/dimensionbuilder.ts",
+        "./src/draw/builder/hlayoutbuilder.ts",
+        "./src/draw/builder/rebarbuilder/index.ts",
+        "./src/draw/builder/tablebuilder.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/index.ts": [
+        "./src/draw/builder/rebarbuilder/materialtable.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/index.ts",
+        "./src/draw/builder/rebarbuilder/rebarform.ts",
+        "./src/draw/builder/rebarbuilder/rebarspec.ts",
+        "./src/draw/builder/rebarbuilder/rebartable.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/materialtable.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/builder/rebarbuilder/rebarspec.ts",
+        "./src/draw/builder/tablebuilder.ts",
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/circlepointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/index.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/circlepointrebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/layerpointrebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/linepointrebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/planerebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/polylinepointrebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/rebardrawbuilder.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/sparsepointrebar.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/layerpointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/linepointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/planerebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/rebardrawbuilder.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/rebardrawbuilder.ts",
+        "./src/draw/drawitem/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/polylinepointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/rebardrawbuilder.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/builder/rebarbuilder/rebarspec.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/sparsepointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/rebarform.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/rebarspec.ts": [
+        "./src/draw/builder/rebarbuilder/rebarform.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/rebartable.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/builder/rebarbuilder/rebarspec.ts",
+        "./src/draw/builder/tablebuilder.ts",
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/tablebuilder.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/arrow.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/compositeitem.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/content.ts": [
+        "./src/draw/drawitem/paper.interface.ts"
+      ],
+      "./src/draw/drawitem/dimaligned.ts": [
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/drawitem.ts": [
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/arc.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/geometry/geometry.ts",
+        "./src/draw/drawitem/geometry/rawintersect.function.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/circle.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/geometry/geometry.ts",
+        "./src/draw/drawitem/geometry/rawintersect.function.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/geometry.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/index.ts": [
+        "./src/draw/drawitem/geometry/arc.ts",
+        "./src/draw/drawitem/geometry/circle.ts",
+        "./src/draw/drawitem/geometry/geometry.ts",
+        "./src/draw/drawitem/geometry/line.ts",
+        "./src/draw/drawitem/geometry/polyline.ts",
+        "./src/draw/drawitem/geometry/rawintersect.function.ts"
+      ],
+      "./src/draw/drawitem/geometry/line.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/geometry/geometry.ts",
+        "./src/draw/drawitem/geometry/rawintersect.function.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/offsetpoint.function.ts": [
+        "./src/draw/drawitem/geometry/arc.ts",
+        "./src/draw/drawitem/geometry/line.ts",
+        "./src/draw/drawitem/geometry/rawintersect.function.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/polyline.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/geometry/arc.ts",
+        "./src/draw/drawitem/geometry/geometry.ts",
+        "./src/draw/drawitem/geometry/line.ts",
+        "./src/draw/drawitem/geometry/offsetpoint.function.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/rawintersect.function.ts": [
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/index.ts": [
+        "./src/draw/drawitem/arrow.ts",
+        "./src/draw/drawitem/compositeitem.ts",
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/dimaligned.ts",
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/geometry/index.ts",
+        "./src/draw/drawitem/mtext.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/drawitem/text.ts"
+      ],
+      "./src/draw/drawitem/mtext.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/paper.interface.ts": [
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/text.ts": [
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/index.ts": [
+        "./src/draw/builder/index.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts",
+        "./src/draw/paper/index.ts"
+      ],
+      "./src/draw/misc/boundary.ts": [
+        "./src/draw/misc/vector.ts"
+      ],
+      "./src/draw/misc/boundingbox.ts": [
+        "./src/draw/misc/vector.ts"
+      ],
+      "./src/draw/misc/enum/index.ts": [
+        "./src/draw/misc/enum/direction.ts",
+        "./src/draw/misc/enum/linetype.ts",
+        "./src/draw/misc/enum/rebardiameter.ts",
+        "./src/draw/misc/enum/rotatedirection.ts",
+        "./src/draw/misc/enum/side.ts",
+        "./src/draw/misc/enum/stretchside.ts",
+        "./src/draw/misc/enum/textalign.ts"
+      ],
+      "./src/draw/misc/index.ts": [
+        "./src/draw/misc/boundingbox.ts",
+        "./src/draw/misc/enum/index.ts",
+        "./src/draw/misc/misc.ts",
+        "./src/draw/misc/pos.ts",
+        "./src/draw/misc/range.ts",
+        "./src/draw/misc/vector.ts"
+      ],
+      "./src/draw/misc/misc.ts": [
+        "./src/draw/misc/enum/index.ts"
+      ],
+      "./src/draw/misc/pos.ts": [
+        "./src/draw/misc/vector.ts"
+      ],
+      "./src/draw/misc/vector.ts": [
+        "./src/draw/misc/misc.ts"
+      ],
+      "./src/draw/paper/index.ts": [
+        "./src/draw/paper/scriptpaper.ts"
+      ],
+      "./src/draw/paper/scriptpaper.ts": [
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/index.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/index.ts"
+      ],
+      "./src/struct/drawing.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/figure.ts"
+      ],
+      "./src/struct/figure.ts": [
+        "./src/draw/index.ts"
+      ],
+      "./src/struct/index.ts": [
+        "./src/struct/ushell/index.ts"
+      ],
+      "./src/struct/ushell/controller.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/drawing.ts",
+        "./src/struct/figure.ts",
+        "./src/struct/ushell/figurebuilder/index.ts",
+        "./src/struct/ushell/rebarbuilder/index.ts",
+        "./src/struct/ushell/ushell.ts",
+        "./src/struct/ushell/ushellfigure.ts",
+        "./src/struct/ushell/ushellrebar.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/base.ts": [
+        "./src/struct/figurebuilder.ts",
+        "./src/struct/ushell/ushell.ts",
+        "./src/struct/ushell/ushellfigure.ts",
+        "./src/struct/ushell/ushellrebar.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/cend.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/cmid.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/ctrans.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/index.ts": [
+        "./src/struct/ushell/figurebuilder/ushellfigurebuilder.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/linner.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/louter.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/sbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/sendbeam.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/sendwall.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/ushellfigurebuilder.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts",
+        "./src/struct/ushell/figurebuilder/cend.ts",
+        "./src/struct/ushell/figurebuilder/cmid.ts",
+        "./src/struct/ushell/figurebuilder/ctrans.ts",
+        "./src/struct/ushell/figurebuilder/linner.ts",
+        "./src/struct/ushell/figurebuilder/louter.ts",
+        "./src/struct/ushell/figurebuilder/sbar.ts",
+        "./src/struct/ushell/figurebuilder/sendbeam.ts",
+        "./src/struct/ushell/figurebuilder/sendwall.ts"
+      ],
+      "./src/struct/ushell/index.ts": [
+        "./src/struct/ushell/controller.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/bar/barrebarbuilder.ts": [
+        "./src/struct/ushell/rebarbuilder/bar/mainbar.ts",
+        "./src/struct/ushell/rebarbuilder/bar/stirbar.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/bar/index.ts": [
+        "./src/struct/ushell/rebarbuilder/bar/barrebarbuilder.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/bar/mainbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/bar/stirbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/base.ts": [
+        "./src/struct/rebarbuilder.ts",
+        "./src/struct/ushell/ushell.ts",
+        "./src/struct/ushell/ushellfigure.ts",
+        "./src/struct/ushell/ushellrebar.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/beambotbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/beammidbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/beamstirbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/beamtopbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/couterbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/endrebarbuilder.ts": [
+        "./src/struct/ushell/rebarbuilder/base.ts",
+        "./src/struct/ushell/rebarbuilder/end/beambotbar.ts",
+        "./src/struct/ushell/rebarbuilder/end/beammidbar.ts",
+        "./src/struct/ushell/rebarbuilder/end/beamstirbar.ts",
+        "./src/struct/ushell/rebarbuilder/end/beamtopbar.ts",
+        "./src/struct/ushell/rebarbuilder/end/couterbar.ts",
+        "./src/struct/ushell/rebarbuilder/end/topbeambar.ts",
+        "./src/struct/ushell/rebarbuilder/end/wallstirbar.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/index.ts": [
+        "./src/struct/ushell/rebarbuilder/end/endrebarbuilder.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/topbeambar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/wallstirbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/index.ts": [
+        "./src/struct/ushell/rebarbuilder/ushellrebarbuilder.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/cinnerbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/cinnersubbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/couterbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/index.ts": [
+        "./src/struct/ushell/rebarbuilder/shell/shellrebarbuilder.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/linnerbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/louterbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/mainbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/shellrebarbuilder.ts": [
+        "./src/struct/ushell/rebarbuilder/base.ts",
+        "./src/struct/ushell/rebarbuilder/shell/cinnerbar.ts",
+        "./src/struct/ushell/rebarbuilder/shell/cinnersubbar.ts",
+        "./src/struct/ushell/rebarbuilder/shell/couterbar.ts",
+        "./src/struct/ushell/rebarbuilder/shell/linnerbar.ts",
+        "./src/struct/ushell/rebarbuilder/shell/louterbar.ts",
+        "./src/struct/ushell/rebarbuilder/shell/mainbar.ts",
+        "./src/struct/ushell/rebarbuilder/shell/topbeambar.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/topbeambar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/trans/arcbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/trans/directbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/trans/index.ts": [
+        "./src/struct/ushell/rebarbuilder/trans/transbarbuilder.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/trans/transbarbuilder.ts": [
+        "./src/struct/ushell/rebarbuilder/base.ts",
+        "./src/struct/ushell/rebarbuilder/trans/arcbar.ts",
+        "./src/struct/ushell/rebarbuilder/trans/directbar.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/ushellrebarbuilder.ts": [
+        "./src/struct/ushell/rebarbuilder/bar/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts",
+        "./src/struct/ushell/rebarbuilder/end/index.ts",
+        "./src/struct/ushell/rebarbuilder/shell/index.ts",
+        "./src/struct/ushell/rebarbuilder/trans/index.ts"
+      ],
+      "./src/struct/ushell/ushell.ts": [
+        "./src/draw/index.ts"
+      ],
+      "./src/struct/ushell/ushellfigure.ts": [
+        "./src/struct/figure.ts"
+      ],
+      "./src/struct/ushell/ushellrebar.ts": [
+        "./src/draw/index.ts"
+      ]
+    },
+    "exportedModulesMap": {
+      "./node_modules/@babel/parser/typings/babel-parser.d.ts": [
+        "./node_modules/@babel/types/lib/index.d.ts"
+      ],
+      "./node_modules/@types/babel__core/index.d.ts": [
+        "./node_modules/@babel/parser/typings/babel-parser.d.ts",
+        "./node_modules/@babel/types/lib/index.d.ts",
+        "./node_modules/@types/babel__generator/index.d.ts",
+        "./node_modules/@types/babel__template/index.d.ts",
+        "./node_modules/@types/babel__traverse/index.d.ts"
+      ],
+      "./node_modules/@types/babel__generator/index.d.ts": [
+        "./node_modules/@babel/types/lib/index.d.ts"
+      ],
+      "./node_modules/@types/babel__template/index.d.ts": [
+        "./node_modules/@babel/parser/typings/babel-parser.d.ts",
+        "./node_modules/@babel/types/lib/index.d.ts"
+      ],
+      "./node_modules/@types/babel__traverse/index.d.ts": [
+        "./node_modules/@babel/types/lib/index.d.ts"
+      ],
+      "./node_modules/@types/graceful-fs/index.d.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/index.d.ts"
+      ],
+      "./node_modules/@types/istanbul-lib-report/index.d.ts": [
+        "./node_modules/@types/istanbul-lib-coverage/index.d.ts"
+      ],
+      "./node_modules/@types/istanbul-reports/index.d.ts": [
+        "./node_modules/@types/istanbul-lib-coverage/index.d.ts",
+        "./node_modules/@types/istanbul-lib-report/index.d.ts"
+      ],
+      "./node_modules/@types/jest/index.d.ts": [
+        "./node_modules/jest-diff/build/index.d.ts",
+        "./node_modules/pretty-format/build/index.d.ts"
+      ],
+      "./node_modules/@types/node/base.d.ts": [
+        "./node_modules/@types/node/assert.d.ts",
+        "./node_modules/@types/node/ts3.6/base.d.ts"
+      ],
+      "./node_modules/@types/node/child_process.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/net.d.ts",
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/cluster.d.ts": [
+        "./node_modules/@types/node/child_process.d.ts",
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/net.d.ts"
+      ],
+      "./node_modules/@types/node/console.d.ts": [
+        "./node_modules/@types/node/util.d.ts"
+      ],
+      "./node_modules/@types/node/constants.d.ts": [
+        "./node_modules/@types/node/crypto.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/os.d.ts"
+      ],
+      "./node_modules/@types/node/crypto.d.ts": [
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/dgram.d.ts": [
+        "./node_modules/@types/node/dns.d.ts",
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/net.d.ts"
+      ],
+      "./node_modules/@types/node/domain.d.ts": [
+        "./node_modules/@types/node/events.d.ts"
+      ],
+      "./node_modules/@types/node/fs.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/fs/promises.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "./node_modules/@types/node/fs/promises.d.ts": [
+        "./node_modules/@types/node/fs.d.ts"
+      ],
+      "./node_modules/@types/node/http.d.ts": [
+        "./node_modules/@types/node/net.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "./node_modules/@types/node/http2.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/net.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/tls.d.ts",
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "./node_modules/@types/node/https.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/tls.d.ts",
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "./node_modules/@types/node/index.d.ts": [
+        "./node_modules/@types/node/base.d.ts"
+      ],
+      "./node_modules/@types/node/inspector.d.ts": [
+        "./node_modules/@types/node/events.d.ts"
+      ],
+      "./node_modules/@types/node/module.d.ts": [
+        "./node_modules/@types/node/url.d.ts"
+      ],
+      "./node_modules/@types/node/net.d.ts": [
+        "./node_modules/@types/node/dns.d.ts",
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/perf_hooks.d.ts": [
+        "./node_modules/@types/node/async_hooks.d.ts"
+      ],
+      "./node_modules/@types/node/process.d.ts": [
+        "./node_modules/@types/node/tty.d.ts"
+      ],
+      "./node_modules/@types/node/readline.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/repl.d.ts": [
+        "./node_modules/@types/node/readline.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/vm.d.ts"
+      ],
+      "./node_modules/@types/node/stream.d.ts": [
+        "./node_modules/@types/node/events.d.ts"
+      ],
+      "./node_modules/@types/node/tls.d.ts": [
+        "./node_modules/@types/node/crypto.d.ts",
+        "./node_modules/@types/node/dns.d.ts",
+        "./node_modules/@types/node/net.d.ts",
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/ts3.4/base.d.ts": [
+        "./node_modules/@types/node/async_hooks.d.ts",
+        "./node_modules/@types/node/buffer.d.ts",
+        "./node_modules/@types/node/child_process.d.ts",
+        "./node_modules/@types/node/cluster.d.ts",
+        "./node_modules/@types/node/console.d.ts",
+        "./node_modules/@types/node/constants.d.ts",
+        "./node_modules/@types/node/crypto.d.ts",
+        "./node_modules/@types/node/dgram.d.ts",
+        "./node_modules/@types/node/dns.d.ts",
+        "./node_modules/@types/node/domain.d.ts",
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/fs/promises.d.ts",
+        "./node_modules/@types/node/globals.d.ts",
+        "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/http2.d.ts",
+        "./node_modules/@types/node/https.d.ts",
+        "./node_modules/@types/node/inspector.d.ts",
+        "./node_modules/@types/node/module.d.ts",
+        "./node_modules/@types/node/net.d.ts",
+        "./node_modules/@types/node/os.d.ts",
+        "./node_modules/@types/node/path.d.ts",
+        "./node_modules/@types/node/perf_hooks.d.ts",
+        "./node_modules/@types/node/process.d.ts",
+        "./node_modules/@types/node/punycode.d.ts",
+        "./node_modules/@types/node/querystring.d.ts",
+        "./node_modules/@types/node/readline.d.ts",
+        "./node_modules/@types/node/repl.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/string_decoder.d.ts",
+        "./node_modules/@types/node/timers.d.ts",
+        "./node_modules/@types/node/tls.d.ts",
+        "./node_modules/@types/node/trace_events.d.ts",
+        "./node_modules/@types/node/tty.d.ts",
+        "./node_modules/@types/node/url.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/v8.d.ts",
+        "./node_modules/@types/node/vm.d.ts",
+        "./node_modules/@types/node/worker_threads.d.ts",
+        "./node_modules/@types/node/zlib.d.ts"
+      ],
+      "./node_modules/@types/node/ts3.6/base.d.ts": [
+        "./node_modules/@types/node/globals.global.d.ts",
+        "./node_modules/@types/node/ts3.4/base.d.ts",
+        "./node_modules/@types/node/wasi.d.ts"
+      ],
+      "./node_modules/@types/node/tty.d.ts": [
+        "./node_modules/@types/node/net.d.ts"
+      ],
+      "./node_modules/@types/node/url.d.ts": [
+        "./node_modules/@types/node/querystring.d.ts"
+      ],
+      "./node_modules/@types/node/v8.d.ts": [
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/node/worker_threads.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/stream.d.ts",
+        "./node_modules/@types/node/url.d.ts",
+        "./node_modules/@types/node/vm.d.ts"
+      ],
+      "./node_modules/@types/node/zlib.d.ts": [
+        "./node_modules/@types/node/stream.d.ts"
+      ],
+      "./node_modules/@types/yargs/index.d.ts": [
+        "./node_modules/@types/yargs-parser/index.d.ts"
+      ],
+      "./node_modules/jest-diff/build/difflines.d.ts": [
+        "./node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "./node_modules/jest-diff/build/types.d.ts"
+      ],
+      "./node_modules/jest-diff/build/index.d.ts": [
+        "./node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "./node_modules/jest-diff/build/difflines.d.ts",
+        "./node_modules/jest-diff/build/printdiffs.d.ts",
+        "./node_modules/jest-diff/build/types.d.ts"
+      ],
+      "./node_modules/jest-diff/build/printdiffs.d.ts": [
+        "./node_modules/jest-diff/build/cleanupsemantic.d.ts",
+        "./node_modules/jest-diff/build/types.d.ts"
+      ],
+      "./node_modules/pretty-format/build/index.d.ts": [
+        "./node_modules/pretty-format/build/types.d.ts"
+      ],
+      "./src/draw/builder/borderbuilder/borderbuilder.ts": [
+        "./src/draw/builder/borderbuilder/container.ts",
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/drawitem/index.ts"
+      ],
+      "./src/draw/builder/borderbuilder/boundary.ts": [
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/borderbuilder/container.ts": [
+        "./src/draw/builder/borderbuilder/boundary.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/borderbuilder/hydroborder.ts": [
+        "./src/draw/builder/borderbuilder/borderbuilder.ts",
+        "./src/draw/builder/borderbuilder/boundary.ts",
+        "./src/draw/builder/borderbuilder/container.ts",
+        "./src/draw/drawitem/index.ts"
+      ],
+      "./src/draw/builder/borderbuilder/index.ts": [
+        "./src/draw/builder/borderbuilder/borderbuilder.ts",
+        "./src/draw/builder/borderbuilder/hydroborder.ts"
+      ],
+      "./src/draw/builder/dimensionbuilder.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/hlayoutbuilder.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/drawitem/index.ts"
+      ],
+      "./src/draw/builder/index.ts": [
+        "./src/draw/builder/borderbuilder/index.ts",
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/builder/dimensionbuilder.ts",
+        "./src/draw/builder/hlayoutbuilder.ts",
+        "./src/draw/builder/rebarbuilder/index.ts",
+        "./src/draw/builder/tablebuilder.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/index.ts": [
+        "./src/draw/builder/rebarbuilder/materialtable.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/index.ts",
+        "./src/draw/builder/rebarbuilder/rebarform.ts",
+        "./src/draw/builder/rebarbuilder/rebarspec.ts",
+        "./src/draw/builder/rebarbuilder/rebartable.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/materialtable.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/builder/rebarbuilder/rebarspec.ts",
+        "./src/draw/builder/tablebuilder.ts",
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/circlepointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/index.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/circlepointrebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/layerpointrebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/linepointrebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/planerebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/polylinepointrebar.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/rebardrawbuilder.ts",
+        "./src/draw/builder/rebarbuilder/notebuilder/sparsepointrebar.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/layerpointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/linepointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/planerebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/rebardrawbuilder.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/rebardrawbuilder.ts",
+        "./src/draw/drawitem/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/polylinepointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/rebardrawbuilder.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/builder/rebarbuilder/rebarspec.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/notebuilder/sparsepointrebar.ts": [
+        "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/rebarform.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/rebarspec.ts": [
+        "./src/draw/builder/rebarbuilder/rebarform.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/builder/rebarbuilder/rebartable.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/builder/rebarbuilder/rebarspec.ts",
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/index.ts"
+      ],
+      "./src/draw/builder/tablebuilder.ts": [
+        "./src/draw/builder/builder.interface.ts",
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/arrow.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/compositeitem.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/content.ts": [
+        "./src/draw/drawitem/paper.interface.ts"
+      ],
+      "./src/draw/drawitem/dimaligned.ts": [
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/drawitem.ts": [
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/arc.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/geometry/geometry.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/circle.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/geometry/geometry.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/geometry.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/index.ts": [
+        "./src/draw/drawitem/geometry/arc.ts",
+        "./src/draw/drawitem/geometry/circle.ts",
+        "./src/draw/drawitem/geometry/geometry.ts",
+        "./src/draw/drawitem/geometry/line.ts",
+        "./src/draw/drawitem/geometry/polyline.ts",
+        "./src/draw/drawitem/geometry/rawintersect.function.ts"
+      ],
+      "./src/draw/drawitem/geometry/line.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/geometry/geometry.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/offsetpoint.function.ts": [
+        "./src/draw/drawitem/geometry/arc.ts",
+        "./src/draw/drawitem/geometry/line.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/polyline.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/geometry/arc.ts",
+        "./src/draw/drawitem/geometry/geometry.ts",
+        "./src/draw/drawitem/geometry/line.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/geometry/rawintersect.function.ts": [
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/index.ts": [
+        "./src/draw/drawitem/arrow.ts",
+        "./src/draw/drawitem/compositeitem.ts",
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/dimaligned.ts",
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/geometry/index.ts",
+        "./src/draw/drawitem/mtext.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/drawitem/text.ts"
+      ],
+      "./src/draw/drawitem/mtext.ts": [
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/paper.interface.ts": [
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/drawitem/text.ts": [
+        "./src/draw/drawitem/content.ts",
+        "./src/draw/drawitem/drawitem.ts",
+        "./src/draw/drawitem/paper.interface.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/draw/index.ts": [
+        "./src/draw/builder/index.ts",
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts",
+        "./src/draw/paper/index.ts"
+      ],
+      "./src/draw/misc/boundary.ts": [
+        "./src/draw/misc/vector.ts"
+      ],
+      "./src/draw/misc/boundingbox.ts": [
+        "./src/draw/misc/vector.ts"
+      ],
+      "./src/draw/misc/enum/index.ts": [
+        "./src/draw/misc/enum/direction.ts",
+        "./src/draw/misc/enum/linetype.ts",
+        "./src/draw/misc/enum/rebardiameter.ts",
+        "./src/draw/misc/enum/rotatedirection.ts",
+        "./src/draw/misc/enum/side.ts",
+        "./src/draw/misc/enum/stretchside.ts",
+        "./src/draw/misc/enum/textalign.ts"
+      ],
+      "./src/draw/misc/index.ts": [
+        "./src/draw/misc/boundingbox.ts",
+        "./src/draw/misc/enum/index.ts",
+        "./src/draw/misc/misc.ts",
+        "./src/draw/misc/pos.ts",
+        "./src/draw/misc/range.ts",
+        "./src/draw/misc/vector.ts"
+      ],
+      "./src/draw/misc/misc.ts": [
+        "./src/draw/misc/enum/index.ts"
+      ],
+      "./src/draw/misc/pos.ts": [
+        "./src/draw/misc/vector.ts"
+      ],
+      "./src/draw/paper/index.ts": [
+        "./src/draw/paper/scriptpaper.ts"
+      ],
+      "./src/draw/paper/scriptpaper.ts": [
+        "./src/draw/drawitem/index.ts",
+        "./src/draw/misc/index.ts"
+      ],
+      "./src/index.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/index.ts"
+      ],
+      "./src/struct/drawing.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/figure.ts"
+      ],
+      "./src/struct/figure.ts": [
+        "./src/draw/index.ts"
+      ],
+      "./src/struct/index.ts": [
+        "./src/struct/ushell/index.ts"
+      ],
+      "./src/struct/ushell/controller.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/drawing.ts",
+        "./src/struct/ushell/ushell.ts",
+        "./src/struct/ushell/ushellrebar.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/base.ts": [
+        "./src/struct/figurebuilder.ts",
+        "./src/struct/ushell/ushell.ts",
+        "./src/struct/ushell/ushellfigure.ts",
+        "./src/struct/ushell/ushellrebar.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/cend.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/cmid.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/ctrans.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/index.ts": [
+        "./src/struct/ushell/figurebuilder/ushellfigurebuilder.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/linner.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/louter.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/sbar.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/sendbeam.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/sendwall.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/figurebuilder/ushellfigurebuilder.ts": [
+        "./src/struct/ushell/figurebuilder/base.ts"
+      ],
+      "./src/struct/ushell/index.ts": [
+        "./src/struct/ushell/controller.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/bar/barrebarbuilder.ts": [
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/bar/index.ts": [
+        "./src/struct/ushell/rebarbuilder/bar/barrebarbuilder.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/bar/mainbar.ts": [
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/bar/stirbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/base.ts": [
+        "./src/struct/rebarbuilder.ts",
+        "./src/struct/ushell/ushell.ts",
+        "./src/struct/ushell/ushellfigure.ts",
+        "./src/struct/ushell/ushellrebar.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/beambotbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/beammidbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/beamstirbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/beamtopbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/couterbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/endrebarbuilder.ts": [
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/index.ts": [
+        "./src/struct/ushell/rebarbuilder/end/endrebarbuilder.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/topbeambar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/end/wallstirbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/index.ts": [
+        "./src/struct/ushell/rebarbuilder/ushellrebarbuilder.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/cinnerbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/cinnersubbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/couterbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/index.ts": [
+        "./src/struct/ushell/rebarbuilder/shell/shellrebarbuilder.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/linnerbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/louterbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/mainbar.ts": [
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/shellrebarbuilder.ts": [
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/shell/topbeambar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/trans/arcbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/trans/directbar.ts": [
+        "./src/draw/index.ts",
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/trans/index.ts": [
+        "./src/struct/ushell/rebarbuilder/trans/transbarbuilder.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/trans/transbarbuilder.ts": [
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/rebarbuilder/ushellrebarbuilder.ts": [
+        "./src/struct/ushell/rebarbuilder/base.ts"
+      ],
+      "./src/struct/ushell/ushell.ts": [
+        "./src/draw/index.ts"
+      ],
+      "./src/struct/ushell/ushellfigure.ts": [
+        "./src/struct/figure.ts"
+      ],
+      "./src/struct/ushell/ushellrebar.ts": [
+        "./src/draw/index.ts"
+      ]
+    },
+    "semanticDiagnosticsPerFile": [
+      "./node_modules/@babel/parser/typings/babel-parser.d.ts",
+      "./node_modules/@babel/types/lib/index.d.ts",
+      "./node_modules/@types/babel__core/index.d.ts",
+      "./node_modules/@types/babel__generator/index.d.ts",
+      "./node_modules/@types/babel__template/index.d.ts",
+      "./node_modules/@types/babel__traverse/index.d.ts",
+      "./node_modules/@types/color-name/index.d.ts",
+      "./node_modules/@types/graceful-fs/index.d.ts",
+      "./node_modules/@types/istanbul-lib-coverage/index.d.ts",
+      "./node_modules/@types/istanbul-lib-report/index.d.ts",
+      "./node_modules/@types/istanbul-reports/index.d.ts",
+      "./node_modules/@types/jest/index.d.ts",
+      "./node_modules/@types/json-schema/index.d.ts",
+      "./node_modules/@types/json5/index.d.ts",
+      "./node_modules/@types/node/assert.d.ts",
+      "./node_modules/@types/node/async_hooks.d.ts",
+      "./node_modules/@types/node/base.d.ts",
+      "./node_modules/@types/node/buffer.d.ts",
+      "./node_modules/@types/node/child_process.d.ts",
+      "./node_modules/@types/node/cluster.d.ts",
+      "./node_modules/@types/node/console.d.ts",
+      "./node_modules/@types/node/constants.d.ts",
+      "./node_modules/@types/node/crypto.d.ts",
+      "./node_modules/@types/node/dgram.d.ts",
+      "./node_modules/@types/node/dns.d.ts",
+      "./node_modules/@types/node/domain.d.ts",
+      "./node_modules/@types/node/events.d.ts",
+      "./node_modules/@types/node/fs.d.ts",
+      "./node_modules/@types/node/fs/promises.d.ts",
+      "./node_modules/@types/node/globals.d.ts",
+      "./node_modules/@types/node/globals.global.d.ts",
+      "./node_modules/@types/node/http.d.ts",
+      "./node_modules/@types/node/http2.d.ts",
+      "./node_modules/@types/node/https.d.ts",
+      "./node_modules/@types/node/index.d.ts",
+      "./node_modules/@types/node/inspector.d.ts",
+      "./node_modules/@types/node/module.d.ts",
+      "./node_modules/@types/node/net.d.ts",
+      "./node_modules/@types/node/os.d.ts",
+      "./node_modules/@types/node/path.d.ts",
+      "./node_modules/@types/node/perf_hooks.d.ts",
+      "./node_modules/@types/node/process.d.ts",
+      "./node_modules/@types/node/punycode.d.ts",
+      "./node_modules/@types/node/querystring.d.ts",
+      "./node_modules/@types/node/readline.d.ts",
+      "./node_modules/@types/node/repl.d.ts",
+      "./node_modules/@types/node/stream.d.ts",
+      "./node_modules/@types/node/string_decoder.d.ts",
+      "./node_modules/@types/node/timers.d.ts",
+      "./node_modules/@types/node/tls.d.ts",
+      "./node_modules/@types/node/trace_events.d.ts",
+      "./node_modules/@types/node/ts3.4/base.d.ts",
+      "./node_modules/@types/node/ts3.6/base.d.ts",
+      "./node_modules/@types/node/tty.d.ts",
+      "./node_modules/@types/node/url.d.ts",
+      "./node_modules/@types/node/util.d.ts",
+      "./node_modules/@types/node/v8.d.ts",
+      "./node_modules/@types/node/vm.d.ts",
+      "./node_modules/@types/node/wasi.d.ts",
+      "./node_modules/@types/node/worker_threads.d.ts",
+      "./node_modules/@types/node/zlib.d.ts",
+      "./node_modules/@types/normalize-package-data/index.d.ts",
+      "./node_modules/@types/prettier/index.d.ts",
+      "./node_modules/@types/stack-utils/index.d.ts",
+      "./node_modules/@types/yargs-parser/index.d.ts",
+      "./node_modules/@types/yargs/index.d.ts",
+      "./node_modules/jest-diff/build/cleanupsemantic.d.ts",
+      "./node_modules/jest-diff/build/difflines.d.ts",
+      "./node_modules/jest-diff/build/index.d.ts",
+      "./node_modules/jest-diff/build/printdiffs.d.ts",
+      "./node_modules/jest-diff/build/types.d.ts",
+      "./node_modules/pretty-format/build/index.d.ts",
+      "./node_modules/pretty-format/build/types.d.ts",
+      "./node_modules/typescript/lib/lib.dom.d.ts",
+      "./node_modules/typescript/lib/lib.dom.iterable.d.ts",
+      "./node_modules/typescript/lib/lib.es2015.collection.d.ts",
+      "./node_modules/typescript/lib/lib.es2015.core.d.ts",
+      "./node_modules/typescript/lib/lib.es2015.d.ts",
+      "./node_modules/typescript/lib/lib.es2015.generator.d.ts",
+      "./node_modules/typescript/lib/lib.es2015.iterable.d.ts",
+      "./node_modules/typescript/lib/lib.es2015.promise.d.ts",
+      "./node_modules/typescript/lib/lib.es2015.proxy.d.ts",
+      "./node_modules/typescript/lib/lib.es2015.reflect.d.ts",
+      "./node_modules/typescript/lib/lib.es2015.symbol.d.ts",
+      "./node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
+      "./node_modules/typescript/lib/lib.es2016.array.include.d.ts",
+      "./node_modules/typescript/lib/lib.es2016.d.ts",
+      "./node_modules/typescript/lib/lib.es2017.d.ts",
+      "./node_modules/typescript/lib/lib.es2017.intl.d.ts",
+      "./node_modules/typescript/lib/lib.es2017.object.d.ts",
+      "./node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts",
+      "./node_modules/typescript/lib/lib.es2017.string.d.ts",
+      "./node_modules/typescript/lib/lib.es2017.typedarrays.d.ts",
+      "./node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts",
+      "./node_modules/typescript/lib/lib.es2018.asynciterable.d.ts",
+      "./node_modules/typescript/lib/lib.es2018.d.ts",
+      "./node_modules/typescript/lib/lib.es2018.intl.d.ts",
+      "./node_modules/typescript/lib/lib.es2018.promise.d.ts",
+      "./node_modules/typescript/lib/lib.es2018.regexp.d.ts",
+      "./node_modules/typescript/lib/lib.es2020.bigint.d.ts",
+      "./node_modules/typescript/lib/lib.es5.d.ts",
+      "./node_modules/typescript/lib/lib.es6.d.ts",
+      "./node_modules/typescript/lib/lib.esnext.intl.d.ts",
+      "./node_modules/typescript/lib/lib.scripthost.d.ts",
+      "./node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "./src/draw/builder/borderbuilder/borderbuilder.ts",
+      "./src/draw/builder/borderbuilder/boundary.ts",
+      "./src/draw/builder/borderbuilder/container.ts",
+      "./src/draw/builder/borderbuilder/hydroborder.ts",
+      "./src/draw/builder/borderbuilder/index.ts",
+      "./src/draw/builder/builder.interface.ts",
+      "./src/draw/builder/dimensionbuilder.ts",
+      "./src/draw/builder/hlayoutbuilder.ts",
+      "./src/draw/builder/index.ts",
+      "./src/draw/builder/rebarbuilder/index.ts",
+      "./src/draw/builder/rebarbuilder/materialtable.ts",
+      "./src/draw/builder/rebarbuilder/notebuilder/circlepointrebar.ts",
+      "./src/draw/builder/rebarbuilder/notebuilder/index.ts",
+      "./src/draw/builder/rebarbuilder/notebuilder/layerpointrebar.ts",
+      "./src/draw/builder/rebarbuilder/notebuilder/linepointrebar.ts",
+      "./src/draw/builder/rebarbuilder/notebuilder/planerebar.ts",
+      "./src/draw/builder/rebarbuilder/notebuilder/pointrebar.ts",
+      "./src/draw/builder/rebarbuilder/notebuilder/polylinepointrebar.ts",
+      "./src/draw/builder/rebarbuilder/notebuilder/rebardrawbuilder.ts",
+      "./src/draw/builder/rebarbuilder/notebuilder/sparsepointrebar.ts",
+      "./src/draw/builder/rebarbuilder/rebarform.ts",
+      "./src/draw/builder/rebarbuilder/rebarspec.ts",
+      "./src/draw/builder/rebarbuilder/rebartable.ts",
+      "./src/draw/builder/tablebuilder.ts",
+      "./src/draw/drawitem/arrow.ts",
+      "./src/draw/drawitem/compositeitem.ts",
+      "./src/draw/drawitem/content.ts",
+      "./src/draw/drawitem/dimaligned.ts",
+      "./src/draw/drawitem/drawitem.ts",
+      "./src/draw/drawitem/geometry/arc.ts",
+      "./src/draw/drawitem/geometry/circle.ts",
+      "./src/draw/drawitem/geometry/geometry.ts",
+      "./src/draw/drawitem/geometry/index.ts",
+      "./src/draw/drawitem/geometry/line.ts",
+      "./src/draw/drawitem/geometry/offsetpoint.function.ts",
+      "./src/draw/drawitem/geometry/polyline.ts",
+      "./src/draw/drawitem/geometry/rawintersect.function.ts",
+      "./src/draw/drawitem/index.ts",
+      "./src/draw/drawitem/mtext.ts",
+      "./src/draw/drawitem/paper.interface.ts",
+      "./src/draw/drawitem/text.ts",
+      "./src/draw/index.ts",
+      "./src/draw/misc/boundary.ts",
+      "./src/draw/misc/boundingbox.ts",
+      "./src/draw/misc/enum/direction.ts",
+      "./src/draw/misc/enum/index.ts",
+      "./src/draw/misc/enum/linetype.ts",
+      "./src/draw/misc/enum/rebardiameter.ts",
+      "./src/draw/misc/enum/rotatedirection.ts",
+      "./src/draw/misc/enum/side.ts",
+      "./src/draw/misc/enum/stretchside.ts",
+      "./src/draw/misc/enum/textalign.ts",
+      "./src/draw/misc/index.ts",
+      "./src/draw/misc/misc.ts",
+      "./src/draw/misc/pos.ts",
+      "./src/draw/misc/range.ts",
+      "./src/draw/misc/vector.ts",
+      "./src/draw/paper/index.ts",
+      "./src/draw/paper/scriptpaper.ts",
+      "./src/draw/preset/index.ts",
+      "./src/index.ts",
+      "./src/struct/drawing.ts",
+      "./src/struct/figure.ts",
+      "./src/struct/figurebuilder.ts",
+      "./src/struct/index.ts",
+      "./src/struct/rebarbuilder.ts",
+      "./src/struct/ushell/controller.ts",
+      "./src/struct/ushell/figurebuilder/base.ts",
+      "./src/struct/ushell/figurebuilder/cend.ts",
+      "./src/struct/ushell/figurebuilder/cmid.ts",
+      "./src/struct/ushell/figurebuilder/ctrans.ts",
+      "./src/struct/ushell/figurebuilder/index.ts",
+      "./src/struct/ushell/figurebuilder/linner.ts",
+      "./src/struct/ushell/figurebuilder/louter.ts",
+      "./src/struct/ushell/figurebuilder/sbar.ts",
+      "./src/struct/ushell/figurebuilder/sendbeam.ts",
+      "./src/struct/ushell/figurebuilder/sendwall.ts",
+      "./src/struct/ushell/figurebuilder/ushellfigurebuilder.ts",
+      "./src/struct/ushell/index.ts",
+      "./src/struct/ushell/rebarbuilder/bar/barrebarbuilder.ts",
+      "./src/struct/ushell/rebarbuilder/bar/index.ts",
+      "./src/struct/ushell/rebarbuilder/bar/mainbar.ts",
+      "./src/struct/ushell/rebarbuilder/bar/stirbar.ts",
+      "./src/struct/ushell/rebarbuilder/base.ts",
+      "./src/struct/ushell/rebarbuilder/end/beambotbar.ts",
+      "./src/struct/ushell/rebarbuilder/end/beammidbar.ts",
+      "./src/struct/ushell/rebarbuilder/end/beamstirbar.ts",
+      "./src/struct/ushell/rebarbuilder/end/beamtopbar.ts",
+      "./src/struct/ushell/rebarbuilder/end/couterbar.ts",
+      "./src/struct/ushell/rebarbuilder/end/endrebarbuilder.ts",
+      "./src/struct/ushell/rebarbuilder/end/index.ts",
+      "./src/struct/ushell/rebarbuilder/end/topbeambar.ts",
+      "./src/struct/ushell/rebarbuilder/end/wallstirbar.ts",
+      "./src/struct/ushell/rebarbuilder/index.ts",
+      "./src/struct/ushell/rebarbuilder/shell/cinnerbar.ts",
+      "./src/struct/ushell/rebarbuilder/shell/cinnersubbar.ts",
+      "./src/struct/ushell/rebarbuilder/shell/couterbar.ts",
+      "./src/struct/ushell/rebarbuilder/shell/index.ts",
+      "./src/struct/ushell/rebarbuilder/shell/linnerbar.ts",
+      "./src/struct/ushell/rebarbuilder/shell/louterbar.ts",
+      "./src/struct/ushell/rebarbuilder/shell/mainbar.ts",
+      "./src/struct/ushell/rebarbuilder/shell/shellrebarbuilder.ts",
+      "./src/struct/ushell/rebarbuilder/shell/topbeambar.ts",
+      "./src/struct/ushell/rebarbuilder/trans/arcbar.ts",
+      "./src/struct/ushell/rebarbuilder/trans/directbar.ts",
+      "./src/struct/ushell/rebarbuilder/trans/index.ts",
+      "./src/struct/ushell/rebarbuilder/trans/transbarbuilder.ts",
+      "./src/struct/ushell/rebarbuilder/ushellrebarbuilder.ts",
+      "./src/struct/ushell/ushell.ts",
+      "./src/struct/ushell/ushellfigure.ts",
+      "./src/struct/ushell/ushellrebar.ts"
+    ]
+  },
+  "version": "4.0.3"
+}

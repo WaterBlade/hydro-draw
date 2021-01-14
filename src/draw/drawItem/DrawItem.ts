@@ -13,6 +13,7 @@ export abstract class DrawItem implements PaperDrawItem {
     if (this._boundingBox) this._boundingBox.move(vec);
     this.moveItem(vec);
   }
+  abstract mirrorByVAxis(x: number): DrawItem;
   protected abstract moveItem(v: Vector): void;
   getBoundingBox(): BoundingBox {
     if (this._boundingBox) return this._boundingBox;

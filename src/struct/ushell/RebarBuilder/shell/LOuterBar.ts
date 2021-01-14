@@ -3,18 +3,20 @@ import {
   Line,
   PolylinePointRebar,
   Polyline,
-  RebarPathForm,
+  RebarFormPreset,
   Side,
   vec,
 } from "@/draw";
+import { Figure } from "@/struct/Figure";
 import { RebarBase } from "../Base";
 
 export class LOuterBar extends RebarBase {
   buildSpec(): this {
     const u = this.struct;
     const bar = this.specs.shell.lOuter;
+    const as = this.specs.as;
     const path = this.genPos()
-      .offset(u.as + bar.diameter / 2)
+      .offset(as + bar.diameter / 2)
       .removeStart()
       .removeStart()
       .divide(bar.space)
@@ -22,12 +24,12 @@ export class LOuterBar extends RebarBase {
       .removeEndPt();
     bar
       .setCount(2 * path.points.length)
-      .setForm(RebarPathForm.Line(bar.diameter, u.len - 2 * u.as));
-    bar.setId(this.id()).setStructure(this.name);
+      .setForm(RebarFormPreset.Line(bar.diameter, u.len - 2 * as));
+    bar.setId(this.specs.id.gen()).setStructure(this.name);
     this.specs.record(bar);
     return this;
   }
-  buildPos(): this{
+  buildPos(): this {
     const ys = this.genHalfPos();
     ys.reverse();
     this.figures.lOuter.pos.yPos = ys;
@@ -36,37 +38,42 @@ export class LOuterBar extends RebarBase {
   buildFigure(): this {
     this.drawCMid();
     this.drawLOuter();
-    this.drawSEndWall();
+    if (this.struct.isLeftExist()) this.drawSEndWall(this.figures.sEndWLeft);
+    if (this.struct.isRightExist()) this.drawSEndWall(this.figures.sEndWRight);
+    if (this.struct.isLeftCantExist())
+      this.drawSEndWall(this.figures.sEndCantWLeft);
+    if (this.struct.isRightCantExist())
+      this.drawSEndWall(this.figures.sEndCantWRight);
     return this;
   }
   protected genPos(): Polyline {
     const u = this.struct;
-    const path = new Polyline(-u.r + u.iBeam.w, u.hd - 1)
+    const path = new Polyline(-u.shell.r + u.iBeam.w, u.shell.hd - 1)
       .lineBy(0, 1)
       .lineBy(-u.beamWidth, 0);
     if (u.oBeam.w > 0) {
       path
         .lineBy(0, -u.oBeam.hd)
         .lineBy(u.oBeam.w, -u.oBeam.hs)
-        .lineBy(0, -u.hd + u.oBeam.hd + u.oBeam.hs);
+        .lineBy(0, -u.shell.hd + u.oBeam.hd + u.oBeam.hs);
     } else {
-      path.lineBy(0, -u.hd);
+      path.lineBy(0, -u.shell.hd);
     }
     const leftPt = u.transPt[0];
     const angle = u.transAngle;
     path
       .arcTo(leftPt.x, leftPt.y, angle)
-      .lineTo(-u.butt.w / 2, u.bottom)
+      .lineTo(-u.shell.wb / 2, u.bottom)
       .lineTo(1, 0);
     return path;
   }
-  protected genHalfPos(): number[]{
-    const u = this.struct;
+  protected genHalfPos(): number[] {
     const bar = this.specs.shell.lOuter;
+    const as = this.specs.as;
     return Array.from(
       new Set(
         this.genPos()
-          .offset(u.as)
+          .offset(as)
           .removeStart()
           .removeEnd()
           .divide(bar.space)
@@ -80,26 +87,27 @@ export class LOuterBar extends RebarBase {
     const u = this.struct;
     const bar = this.specs.shell.lOuter;
     const fig = this.figures.cMid;
+    const as = this.specs.as;
     const pLeft = this.genPos()
-      .offset(u.as + fig.drawRadius)
+      .offset(as + fig.drawRadius)
       .removeStart()
       .removeEnd()
       .divide(bar.space)
       .removeStartPt()
       .removeEndPt();
-    const pRight = pLeft.mirrorByYAxis();
+    const pRight = pLeft.mirrorByVAxis();
     fig.push(
       new PolylinePointRebar(fig.textHeight, fig.drawRadius)
         .spec(bar, bar.count / 2, bar.space)
         .polyline(pLeft)
         .offset(2 * fig.textHeight, Side.Right)
-        .onlineNote(vec(-u.r, -u.r / 4))
+        .onlineNote(vec(-u.shell.r, -u.shell.r / 4))
         .generate(),
       new PolylinePointRebar(fig.textHeight, fig.drawRadius)
         .spec(bar, bar.count / 2, bar.space)
         .polyline(pRight)
         .offset(2 * fig.textHeight)
-        .onlineNote(vec(u.r, -u.r / 4), true)
+        .onlineNote(vec(u.shell.r, -u.shell.r / 4), true)
         .generate()
     );
   }
@@ -107,35 +115,41 @@ export class LOuterBar extends RebarBase {
     const u = this.struct;
     const bar = this.specs.shell.lOuter;
     const fig = this.figures.lOuter;
+    const as = this.specs.as;
     const ys = this.genHalfPos();
-    const start = -u.len / 2 + u.as;
-    const end = u.len / 2 - u.as;
+    const start = -u.len / 2 + as;
+    const end = u.len / 2 - as;
 
-    const x = fig.pos.findX(-0.8 * u.len/2);
+    const x = fig.pos.findX((-0.8 * u.len) / 2);
 
     fig.push(
       new PlaneRebar(fig.textHeight)
         .spec(bar, 0, bar.space)
         .rebar(...ys.map((y) => new Line(vec(start, y), vec(end, y))))
         .leaderNote(
-          vec(x, u.hd + 2 * fig.textHeight),
+          vec(x, u.shell.hd + 2 * fig.textHeight),
           vec(0, 1),
           vec(-1, 0)
         )
         .generate()
     );
   }
-  protected drawSEndWall(): void{
+  protected drawSEndWall(fig: Figure): void {
     const u = this.struct;
     const bar = this.specs.shell.lOuter;
-    const fig = this.figures.sEndWall;
+    const as = this.specs.as;
+    const left = fig.outline.getBoundingBox().left;
     const right = fig.outline.getBoundingBox().right;
-    const y = -u.t + u.as + fig.drawRadius;
+    const y = -u.shell.t + as + fig.drawRadius;
     fig.push(
       new PlaneRebar(fig.textHeight)
-        .rebar(new Line(vec(u.as, y), vec(right, y)))
+        .rebar(new Line(vec(left + as, y), vec(right, y)))
         .spec(bar, 0, bar.space)
-        .leaderNote(vec(u.endSect.b + 75, 4*fig.textHeight), vec(0, 1), vec(1, 0))
+        .leaderNote(
+          vec(u.endSect.b + 75, 4 * fig.textHeight),
+          vec(0, 1),
+          vec(1, 0)
+        )
         .generate()
     );
   }

@@ -41,9 +41,10 @@ export class Line extends DrawItem implements LineGeometry {
   get endTangent(): Vector {
     return this.end.sub(this.start).unit();
   }
-  mirrorByYAxis(): Line {
-    const l = new Line(this.start.mirrorByYAxis(), this.end.mirrorByYAxis());
-    l.points = this.points.map((p) => p.mirrorByYAxis());
+  mirrorByVAxis(x = 0): Line {
+    const l = new Line(this.start.mirrorByVAxis(x), this.end.mirrorByVAxis(x));
+    l.points = this.points.map((p) => p.mirrorByVAxis(x));
+    l.lineType = this.lineType;
     return l;
   }
   offsetStart(dist: number, side: Side): Vector {

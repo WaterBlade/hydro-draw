@@ -25,6 +25,21 @@ export class DimAligned extends DrawItem implements PaperDimAligned {
   accept(paper: Paper, insertPoint: Vector): void {
     paper.visitDimAligned(this, insertPoint);
   }
+  mirrorByVAxis(x = 0): DimAligned {
+    const start = this.start.mirrorByVAxis(x);
+    const end = this.end.mirrorByVAxis(x);
+    const textPoint = this.textPoint.mirrorByVAxis(x);
+    const d = new DimAligned(
+      start,
+      end,
+      textPoint,
+      this.unitScale,
+      this.drawScale,
+      this.override
+    );
+    d.lineType = this.lineType;
+    return d;
+  }
   protected scaleItem(factor: number): void {
     this.start = this.start.mul(factor);
     this.end = this.end.mul(factor);

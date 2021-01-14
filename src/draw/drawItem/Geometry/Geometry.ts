@@ -11,7 +11,7 @@ export interface Geometry extends DrawItem {
   points: Vector[];
   includeTest(pt: Vector): boolean;
   calcLength(): number;
-  mirrorByYAxis(): Geometry;
+  mirrorByVAxis(x: number): Geometry;
   offset(dist: number, side: Side): Geometry;
   divide(space: number, side: StrecthSide, minimunRatio: number): this;
   project(side: StrecthSide, minimunRatio: number): Geometry;

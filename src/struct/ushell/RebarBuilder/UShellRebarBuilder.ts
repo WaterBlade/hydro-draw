@@ -5,13 +5,12 @@ import { ShellRebarBuilder } from "./shell";
 import { TransBarBuilder } from "./trans";
 
 export class UShellRebarBuilder extends CompositeRebarBase {
-  init(): void{
+  init(): void {
     this.push(
-      ShellRebarBuilder,
-      EndRebarBuilder,
-      TransBarBuilder,
-      BarRebarBuilder,
+      new ShellRebarBuilder(this.struct, this.specs, this.figures),
+      new EndRebarBuilder(this.struct, this.specs, this.figures),
+      new TransBarBuilder(this.struct, this.specs, this.figures),
+      new BarRebarBuilder(this.struct, this.specs, this.figures)
     );
-    this.setIdGen(this.idGen);
   }
 }

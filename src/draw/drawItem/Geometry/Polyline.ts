@@ -40,26 +40,26 @@ export class Polyline extends DrawItem implements PolylineGeometry {
   get lengths(): number[] {
     return this.segments.map((s) => s.calcLength());
   }
-  prepend(seg: Line | Arc | Polyline): Polyline{
+  prepend(seg: Line | Arc | Polyline): Polyline {
     const p = new Polyline();
-    if(!seg.end.closeTo(this.start, 1e-6)){
-      throw Error('cannot prepend to polyline');
+    if (!seg.end.closeTo(this.start, 1e-6)) {
+      throw Error("cannot prepend to polyline");
     }
-    if(seg instanceof Polyline){
+    if (seg instanceof Polyline) {
       p.segments.push(...seg.segments, ...this.segments);
-    }else{
+    } else {
       p.segments.push(seg, ...this.segments);
     }
     return p;
   }
-  append(seg: Line | Arc | Polyline): Polyline{
+  append(seg: Line | Arc | Polyline): Polyline {
     const p = new Polyline();
-    if(!seg.start.closeTo(this.end, 1e-6)){
-      throw Error('cannot prepend to polyline');
+    if (!seg.start.closeTo(this.end, 1e-6)) {
+      throw Error("cannot prepend to polyline");
     }
-    if(seg instanceof Polyline){
+    if (seg instanceof Polyline) {
       p.segments.push(...this.segments, ...seg.segments);
-    }else{
+    } else {
       p.segments.push(...this.segments, seg);
     }
     return p;
@@ -109,9 +109,10 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     const { x: x0, y: y0 } = this.current;
     return this.arcTo(x + x0, y + y0, angle, direciton);
   }
-  mirrorByYAxis(): Polyline {
+  mirrorByVAxis(x = 0): Polyline {
     const p = new Polyline();
-    p.segments = this.segments.map((s) => s.mirrorByYAxis());
+    p.segments = this.segments.map((s) => s.mirrorByVAxis(x));
+    p.lineType = this.lineType;
     p.closed = this.closed;
     return p;
   }

@@ -78,8 +78,8 @@ export class BoundingBox {
   }
 }
 
-export class EmptyBox extends BoundingBox{
-  constructor(){
+export class EmptyBox extends BoundingBox {
+  constructor() {
     super(Infinity, -Infinity, Infinity, -Infinity);
   }
 }

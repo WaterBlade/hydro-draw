@@ -33,8 +33,8 @@ export class Vector {
     }
     return new Vector(this.x / len, this.y / len);
   }
-  mirrorByYAxis(): Vector {
-    return new Vector(-this.x, this.y);
+  mirrorByVAxis(x = 0): Vector {
+    return new Vector(2 * x - this.x, this.y);
   }
   rotate(angle: number): Vector {
     // counterclockwise rotate

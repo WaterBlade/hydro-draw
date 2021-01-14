@@ -1,54 +1,63 @@
-import { Circle, RebarPathForm, vec } from "@/draw";
+import { Circle, RebarFormPreset, vec } from "@/draw";
 import { RebarBase } from "../Base";
 
-export class MainBar extends RebarBase{
-  buildSpec(): this{
+export class MainBar extends RebarBase {
+  buildSpec(): this {
     const u = this.struct;
     const bar = this.specs.bar.main;
+    const as = this.specs.asBar;
     const pts = u.genBarCenters();
     bar
       .setCount(pts.length * 4)
-      .setId(this.id())
+      .setId(this.specs.id.gen())
       .setStructure(this.name)
-      .setForm(RebarPathForm.Line(bar.diameter, 2*u.r + 2*u.t + 2*u.oBeam.w - 2*u.as));
+      .setForm(
+        RebarFormPreset.Line(
+          bar.diameter,
+          2 * u.shell.r + 2 * u.shell.t + 2 * u.oBeam.w - 2 * as
+        )
+      );
     this.specs.record(bar);
     return this;
   }
-  buildFigure(): this{
+  buildFigure(): this {
     this.drawLInner();
     this.drawSBar();
     return this;
   }
-  protected drawLInner(): void{
+  protected drawLInner(): void {
     const u = this.struct;
-    const {w, h} = u.bar;
+    const { w, h } = u.bar;
     const fig = this.figures.lInner;
     const r = fig.drawRadius;
-    const w0 = w/2 - u.as - r;
-    const h0 = h/2 - u.as - r;
+    const as = this.specs.asBar;
+    const w0 = w / 2 - as - r;
+    const h0 = h / 2 - as - r;
     const pts = u.genBarCenters();
-    for(const p of pts){
+    for (const p of pts) {
       fig.push(
         new Circle(p.add(vec(-w0, h0)), r).thickLine(),
         new Circle(p.add(vec(w0, h0)), r).thickLine(),
         new Circle(p.add(vec(-w0, -h0)), r).thickLine(),
-        new Circle(p.add(vec(w0, -h0)), r).thickLine(),
+        new Circle(p.add(vec(w0, -h0)), r).thickLine()
       );
     }
   }
-  protected drawSBar(): void{
+  protected drawSBar(): void {
     const u = this.struct;
     const bar = this.specs.bar.main;
-    const {w, h} = u.bar;
+    const { w, h } = u.bar;
     const fig = this.figures.sBar;
-    const w0 = w/2 - u.as - fig.r;
-    const h0 = h/2 - u.as -fig.r;
+    const as = this.specs.asBar;
+    const w0 = w / 2 - as - fig.r;
+    const h0 = h / 2 - as - fig.r;
     fig.push(
-      fig.sparsePointRebar()
+      fig
+        .sparsePointRebar()
         .points(vec(-w0, h0), vec(w0, h0), vec(-w0, -h0), vec(w0, -h0))
         .spec(bar, 4)
         .jointLeader(vec(0, 0), vec(-w / 2 - 2 * fig.h, 0))
         .generate()
-    )
+    );
   }
 }

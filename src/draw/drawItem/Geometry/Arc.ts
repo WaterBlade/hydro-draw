@@ -98,8 +98,8 @@ export class Arc extends DrawItem implements ArcGeometry {
   get endTangent(): Vector {
     return this.endNorm.norm().mul(-1);
   }
-  mirrorByYAxis(): Arc {
-    const c = this.center.mirrorByYAxis();
+  mirrorByVAxis(x = 0): Arc {
+    const c = this.center.mirrorByVAxis(x);
     const start = angleMirrorByYAxis(this.startAngle);
     const end = angleMirrorByYAxis(this.endAngle);
     const dir =
@@ -107,7 +107,8 @@ export class Arc extends DrawItem implements ArcGeometry {
         ? RotateDirection.clockwise
         : RotateDirection.counterclockwise;
     const a = new Arc(c, this.radius, start, end, dir);
-    a.points = this.points.map((p) => p.mirrorByYAxis());
+    a.points = this.points.map((p) => p.mirrorByVAxis(x));
+    a.lineType = this.lineType;
     return a;
   }
   offsetStart(dist: number, side: Side): Vector {

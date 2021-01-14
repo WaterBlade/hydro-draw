@@ -3,27 +3,29 @@ import {
   Line,
   PolylinePointRebar,
   Polyline,
-  RebarPathForm,
+  RebarFormPreset,
   Side,
   vec,
 } from "@/draw";
+import { Figure } from "@/struct/Figure";
 import { RebarBase } from "../Base";
 
 export class LInnerBar extends RebarBase {
   buildSpec(): this {
     const u = this.struct;
     const bar = this.specs.shell.lInner;
+    const as = this.specs.as;
     const path = this.genPos()
-      .offset(u.as + bar.diameter / 2, Side.Right)
+      .offset(as + bar.diameter / 2, Side.Right)
       .removeStart()
       .removeEnd()
       .divide(bar.space);
     bar
       .setCount(path.points.length)
       .setForm(
-        RebarPathForm.Line(bar.diameter, u.len - 2 * u.as - 2 * u.waterStop.w)
+        RebarFormPreset.Line(bar.diameter, u.len - 2 * as - 2 * u.waterStop.w)
       )
-      .setId(this.id())
+      .setId(this.specs.id.gen())
       .setStructure(this.name);
     this.specs.record(bar);
     return this;
@@ -31,39 +33,57 @@ export class LInnerBar extends RebarBase {
   buildFigure(): this {
     this.drawCMid();
     this.drawLInner();
-    this.drawSEndBeam();
-    this.drawSEndWall();
+    if (this.struct.isLeftExist()) {
+      this.drawSEndBeam(this.figures.sEndBLeft);
+      this.drawSEndWall(this.figures.sEndWLeft);
+    }
+    if (this.struct.isRightExist()) {
+      this.drawSEndBeam(this.figures.sEndBRight);
+      this.drawSEndWall(this.figures.sEndWRight);
+    }
+    if (this.struct.isLeftCantExist()) {
+      this.drawSEndBeam(this.figures.sEndCantBLeft);
+      this.drawSEndWall(this.figures.sEndCantWLeft);
+    }
+    if (this.struct.isRightCantExist()) {
+      this.drawSEndBeam(this.figures.sEndCantBRight);
+      this.drawSEndWall(this.figures.sEndCantWRight);
+    }
     return this;
   }
   protected genPos(): Polyline {
     const u = this.struct;
-    const path = new Polyline(-u.r - u.t, u.hd).lineBy(u.t + u.iBeam.w, 0);
+    const path = new Polyline(-u.shell.r - u.shell.t, u.shell.hd).lineBy(
+      u.shell.t + u.iBeam.w,
+      0
+    );
     if (u.iBeam.w !== 0) {
       path
         .lineBy(0, -u.iBeam.hd)
         .lineBy(-u.iBeam.w, -u.iBeam.hs)
-        .lineBy(0, -u.hd + u.iBeam.hd + u.iBeam.hs);
+        .lineBy(0, -u.shell.hd + u.iBeam.hd + u.iBeam.hs);
     } else {
-      path.lineBy(0, -u.hd);
+      path.lineBy(0, -u.shell.hd);
     }
-    path.arcBy(2 * u.r, 0, 180);
+    path.arcBy(2 * u.shell.r, 0, 180);
     if (u.iBeam.w !== 0) {
       path
-        .lineBy(0, u.hd - u.iBeam.hd - u.iBeam.hs)
+        .lineBy(0, u.shell.hd - u.iBeam.hd - u.iBeam.hs)
         .lineBy(-u.iBeam.w, u.iBeam.hs)
         .lineBy(0, u.iBeam.hd);
     } else {
-      path.lineBy(0, -u.hd);
+      path.lineBy(0, -u.shell.hd);
     }
-    path.lineBy(u.iBeam.w + u.t, 0);
+    path.lineBy(u.iBeam.w + u.shell.t, 0);
     return path;
   }
   protected drawCMid(): void {
     const u = this.struct;
     const bar = this.specs.shell.lInner;
+    const as = this.specs.as;
     const fig = this.figures.cMid;
     const p = this.genPos()
-      .offset(u.as + fig.drawRadius, Side.Right)
+      .offset(as + fig.drawRadius, Side.Right)
       .removeStart()
       .removeEnd()
       .divide(bar.space);
@@ -72,7 +92,7 @@ export class LInnerBar extends RebarBase {
         .spec(bar, bar.count, bar.space)
         .polyline(p)
         .offset(2 * fig.textHeight)
-        .onlineNote(vec(0, -u.r / 2))
+        .onlineNote(vec(0, -u.shell.r / 2))
         .generate()
     );
   }
@@ -80,49 +100,63 @@ export class LInnerBar extends RebarBase {
     const u = this.struct;
     const bar = this.specs.shell.lInner;
     const fig = this.figures.lInner;
-    const y = -u.r - u.as - fig.drawRadius;
+    const as = this.specs.as;
+    const y = -u.shell.r - as - fig.drawRadius;
     fig.push(
       new PlaneRebar(fig.textHeight)
         .rebar(
           new Line(
-            vec(-u.len / 2 + u.waterStop.w + u.as, y),
-            vec(u.len / 2 - u.waterStop.w - u.as, y)
+            vec(-u.len / 2 + u.waterStop.w + as, y),
+            vec(u.len / 2 - u.waterStop.w - as, y)
           )
         )
         .spec(bar)
         .leaderNote(
-          vec(-u.len / 2 + u.cantLeft + u.denseL + 75, y + 4 * fig.textHeight),
+          vec(
+            -u.len / 2 + u.cantLeft + this.specs.denseL + 75,
+            y + 4 * fig.textHeight
+          ),
           vec(0, -1),
           vec(1, 0)
         )
         .generate()
     );
   }
-  protected drawSEndBeam(): void{
+  protected drawSEndBeam(fig: Figure): void {
     const u = this.struct;
     const bar = this.specs.shell.lInner;
-    const fig = this.figures.sEndBeam;
-    const y = -u.as;
+    const as = this.specs.as;
+    const y = -as;
+    const left = fig.outline.getBoundingBox().left;
     const right = fig.outline.getBoundingBox().right;
     fig.push(
       new PlaneRebar(fig.textHeight)
-        .rebar(new Line(vec(u.waterStop.w + u.as, y), vec(right, y)))
+        .rebar(new Line(vec(left + u.waterStop.w + as, y), vec(right, y)))
         .spec(bar, 0, bar.space)
-        .leaderNote(vec(u.endSect.b + 25, 4*fig.textHeight), vec(0, 1), vec(-1, 0))
+        .leaderNote(
+          vec(u.endSect.b + 25, 4 * fig.textHeight),
+          vec(0, 1),
+          vec(-1, 0)
+        )
         .generate()
     );
   }
-  protected drawSEndWall(): void{
+  protected drawSEndWall(fig: Figure): void {
     const u = this.struct;
     const bar = this.specs.shell.lInner;
-    const fig = this.figures.sEndWall;
-    const y = -u.as;
+    const as = this.specs.as;
+    const y = -as;
+    const left = fig.outline.getBoundingBox().left;
     const right = fig.outline.getBoundingBox().right;
     fig.push(
       new PlaneRebar(fig.textHeight)
-        .rebar(new Line(vec(u.waterStop.w + u.as, y), vec(right, y)))
+        .rebar(new Line(vec(left + u.waterStop.w + as, y), vec(right, y)))
         .spec(bar, 0, bar.space)
-        .leaderNote(vec(u.endSect.b + 25, 4*fig.textHeight), vec(0, 1), vec(-1, 0))
+        .leaderNote(
+          vec(u.endSect.b + 25, 4 * fig.textHeight),
+          vec(0, 1),
+          vec(-1, 0)
+        )
         .generate()
     );
   }

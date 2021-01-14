@@ -3,20 +3,22 @@ import {
   Line,
   LinePointRebar,
   Polyline,
-  RebarPathForm,
   Side,
   SparsePointRebar,
   StrecthSide,
   vec,
+  RebarPathForm,
 } from "@/draw";
+import { Figure } from "@/struct/Figure";
 import { RebarBase } from "../Base";
 
 export class CInnerBar extends RebarBase {
   buildSpec(): this {
     const u = this.struct;
     const bar = this.specs.shell.cInner;
+    const as = this.specs.as;
     const path = this.genShape()
-      .offset(u.as, Side.Right)
+      .offset(as, Side.Right)
       .removeStart()
       .removeEnd();
     const lens = path.segments.map((s) => s.calcLength());
@@ -24,7 +26,7 @@ export class CInnerBar extends RebarBase {
       .lineBy(0, -1.6)
       .dimLength(lens[0])
       .arcBy(4, 0, 180)
-      .dimArc(u.r + u.as)
+      .dimArc(u.shell.r + as)
       .dimLength(lens[1])
       .lineBy(0, 1.6)
       .dimLength(lens[2]);
@@ -33,49 +35,65 @@ export class CInnerBar extends RebarBase {
     bar.setCount(
       this.genMulPos().reduce((pre: number, cur) => pre + cur.points.length, 0)
     );
-    bar.setId(this.id()).setStructure(this.name);
+    bar.setId(this.specs.id.gen()).setStructure(this.name);
     this.specs.record(bar);
     return this;
   }
   buildFigure(): this {
     this.drawCMid();
+    this.drawCEndCant();
     this.drawLInner();
-    this.drawSEndBeam();
-    this.drawSEndWall();
+    if (this.struct.isLeftExist()) {
+      this.drawSEndBeam(this.figures.sEndBLeft);
+      this.drawSEndWall(this.figures.sEndWLeft);
+    }
+    if (this.struct.isRightExist()) {
+      this.drawSEndBeam(this.figures.sEndBRight);
+      this.drawSEndWall(this.figures.sEndWRight);
+    }
+    if (this.struct.isLeftCantExist()) {
+      this.drawSEndCantBeam(this.figures.sEndCantBLeft);
+      this.drawSEndCantWall(this.figures.sEndCantWLeft);
+    }
+    if (this.struct.isRightCantExist()) {
+      this.drawSEndCantBeam(this.figures.sEndCantBRight);
+      this.drawSEndCantWall(this.figures.sEndCantWRight);
+    }
     return this;
   }
   protected genShape(): Polyline {
     const u = this.struct;
-    const path = new Polyline(-u.r - 1, u.hd)
+    const path = new Polyline(-u.shell.r - 1, u.shell.hd)
       .lineBy(1, 0)
-      .lineBy(0, -u.hd)
-      .arcBy(2 * u.r, 0, 180)
-      .lineBy(0, u.hd)
+      .lineBy(0, -u.shell.hd)
+      .arcBy(2 * u.shell.r, 0, 180)
+      .lineBy(0, u.shell.hd)
       .lineBy(1, 0);
     return path;
   }
   protected genMulPos(offsetDist?: number): Line[] {
     const u = this.struct;
     const bar = this.specs.shell.cInner;
+    const as = this.specs.as;
     const res: Line[] = [];
-    const y = -u.r;
-    const midLeft = -u.len / 2 + u.cantLeft + u.denseL;
-    const midRight = u.len / 2 - u.cantRight - u.denseL;
+    const y = -u.shell.r;
+    const midLeft = -u.len / 2 + u.cantLeft + this.specs.denseL;
+    const midRight = u.len / 2 - u.cantRight - this.specs.denseL;
 
     let left: number;
     if (u.cantLeft > 0) {
-      left = -u.len / 2 + u.waterStop.w + u.as;
+      left = -u.len / 2 + u.waterStop.w + as;
     } else {
       left = -u.len / 2 + u.endSect.b;
     }
     let right: number;
     if (u.cantRight > 0) {
-      right = u.len / 2 - u.waterStop.w - u.as;
+      right = u.len / 2 - u.waterStop.w - as;
     } else {
       right = u.len / 2 - u.endSect.b;
     }
 
-    const dist = offsetDist ? offsetDist : u.as;
+    const dist = offsetDist ? offsetDist : as;
 
     res.push(
       new Line(vec(left, y), vec(midLeft, y))
@@ -98,11 +116,12 @@ export class CInnerBar extends RebarBase {
     const u = this.struct;
     const bar = this.specs.shell.cInner;
     const fig = this.figures.cMid;
+    const as = this.specs.as;
     const path = this.genShape()
-      .offset(u.as, Side.Right)
+      .offset(as, Side.Right)
       .removeStart()
       .removeEnd();
-    const pt = vec(-u.r + 3 * fig.textHeight, u.hd / 5);
+    const pt = vec(-u.shell.r + 3 * fig.textHeight, u.shell.hd / 5);
     fig.push(
       new PlaneRebar(fig.textHeight)
         .spec(bar, 0, bar.space)
@@ -110,6 +129,26 @@ export class CInnerBar extends RebarBase {
         .leaderNote(pt, vec(1, 0))
         .generate()
     );
+  }
+  protected drawCEndCant(): void {
+    if (this.struct.hasCant()) {
+      const u = this.struct;
+      const bar = this.specs.shell.cInner;
+      const fig = this.figures.cEndCant;
+      const as = this.specs.as;
+      const path = this.genShape()
+        .offset(as, Side.Right)
+        .removeStart()
+        .removeEnd();
+      const pt = vec(-u.shell.r + 3 * fig.textHeight, u.shell.hd / 5);
+      fig.push(
+        new PlaneRebar(fig.textHeight)
+          .spec(bar, 0, bar.space)
+          .rebar(path)
+          .leaderNote(pt, vec(1, 0))
+          .generate()
+      );
+    }
   }
   protected drawLInner(): void {
     const bar = this.specs.shell.cInner;
@@ -136,32 +175,92 @@ export class CInnerBar extends RebarBase {
         .generate()
     );
   }
-  protected drawSEndBeam(): void{
+  protected drawSEndBeam(fig: Figure): void {
     const u = this.struct;
-    const fig = this.figures.sEndBeam;
     const bar = this.specs.shell.cInner;
     const r = fig.drawRadius;
+    const as = this.specs.as;
     const right = fig.outline.getBoundingBox().right;
     fig.push(
       new SparsePointRebar(fig.textHeight, r, 30)
-        .points(...new Line(vec(u.endSect.b, -u.as+r), vec(right, -u.as + r)).divide(bar.denseSpace, StrecthSide.tail).removeStartPt().removeEndPt().points)
+        .points(
+          ...new Line(vec(u.endSect.b, -as + r), vec(right, -as + r))
+            .divide(bar.denseSpace, StrecthSide.tail)
+            .removeStartPt()
+            .removeEndPt().points
+        )
         .spec(bar, 0, bar.denseSpace)
-        .parallelLeader(vec(right + fig.textHeight, 2*fig.textHeight), vec(1, 0))
+        .parallelLeader(
+          vec(right + fig.textHeight, 2 * fig.textHeight),
+          vec(1, 0)
+        )
         .generate()
-    )
+    );
   }
-  protected drawSEndWall(): void{
+  protected drawSEndCantBeam(fig: Figure): void {
     const u = this.struct;
-    const fig = this.figures.sEndWall;
     const bar = this.specs.shell.cInner;
     const r = fig.drawRadius;
+    const as = this.specs.as;
+    const left = fig.outline.getBoundingBox().left + u.waterStop.w + as + fig.r;
     const right = fig.outline.getBoundingBox().right;
     fig.push(
       new SparsePointRebar(fig.textHeight, r, 30)
-        .points(...new Line(vec(u.endSect.b, -u.as+r), vec(right, -u.as + r)).divide(bar.denseSpace, StrecthSide.tail).removeStartPt().removeEndPt().points)
+        .points(
+          ...new Line(vec(left, -as + r), vec(right, -as + r))
+            .divide(bar.denseSpace, StrecthSide.tail)
+            .removeEndPt().points
+        )
         .spec(bar, 0, bar.denseSpace)
-        .parallelLeader(vec(right + fig.textHeight, 2*fig.textHeight), vec(1, 0))
+        .parallelLeader(
+          vec(right + fig.textHeight, 2 * fig.textHeight),
+          vec(1, 0)
+        )
         .generate()
-    )
+    );
+  }
+  protected drawSEndWall(fig: Figure): void {
+    const u = this.struct;
+    const bar = this.specs.shell.cInner;
+    const r = fig.drawRadius;
+    const as = this.specs.as;
+    const right = fig.outline.getBoundingBox().right;
+    fig.push(
+      new SparsePointRebar(fig.textHeight, r, 30)
+        .points(
+          ...new Line(vec(u.endSect.b, -as + r), vec(right, -as + r))
+            .divide(bar.denseSpace, StrecthSide.tail)
+            .removeStartPt()
+            .removeEndPt().points
+        )
+        .spec(bar, 0, bar.denseSpace)
+        .parallelLeader(
+          vec(right + fig.textHeight, 2 * fig.textHeight),
+          vec(1, 0)
+        )
+        .generate()
+    );
+  }
+  protected drawSEndCantWall(fig: Figure): void {
+    const u = this.struct;
+    const bar = this.specs.shell.cInner;
+    const r = fig.drawRadius;
+    const as = this.specs.as;
+    const left = fig.outline.getBoundingBox().left + u.waterStop.w + as + fig.r;
+    const right = fig.outline.getBoundingBox().right;
+    fig.push(
+      new SparsePointRebar(fig.textHeight, r, 30)
+        .points(
+          ...new Line(vec(left, -as + r), vec(right, -as + r))
+            .divide(bar.denseSpace, StrecthSide.tail)
+            .removeEndPt().points
+        )
+        .spec(bar, 0, bar.denseSpace)
+        .parallelLeader(
+          vec(right + fig.textHeight, 2 * fig.textHeight),
+          vec(1, 0)
+        )
+        .generate()
+    );
   }
 }

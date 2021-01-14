@@ -3,17 +3,19 @@ import {
   LayerPointRebar,
   Line,
   LinePointRebar,
-  RebarPathForm,
+  RebarFormPreset,
   vec,
 } from "@/draw";
+import { Figure } from "@/struct/Figure";
 import { RebarBase } from "../Base";
 
 export class MainBar extends RebarBase {
   buildSpec(): this {
     const u = this.struct;
     const bar = this.specs.shell.main;
-    bar.setForm(RebarPathForm.Line(bar.diameter, u.len - 2 * u.as));
-    bar.setId(this.id()).setStructure(this.name);
+    const as = this.specs.as;
+    bar.setForm(RebarFormPreset.Line(bar.diameter, u.len - 2 * as));
+    bar.setId(this.specs.id.gen()).setStructure(this.name);
     this.specs.record(bar);
     return this;
   }
@@ -21,16 +23,22 @@ export class MainBar extends RebarBase {
     this.drawCMid();
     this.drawLInner();
     this.drawLOuter();
-    this.drawSEndBeam();
+    if (this.struct.isLeftExist()) this.drawSEndBeam(this.figures.sEndBLeft);
+    if (this.struct.isRightExist()) this.drawSEndBeam(this.figures.sEndBRight);
+    if (this.struct.isLeftCantExist())
+      this.drawSEndBeam(this.figures.sEndCantBLeft);
+    if (this.struct.isRightCantExist())
+      this.drawSEndBeam(this.figures.sEndCantBRight);
     return this;
   }
   protected drawCMid(): void {
     const u = this.struct;
     const bar = this.specs.shell.main;
     const fig = this.figures.cMid;
-    const y = u.bottom + u.as + fig.drawRadius;
-    const left = vec(-u.butt.w / 2, y);
-    const right = vec(u.butt.w / 2, y);
+    const as = this.specs.as;
+    const y = u.bottom + as + fig.drawRadius;
+    const left = vec(-u.shell.wb / 2, y);
+    const right = vec(u.shell.wb / 2, y);
     const pt = vec(0, y - 2 * fig.textHeight);
     if (bar.layerCount > 1) {
       fig.push(
@@ -53,14 +61,18 @@ export class MainBar extends RebarBase {
   protected drawLInner(): void {
     const u = this.struct;
     const bar = this.specs.shell.main;
+    const as = this.specs.as;
     const fig = this.figures.lInner;
-    const y = -u.r - u.t - u.butt.h + u.as + fig.drawRadius;
+    const y = -u.shell.r - u.shell.t - u.shell.hb + as + fig.drawRadius;
     fig.push(
       new PlaneRebar(fig.textHeight)
-        .rebar(new Line(vec(-u.len / 2 + u.as, y), vec(u.len / 2 - u.as, y)))
+        .rebar(new Line(vec(-u.len / 2 + as, y), vec(u.len / 2 - as, y)))
         .spec(bar)
         .leaderNote(
-          vec(u.len / 2 - u.cantRight - u.denseL - 75, y - 4 * fig.textHeight),
+          vec(
+            u.len / 2 - u.cantRight - this.specs.denseL - 75,
+            y - 4 * fig.textHeight
+          ),
           vec(0, 1),
           vec(-1, 0)
         )
@@ -71,10 +83,11 @@ export class MainBar extends RebarBase {
     const u = this.struct;
     const bar = this.specs.shell.main;
     const fig = this.figures.lOuter;
-    const y = -u.r - u.t - u.butt.h + u.as;
+    const as = this.specs.as;
+    const y = -u.shell.r - u.shell.t - u.shell.hb + as;
     fig.push(
       new PlaneRebar(fig.textHeight)
-        .rebar(new Line(vec(-u.len / 2 + u.as, y), vec(u.len / 2 - u.as, y)))
+        .rebar(new Line(vec(-u.len / 2 + as, y), vec(u.len / 2 - as, y)))
         .spec(bar)
         .leaderNote(
           vec(-u.len / 4, y - 4 * fig.textHeight),
@@ -84,18 +97,23 @@ export class MainBar extends RebarBase {
         .generate()
     );
   }
-  protected drawSEndBeam(): void{
+  protected drawSEndBeam(fig: Figure): void {
     const u = this.struct;
     const bar = this.specs.shell.main;
-    const fig = this.figures.sEndBeam;
+    const as = this.specs.as;
+    const left = fig.outline.getBoundingBox().left;
     const right = fig.outline.getBoundingBox().right;
-    const y = -u.t - u.butt.h + u.as + fig.drawRadius;
+    const y = -u.shell.t - u.shell.hb + as + fig.drawRadius;
     fig.push(
       new PlaneRebar(fig.textHeight)
-        .rebar(new Line(vec(u.as, y), vec(right, y)))
+        .rebar(new Line(vec(left + as, y), vec(right, y)))
         .spec(bar)
-        .leaderNote(vec(u.endSect.b + 75, 4*fig.textHeight), vec(0, 1), vec(1, 0))
+        .leaderNote(
+          vec(u.endSect.b + 75, 4 * fig.textHeight),
+          vec(0, 1),
+          vec(1, 0)
+        )
         .generate()
-    )
+    );
   }
 }

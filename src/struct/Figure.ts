@@ -21,32 +21,72 @@ import {
   DimensionBuilder,
 } from "@/draw";
 
-
-class PosGen{
+class PosGen {
   xPos: number[] = [];
   yPos: number[] = [];
-  findX(x: number): number{
+  findX(x: number): number {
     return this.find(x, this.xPos);
   }
-  findY(y: number): number{
+  findY(y: number): number {
     return this.find(y, this.yPos);
   }
-  protected find(k: number, array: number[]): number{
-    if(k < array[0] || k > last(array)) return k;
+  protected find(k: number, array: number[]): number {
+    if (k < array[0] || k > last(array)) return k;
     let i = 0;
-    while(array[i] < k){
+    while (array[i] < k) {
       i++;
     }
-    return (array[i-1] + array[i])/2;
+    return (array[i - 1] + array[i]) / 2;
   }
 }
 
+export class SpecIdGen {
+  protected _id = 0;
+  protected _symbols = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+  ];
+  gen(): { id: string; title: string } {
+    const id = this._symbols[this._id++];
+    return {
+      id: `${id}`,
+      title: `大样${id}`,
+    };
+  }
+}
 
+export class SectIdGen {
+  protected _id = 0;
+  protected _symbols = ["Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ", "Ⅶ", "Ⅷ", "Ⅸ", "Ⅹ"];
+  gen(): { id: string; title: string } {
+    const id = this._symbols[this._id++];
+    return {
+      id: `${id}`,
+      title: `${id}--${id}`,
+    };
+  }
+}
 
 export interface FigureInBorder {
   pushTo(border: BorderBuilder): this;
 }
 export class Figure implements FigureInBorder {
+  id = "";
+  setId(id: string): this {
+    this.id = id;
+    return this;
+  }
   pos = new PosGen();
   protected _unitScale = 1;
   protected _drawScale = 1;
@@ -70,42 +110,40 @@ export class Figure implements FigureInBorder {
     this._titlePosKeep = true;
     return this;
   }
-  setTitle(
-    content: string | Content,
-  ): this {
+  setTitle(content: string | Content): this {
     this._content = content;
     return this;
   }
   protected _outline = new CompositeItem();
-  addOutline(...items: DrawItem[]): this{
+  addOutline(...items: DrawItem[]): this {
     this._outline.push(...items);
     this.push(...items);
     return this;
   }
-  get outline(): CompositeItem{
+  get outline(): CompositeItem {
     return this._outline;
   }
   // dim
-  dimBuilder(): DimensionBuilder{
+  dimBuilder(): DimensionBuilder {
     return new DimensionBuilder(this.unitScale, this.drawScale);
   }
   // rebar
-  planeRebar(): PlaneRebar{
+  planeRebar(): PlaneRebar {
     return new PlaneRebar(this.textHeight);
   }
-  circlePointRebar(): CirclePointRebar{
+  circlePointRebar(): CirclePointRebar {
     return new CirclePointRebar(this.textHeight, this.drawRadius);
   }
-  layerPointRebar(): LayerPointRebar{
+  layerPointRebar(): LayerPointRebar {
     return new LayerPointRebar(this.textHeight, this.drawRadius);
   }
-  linePointRebar(): LinePointRebar{
+  linePointRebar(): LinePointRebar {
     return new LinePointRebar(this.textHeight, this.drawRadius);
   }
-  polylinePointRebar(): PolylinePointRebar{
+  polylinePointRebar(): PolylinePointRebar {
     return new PolylinePointRebar(this.textHeight, this.drawRadius);
   }
-  sparsePointRebar(angle=30): SparsePointRebar{
+  sparsePointRebar(angle = 30): SparsePointRebar {
     return new SparsePointRebar(this.textHeight, this.drawRadius, angle);
   }
   reset(unitScale = 1, drawScale = 1): this {
@@ -129,7 +167,7 @@ export class Figure implements FigureInBorder {
   get textHeight(): number {
     return this._textHeight;
   }
-  get h(): number{
+  get h(): number {
     return this.textHeight;
   }
   get numberHeight(): number {
@@ -138,8 +176,13 @@ export class Figure implements FigureInBorder {
   get drawRadius(): number {
     return this._drawRadius;
   }
-  get r(): number{
+  get r(): number {
     return this.drawRadius;
+  }
+  mirror(): this {
+    this.composite = this.composite.mirrorByVAxis();
+    this._outline = this._outline.mirrorByVAxis();
+    return this;
   }
 
   protected composite = new CompositeItem();
@@ -214,10 +257,10 @@ export class MaterialTableFigure implements FigureInBorder {
   }
 }
 
-export abstract class FigureContainer<T>{
-  constructor(protected struct: T){}
+export abstract class FigureContainer<T> {
+  constructor(protected struct: T) {}
   figures: FigureInBorder[] = [];
-  push(...figs: FigureInBorder[]): this{
+  push(...figs: FigureInBorder[]): this {
     this.figures.push(...figs);
     return this;
   }

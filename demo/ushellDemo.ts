@@ -21,20 +21,18 @@ export default function runUshellDemo(): void{
   const u = ctrl.struct;
   // 长度
   u.len = 14960;
-  // 加密长度
-  u.denseL = 3740;
+  u.cantLeft = 1000;
+  u.cantRight = 0;
   // 内径
-  u.r = 2300;
+  u.shell.r = 2300;
   // 直段高
-  u.hd = 1500;
+  u.shell.hd = 1500;
   // 壁厚
-  u.t = 220;
-  // 钢筋保护层厚度
-  u.as = 35;
+  u.shell.t = 220;
   // 底板加厚
-  u.butt.h = 130;
+  u.shell.hb = 130;
   // 加厚宽
-  u.butt.w = 800;
+  u.shell.wb = 800;
   // 外挑长
   u.oBeam.w = 500;
   // 外挑直高
@@ -55,18 +53,22 @@ export default function runUshellDemo(): void{
   u.endSect.w = 770;
   u.endSect.hd = 2600;
   u.endSect.hs = 2300;
-  u.trans = 500;
+  u.lenTrans = 500;
   // 支座 
   u.support.w = 500;
   u.support.h = 100;
   // 拉杆
   u.bar.w = 200;
   u.bar.h = 200;
-  u.bar.s = 1500;
-  u.bar.as = 25;
+  u.spaceBar = 1500;
 
   // 钢筋
   const bar = ctrl.rebar;
+  // 钢筋保护层厚度
+  bar.as = 35;
+  bar.asBar = 25;
+  // 加密长度
+  bar.denseL = 3740;
   // 槽壳钢筋
   // 主筋
   bar.shell.main.set( 'HRB400', 28, 9, 2, 50);

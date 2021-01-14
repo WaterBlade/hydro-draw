@@ -1,29 +1,35 @@
 import { Line, vec } from "@/draw";
 import { FigureBase } from "./Base";
 
-export class CTrans extends FigureBase{
-  initFigure(): this{
+export class CTrans extends FigureBase {
+  initFigure(): this {
     this.figures.cTrans
       .reset(1, 50)
-      .setTitle('槽身渐变段钢筋图')
+      .setTitle("槽身渐变段钢筋图")
       .displayScale()
       .keepTitlePos()
-      .centerAligned()
+      .centerAligned();
     this.figures.record(this.figures.cTrans);
     return this;
   }
-  buildOutline(): this{
+  buildOutline(): this {
     const u = this.struct;
     this.figures.cTrans.addOutline(
       u.genCInner().greyLine(),
       u.genTransCOuter().greyLine(),
       u.genEndCOuter().greyLine(),
-      new Line(vec(-u.r + u.iBeam.w, u.hd), vec(-u.r -u.t - u.oBeam.w, u.hd)).greyLine(),
-      new Line(vec(u.r - u.iBeam.w, u.hd), vec(u.r +u.t + u.oBeam.w, u.hd)).greyLine(),
-    )
+      new Line(
+        vec(-u.shell.r + u.iBeam.w, u.shell.hd),
+        vec(-u.shell.r - u.shell.t - u.oBeam.w, u.shell.hd)
+      ).greyLine(),
+      new Line(
+        vec(u.shell.r - u.iBeam.w, u.shell.hd),
+        vec(u.shell.r + u.shell.t + u.oBeam.w, u.shell.hd)
+      ).greyLine()
+    );
     return this;
   }
-  buildDim(): this{
+  buildDim(): this {
     return this;
   }
 }

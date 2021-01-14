@@ -1,4 +1,4 @@
-import { DrawItem} from "@/draw";
+import { DrawItem } from "@/draw";
 import { Drawing } from "../Drawing";
 import { MaterialTableFigure, RebarTableFigure } from "../Figure";
 import { UShellFigureBuilder } from "./FigureBuilder";
@@ -15,7 +15,11 @@ export class UShellController {
     const figure = new UShellFigure();
 
     const figBuilder = new UShellFigureBuilder(this.struct, this.rebar, figure);
-    const rebarBuilder = new UShellRebarBuilder(this.struct, this.rebar, figure);
+    const rebarBuilder = new UShellRebarBuilder(
+      this.struct,
+      this.rebar,
+      figure
+    );
 
     figBuilder.initFigure();
     figBuilder.buildOutline();
@@ -25,7 +29,7 @@ export class UShellController {
     this.drawing.push(
       ...figure.recordFigures,
       new RebarTableFigure().push(...this.rebar.recordRebars),
-      new MaterialTableFigure().push(...this.rebar.recordRebars),
+      new MaterialTableFigure().push(...this.rebar.recordRebars)
     );
 
     return this.drawing.generate();

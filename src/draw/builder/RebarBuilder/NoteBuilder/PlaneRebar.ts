@@ -26,7 +26,7 @@ export class PlaneRebar extends RebarDrawBuilder {
   }
   protected _rebarDraw: (Geometry & DrawItem)[] = [];
   rebar(...draws: (Geometry & DrawItem)[]): this {
-    this._rebarDraw = draws;
+    this._rebarDraw.push(...draws);
     return this;
   }
   protected _crossLine?: Polyline;

@@ -138,7 +138,7 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
     super(0, 0);
   }
 
-  protected genFirstNote(): MText{
+  protected genFirstNote(): MText {
     const textHeight = 3.5;
     const maxNoteWidth = 100;
     const mtext = new MText(
@@ -157,14 +157,12 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
         vec(w - c - tw - textHeight, c + textHeight).sub(box.BottomRight)
       );
     } else {
-      mtext.move(
-        vec(w - c - textHeight, th + textHeight).sub(box.BottomRight)
-      );
+      mtext.move(vec(w - c - textHeight, th + textHeight).sub(box.BottomRight));
     }
     return mtext;
   }
 
-  protected genOtherNote(): MText{
+  protected genOtherNote(): MText {
     const textHeight = 3.5;
     const maxNoteWidth = 100;
     const mtext = new MText(
@@ -197,12 +195,12 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
       const box = this.genFirstNote().getBoundingBox();
       if (box.top < c + this.titleHeight) {
         boundary.corner(box.left - a, box.top - c);
-        boundary.corner(w-tw-c-box.left, th+c - box.top);
+        boundary.corner(w - tw - c - box.left, th + c - box.top);
         boundary.corner(tw, h - 2 * c - th);
       } else {
         boundary.corner(w - a - c - tw, th);
-        boundary.corner(box.left - (w - tw - c), box.top - (c+th));
-        boundary.corner( w-c-box.left, h-c - box.top);
+        boundary.corner(box.left - (w - tw - c), box.top - (c + th));
+        boundary.corner(w - c - box.left, h - c - box.top);
       }
     } else {
       const box = this.genOtherNote().getBoundingBox();

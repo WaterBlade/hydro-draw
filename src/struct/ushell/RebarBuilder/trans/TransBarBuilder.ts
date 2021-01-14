@@ -2,12 +2,12 @@ import { CompositeRebarBase } from "../Base";
 import { ArcBar } from "./ArcBar";
 import { DirectBar } from "./DirectBar";
 
-export class TransBarBuilder extends CompositeRebarBase{
-  init(): void{
+export class TransBarBuilder extends CompositeRebarBase {
+  init(): void {
     this.push(
-      DirectBar,
-      ArcBar
+      new DirectBar(this.struct, this.specs, this.figures),
+      new ArcBar(this.struct, this.specs, this.figures)
     );
-    this.setName('渐变段');
+    this.setName("渐变段");
   }
 }

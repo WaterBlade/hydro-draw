@@ -10,7 +10,7 @@ export class SparsePointRebar extends PointRebar {
   points(...pts: Vector[]): this {
     this._points.push(...pts);
     const r = this.drawRadius;
-    this.rebars = pts.map((p) => new Circle(p, r).thickLine());
+    this.rebars.push(...pts.map((p) => new Circle(p, r).thickLine()));
     return this;
   }
   parallelLeader(pt: Vector, leaderVector: Vector, noteVector?: Vector): this {
