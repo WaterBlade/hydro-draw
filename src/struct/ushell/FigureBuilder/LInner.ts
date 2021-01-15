@@ -4,7 +4,7 @@ import { FigureBase } from "./Base";
 export class LInner extends FigureBase {
   initFigure(): this {
     this.figures.lInner
-      .reset(1, 50)
+      .resetScale(1, 50)
       .setTitle("槽身纵剖钢筋图")
       .displayScale()
       .centerAligned()

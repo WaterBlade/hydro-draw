@@ -53,7 +53,9 @@ export class MaterialTable implements Builder<CompositeItem> {
       t.cell(row, 2).text(`${u.toFixed(3)}`);
       t.cell(row, 3).text(`${w.toFixed(2)}`);
     }
-    t.cell(1, 4, specGroups.length).text(`${(totalWeight * 0.001).toFixed(3)}`);
+    if(specGroups.length > 0){
+      t.cell(1, 4, specGroups.length).text(`${(totalWeight * 0.001).toFixed(3)}`);
+    }
     return t.generate();
   }
 

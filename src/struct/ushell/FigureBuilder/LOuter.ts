@@ -3,7 +3,7 @@ import { FigureBase } from "./Base";
 export class LOuter extends FigureBase {
   initFigure(): this {
     this.figures.lOuter
-      .reset(1, 50)
+      .resetScale(1, 50)
       .setTitle("槽身跨中钢筋图")
       .displayScale()
       .centerAligned()

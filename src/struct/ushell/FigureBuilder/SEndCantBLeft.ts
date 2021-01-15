@@ -19,7 +19,7 @@ export class SEndCantBLeft extends FigureBase {
     if (this.isExist()) {
       const fig = this.getFigure();
       const { id, title } = this.figures.specId.gen();
-      fig.reset(1, 25).setId(id).setTitle(title).displayScale();
+      fig.resetScale(1, 25).setId(id).setTitle(title).displayScale();
       this.figures.record(fig);
     }
 

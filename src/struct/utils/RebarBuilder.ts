@@ -1,10 +1,3 @@
-export class IdGenerator {
-  protected _id = 1;
-  gen(): string {
-    return `${this._id++}`;
-  }
-}
-
 export abstract class RebarBuilder<T, U, P> {
   name = "";
   constructor(protected struct: T, protected specs: U, protected figures: P) {}

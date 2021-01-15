@@ -1,12 +1,6 @@
-import { Figure, FigureInBorder, SectIdGen, SpecIdGen } from "../utils/Figure";
+import { Figure, FigureContainer } from "../utils";
 
-export class UShellFigure {
-  recordFigures: FigureInBorder[] = [];
-  specId = new SpecIdGen();
-  sectId = new SectIdGen();
-  record(fig: FigureInBorder): void {
-    this.recordFigures.push(fig);
-  }
+export class UShellFigure extends FigureContainer{
   cMid = new Figure();
   cEnd = new Figure();
   cEndCant = new Figure();

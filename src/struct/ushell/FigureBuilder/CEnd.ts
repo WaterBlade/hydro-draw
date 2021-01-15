@@ -23,7 +23,7 @@ export class CEnd extends FigureBase {
     if (this.isExist()) {
       const fig = this.getFigure();
       fig
-        .reset(1, 50)
+        .resetScale(1, 50)
         .setTitle(this.getTitle())
         .displayScale()
         .centerAligned()

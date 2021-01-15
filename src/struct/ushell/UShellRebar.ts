@@ -1,12 +1,7 @@
 import { CountRebarSpec, RebarSpec, SpaceRebarSpec } from "@/draw";
-import { IdGenerator } from "../utils/RebarBuilder";
+import { RebarContainer } from "../utils";
 
-export class UShellRebar {
-  id = new IdGenerator();
-  recordRebars: RebarSpec[] = [];
-  record(spec: RebarSpec): void {
-    this.recordRebars.push(spec);
-  }
+export class UShellRebar extends RebarContainer{
   shell = new ShellRebar();
   end = new EndRebar();
   trans = new TransRebar();

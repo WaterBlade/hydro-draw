@@ -5,7 +5,7 @@ export class SBar extends FigureBase {
   initFigure(): this {
     const { id, title } = this.figures.specId.gen();
     this.figures.sBar
-      .reset(1, 10)
+      .resetScale(1, 10)
       .setTitle(title)
       .setId(id)
       .displayScale()

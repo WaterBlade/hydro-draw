@@ -100,7 +100,7 @@ export default function runUshellDemo(): void{
   bar.bar.stir.set('HPB300', 10, 300);
 
 
-  const layout = new HLayoutBuilder(10);
+  const layout = new HLayoutBuilder(100);
   layout.push(...ctrl.generate());
   paper.push(layout.generate());
 

@@ -4,7 +4,7 @@ import { FigureBase } from "./Base";
 export class CTrans extends FigureBase {
   initFigure(): this {
     this.figures.cTrans
-      .reset(1, 50)
+      .resetScale(1, 50)
       .setTitle("槽身渐变段钢筋图")
       .displayScale()
       .keepTitlePos()

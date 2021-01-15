@@ -43,43 +43,6 @@ class PosGen {
   }
 }
 
-export class SpecIdGen {
-  protected _id = 0;
-  protected _symbols = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-  ];
-  gen(): { id: string; title: string } {
-    const id = this._symbols[this._id++];
-    return {
-      id: `${id}`,
-      title: `大样${id}`,
-    };
-  }
-}
-
-export class SectIdGen {
-  protected _id = 0;
-  protected _symbols = ["Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ", "Ⅶ", "Ⅷ", "Ⅸ", "Ⅹ"];
-  gen(): { id: string; title: string } {
-    const id = this._symbols[this._id++];
-    return {
-      id: `${id}`,
-      title: `${id}--${id}`,
-    };
-  }
-}
 
 export interface FigureInBorder {
   pushTo(border: BorderBuilder): this;
@@ -175,7 +138,7 @@ export class Figure implements FigureInBorder {
   sparsePointRebar(angle = 30): SparsePointRebar {
     return new SparsePointRebar(this.textHeight, this.drawRadius, angle);
   }
-  reset(unitScale = 1, drawScale = 1): this {
+  resetScale(unitScale = 1, drawScale = 1): this {
     this._unitScale = unitScale;
     this._drawScale = drawScale;
     this._titleHeight = (5.0 * drawScale) / unitScale;
@@ -284,14 +247,4 @@ export class MaterialTableFigure implements FigureInBorder {
     border.addItem(this.table.generate(), 1, 1);
     return this;
   }
-}
-
-export abstract class FigureContainer<T> {
-  constructor(protected struct: T) {}
-  figures: FigureInBorder[] = [];
-  push(...figs: FigureInBorder[]): this {
-    this.figures.push(...figs);
-    return this;
-  }
-  abstract build(): this;
 }
