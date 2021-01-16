@@ -49,7 +49,7 @@ test("inside test", () => {
 test("get bottom test", () => {
   const b = new Boundary(vec(0, 0)).h(20).v(10).h(20).v(10);
   expect(b.getBottom(0, 30)).toEqual(10);
-  expect(b.getBottom(0, 20)).toEqual(10);
+  expect(b.getBottom(0, 20)).toEqual(0);
   expect(b.getBottom(0, 15)).toEqual(0);
   expect(b.getBottom(0, 45)).toEqual(20);
 });

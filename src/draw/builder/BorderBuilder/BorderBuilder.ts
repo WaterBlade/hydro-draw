@@ -1,6 +1,6 @@
 import { CompositeItem, DrawItem } from "@/draw/drawItem";
 import { Builder } from "../Builder.interface";
-import { Container } from "./Container";
+import { Container } from "./Container/Container";
 
 export interface BorderItemBuilder {
   generate(): CompositeItem;

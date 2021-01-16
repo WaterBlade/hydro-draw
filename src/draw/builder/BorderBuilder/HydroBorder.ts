@@ -2,7 +2,7 @@ import { CompositeItem, Line, Text, MText } from "@/draw/drawItem";
 import { vec, TextAlign } from "@/draw/misc";
 import { Boundary } from "./Boundary";
 import { BorderBuilder } from "./BorderBuilder";
-import { Container } from "./Container";
+import { Container } from "./Container/Container";
 
 function presetA0A1Title(
   company: string,
