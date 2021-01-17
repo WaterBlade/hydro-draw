@@ -45,6 +45,7 @@ export interface PolylineSegment extends Geometry {
   getNearestPt(pt: Vector): Vector;
   removeStartPt(): this;
   removeEndPt(): this;
+  removeBothPt(): this;
 }
 
 export interface ArcGeometry extends PolylineSegment, PaperArc {}

@@ -124,6 +124,11 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     this.segments.pop();
     return this;
   }
+  removeBothPt(): this{
+    this.removeStartPt();
+    this.removeEndPt();
+    return this;
+  }
   removeStartPt(): this {
     this.segments[0].points.shift();
     return this;

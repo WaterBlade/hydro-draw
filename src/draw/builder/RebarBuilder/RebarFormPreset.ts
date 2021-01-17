@@ -14,11 +14,11 @@ export const RebarFormPreset = {
   },
   SShape(dia: RebarDiameter, v0Len: number, hLen: number, v1Len: number): RebarPathForm{
     return new RebarPathForm(dia)
-      .lineBy(0, -0.8)
+      .lineBy(0, -1.2)
       .dimLength(v0Len)
       .lineBy(7, 0)
       .dimLength(hLen)
-      .lineBy(0, -0.8)
+      .lineBy(0, -1.2)
       .dimLength(v1Len)
   },
   UShape(dia: RebarDiameter, vLen: number, hLen: number): RebarPathForm {

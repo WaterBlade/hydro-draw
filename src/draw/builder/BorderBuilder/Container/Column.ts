@@ -34,7 +34,7 @@ export class Column extends BoxContainer {
     this.height = this.topLeft.y - last(this.boxs).bottom;
   }
   arrange(boundary: Boundary): void {
-    const b = boundary.genSubByH(this.left, this.right);
+    const b = boundary.genSubByH(this.left-this.leftSpace/2, this.right+this.rightSpace/2);
     this.vArrange(b);
     this.boxs.forEach(row => row.arrange(b));
     this.resetSize();

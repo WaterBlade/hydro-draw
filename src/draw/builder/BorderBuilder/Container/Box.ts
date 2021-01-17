@@ -5,6 +5,10 @@ import { Boundary } from "../Boundary";
 
 export class Box {
   constructor(public topLeft: Vector, public width = 0, public height = 0) { }
+  topSpace = 0;
+  bottomSpace = 0;
+  leftSpace = 0;
+  rightSpace = 0;
   get left(): number {
     return this.topLeft.x;
   }

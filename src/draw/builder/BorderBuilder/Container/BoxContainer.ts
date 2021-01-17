@@ -22,7 +22,15 @@ export class BoxContainer extends Box{
         spaceList.push(rightCol.hMinSpace(left, count, preTotalWidth, boundary));
       }
       const col = cols[i];
-      col.topLeft = vec(left + Math.min(...spaceList), this.top);
+      const space = Math.min(...spaceList);
+      col.leftSpace = space;
+      if(i !== 0){
+        cols[i-1].rightSpace = space;
+      }
+      if(i === colCount-1){
+        col.rightSpace = space;
+      }
+      col.topLeft = vec(left + space, this.top);
     }
     this.resetSize();
   }

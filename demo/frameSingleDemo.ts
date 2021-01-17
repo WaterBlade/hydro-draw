@@ -39,6 +39,7 @@ export default function runFrameSingleDemo(): void{
   f.found.s = 150;
 
   const bar = ctrl.rebar;
+  bar.as = 50;
   bar.column.corner.set('HRB400', 22);
   bar.column.along.set('HRB400', 22, 3);
   bar.column.cross.set('HRB400', 22, 3);
