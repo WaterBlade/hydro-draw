@@ -4,6 +4,7 @@ import { Boundary } from "../Boundary";
 import { BoxContainer } from "./BoxContainer";
 import { Cell } from "./Cell";
 import { Column } from "./Column";
+import { Row } from "./Row";
 
 
 export class Container extends BoxContainer {
@@ -19,6 +20,7 @@ export class Container extends BoxContainer {
     this.boxs.push(column);
     this.resetSize();
   }
+  protected needWrapColumn = true;
   fill(
     item: DrawItem,
     title?: DrawItem,
@@ -28,17 +30,45 @@ export class Container extends BoxContainer {
     const cell = new Cell(item, title, centerAligned, titlePosKeep);
     
     const tail = last(this.boxs);
-    if(tail && tail.fill(cell)){
-      this.resetSize();
-      return true;
-    }else{
-      const col = new Column(vec(this.right, this.top), this.border);
-      if(col.fill(cell)){
-        this.add(col);
-        return true;
+    if(tail){
+      if(this.boxs.length === 1){
+        if(tail.fill(cell)){
+          this.needWrapColumn = false;
+          this.resetSize();
+          return true;
+        }
       }else{
-        return false;
+        if(this.needWrapColumn){
+          this.needWrapColumn = false;
+          const bottomRight = this.topLeft.add(vec(cell.width, -this.height - cell.height))
+          if (this.border.insideTest(bottomRight)) {
+            const col = new Column(this.topLeft, this.border);
+            const row = new Row(this.topLeft, this.border);
+            for (const c of this.boxs) {
+              row.add(c.boxs[0].boxs[0]);
+            }
+            col.add(row);
+            const rowBelow = new Row(vec(this.left, this.bottom), this.border);
+            rowBelow.add(cell);
+            col.add(rowBelow);
+            this.boxs = [col];
+            this.resetSize();
+            return true;
+          }
+        }else{
+          if(tail.fill(cell)){
+            this.resetSize();
+            return true;
+          }
+        }
       }
+    }
+    const col = new Column(vec(this.right, this.top), this.border);
+    if (col.fill(cell)) {
+      this.add(col);
+      return true;
+    } else {
+      return false;
     }
   }
   generate(): CompositeItem {

@@ -56,22 +56,3 @@ export class Column extends BoxContainer {
     }
   }
 }
-
-export class RowWrapColumn extends BoxContainer{
-  constructor(topLeft: Vector, ...cols: Column[]){
-    super(topLeft);
-    this.boxs.push(...cols);
-    this.resetSize();
-  }
-  protected resetSize(): void{
-    this.width = last(this.boxs).right - this.topLeft.x;
-    this.height = Math.max(...this.boxs.map(b=> b.height));
-  }
-  arrange(boundary: Boundary): void{
-    const b = boundary.genSubByV(this.bottom, this.top);
-    this.hArrange(b);
-    this.boxs.forEach(col => col.arrange(b));
-    this.resetSize();
-  }
-
-}

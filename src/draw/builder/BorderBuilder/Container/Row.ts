@@ -27,7 +27,7 @@ export class Row extends BoxContainer {
     return this.boxs.reduce((pre, cur)=> pre + cur.netWidth, 0);
   }
 
-  protected add(box: Cell): void {
+  add(box: Cell): void {
     box.topLeft = vec(this.right, this.top);
     this.boxs.push(box);
     this.resetSize();
