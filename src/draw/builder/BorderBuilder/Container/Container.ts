@@ -39,7 +39,9 @@ export class Container extends BoxContainer {
         }
       }else{
         if(this.needWrapColumn){
-          this.needWrapColumn = false;
+          if(cell.width < 0.75 * this.height){
+            this.needWrapColumn = false;
+          }
           const bottomRight = this.topLeft.add(vec(cell.width, -this.height - cell.height))
           if (this.border.insideTest(bottomRight)) {
             const col = new Column(this.topLeft, this.border);

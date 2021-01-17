@@ -57,7 +57,7 @@ export class BeamStirBar extends RebarBase {
       const lens = this.genMulShape().map((l) => l.calcLength());
       bar
         .setForm(
-          RebarFormPreset.RectWidthHook(
+          RebarFormPreset.RectStir(
             bar.diameter,
             u.endSect.b - 2 * as,
             lens

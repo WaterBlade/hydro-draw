@@ -86,6 +86,14 @@ export class RebarSpec {
   }
 }
 
+export class UnitRebarSpec extends RebarSpec{
+  set(grade: RebarGrade, diameter: RebarDiameter): this{
+    this.setGrade(grade);
+    this.setDiameter(diameter);
+    return this;
+  }
+}
+
 export class CountRebarSpec extends RebarSpec {
   protected _singleCount = 0;
   get singleCount(): number {

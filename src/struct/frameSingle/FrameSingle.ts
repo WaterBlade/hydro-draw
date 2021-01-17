@@ -38,4 +38,7 @@ class Corbel{
 class Foundation{
   h = 0;
   s = 0;
+  get hn(): number{
+    return this.h - this.s;
+  }
 }

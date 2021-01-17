@@ -13,7 +13,7 @@ export class StirBar extends RebarBase {
       .setStructure(this.name)
       .setCount(pts.length * lines.length)
       .setForm(
-        RebarFormPreset.RectWidthHook(
+        RebarFormPreset.RectStir(
           bar.diameter,
           u.bar.h - 2 * as,
           u.bar.w - 2 * as

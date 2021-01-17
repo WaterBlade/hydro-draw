@@ -7,21 +7,44 @@ export const RebarFormPreset = {
   },
   LShape(dia: RebarDiameter, vLen: number, hLen: number): RebarPathForm {
     return new RebarPathForm(dia)
-      .lineBy(0, -2)
+      .lineBy(0, -1)
       .dimLength(vLen)
       .lineBy(8, 0)
       .dimLength(hLen);
   },
+  SShape(dia: RebarDiameter, v0Len: number, hLen: number, v1Len: number): RebarPathForm{
+    return new RebarPathForm(dia)
+      .lineBy(0, -0.8)
+      .dimLength(v0Len)
+      .lineBy(7, 0)
+      .dimLength(hLen)
+      .lineBy(0, -0.8)
+      .dimLength(v1Len)
+  },
   UShape(dia: RebarDiameter, vLen: number, hLen: number): RebarPathForm {
     return new RebarPathForm(dia)
-      .lineBy(0, -2)
+      .lineBy(0, -1)
       .dimLength(vLen)
       .lineBy(8, 0)
       .dimLength(hLen)
-      .lineBy(0, 2)
-      .dimLength(vLen, Side.Right);
+      .lineBy(0, 1)
+      .dimLength(vLen);
   },
-  RectWidthHook(
+  CorbelDouble(dia: RebarDiameter, sLen: number, vLen: number, hLen: number, angle=45): RebarPathForm{
+    return new RebarPathForm(dia)
+      .lineBy(-1.5, 1)
+      .dimLength(sLen)
+      .lineBy(0, 1.2)
+      .dimAngle(angle)
+      .dimLength(vLen)
+      .lineBy(3.2, 0)
+      .dimLength(hLen)
+      .lineBy(0, -1.2)
+      .dimLength(vLen)
+      .lineBy(-1.5, -1)
+      .dimLength(sLen)
+  },
+  RectStir(
     dia: RebarDiameter,
     vLen: number,
     hLen: number | number[]
