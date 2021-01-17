@@ -9,7 +9,7 @@ export class BoxContainer extends Box{
     return this.boxs.length === 0;
   }
   hArrange(boundary: Boundary): void{
-    const leftMost = this.topLeft.x;
+    const leftMost = boundary.left;
     const cols = this.boxs;
     const colCount = cols.length;
     for (let i = 0; i < colCount; i++) {
@@ -24,12 +24,7 @@ export class BoxContainer extends Box{
       const col = cols[i];
       const space = Math.min(...spaceList);
       col.leftSpace = space;
-      if(i !== 0){
-        cols[i-1].rightSpace = space;
-      }
-      if(i === colCount-1){
-        col.rightSpace = space;
-      }
+      col.rightSpace = space;
       col.topLeft = vec(left + space, this.top);
     }
     this.resetSize();
