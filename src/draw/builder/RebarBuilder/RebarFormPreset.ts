@@ -5,27 +5,30 @@ export const RebarFormPreset = {
   Line(dia: RebarDiameter, length: number | number[]): RebarPathForm {
     return new RebarPathForm(dia).lineBy(8, 0).dimLength(length);
   },
-  LShape(dia: RebarDiameter, vLen: number, hLen: number): RebarPathForm {
+  HookLine(dia: RebarDiameter, length: number | number[], drawLen=8): RebarPathForm{
+    return new RebarPathForm(dia).lineBy(drawLen, 0).dimLength(length).hook({start: Side.Left, end: Side.Left});
+  },
+  LShape(dia: RebarDiameter, vLen: number, hLen: number, drawLen=8): RebarPathForm {
     return new RebarPathForm(dia)
       .lineBy(0, -1)
       .dimLength(vLen)
-      .lineBy(8, 0)
+      .lineBy(drawLen, 0)
       .dimLength(hLen);
   },
-  SShape(dia: RebarDiameter, v0Len: number, hLen: number, v1Len: number): RebarPathForm{
+  SShape(dia: RebarDiameter, v0Len: number, hLen: number, v1Len: number, drawLen=8): RebarPathForm{
     return new RebarPathForm(dia)
       .lineBy(0, -1.2)
       .dimLength(v0Len)
-      .lineBy(7, 0)
+      .lineBy(drawLen, 0)
       .dimLength(hLen)
       .lineBy(0, -1.2)
       .dimLength(v1Len)
   },
-  UShape(dia: RebarDiameter, vLen: number, hLen: number): RebarPathForm {
+  UShape(dia: RebarDiameter, vLen: number, hLen: number, drawLen=8): RebarPathForm {
     return new RebarPathForm(dia)
       .lineBy(0, -1)
       .dimLength(vLen)
-      .lineBy(8, 0)
+      .lineBy(drawLen, 0)
       .dimLength(hLen)
       .lineBy(0, 1)
       .dimLength(vLen);

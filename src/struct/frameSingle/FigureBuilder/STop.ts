@@ -9,6 +9,7 @@ export class STopFigure extends FigureBase{
       .resetScale(1, 20)
       .setTitle(title)
       .setId(id)
+      .displayScale()
       .keepTitlePos()
       .centerAligned();
 

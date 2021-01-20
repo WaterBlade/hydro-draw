@@ -12,7 +12,9 @@ export class LOuter extends FigureBase {
     return this;
   }
   buildOutline(): this {
-    this.figures.lOuter.addOutline(this.struct.genLOuterLine().greyLine());
+    const u = this.struct;
+    const fig = this.figures.lOuter;
+    fig.addOutline(u.genLOuterLine().greyLine());
     return this;
   }
   buildDim(): this {

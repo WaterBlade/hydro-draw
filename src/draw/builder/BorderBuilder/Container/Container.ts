@@ -25,9 +25,10 @@ export class Container extends BoxContainer {
     item: DrawItem,
     title?: DrawItem,
     centerAligned = false,
-    titlePosKeep = false
+    titlePosKeep = false,
+    baseAligned = false,
   ): boolean {
-    const cell = new Cell(item, title, centerAligned, titlePosKeep);
+    const cell = new Cell(item, title, centerAligned, titlePosKeep, baseAligned);
     
     const tail = last(this.boxs);
     if(tail){
@@ -47,11 +48,11 @@ export class Container extends BoxContainer {
             const col = new Column(this.topLeft, this.border);
             const row = new Row(this.topLeft, this.border);
             for (const c of this.boxs) {
-              row.add(c.boxs[0].boxs[0]);
+              row.fill(c.boxs[0].boxs[0]);
             }
             col.add(row);
             const rowBelow = new Row(vec(this.left, this.bottom), this.border);
-            rowBelow.add(cell);
+            rowBelow.fill(cell);
             col.add(rowBelow);
             this.boxs = [col];
             this.resetSize();

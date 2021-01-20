@@ -34,6 +34,20 @@ export class HStir extends RebarBase{
     );
   }
   buildFigure(): this{
+    this.drawAlong();
     return this;
+  }
+  protected drawAlong(): void{
+    const t = this.struct;
+    const bar = this.specs.corbel.hStir;
+    const fig = this.figures.along;
+    const lens = this.genShape();
+    fig.push(
+      fig.planeRebar()
+        .rebar(...lens)
+        .spec(bar, lens.length, bar.space)
+        .leaderNote(vec(t.col.h/2 + bar.space/2, t.h+2*fig.h), vec(0, 1), vec(1, 0))
+        .generate()
+    );
   }
 }

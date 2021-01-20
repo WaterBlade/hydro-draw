@@ -50,7 +50,7 @@ export class COuterBar extends RebarBase {
       (pre: number[], cur) => pre.concat(cur.points.map((p) => p.x)),
       []
     );
-    this.figures.lOuter.pos.xPos = xs;
+    this.figures.lOuter.pos.h.dot(...xs);
     return this;
   }
   buildFigure(): this {
@@ -220,7 +220,7 @@ export class COuterBar extends RebarBase {
     );
     const lines = pts.map((p) => new Line(vec(p.x, top), p));
 
-    const y = fig.pos.findY(u.shell.hd - 2 * fig.h);
+    const y = fig.pos.v.find(u.shell.hd - 2 * fig.h);
 
     fig.push(
       new PlaneRebar(fig.textHeight)

@@ -32,7 +32,7 @@ export class LOuterBar extends RebarBase {
   buildPos(): this {
     const ys = this.genHalfPos();
     ys.reverse();
-    this.figures.lOuter.pos.yPos = ys;
+    this.figures.lOuter.pos.v.dot(...ys);
     return this;
   }
   buildFigure(): this {
@@ -120,7 +120,7 @@ export class LOuterBar extends RebarBase {
     const start = -u.len / 2 + as;
     const end = u.len / 2 - as;
 
-    const x = fig.pos.findX((-0.8 * u.len) / 2);
+    const x = fig.pos.v.find((-0.8 * u.len) / 2);
 
     fig.push(
       new PlaneRebar(fig.textHeight)

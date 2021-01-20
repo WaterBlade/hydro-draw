@@ -15,12 +15,18 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
   abstract generate(): CompositeItem;
   protected _content = new Content();
   protected _id = "";
-  spec(s: RebarSpec, count = 0, space = 0): this {
+  spec(s: RebarSpec, count = 0, space = 0, denSpace=0): this {
     this._content = new Content();
     this._id = s.id;
     if (count) this._content.text(`${count}`);
     this._content.special(s.grade).text(`${s.diameter}`);
     if (space) this._content.text(`@${space}`);
+    if (denSpace) this._content.text(`(${denSpace})`);
+    return this;
+  }
+  protected _mulIds: string[] = [];
+  mulSpec(...specs: RebarSpec[]): this{
+    this._mulIds.push(...specs.map(s=>s.id));
     return this;
   }
   protected genNoteLength(): number {
@@ -37,7 +43,7 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
     const r = this.textHeight;
     const centerPt = insertPt.add(dir.unit().mul(r));
 
-    return [
+    const res = [
       new Circle(centerPt, r),
       new Text(
         this._id,
@@ -52,8 +58,28 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
         this.textHeight,
         Text.properAlign(angle, align),
         Text.properAngle(angle)
-      ),
+      )
     ];
+
+    if(this._mulIds.length > 0){
+      const v = dir.unit().mul(2 * r);
+      let p = centerPt.add(v);
+      for(const id of this._mulIds){
+        res.push(
+          new Circle(p, r),
+          new Text(
+            id,
+            p,
+            this.textHeight,
+            TextAlign.MiddleCenter,
+            Text.properAngle(angle)
+          )
+        )
+        p = p.add(v);
+      }
+    }
+
+    return res;
   }
   protected genLeader(
     start: Vector,
@@ -88,7 +114,7 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
     const centerPt = insertPt.add(dir.unit().mul(-r));
     const align = TextAlign.MiddleLeft;
     const angle = dir.quadrantAngle();
-    return [
+    const res = [
       new Circle(centerPt, r),
       new Text(
         this._id,
@@ -105,6 +131,26 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
         Text.properAngle(angle)
       ),
     ];
+
+    if(this._mulIds.length > 0){
+      const v = dir.unit().mul(-2 * r);
+      let p = centerPt.add(v);
+      for(const id of this._mulIds){
+        res.push(
+          new Circle(p, r),
+          new Text(
+            id,
+            p,
+            this.textHeight,
+            TextAlign.MiddleCenter,
+            Text.properAngle(angle)
+          )
+        )
+        p = p.add(v);
+      }
+    }
+
+    return res;
   }
   protected findFarest(pt: Vector, iters: Vector[]): Vector {
     let far = iters[0];

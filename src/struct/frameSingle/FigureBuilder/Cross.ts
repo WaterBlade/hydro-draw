@@ -1,4 +1,4 @@
-import { Line, Polyline, vec } from "@/draw";
+import { Line, Polyline, Text, TextAlign, vec } from "@/draw";
 import { FigureBase } from "../Base";
 
 export class CrossFigure extends FigureBase{
@@ -9,8 +9,15 @@ export class CrossFigure extends FigureBase{
       .setTitle('垂直水流向立面钢筋图')
       .displayScale()
       .centerAligned()
+      .baseAligned()
       .keepTitlePos();
     this.figures.record(fig);
+    return this;
+  }
+  buildPos(): this{
+    const fig = this.figures.cross;
+    const t = this.struct;
+    fig.pos.v.set(Math.max(0, t.h-t.hs), t.h-t.topBeam.h);
     return this;
   }
   buildOutline(): this{
@@ -59,19 +66,44 @@ export class CrossFigure extends FigureBase{
     fig.breakline(vec(right, 0), vec(right, -t.found.h));
     const {top, bottom} = fig.getBoundingBox();
     fig.sectSymbol(this.figures.along.id, vec(-t.w/2, bottom-fig.h), vec(-t.w/2, top+fig.h));
+    
     fig.sectSymbol(this.figures.sTop.id, vec(0, t.h-t.topBeam.h - 3*fig.h), vec(0, top+fig.h));
     if(t.n > 0){
       const y = t.h - t.hs - t.beam.h;
       fig.sectSymbol(this.figures.sBeam.id, vec(0, y - 2 * fig.h), vec(0, y + t.beam.h + 2*fig.h));
     }
-    const y = Math.max(t.h - t.hs/2, t.h/2)
-    fig.sectSymbol(this.figures.sCol.id, vec(-t.w/2-fig.h, y), vec(-t.w/2+t.col.w+fig.h, y));
+    const space = fig.pos.v.findR(2.5*fig.h);
+    if(space){
+      const y = space.mid;
+      fig.sectSymbol(this.figures.sCol.id, vec(-t.w / 2 - fig.h, y), vec(-t.w / 2 + t.col.w + fig.h, y));
+    }
+
+    this.drawSpaceNote();
+
     return this;
+  }
+  protected drawSpaceNote(): void{
+    const fig = this.figures.cross;
+    const t = this.struct;
+    const x = fig.getBoundingBox().left - fig.h;
+    const lens = t.calcColStirSpace();
+    let h = t.h;
+    const spaceText = `间距${this.specs.column.stir.space}`;
+    const denseSpaceText = `间距${this.specs.column.stir.denseSpace}`;
+    for(let i = 0; i < lens.length; i++){
+      const l = lens[i];
+      if(i % 2 === 0){
+        fig.push(new Text(denseSpaceText, vec(x, h - l/2), fig.h, TextAlign.BottomCenter, 90))
+      }else{
+        fig.push(new Text(spaceText, vec(x, h - l/2), fig.h, TextAlign.BottomCenter, 90))
+      }
+      h -= l;
+    }
   }
   buildDim(): this{
     const fig = this.figures.cross;
     const t= this.struct;
-    const {right, top} = fig.getBoundingBox();
+    const {right, top, left} = fig.getBoundingBox();
     const dim = fig.dimBuilder();
     dim.vRight(right+fig.h, t.h);
 
@@ -86,6 +118,12 @@ export class CrossFigure extends FigureBase{
       dim.dim(t.beam.h).dim(t.h - n*t.hs-t.beam.h);
     }
     dim.next().dim(t.h).dim(t.found.h);
+
+    // draw space dim
+    dim.vLeft(left, t.h)
+    for(const l of t.calcColStirSpace()){
+      dim.dim(l);
+    }
 
     dim.hTop(-t.w/2, top+fig.h)
       .dim(t.col.w).dim(t.hs-t.col.w).dim(t.col.w)

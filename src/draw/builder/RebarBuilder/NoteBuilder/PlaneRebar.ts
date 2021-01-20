@@ -35,18 +35,26 @@ export class PlaneRebar extends RebarDrawBuilder {
     return this;
   }
 
-  note(noteVector: Vector): this {
+  note(noteVector?: Vector): this {
     const polyline = this._crossLine;
     if (!polyline) {
       throw Error("note error: cross line not specified");
     }
     const end = polyline.end;
+    const dir = noteVector ? noteVector : last(polyline.segments).endTangent
+
     this.notes.push(
       polyline,
-      ...this.genArrowOnCross(polyline),
-      new Line(end, this.genLeaderEnd(end, noteVector)),
-      ...this.genLeaderText(end, noteVector)
-    );
+      ...this.genArrowOnCross(polyline)
+    )
+    if(noteVector){
+      this.notes.push( new Line(end, this.genLeaderEnd(end, noteVector)))
+    }else{
+      polyline.resetEnd(this.genLeaderEnd(end, dir));
+    }
+    this.notes.push(
+      ...this.genLeaderText(end, dir)
+    )
     return this;
   }
 

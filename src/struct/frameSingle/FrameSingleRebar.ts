@@ -1,5 +1,5 @@
 import { CountRebarSpec, SpaceRebarSpec, UnitRebarSpec } from "@/draw";
-import { RebarContainer } from "../utils";
+import { CountRebar, PosGen, RebarContainer, SpaceRebar } from "../utils";
 
 export class FrameSingleRebar extends RebarContainer{
   column = new Column();
@@ -11,16 +11,25 @@ export class FrameSingleRebar extends RebarContainer{
 
 class Column{
   corner = new UnitRebarSpec();
-  along = new CountRebarSpec();
-  cross = new CountRebarSpec();
-  stir = new SpaceRebarSpec();
+  along = new CountRebar({
+    along: new PosGen(),
+    sCol: new PosGen()
+  });
+  cross = new CountRebar({
+    cross: new PosGen(),
+    sCol: new PosGen()
+  });
+  stir = new SpaceRebar(new PosGen());
 }
 
 class Beam{
   top = new CountRebarSpec();
   bot = new CountRebarSpec();
-  mid = new CountRebarSpec();
-  stir = new SpaceRebarSpec();
+  mid = new CountRebar({
+    cross: new PosGen(),
+    sBeam: new PosGen()
+  });
+  stir = new SpaceRebar(new PosGen());
 }
 
 class Corbel{

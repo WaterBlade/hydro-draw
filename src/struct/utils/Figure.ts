@@ -17,32 +17,11 @@ import {
   LinePointRebar,
   PolylinePointRebar,
   SparsePointRebar,
-  last,
   DimensionBuilder,
   Vector,
   Note,
+  Sym,
 } from "@/draw";
-import { Sym } from "@/draw/preset/SymbolPreset";
-
-class PosGen {
-  xPos: number[] = [];
-  yPos: number[] = [];
-  findX(x: number): number {
-    return this.find(x, this.xPos);
-  }
-  findY(y: number): number {
-    return this.find(y, this.yPos);
-  }
-  protected find(k: number, array: number[]): number {
-    if (k < array[0] || k > last(array)) return k;
-    let i = 0;
-    while (array[i] < k) {
-      i++;
-    }
-    return (array[i - 1] + array[i]) / 2;
-  }
-}
-
 
 export interface FigureInBorder {
   pushTo(border: BorderBuilder): this;
@@ -53,7 +32,6 @@ export class Figure implements FigureInBorder {
     this.id = id;
     return this;
   }
-  pos = new PosGen();
   protected _unitScale = 1;
   protected _drawScale = 1;
   protected _titleHeight = 1;
@@ -61,11 +39,16 @@ export class Figure implements FigureInBorder {
   protected _numberHeight = 1;
   protected _drawRadius = 1;
   protected _centerAligned = false;
+  protected _baseAligned = false;
   protected _displayScale = false;
   protected _titlePosKeep = false;
   protected _content?: string | Content;
   centerAligned(): this {
     this._centerAligned = true;
+    return this;
+  }
+  baseAligned(): this{
+    this._baseAligned = true;
     return this;
   }
   displayScale(): this {
@@ -193,7 +176,8 @@ export class Figure implements FigureInBorder {
       this.drawScale,
       title,
       this._centerAligned,
-      this._titlePosKeep
+      this._titlePosKeep,
+      this._baseAligned
     );
     return this;
   }
@@ -222,6 +206,12 @@ export class Figure implements FigureInBorder {
     } else {
       return undefined;
     }
+  }
+}
+
+export class PosFigure<T> extends Figure{
+  constructor(public pos: T){
+    super();
   }
 }
 

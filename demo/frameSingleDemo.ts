@@ -56,8 +56,8 @@ export default function runFrameSingleDemo(): void{
   bar.beam.stir.set('HPB300', 10, 125);
 
   bar.corbel.main.set('HRB400', 20, 4);
-  bar.corbel.hStir.set('HPB300', 10, 100);
-  bar.corbel.vStir.set('HPB300', 10, 100);
+  bar.corbel.hStir.set('HPB300', 10, 150);
+  bar.corbel.vStir.set('HPB300', 10, 200);
 
   const layout = new HLayoutBuilder(100);
   layout.push(...ctrl.generate());

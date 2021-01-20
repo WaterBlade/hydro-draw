@@ -28,7 +28,7 @@ export class ArcBar extends RebarBase {
     return this;
   }
   buildPos(): this {
-    this.figures.cTrans.pos.xPos = this.genShape().map((l) => l.start.x);
+    this.figures.cTrans.pos.dot(...this.genShape().map((l) => l.start.x));
     return this;
   }
   buildFigure(): this {
@@ -161,7 +161,7 @@ export class ArcBar extends RebarBase {
     const u = this.struct;
     const fig = this.figures.cTrans;
     const bar = this.specs.trans.arc;
-    const x = fig.pos.findX(0);
+    const x = fig.pos.find(0);
     const lines = this.genShape();
     fig.push(
       fig

@@ -27,6 +27,22 @@ export class VStir extends RebarBase{
     );
   }
   buildFigure(): this{
+    this.drawAlong();
     return this;
+  }
+  protected drawAlong(): void{
+    const t = this.struct;
+    const bar = this.specs.corbel.vStir;
+    const fig = this.figures.along;
+    const as = this.specs.as;
+    const left = this.genShape();
+    const right = left.map(l => l.mirrorByVAxis());
+    fig.push(
+      fig.planeRebar()
+        .rebar(...left, ...right)
+        .spec(bar, left.length + right.length)
+        .leaderNote(vec(-t.col.h/2-t.corbel.w-fig.h, t.h-as-this.specs.corbel.hStir.space/2), vec(1, 0))
+        .generate()
+        );
   }
 }

@@ -1,6 +1,9 @@
 export abstract class FigureBuilder<T, U, P> {
   constructor(protected struct: T, protected specs: U, protected figures: P) {}
   abstract initFigure(): this;
+  buildPos(): this{
+    return this;
+  }
   abstract buildOutline(): this;
   abstract buildDim(): this;
   buildNote(): this {
@@ -24,6 +27,10 @@ export abstract class CompositeFigureBuilder<T, U, P> extends FigureBuilder<
   }
   initFigure(): this {
     this.builders.forEach((b) => b.initFigure());
+    return this;
+  }
+  buildPos(): this{
+    this.builders.forEach(b=>b.buildPos());
     return this;
   }
   buildOutline(): this {

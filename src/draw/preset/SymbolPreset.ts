@@ -37,14 +37,16 @@ function sectSymbol(content: string | Content, start: Vector, end: Vector, textH
   const angle = dir.quadrantAngle();
   const align = TextAlign.BottomCenter;
 
+  const n = dir.norm().mul(textHeight*0.25);
+
   const propAngle = Text.properAngle(angle);
   const propAlign = Text.properAlign(angle, align);
 
   comp.push(
     new Line(extStart, start),
     new Line(extEnd, end),
-    new Text(content, ptStart, textHeight, propAlign, propAngle),
-    new Text(content, ptEnd, textHeight, propAlign, propAngle),
+    new Text(content, ptStart.add(n), textHeight, propAlign, propAngle),
+    new Text(content, ptEnd.add(n), textHeight, propAlign, propAngle),
   );
   
   return comp;

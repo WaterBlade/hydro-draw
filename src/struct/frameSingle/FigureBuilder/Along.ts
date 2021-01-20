@@ -1,4 +1,4 @@
-import { Line, Polyline, vec } from "@/draw";
+import { Line, Polyline, vec, Text, TextAlign } from "@/draw";
 import { FigureBase } from "../Base";
 
 export class AlongFigure extends FigureBase{
@@ -11,8 +11,15 @@ export class AlongFigure extends FigureBase{
       .setId(id)
       .displayScale()
       .centerAligned()
+      .baseAligned()
       .keepTitlePos();
     this.figures.record(fig);
+    return this;
+  }
+  buildPos(): this{
+    const fig = this.figures.along;
+    const t = this.struct;
+    fig.pos.v.set(Math.max(0, t.h-t.hs), t.h-t.topBeam.h);
     return this;
   }
   buildOutline(): this{
@@ -67,12 +74,31 @@ export class AlongFigure extends FigureBase{
     const right = fig.outline.getBoundingBox().right;
     fig.breakline(vec(left, 0), vec(left, -t.found.h));
     fig.breakline(vec(right, 0), vec(right, -t.found.h));
+    this.drawSpaceNote();
     return this;
+  }
+  protected drawSpaceNote(): void{
+    const fig = this.figures.along;
+    const t = this.struct;
+    const x = fig.getBoundingBox().left - fig.h;
+    const lens = t.calcColStirSpace();
+    let h = t.h;
+    const spaceText = `间距${this.specs.column.stir.space}`;
+    const denseSpaceText = `间距${this.specs.column.stir.denseSpace}`;
+    for(let i = 0; i < lens.length; i++){
+      const l = lens[i];
+      if(i % 2 === 0){
+        fig.push(new Text(denseSpaceText, vec(x, h - l/2), fig.h, TextAlign.BottomCenter, 90))
+      }else{
+        fig.push(new Text(spaceText, vec(x, h - l/2), fig.h, TextAlign.BottomCenter, 90))
+      }
+      h -= l;
+    }
   }
   buildDim(): this{
     const fig = this.figures.along;
     const t= this.struct;
-    const {right, top} = fig.getBoundingBox();
+    const {right, top, left} = fig.getBoundingBox();
     const dim = fig.dimBuilder();
     dim.vRight(right+fig.h, t.h);
     dim.dim(t.corbel.hd).dim(t.corbel.hs).next();
@@ -88,6 +114,12 @@ export class AlongFigure extends FigureBase{
       dim.dim(t.beam.h).dim(t.h - n*t.hs-t.beam.h);
     }
     dim.next().dim(t.h).dim(t.found.h);
+
+    // draw space dim
+    dim.vLeft(left, t.h)
+    for(const l of t.calcColStirSpace()){
+      dim.dim(l);
+    }
 
     dim.hTop(-t.corbel.w-t.col.h/2, top+fig.h)
       .dim(t.corbel.w).dim(t.col.h).dim(t.corbel.w)

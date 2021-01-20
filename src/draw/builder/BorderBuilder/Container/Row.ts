@@ -42,16 +42,32 @@ export class Row extends BoxContainer {
         return false;
       }
     }else{
-      const bottomRight = vec(this.left + this.netWidth + cell.netWidth, this.top - cell.height);
+      let height = cell.height;
+      const preCell = last(this.boxs);
+      if(preCell.baseAligned && cell.baseAligned){
+        height = Math.max(preCell.baseTop, cell.baseTop) - Math.min(preCell.baseTop, cell.baseBottom);
+      }
+      const bottomRight = vec(this.left + this.netWidth + cell.netWidth, this.top - height);
       if(rightBoundary !== undefined && bottomRight.x > rightBoundary){
         return false;
       }
       if(this.border.insideTest(bottomRight)){
+        // handle center aligned
         if(this.boxs.length === 1){
           this.boxs[0].resetCenterAligned(false);
           this.resetSize();
         }
         cell.resetCenterAligned(false);
+        // handle base aligned
+        const top = Math.max(cell.baseTop, preCell.baseTop);
+        const bottom = Math.min(cell.baseBottom, preCell.baseBottom);
+        cell.setBase(bottom, top);
+        for(const box of this.boxs){
+          if(box.baseAligned){
+            box.setBase(bottom, top);
+          }
+        }
+        // add to collection
         this.add(cell);
         return true;
       }else{

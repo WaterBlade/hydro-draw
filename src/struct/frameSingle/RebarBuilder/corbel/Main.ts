@@ -1,4 +1,4 @@
-import { Polyline, RebarFormPreset, Side } from "@/draw";
+import { Polyline, RebarFormPreset, Side, vec } from "@/draw";
 import { RebarBase } from "../../Base";
 
 export class Main extends RebarBase{
@@ -23,6 +23,19 @@ export class Main extends RebarBase{
       .offset(as, Side.Right)
   }
   buildFigure(): this{
+    this.drawAlong();
     return this;
+  }
+  protected drawAlong(): void{
+    const t = this.struct;
+    const fig = this.figures.along;
+    const bar = this.specs.corbel.main;
+    fig.push(
+      fig.planeRebar()
+        .rebar(this.genShape())
+        .spec(bar, bar.singleCount)
+        .leaderNote(vec(t.col.h/2 + t.corbel.w, t.h-t.corbel.h-t.corbel.w/2), vec(-1, 1), vec(1, 0))
+        .generate()
+    );
   }
 }

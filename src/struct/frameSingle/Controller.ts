@@ -26,6 +26,7 @@ export class FrameSingleController{
 
     figBuilder.initFigure();
     figBuilder.buildOutline();
+    figBuilder.buildPos();
     rebarBuilder.build();
     figBuilder.buildNote();
     figBuilder.buildDim();

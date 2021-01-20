@@ -83,3 +83,12 @@ export function angleMirrorByYAxis(angle: number): number {
   if (angle <= 180) return 180 - angle;
   return 540 - angle;
 }
+
+export function divide(left: number, right: number, count: number): number[]{
+  const d = (right-left)/count;
+  const res = [];
+  for(let i = 0; i < count+1; i++){
+    res.push(left + i * d);
+  }
+  return res;
+}

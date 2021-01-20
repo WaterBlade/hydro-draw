@@ -103,7 +103,7 @@ export class COuterBar extends RebarBase {
     const as = this.specs.as;
     const y0 = u.shell.hd - as;
     const y1 = u.shell.hd - u.endHeight + as;
-    const y = fig.pos.findY(u.shell.hd - 6 * fig.h);
+    const y = fig.pos.v.find(u.shell.hd - 6 * fig.h);
     const leftXs = new Line(
       vec(-u.len / 2 + u.cantLeft + as, 0),
       vec(-u.len / 2 + u.cantLeft + u.endSect.b - as, 0)

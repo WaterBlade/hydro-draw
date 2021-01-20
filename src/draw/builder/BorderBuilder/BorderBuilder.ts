@@ -16,7 +16,8 @@ class ItemWrapper {
     public drawScale: number,
     public title?: DrawItem,
     public centerAligned = false,
-    public titlePosKeep = false
+    public titlePosKeep = false,
+    public baseAligned = false
   ) {}
 }
 
@@ -31,7 +32,8 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
     drawScale: number,
     title?: DrawItem,
     centerAligned = false,
-    titlePosKeep = false
+    titlePosKeep = false,
+    baseAligned = false,
   ): void {
     this.itemWrappers.push(
       new ItemWrapper(
@@ -40,7 +42,8 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
         drawScale,
         title,
         centerAligned,
-        titlePosKeep
+        titlePosKeep,
+        baseAligned
       )
     );
   }
@@ -61,13 +64,14 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
       const title = itemWrapper.title;
       const centerAligned = itemWrapper.centerAligned;
       const titlePosKeep = itemWrapper.titlePosKeep;
+      const baseAligned = itemWrapper.baseAligned;
 
       if (Math.abs(factor - 1) > 1e-6) {
         item.scale(factor);
         if (title) title.scale(factor);
       }
 
-      if (container.fill(item, title, centerAligned, titlePosKeep)) {
+      if (container.fill(item, title, centerAligned, titlePosKeep, baseAligned)) {
         continue;
       } else {
         if (!container.isEmpty()) {
@@ -76,7 +80,7 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
           allItems.push(comp);
         }
         container = this.genContainer();
-        if (container.fill(item, title, centerAligned, titlePosKeep)) {
+        if (container.fill(item, title, centerAligned, titlePosKeep, baseAligned)) {
           continue;
         } else {
           allItems.push(item);
