@@ -164,7 +164,9 @@ export class Cell {
       content,
       this.insertPoint,
       this.textHeight,
-      TextAlign.MiddleCenter
+      TextAlign.MiddleCenter,
+      0,
+      0.7
     );
     this.insertPoint = this.insertPoint.add(vec(0, -2 * this.textHeight));
     this.push(t);

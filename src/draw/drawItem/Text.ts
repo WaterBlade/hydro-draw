@@ -18,7 +18,8 @@ export class Text extends DrawItem implements PaperText {
     public insertPoint: Vector,
     public height: number,
     public textAlign = TextAlign.BottomLeft,
-    public rotateAngle = 0
+    public rotateAngle = 0,
+    public widthFactor = 1
   ) {
     super();
     if (typeof content === "string") {
@@ -113,7 +114,7 @@ export class Text extends DrawItem implements PaperText {
     this.insertPoint = this.insertPoint.add(vec);
   }
   calcBoundingBox(): BoundingBox {
-    const l = Math.max(1, this.content.length) * this.height;
+    const l = Math.max(1, this.content.length) * this.height * this.widthFactor;
     const h = this.height;
 
     const b = this.insertPoint;
