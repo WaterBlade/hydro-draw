@@ -1,6 +1,7 @@
-export abstract class RebarBuilder<T, U, P> {
+import { Builder } from "./Builder";
+
+export abstract class RebarBuilder<T, U, P> extends Builder<T, U, P>{
   name = "";
-  constructor(protected struct: T, protected specs: U, protected figures: P) {}
   setName(name: string): this {
     this.name = name;
     return this;

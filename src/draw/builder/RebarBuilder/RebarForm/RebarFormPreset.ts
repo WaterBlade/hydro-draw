@@ -1,7 +1,11 @@
 import { average, RebarDiameter, Side } from "@/draw/misc";
-import { RebarPathForm } from "./RebarForm";
+import { RebarCircleForm } from "./RebarCircleForm";
+import { RebarPathForm } from "./RebarPathForm";
 
 export const RebarFormPreset = {
+  Circle(barDia: RebarDiameter, circleDia: number | number[]): RebarCircleForm{
+    return new RebarCircleForm(barDia).circle(circleDia);
+  },
   Line(dia: RebarDiameter, length: number | number[]): RebarPathForm {
     return new RebarPathForm(dia).lineBy(8, 0).dimLength(length);
   },

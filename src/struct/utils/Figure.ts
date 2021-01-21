@@ -217,7 +217,10 @@ export class PosFigure<T> extends Figure{
 
 export class RebarTableFigure implements FigureInBorder {
   protected table = new RebarTable();
-  push(...specs: RebarSpec[]): this {
+  constructor(...specs: RebarSpec[]){
+    this.table.push(...specs);
+  }
+  push(...specs: RebarSpec[]): this{
     this.table.push(...specs);
     return this;
   }
@@ -229,7 +232,10 @@ export class RebarTableFigure implements FigureInBorder {
 
 export class MaterialTableFigure implements FigureInBorder {
   protected table = new MaterialTable();
-  push(...specs: RebarSpec[]): this {
+  constructor(...specs: RebarSpec[]){
+    this.table.push(...specs);
+  }
+  push(...specs: RebarSpec[]): this{
     this.table.push(...specs);
     return this;
   }

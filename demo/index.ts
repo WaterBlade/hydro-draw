@@ -3,11 +3,13 @@ import runNoteDemo from "./noteDemo";
 import runBorderDemo from "./borderDemo";
 import runUshellDemo from "./ushellDemo";
 import runFrameSingleDemo from "./frameSingleDemo";
+import runPileDemo from "./pileDemo";
 
 console.time();
 // runDimDemo();
 // runNoteDemo();
 // runBorderDemo();
 // runUshellDemo();
-runFrameSingleDemo();
+// runFrameSingleDemo();
+runPileDemo();
 console.timeEnd();

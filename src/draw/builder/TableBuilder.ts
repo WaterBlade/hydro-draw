@@ -10,6 +10,7 @@ export class TableBuilder implements Builder<CompositeItem> {
   heightList?: number[];
   widthList?: number[];
   protected widthMap: Map<number, number> = new Map();
+  protected heightMap: Map<number, number> = new Map();
   protected titleContent?: string | Content;
 
   unitSize: number;
@@ -113,18 +114,29 @@ export class TableBuilder implements Builder<CompositeItem> {
     }
     return ws;
   }
+  setHeight(row: number, height: number): this{
+    this.heightMap.set(row, height);
+    return this;
+  }
   computeCellHeight(height: number): number {
     return (
-      2 * this.unitSize * Math.max(Math.ceil(height / this.unitSize / 2), 1)
+      this.unitSize * Math.max(Math.ceil(height / this.unitSize ), 1)
     );
   }
   computeHeightList(): number[] {
     const hs = Array(this.rowCount).fill(0);
+    this.heightMap.forEach((value, key) => {
+      hs[key] = value;
+    });
+    const settled = Array.from(this.heightMap.keys());
     for (const c of this.cells) {
       if (c.rowSpan > 1) continue;
-      const height = this.computeCellHeight(c.getBoundingBox().height);
       const id = c.row;
-      hs[id] = Math.max(hs[id], height);
+      if(settled.includes(id)) continue;
+      const height = this.computeCellHeight(c.getBoundingBox().height);
+      if(!isNaN(height)){
+        hs[id] = Math.max(hs[id], height);
+      }
     }
     for (let i = 0; i < hs.length; i++) {
       hs[i] = Math.max(2 * this.unitSize, hs[i]);
@@ -147,7 +159,7 @@ export class Cell {
   }
 
   private insertPoint = vec(0, 0);
-  text(content: string | Content): void {
+  text(content: string | Content): this {
     const t = new Text(
       content,
       this.insertPoint,
@@ -156,6 +168,7 @@ export class Cell {
     );
     this.insertPoint = this.insertPoint.add(vec(0, -2 * this.textHeight));
     this.push(t);
+    return this;
   }
   getCellCenter(heightList: number[], widthList: number[]): Vector {
     const top = -sum(...heightList.slice(0, this.row));

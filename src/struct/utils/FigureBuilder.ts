@@ -1,11 +1,18 @@
-export abstract class FigureBuilder<T, U, P> {
-  constructor(protected struct: T, protected specs: U, protected figures: P) {}
-  abstract initFigure(): this;
+import { Builder } from "./Builder";
+
+export abstract class FigureBuilder<T, U, P> extends Builder<T, U, P>{
+  initFigure(): this{
+    return this;
+  }
   buildPos(): this{
     return this;
   }
-  abstract buildOutline(): this;
-  abstract buildDim(): this;
+  buildOutline(): this{
+    return this;
+  }
+  buildDim(): this{
+    return this;
+  }
   buildNote(): this {
     return this;
   }

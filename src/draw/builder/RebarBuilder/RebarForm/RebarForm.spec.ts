@@ -1,6 +1,6 @@
 import { Arc, Line, Text } from "@/draw/drawItem";
 import { RotateDirection, TextAlign, vec } from "@/draw/misc";
-import { RebarPathForm } from "./RebarForm";
+import { RebarPathForm } from "./RebarPathForm";
 
 test("add line", () => {
   const s = new RebarPathForm(8);

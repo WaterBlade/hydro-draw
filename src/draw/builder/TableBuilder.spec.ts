@@ -28,7 +28,7 @@ describe("Table", () => {
   });
   test("compute cell height", () => {
     const t = new TableBuilder();
-    expect(t.computeCellHeight(2)).toEqual(10);
+    expect(t.computeCellHeight(2)).toEqual(5);
   });
   test("compute height list", () => {
     const t = new TableBuilder();

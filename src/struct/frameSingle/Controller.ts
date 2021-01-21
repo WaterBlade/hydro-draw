@@ -33,8 +33,8 @@ export class FrameSingleController{
 
     this.drawing.push(
       ...figure.recordFigures,
-      new RebarTableFigure().push(...this.rebar.recordRebars),
-      new MaterialTableFigure().push(...this.rebar.recordRebars)
+      new RebarTableFigure(...this.rebar.recordRebars),
+      new MaterialTableFigure(...this.rebar.recordRebars)
     );
 
     return this.drawing.generate();
