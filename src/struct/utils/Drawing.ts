@@ -10,6 +10,7 @@ import { FigureInBorder } from "./Figure";
 
 export class Drawing implements Builder<DrawItem[]> {
   protected figures: FigureInBorder[] = [];
+  constructor(public widthFactor=1, public heightFactor=1){}
   push(...figures: FigureInBorder[]): this {
     this.figures.push(...figures);
     return this;
@@ -22,6 +23,11 @@ export class Drawing implements Builder<DrawItem[]> {
     return border.generate();
   }
 
+  setSize(size: 'A1' | 'A2' | 'A3'): this{
+    this.size = size;
+    return this;
+  }
+
   company?: string;
   project?: string;
   design?: string;
@@ -31,15 +37,15 @@ export class Drawing implements Builder<DrawItem[]> {
   drawingNumberStart?: number;
   certificateNumber?: string;
   note: string[] = [];
-  size: "A1" | "A2" | "A3" = "A1";
+  protected size: "A1" | "A2" | "A3" = "A1";
   protected genBorder(): HydroBorderBuilder {
     let border: HydroBorderBuilder;
     if (this.size === "A1") {
-      border = new HydroA1Builder();
+      border = new HydroA1Builder(this.widthFactor, this.heightFactor);
     } else if (this.size === "A2") {
-      border = new HydroA2Builder();
+      border = new HydroA2Builder(this.widthFactor, this.heightFactor);
     } else {
-      border = new HydroA3Builder();
+      border = new HydroA3Builder(this.widthFactor, this.heightFactor);
     }
 
     if (this.company) border.company = this.company;

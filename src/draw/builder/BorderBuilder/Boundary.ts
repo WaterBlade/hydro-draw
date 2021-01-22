@@ -2,35 +2,26 @@ import { last, toLeftTest, vec, Vector } from "@/draw/misc";
 
 export class Boundary {
   edges: Edge[] = [];
-  bottom = 0;
-  top = 0;
-  left = 0;
-  right = 0;
-  constructor(protected current?: Vector) {
-    if(current){
-      this.bottom = current.y;
-      this.top = current.y;
-      this.left = current.x;
-      this.right = current.x;
-    }
+  constructor(protected current?: Vector) {}
+  clone(): Boundary{
+    const b = new Boundary();
+    b.edges = this.edges.map(e => e.clone());
+    return b;
   }
   scale(factor: number): void {
     this.edges.forEach((e) => e.scale(factor));
-    this.bottom *= factor;
-    this.top *= factor;
-    this.left *= factor;
-    this.right *= factor;
+  }
+  scaleBy(pt: Vector, xFactor: number, yFactor: number): void{
+    this.edges.forEach(e => e.scaleBy(pt, xFactor, yFactor));
   }
   h(dist: number): this {
     if (dist < 0) throw Error("neg dist not support in boundary");
     this.edgeBy(vec(dist, 0));
-    this.right += dist;
     return this;
   }
   v(dist: number): this {
     if (dist < 0) throw Error("neg dist not support in boundary");
     this.edgeBy(vec(0, dist));
-    this.top += dist;
     return this;
   }
   corner(xDist: number, yDist: number): void {
@@ -66,11 +57,17 @@ export class Boundary {
     }
     return right;
   }
-  protected resetSide(): void{
-    this.left = this.edges[0].left;
-    this.right = last(this.edges).right;
-    this.bottom = this.edges[0].bottom;
-    this.top = last(this.edges).top;
+  get left(): number{
+    return this.edges[0].left;
+  }
+  get right(): number{
+    return last(this.edges).right;
+  }
+  get bottom(): number{
+    return this.edges[0].bottom;
+  }
+  get top(): number{
+    return last(this.edges).top;
   }
   genSubByH(left: number, right: number): Boundary{
     if(left > right) throw Error('left is above right');
@@ -92,7 +89,6 @@ export class Boundary {
     if(tail.top < this.top){
       b.edges.push(new Edge(tail.end, vec(right, this.top)));
     }
-    b.resetSide();
     return b;
   }
   genSubByV(bottom: number, top: number): Boundary{
@@ -114,58 +110,35 @@ export class Boundary {
     if(head.left > this.left){
       b.edges.unshift(new Edge(vec(this.left, bottom), head.start));
     }
-    b.resetSide();
     return b;
   }
 }
 
 export class Edge {
-  _left = 0;
-  _right = 0;
-  _bottom = 0;
-  _top = 0;
-  constructor(protected _start: Vector, protected _end: Vector) {
-    this.resetSide();
+  constructor(public start: Vector, public end: Vector) {
   }
   clone(): Edge{
     return new Edge(this.start, this.end);
   }
   scale(factor: number): void {
-    this._start = this._start.mul(factor);
-    this._end = this._end.mul(factor);
-    this.resetSide();
+    this.start = this.start.mul(factor);
+    this.end = this.end.mul(factor);
+  }
+  scaleBy(pt: Vector, xFactor: number, yFactor: number): void{
+    this.start = this.start.scaleBy(pt, xFactor, yFactor);
+    this.end = this.end.scaleBy(pt, xFactor, yFactor);
   }
   get left(): number{
-    return this._left;
+    return Math.min(this.start.x, this.end.x);
   }
   get right(): number{
-    return this._right;
+    return Math.max(this.start.x, this.end.x);
   }
   get bottom(): number{
-    return this._bottom;
+    return Math.min(this.start.y, this.end.y);
   }
   get top(): number{
-    return this._top;
-  }
-  set start(val: Vector){
-    this._start = val;
-    this.resetSide();
-  }
-  get start(): Vector{
-    return this._start;
-  }
-  set end(val: Vector){
-    this._end = val;
-    this.resetSide();
-  }
-  get end(): Vector{
-    return this._end;
-  }
-  protected resetSide(): void{
-    this._left = Math.min(this._start.x, this._end.x);
-    this._right = Math.max(this._start.x, this._end.x);
-    this._bottom = Math.min(this._start.y, this._end.y);
-    this._top = Math.max(this._start.y, this._end.y);
+    return Math.max(this.start.y, this.end.y);
   }
   insideTest(pt: Vector): boolean {
     return this.xInsideTest(pt) || this.yInsideTest(pt);
@@ -185,6 +158,6 @@ export class Edge {
     return true;
   }
   leftTest(pt: Vector): boolean {
-    return toLeftTest(this._start, this._end, pt);
+    return toLeftTest(this.start, this.end, pt);
   }
 }

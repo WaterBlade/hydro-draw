@@ -10,7 +10,7 @@ import { PileRebarBuilder } from "./RebarBuilder";
 export class PileController{
   struct = new Pile();
   rebar = new PileRebar();
-  drawing = new Drawing();
+  drawing = new Drawing(1, 0.75);
   generate(): DrawItem[] {
     const figure = new PileFigure();
 
@@ -32,7 +32,7 @@ export class PileController{
     figBuilder.buildNote();
     figBuilder.buildDim();
 
-    this.drawing.size = 'A2';
+    this.drawing.setSize('A2');
 
     this.drawing.push(
       ...figure.recordFigures,

@@ -88,3 +88,7 @@ test("toLeft test", () => {
   expect(toLeftTest(a, b, c)).toBeTruthy();
   expect(toLeftTest(a, b, d)).toBeFalsy();
 });
+test('scaleby test', ()=>{
+  const a = vec(10, 10);
+  expect(a.scaleBy(vec(2, 2), 0.5, 1)).toEqual(vec(6, 10));
+})

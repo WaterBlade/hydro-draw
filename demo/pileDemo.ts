@@ -40,10 +40,6 @@ export default function runPileDemo(): void{
   ctrl.add('24', 222.533, 210.533, 4);
   ctrl.add('25', 237.518, 225.518, 4);
 
-  for(let i = 26; i< 60; i++){
-    ctrl.add(`${i}`, 200+i, 190+i, 4);
-  }
-
   
 
 

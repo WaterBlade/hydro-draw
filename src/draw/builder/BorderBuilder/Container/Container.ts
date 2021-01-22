@@ -9,8 +9,13 @@ import { Row } from "./Row";
 
 export class Container extends BoxContainer {
   boxs: Column[] = [];
-  constructor(public border: Boundary) {
+  fillBorder: Boundary;
+  constructor(public border: Boundary, widthFactor = 1, heightFactor = 1) {
     super(vec(border.left, border.top));
+    this.fillBorder = border.clone();
+    if(widthFactor !== 1 || heightFactor !== 1){
+      this.fillBorder.scaleBy(this.topLeft, widthFactor, heightFactor);
+    }
   }
   protected resetSize(): void {
     this.width = last(this.boxs).right - this.topLeft.x;
@@ -40,21 +45,19 @@ export class Container extends BoxContainer {
         }
       }else{
         if(this.needWrapColumn){
-          if(cell.width < 0.75 * this.height){
-            this.needWrapColumn = false;
-          }
           const bottomRight = this.topLeft.add(vec(cell.width, -this.height - cell.height))
-          if (this.border.insideTest(bottomRight)) {
-            const col = new Column(this.topLeft, this.border);
-            const row = new Row(this.topLeft, this.border);
+          if (this.fillBorder.insideTest(bottomRight)) {
+            const col = new Column(this.topLeft, this.fillBorder);
+            const row = new Row(this.topLeft, this.fillBorder);
             for (const c of this.boxs) {
               row.fill(c.boxs[0].boxs[0]);
             }
             col.add(row);
-            const rowBelow = new Row(vec(this.left, this.bottom), this.border);
+            const rowBelow = new Row(vec(this.left, this.bottom), this.fillBorder);
             rowBelow.fill(cell);
             col.add(rowBelow);
             this.boxs = [col];
+            this.needWrapColumn = false;
             this.resetSize();
             return true;
           }
@@ -66,7 +69,10 @@ export class Container extends BoxContainer {
         }
       }
     }
-    const col = new Column(vec(this.right, this.top), this.border);
+    if (this.needWrapColumn && cell.height < 0.75 * this.height) {
+      this.needWrapColumn = false;
+    }
+    const col = new Column(vec(this.right, this.top), this.fillBorder);
     if (col.fill(cell)) {
       this.add(col);
       return true;

@@ -57,6 +57,12 @@ export class Vector {
       Math.abs(this.x - right.x) < delta && Math.abs(this.y - right.y) < delta
     );
   }
+  scaleBy(pt: Vector, xFactor: number, yFactor?: number): Vector{
+    yFactor = yFactor !== undefined ? yFactor : xFactor;
+    const x = pt.x + xFactor*(this.x - pt.x);
+    const y = pt.y + yFactor*(this.y - pt.y);
+    return new Vector(x, y);
+  }
 }
 
 export function vec(x: number, y: number): Vector {

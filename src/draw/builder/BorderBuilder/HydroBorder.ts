@@ -133,9 +133,11 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
     public space: number,
     public bindSpace: number,
     public titleHeight: number,
-    public titleWidth: number
+    public titleWidth: number,
+    widthFactor = 1,
+    heightFactor = 1
   ) {
-    super(0, 0);
+    super(widthFactor, heightFactor);
   }
 
   protected genFirstNote(): MText {
@@ -215,13 +217,13 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
   }
 
   genContainer(): Container {
-    return new Container(this.genBoundary());
+    return new Container(this.genBoundary(), this.widthFactor, this.heightFactor);
   }
 
   protected isMultipleBorder = false;
   protected totalBorderCount = 0;
   protected borderCount = 1;
-  genBorder(itemsInContainer: CompositeItem[]): void {
+  drawBorder(itemsInContainer: CompositeItem[]): void {
     let isFirstBorder = true;
     this.totalBorderCount = itemsInContainer.length;
     this.isMultipleBorder = this.totalBorderCount > 1;
@@ -278,8 +280,8 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
 }
 
 export class HydroA1Builder extends HydroBorderBuilder {
-  constructor() {
-    super(594, 841, 10, 25, 71, 180);
+  constructor(widthFactor=1, heightFactor=1) {
+    super(594, 841, 10, 25, 71, 180, widthFactor, heightFactor);
   }
   getTitle(): CompositeItem {
     const title = this.isMultipleBorder
@@ -299,8 +301,8 @@ export class HydroA1Builder extends HydroBorderBuilder {
 }
 
 export class HydroA2Builder extends HydroBorderBuilder {
-  constructor() {
-    super(420, 594, 10, 25, 68, 120);
+  constructor(widthFactor=1, heightFactor=1) {
+    super(420, 594, 10, 25, 68, 120, widthFactor, heightFactor);
   }
   getTitle(): CompositeItem {
     const title = this.isMultipleBorder
@@ -320,8 +322,8 @@ export class HydroA2Builder extends HydroBorderBuilder {
 }
 
 export class HydroA3Builder extends HydroBorderBuilder {
-  constructor() {
-    super(297, 420, 10, 25, 68, 120);
+  constructor(widthFactor=1, heightFactor=1) {
+    super(297, 420, 10, 25, 68, 120, widthFactor, heightFactor);
   }
   getTitle(): CompositeItem {
     const title = this.isMultipleBorder

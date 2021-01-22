@@ -25,7 +25,7 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
   itemWrappers: ItemWrapper[] = [];
   unitScale = 1;
   drawScale = 1;
-  constructor(public width: number, public height: number) {}
+  constructor(public widthFactor: number, public heightFactor: number) {}
   addItem(
     item: DrawItem,
     unitScale: number,
@@ -48,7 +48,7 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
     );
   }
   abstract genContainer(): Container;
-  abstract genBorder(itemsInContainer: CompositeItem[]): void;
+  abstract drawBorder(itemsInContainer: CompositeItem[]): void;
   generate(): DrawItem[] {
     this.unitScale = this.itemWrappers[0].unitScale;
     this.drawScale = this.itemWrappers[0].drawScale;
@@ -94,7 +94,7 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
       allItems.push(comp);
     }
 
-    this.genBorder(itemsInContainer);
+    this.drawBorder(itemsInContainer);
 
     return allItems;
   }
