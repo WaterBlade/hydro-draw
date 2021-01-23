@@ -1,7 +1,5 @@
 import {
-  PlaneRebar,
   Line,
-  PolylinePointRebar,
   Polyline,
   RebarFormPreset,
   Side,
@@ -95,20 +93,21 @@ export class LOuterBar extends RebarBase {
       .divide(bar.space)
       .removeStartPt()
       .removeEndPt();
-    const pRight = pLeft.mirrorByVAxis();
+    
+    const pRight = pLeft.mirrorByVAxis()
     fig.push(
-      new PolylinePointRebar(fig.textHeight, fig.drawRadius)
+      fig.polylinePointRebar()
         .spec(bar, bar.count / 2, bar.space)
         .polyline(pLeft)
         .offset(2 * fig.textHeight, Side.Right)
         .onlineNote(vec(-u.shell.r, -u.shell.r / 4))
         .generate(),
-      new PolylinePointRebar(fig.textHeight, fig.drawRadius)
+      fig.polylinePointRebar()
         .spec(bar, bar.count / 2, bar.space)
         .polyline(pRight)
         .offset(2 * fig.textHeight)
-        .onlineNote(vec(u.shell.r, -u.shell.r / 4), true)
-        .generate()
+        .onlineNote(vec(u.shell.r, -u.shell.r / 4))
+        .generate(),
     );
   }
   protected drawLOuter(): void {
@@ -123,7 +122,7 @@ export class LOuterBar extends RebarBase {
     const x = fig.pos.v.find((-0.8 * u.len) / 2);
 
     fig.push(
-      new PlaneRebar(fig.textHeight)
+      fig.planeRebar()
         .spec(bar, 0, bar.space)
         .rebar(...ys.map((y) => new Line(vec(start, y), vec(end, y))))
         .leaderNote(
@@ -142,7 +141,7 @@ export class LOuterBar extends RebarBase {
     const right = fig.outline.getBoundingBox().right;
     const y = -u.shell.t + as + fig.drawRadius;
     fig.push(
-      new PlaneRebar(fig.textHeight)
+      fig.planeRebar()
         .rebar(new Line(vec(left + as, y), vec(right, y)))
         .spec(bar, 0, bar.space)
         .leaderNote(

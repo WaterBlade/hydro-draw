@@ -111,9 +111,9 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
     const l = this.genNoteLength();
     const textDir = Text.properVector(dir);
     const insertPt = pt.add(v.mul(r + dist)).add(textDir.mul(r - l / 2));
-    const centerPt = insertPt.add(dir.unit().mul(-r));
-    const align = TextAlign.MiddleLeft;
-    const angle = dir.quadrantAngle();
+    const centerPt = insertPt.add(textDir.unit().mul(-r));
+    const angle = textDir.quadrantAngle();
+    const align = Text.properAlign(angle, TextAlign.MiddleLeft);
     const res = [
       new Circle(centerPt, r),
       new Text(
@@ -121,14 +121,14 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
         centerPt,
         this.textHeight,
         TextAlign.MiddleCenter,
-        Text.properAngle(angle)
+        angle
       ),
       new Text(
         this._content,
         insertPt,
         this.textHeight,
-        Text.properAlign(angle, align),
-        Text.properAngle(angle)
+        align,
+        angle
       ),
     ];
 
@@ -143,7 +143,7 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
             p,
             this.textHeight,
             TextAlign.MiddleCenter,
-            Text.properAngle(angle)
+            angle
           )
         )
         p = p.add(v);

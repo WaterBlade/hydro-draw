@@ -24,6 +24,12 @@ export class Sect extends FigureBase{
     return this;
   }
   buildDim(): this{
+    const t = this.struct;
+    const fig = this.figures.sect;
+    const bottom = fig.getBoundingBox().bottom;
+    fig.push(
+      fig.dimBuilder().hBottom(-t.d/2, bottom-fig.h).dim(t.d).generate()
+    );
     return this;
   }
 }

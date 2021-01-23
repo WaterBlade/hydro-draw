@@ -17,7 +17,8 @@ export class Row extends BoxContainer {
     this.resetSize();
   }
   vMinSpace(top: number, preCount: number, preTotalHeight: number, boundary: Boundary): number {
-    const colFloor = boundary.getBottom(boundary.left, boundary.right);
+    const colRight = (boundary.left + boundary.right)/2 + this.width /2;
+    const colFloor = boundary.getBottom(this.left, colRight);
     const rowFloor = boundary.getBottom(this.left, this.right);
     const bottom = this.bottom > colFloor ? colFloor : rowFloor;
     return Math.max(0, (top - bottom - preTotalHeight - this.height) / (preCount + 2));

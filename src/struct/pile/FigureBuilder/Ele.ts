@@ -1,4 +1,4 @@
-import { Line, Polyline, vec } from "@/draw";
+import { Line, Polyline, Text, TextAlign, vec } from "@/draw";
 import { FigureBase } from "../Base";
 
 export class Ele extends FigureBase{
@@ -16,7 +16,6 @@ export class Ele extends FigureBase{
   buildOutline(): this{
     const t = this.struct;
     const fig = this.figures.ele;
-    const h = 1500;
     const s = 500;
     fig.addOutline(
       new Polyline(-t.d/2, t.hs)
@@ -25,7 +24,7 @@ export class Ele extends FigureBase{
         .lineBy(0, t.hs+t.h).close().greyLine(),
       new Line(vec(-t.d/2, 0), vec(-t.d/2-s, 0)).greyLine(),
       new Line(vec(t.d/2, 0), vec(t.d/2+s, 0)).greyLine(),
-      new Line(vec(-t.d/2-s, h), vec(t.d/2+s, h)).greyLine(),
+      new Line(vec(-t.d/2-s, t.hp), vec(t.d/2+s, t.hp)).greyLine(),
     );
     return this;
   }
@@ -37,6 +36,25 @@ export class Ele extends FigureBase{
     return this;
   }
   buildDim(): this{
+    const fig = this.figures.ele;
+    const t = this.struct;
+    const dim = fig.dimBuilder();
+    const bar = this.specs.stir;
+    const right = fig.getBoundingBox().right+fig.h;
+    const bottom = fig.getBoundingBox().bottom;
+    dim.vRight(right+0.5*fig.h, t.hs)
+    if(t.hs > 0){
+      dim.dim(t.hs)
+    }
+    const ln = this.specs.denseFactor * t.d;
+    dim.dim(ln).dim(t.h-ln, `H-${ln}`).next().skip(t.hs).dim(t.h, '桩长H');
+
+    dim.hBottom(-t.d/2, bottom-fig.h).dim(t.d);
+    fig.push(
+      dim.generate(),
+      new Text(`间距${bar.denseSpace}`, vec(right, -0.5*ln), fig.h, TextAlign.BottomCenter, 90),
+      new Text(`间距${bar.space}`, vec(right, (-t.h-ln)/2), fig.h, TextAlign.BottomCenter, 90),
+      )
     return this;
   }
 }

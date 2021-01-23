@@ -120,9 +120,11 @@ export class RebarPathForm extends RebarForm {
 
     const p2 = vec(px, py);
 
+    const dx = norm.x > 0 ? 0.2 * this.numberHeight : -0.2*this.numberHeight;
+
     this.notes.push(
       new Line(p0, p1), new Line(p1, p2), new Line(p2, p0),
-      new Text(`${y}`, vec(px, mid.y), 0.8 * this.numberHeight, norm.x > 0 ? TextAlign.MiddleLeft : TextAlign.MiddleRight),
+      new Text(`${y}`, vec(px + dx, mid.y), 0.8 * this.numberHeight, norm.x > 0 ? TextAlign.MiddleLeft : TextAlign.MiddleRight),
       new Text(`${x}`, vec(mid.x, py), 0.8 * this.numberHeight, norm.y > 0 ? TextAlign.BottomCenter : TextAlign.TopCenter)
     );
 

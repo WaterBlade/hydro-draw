@@ -1,5 +1,5 @@
 import { Arc, Circle, Line, Polyline } from "@/draw/drawItem";
-import { flip, last, RotateDirection, Side, Vector } from "@/draw/misc";
+import { last, RotateDirection, Side, Vector } from "@/draw/misc";
 import { PointRebar } from "./PointRebar";
 
 export class PolylinePointRebar extends PointRebar {
@@ -39,7 +39,7 @@ export class PolylinePointRebar extends PointRebar {
     return this;
   }
 
-  onlineNote(pt: Vector, flipText = false): this {
+  onlineNote(pt: Vector): this {
     const op = this._offsetLine;
     if (!op) {
       throw Error("online note error: path not specified or not offseted");
@@ -58,11 +58,9 @@ export class PolylinePointRebar extends PointRebar {
         d = segR - Math.sqrt(segR ** 2 - 0.25 * (l + 2 * r) ** 2);
       }
     }
-    const factor = flipText ? -1 : 1;
     const nearPt = nearSeg.getNearestPt(pt);
-    const dir = nearSeg.getPointTangent(nearPt).mul(factor);
-    const side = flipText ? flip(this._offsetSide) : this._offsetSide;
-    this.notes.push(...this.genOnlineText(nearPt, dir, side, d));
+    const dir = nearSeg.getPointTangent(nearPt);
+    this.notes.push(...this.genOnlineText(nearPt, dir, this._offsetSide, d));
 
     return this;
   }

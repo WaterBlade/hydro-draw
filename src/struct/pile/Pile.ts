@@ -10,6 +10,7 @@ export class Pile{
 
   topAngle = 15;
   botAngle = 5;
+  hp = 1500;
 
   get h(): number{
     return (this.top - this.bottom)*1000;

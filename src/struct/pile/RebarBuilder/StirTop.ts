@@ -28,6 +28,20 @@ export class StirTop extends RebarBase{
     );
   }
   buildFigure(): this{
+    this.drawEle();
     return this;
+  }
+  protected drawEle(): void{
+    const t = this.struct;
+    const bar = this.specs.topStir;
+    const fig = this.figures.ele;
+    const lines = this.genMulShape()
+    fig.push(
+      fig.planeRebar()
+        .rebar(...lines)
+        .spec(bar, lines.length, bar.space)
+        .leaderNote(vec(this.specs.main.pos.ele.find(0), t.hp + 6*fig.h), vec(0, 1), vec(-1, 0))
+        .generate()
+    );
   }
 }
