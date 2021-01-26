@@ -1,5 +1,5 @@
 
-import { divide, Line, RebarFormPreset, vec } from "@/draw";
+import { divideByCount, Line, RebarFormPreset, vec } from "@/draw";
 import { RebarBase } from "../../Base";
 
 export class Mid extends RebarBase{
@@ -16,9 +16,9 @@ export class Mid extends RebarBase{
     const t = this.struct;
     const as = this.specs.as;
     const bar = this.specs.beam.mid;
-    bar.pos.cross.dot(...divide(-t.beam.h/2+as, t.beam.h/2-as, bar.singleCount+1));
+    bar.pos.cross.dot(...divideByCount(-t.beam.h/2+as, t.beam.h/2-as, bar.singleCount+1));
     const r = this.figures.sBeam.r
-    bar.pos.sBeam.dot(...divide(-t.beam.h/2+as+r, t.beam.h/2-as-r, bar.singleCount+1));
+    bar.pos.sBeam.dot(...divideByCount(-t.beam.h/2+as+r, t.beam.h/2-as-r, bar.singleCount+1));
     return this;
   }
   buildFigure(): this{
@@ -32,7 +32,7 @@ export class Mid extends RebarBase{
     const bar = this.specs.beam.mid;
     const as = this.specs.as;
     const n = t.n;
-    const ys = divide(-t.beam.h+as, -as, bar.singleCount+1).slice(1, -1);
+    const ys = divideByCount(-t.beam.h+as, -as, bar.singleCount+1).slice(1, -1);
     if(n > 0){
       const x0 = -t.w/2+as;
       const x1 = -x0;

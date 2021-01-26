@@ -1,6 +1,6 @@
 import { BorderBuilder, Circle, Content, RebarSpec, TableBuilder, Text, TextAlign, vec } from "@/draw";
 import { FigureInBorder } from "@/struct/utils";
-import { Pile } from "../Pile";
+import { Pile } from "../Basic/PileStruct";
 
 export class PileRebarTableFigure implements FigureInBorder{
   protected table = new TableBuilder();

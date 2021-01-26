@@ -5,6 +5,8 @@ import {
   StrecthSide,
   remainIf,
   removeDuplicate,
+  divideBySpace,
+  divideByCount,
 } from "@/draw/misc";
 import { DrawItem } from "../DrawItem";
 import { Paper } from "../Paper.interface";
@@ -114,48 +116,59 @@ export class Line extends DrawItem implements LineGeometry {
   }
   divide(space: number, side = StrecthSide.both, minimunRatio = 0.5): this {
     this.points = [];
-    const length = this.calcLength();
-    const dir = this.end.sub(this.start).unit();
-    const count = Math.floor(length / space);
-    const minimun = minimunRatio * space;
+    const ds = divideBySpace(0, this.calcLength(), space, side, minimunRatio);
     const start = this.start;
-    this.points.push(start);
-    if (count >= 2) {
-      if (length - count * space < 1e-6) {
-        for (let i = 1; i < count; i++) {
-          this.points.push(start.add(dir.mul(i * space)));
-        }
-      } else if (side === StrecthSide.both) {
-        const p1 = start.add(dir.mul((length - (count - 1) * space) / 2));
-        for (let i = 0; i < count; i++) {
-          this.points.push(p1.add(dir.mul(i * space)));
-        }
-      } else {
-        const spaceLeft = length - count * space;
-        const n = spaceLeft < minimun ? count : count + 1;
-        if (side === StrecthSide.head) {
-          const p1 = start.add(dir.mul(length - (n - 1) * space));
-          for (let i = 0; i < n - 1; i++) {
-            this.points.push(p1.add(dir.mul(i * space)));
-          }
-        } else {
-          for (let i = 1; i < n; i++) {
-            this.points.push(start.add(dir.mul(i * space)));
-          }
-        }
-      }
-    }
-    this.points.push(this.end);
+    const dir = this.end.sub(this.start).unit();
+    this.points = ds.map(d => start.add(dir.mul(d)));
     return this;
+    // const length = this.calcLength();
+    // const dir = this.end.sub(this.start).unit();
+    // const count = Math.floor(length / space);
+    // const minimun = minimunRatio * space;
+    // const start = this.start;
+    // this.points.push(start);
+    // if (count >= 2) {
+    //   if (length - count * space < 1e-6) {
+    //     for (let i = 1; i < count; i++) {
+    //       this.points.push(start.add(dir.mul(i * space)));
+    //     }
+    //   } else if (side === StrecthSide.both) {
+    //     const p1 = start.add(dir.mul((length - (count - 1) * space) / 2));
+    //     for (let i = 0; i < count; i++) {
+    //       this.points.push(p1.add(dir.mul(i * space)));
+    //     }
+    //   } else {
+    //     const spaceLeft = length - count * space;
+    //     const n = spaceLeft < minimun ? count : count + 1;
+    //     if (side === StrecthSide.head) {
+    //       const p1 = start.add(dir.mul(length - (n - 1) * space));
+    //       for (let i = 0; i < n - 1; i++) {
+    //         this.points.push(p1.add(dir.mul(i * space)));
+    //       }
+    //     } else {
+    //       for (let i = 1; i < n; i++) {
+    //         this.points.push(start.add(dir.mul(i * space)));
+    //       }
+    //     }
+    //   }
+    // }
+    // this.points.push(this.end);
+    // return this;
   }
   divideByCount(count: number): this {
-    const space = this.calcLength() / count;
+    this.points = [];
+    const ds = divideByCount(0, this.calcLength(), count);
     const start = this.start;
     const dir = this.end.sub(this.start).unit();
-    for (let i = 0; i < count + 1; i++) {
-      this.points.push(start.add(dir.mul(i * space)));
-    }
+    this.points = ds.map(d => start.add(dir.mul(d)));
     return this;
+    // const space = this.calcLength() / count;
+    // const start = this.start;
+    // const dir = this.end.sub(this.start).unit();
+    // for (let i = 0; i < count + 1; i++) {
+    //   this.points.push(start.add(dir.mul(i * space)));
+    // }
+    // return this;
   }
   calcLength(): number {
     return this.end.sub(this.start).length();

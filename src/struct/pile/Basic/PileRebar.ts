@@ -1,11 +1,8 @@
-import { SpaceRebarSpec } from "@/draw";
-import { CountRebar, PosGen, RebarContainer } from "../utils";
+import { CountRebarSpec, SpaceRebarSpec } from "@/draw";
+import { RebarContainer } from "../../utils";
 
 export class PileRebar extends RebarContainer{
-  main = new CountRebar({
-    ele: new PosGen(),
-    sect: new PosGen()
-  });
+  main = new CountRebarSpec();
   stir = new SpaceRebarSpec();
   topStir = new SpaceRebarSpec();
   fix = new SpaceRebarSpec();
@@ -13,4 +10,5 @@ export class PileRebar extends RebarContainer{
   as = 60;
   anchorFactor = 40;
   denseFactor = 5;
+  fixCount = 4;
 }

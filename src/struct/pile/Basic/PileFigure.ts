@@ -1,4 +1,4 @@
-import { Figure, FigureContainer} from "../utils";
+import { Figure, FigureContainer } from "@/struct/utils";
 
 export class PileFigure extends FigureContainer{
   ele = new Figure();

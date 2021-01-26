@@ -1,10 +1,8 @@
 import { DrawItem } from "@/draw";
 import { Drawing, MaterialTableFigure } from "../utils";
+import { Pile, PileFigure, PileRebar } from "./Basic";
 import { PileRebarTableFigure } from "./Figure";
 import { PileFigureBuilder } from "./FigureBuilder";
-import { Pile } from "./Pile";
-import { PileFigure } from "./PileFigure";
-import { PileRebar } from "./PileRebar";
 import { PileRebarBuilder } from "./RebarBuilder";
 
 export class PileController{
@@ -13,24 +11,20 @@ export class PileController{
   drawing = new Drawing(1, 0.75);
   generate(): DrawItem[] {
     const figure = new PileFigure();
+    const rebarBuilder = new PileRebarBuilder(
+      this.struct,
+      this.rebar,
+    );
 
     const figBuilder = new PileFigureBuilder(
       this.struct,
       this.rebar,
       figure
     );
-    const rebarBuilder = new PileRebarBuilder(
-      this.struct,
-      this.rebar,
-      figure
-    );
 
-    figBuilder.initFigure();
-    figBuilder.buildOutline();
-    figBuilder.buildPos();
     rebarBuilder.build();
-    figBuilder.buildNote();
-    figBuilder.buildDim();
+    figBuilder.initFigure();
+    figBuilder.build();
 
     this.drawing.setSize('A2');
 
@@ -46,7 +40,7 @@ export class PileController{
       this.struct.count = pile.count;
       this.struct.load = pile.load;
       this.rebar.clear();
-      rebarBuilder.buildSpec();
+      rebarBuilder.build();
       this.drawing.push(
       new PileRebarTableFigure(this.struct, this.rebar.recordRebars),
       );

@@ -7,7 +7,9 @@ export abstract class RebarBuilder<T, U, P> extends Builder<T, U, P>{
     return this;
   }
   abstract buildSpec(): this;
-  abstract buildFigure(): this;
+  buildFigure(): this{
+    return this;
+  }
   buildPos(): this {
     return this;
   }
