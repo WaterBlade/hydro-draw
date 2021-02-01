@@ -1,13 +1,13 @@
 import { Builder } from "./Builder";
 
-export abstract class RebarBuilder<T, U, P> extends Builder<T, U, P>{
+export abstract class RebarBuilder<T, U, P> extends Builder<T, U, P> {
   name = "";
   setName(name: string): this {
     this.name = name;
     return this;
   }
   abstract buildSpec(): this;
-  buildFigure(): this{
+  buildFigure(): this {
     return this;
   }
   buildPos(): this {

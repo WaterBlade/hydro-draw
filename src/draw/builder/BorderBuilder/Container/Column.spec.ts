@@ -1,10 +1,10 @@
 import { Circle } from "@/draw/drawItem";
 import { vec } from "@/draw/misc";
-import { Boundary } from "../Boundary"
+import { Boundary } from "../Boundary";
 import { Cell } from "./Cell";
 import { Column } from "./Column";
 
-test('fill', ()=>{
+test("fill", () => {
   const b = new Boundary(vec(0, 0));
   b.h(10).v(10).h(10).v(10);
   const col = new Column(vec(0, 20), b);

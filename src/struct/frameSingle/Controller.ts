@@ -6,7 +6,7 @@ import { FrameSingleFigure } from "./FrameSingleFigure";
 import { FrameSingleRebar } from "./FrameSingleRebar";
 import { FrameSingleRebarBuilder } from "./RebarBuilder";
 
-export class FrameSingleController{
+export class FrameSingleController {
   struct = new FrameSingle();
   rebar = new FrameSingleRebar();
   drawing = new Drawing();

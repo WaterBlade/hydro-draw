@@ -6,14 +6,13 @@ import { Cell } from "./Cell";
 import { Column } from "./Column";
 import { Row } from "./Row";
 
-
 export class Container extends BoxContainer {
   boxs: Column[] = [];
   fillBorder: Boundary;
   constructor(public border: Boundary, widthFactor = 1, heightFactor = 1) {
     super(vec(border.left, border.top));
     this.fillBorder = border.clone();
-    if(widthFactor !== 1 || heightFactor !== 1){
+    if (widthFactor !== 1 || heightFactor !== 1) {
       this.fillBorder.scaleBy(this.topLeft, widthFactor, heightFactor);
     }
   }
@@ -31,21 +30,29 @@ export class Container extends BoxContainer {
     title?: DrawItem,
     centerAligned = false,
     titlePosKeep = false,
-    baseAligned = false,
+    baseAligned = false
   ): boolean {
-    const cell = new Cell(item, title, centerAligned, titlePosKeep, baseAligned);
-    
+    const cell = new Cell(
+      item,
+      title,
+      centerAligned,
+      titlePosKeep,
+      baseAligned
+    );
+
     const tail = last(this.boxs);
-    if(tail){
-      if(this.boxs.length === 1){
-        if(tail.fill(cell)){
+    if (tail) {
+      if (this.boxs.length === 1) {
+        if (tail.fill(cell)) {
           this.needWrapColumn = false;
           this.resetSize();
           return true;
         }
-      }else{
-        if(this.needWrapColumn){
-          const bottomRight = this.topLeft.add(vec(cell.width, -this.height - cell.height))
+      } else {
+        if (this.needWrapColumn) {
+          const bottomRight = this.topLeft.add(
+            vec(cell.width, -this.height - cell.height)
+          );
           if (this.fillBorder.insideTest(bottomRight)) {
             const col = new Column(this.topLeft, this.fillBorder);
             const row = new Row(this.topLeft, this.fillBorder);
@@ -53,7 +60,10 @@ export class Container extends BoxContainer {
               row.fill(c.boxs[0].boxs[0]);
             }
             col.add(row);
-            const rowBelow = new Row(vec(this.left, this.bottom), this.fillBorder);
+            const rowBelow = new Row(
+              vec(this.left, this.bottom),
+              this.fillBorder
+            );
             rowBelow.fill(cell);
             col.add(rowBelow);
             this.boxs = [col];
@@ -61,8 +71,8 @@ export class Container extends BoxContainer {
             this.resetSize();
             return true;
           }
-        }else{
-          if(tail.fill(cell)){
+        } else {
+          if (tail.fill(cell)) {
             this.resetSize();
             return true;
           }
@@ -86,9 +96,9 @@ export class Container extends BoxContainer {
     c.push(...this.getItems());
     return c;
   }
-  arrange(): void{
+  arrange(): void {
     this.hArrange(this.border);
-    this.boxs.forEach(col => col.arrange(this.border));
+    this.boxs.forEach((col) => col.arrange(this.border));
     this.resetSize();
   }
 }

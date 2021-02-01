@@ -3,16 +3,16 @@ import { last, toLeftTest, vec, Vector } from "@/draw/misc";
 export class Boundary {
   edges: Edge[] = [];
   constructor(protected current?: Vector) {}
-  clone(): Boundary{
+  clone(): Boundary {
     const b = new Boundary();
-    b.edges = this.edges.map(e => e.clone());
+    b.edges = this.edges.map((e) => e.clone());
     return b;
   }
   scale(factor: number): void {
     this.edges.forEach((e) => e.scale(factor));
   }
-  scaleBy(pt: Vector, xFactor: number, yFactor: number): void{
-    this.edges.forEach(e => e.scaleBy(pt, xFactor, yFactor));
+  scaleBy(pt: Vector, xFactor: number, yFactor: number): void {
+    this.edges.forEach((e) => e.scaleBy(pt, xFactor, yFactor));
   }
   h(dist: number): this {
     if (dist < 0) throw Error("neg dist not support in boundary");
@@ -28,8 +28,8 @@ export class Boundary {
     this.h(xDist).v(yDist);
   }
   protected edgeBy(v: Vector): void {
-    if(!this.current){
-      throw Error('boundary current pt is undefined')
+    if (!this.current) {
+      throw Error("boundary current pt is undefined");
     }
     const pt = this.current.add(v);
     this.edges.push(new Edge(this.current, pt));
@@ -57,57 +57,57 @@ export class Boundary {
     }
     return right;
   }
-  get left(): number{
+  get left(): number {
     return this.edges[0].left;
   }
-  get right(): number{
+  get right(): number {
     return last(this.edges).right;
   }
-  get bottom(): number{
+  get bottom(): number {
     return this.edges[0].bottom;
   }
-  get top(): number{
+  get top(): number {
     return last(this.edges).top;
   }
-  genSubByH(left: number, right: number): Boundary{
-    if(left > right) throw Error('left is above right');
-    if(this.edges.length === 0) throw Error('empty boundary');
+  genSubByH(left: number, right: number): Boundary {
+    if (left > right) throw Error("left is above right");
+    if (this.edges.length === 0) throw Error("empty boundary");
     const b = new Boundary();
-    for(const e of this.edges){
-      if(e.xOverlapTest(left, right)){
+    for (const e of this.edges) {
+      if (e.xOverlapTest(left, right)) {
         b.edges.push(e.clone());
       }
     }
     const head = b.edges[0];
-    if(head.left < left){
+    if (head.left < left) {
       head.start = vec(left, head.start.y);
     }
     const tail = last(b.edges);
-    if(tail.right > right){
+    if (tail.right > right) {
       tail.end = vec(right, tail.end.y);
     }
-    if(tail.top < this.top){
+    if (tail.top < this.top) {
       b.edges.push(new Edge(tail.end, vec(right, this.top)));
     }
     return b;
   }
-  genSubByV(bottom: number, top: number): Boundary{
-    if(bottom > top) throw Error('bottom is above top');
+  genSubByV(bottom: number, top: number): Boundary {
+    if (bottom > top) throw Error("bottom is above top");
     const b = new Boundary();
-    for(const e of this.edges){
-      if(e.yOverlapTest(bottom, top)){
+    for (const e of this.edges) {
+      if (e.yOverlapTest(bottom, top)) {
         b.edges.push(e.clone());
       }
     }
     const head = b.edges[0];
-    if(head.bottom < bottom){
+    if (head.bottom < bottom) {
       head.start = vec(head.start.x, bottom);
     }
     const tail = last(b.edges);
-    if(tail.top > top){
+    if (tail.top > top) {
       tail.end = vec(tail.end.x, top);
     }
-    if(head.left > this.left){
+    if (head.left > this.left) {
       b.edges.unshift(new Edge(vec(this.left, bottom), head.start));
     }
     return b;
@@ -115,29 +115,28 @@ export class Boundary {
 }
 
 export class Edge {
-  constructor(public start: Vector, public end: Vector) {
-  }
-  clone(): Edge{
+  constructor(public start: Vector, public end: Vector) {}
+  clone(): Edge {
     return new Edge(this.start, this.end);
   }
   scale(factor: number): void {
     this.start = this.start.mul(factor);
     this.end = this.end.mul(factor);
   }
-  scaleBy(pt: Vector, xFactor: number, yFactor: number): void{
+  scaleBy(pt: Vector, xFactor: number, yFactor: number): void {
     this.start = this.start.scaleBy(pt, xFactor, yFactor);
     this.end = this.end.scaleBy(pt, xFactor, yFactor);
   }
-  get left(): number{
+  get left(): number {
     return Math.min(this.start.x, this.end.x);
   }
-  get right(): number{
+  get right(): number {
     return Math.max(this.start.x, this.end.x);
   }
-  get bottom(): number{
+  get bottom(): number {
     return Math.min(this.start.y, this.end.y);
   }
-  get top(): number{
+  get top(): number {
     return Math.max(this.start.y, this.end.y);
   }
   insideTest(pt: Vector): boolean {

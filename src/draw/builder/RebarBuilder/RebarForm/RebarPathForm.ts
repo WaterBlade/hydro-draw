@@ -1,23 +1,6 @@
-import {
-  Arc,
-
-
-
-  DrawItem,
-  Line,
-  Text
-} from "@/draw/drawItem";
-import {
-  last,
-
-  RotateDirection,
-  Side,
-
-  TextAlign,
-  vec
-} from "@/draw/misc";
+import { Arc, DrawItem, Line, Text } from "@/draw/drawItem";
+import { last, RotateDirection, Side, TextAlign, vec } from "@/draw/misc";
 import { RebarForm } from "./RebarForm";
-
 
 export class RebarPathForm extends RebarForm {
   segments: (Arc | Line)[] = [];
@@ -26,8 +9,7 @@ export class RebarPathForm extends RebarForm {
   }
   // generate rebar
   lineBy(x: number, y: number): this {
-    if (Math.abs(x) > 8 || Math.abs(y) > 8)
-      throw Error("tow large x or y");
+    if (Math.abs(x) > 8 || Math.abs(y) > 8) throw Error("tow large x or y");
     const end = vec(x, y).mul(this.baseUnit).add(this.pt);
     this.segments.push(new Line(this.pt, end).thickLine());
     this.pt = end;
@@ -39,8 +21,7 @@ export class RebarPathForm extends RebarForm {
     angle: number,
     direction = RotateDirection.counterclockwise
   ): this {
-    if (Math.abs(x) > 8 || Math.abs(y) > 8)
-      throw Error("tow large x or y");
+    if (Math.abs(x) > 8 || Math.abs(y) > 8) throw Error("tow large x or y");
     const end = vec(x, y).mul(this.baseUnit).add(this.pt);
     this.segments.push(
       Arc.createByEnds(this.pt, end, angle, direction).thickLine()
@@ -48,10 +29,9 @@ export class RebarPathForm extends RebarForm {
     this.pt = end;
     return this;
   }
-  hook(option: { start?: Side; end?: Side; }): this {
+  hook(option: { start?: Side; end?: Side }): this {
     const { start, end } = option;
-    if (start === undefined && end === undefined)
-      return this;
+    if (start === undefined && end === undefined) return this;
     if (start !== undefined) {
       const seg = this.segments[0];
       this.hooks.push(
@@ -69,8 +49,7 @@ export class RebarPathForm extends RebarForm {
 
   // dim
   dimLength(length: number | number[], side = Side.Left): this {
-    if (length === undefined)
-      throw Error("length is undefined");
+    if (length === undefined) throw Error("length is undefined");
     this.addUp(length);
     const content = this.genNumContent(length);
     const seg = last(this.segments);
@@ -108,8 +87,7 @@ export class RebarPathForm extends RebarForm {
     const mid = line.mid.add(norm.mul(0.5));
 
     const den = Math.min(Math.abs(dir.x), Math.abs(dir.y));
-    if (den < 1e-6)
-      throw Error('zero denomitor');
+    if (den < 1e-6) throw Error("zero denomitor");
     const factor = this.numberHeight / den;
     const v = dir.mul(factor * 0.5);
     const p0 = mid.add(v);
@@ -120,12 +98,24 @@ export class RebarPathForm extends RebarForm {
 
     const p2 = vec(px, py);
 
-    const dx = norm.x > 0 ? 0.2 * this.numberHeight : -0.2*this.numberHeight;
+    const dx = norm.x > 0 ? 0.2 * this.numberHeight : -0.2 * this.numberHeight;
 
     this.notes.push(
-      new Line(p0, p1), new Line(p1, p2), new Line(p2, p0),
-      new Text(`${y}`, vec(px + dx, mid.y), 0.8 * this.numberHeight, norm.x > 0 ? TextAlign.MiddleLeft : TextAlign.MiddleRight),
-      new Text(`${x}`, vec(mid.x, py), 0.8 * this.numberHeight, norm.y > 0 ? TextAlign.BottomCenter : TextAlign.TopCenter)
+      new Line(p0, p1),
+      new Line(p1, p2),
+      new Line(p2, p0),
+      new Text(
+        `${y}`,
+        vec(px + dx, mid.y),
+        0.8 * this.numberHeight,
+        norm.x > 0 ? TextAlign.MiddleLeft : TextAlign.MiddleRight
+      ),
+      new Text(
+        `${x}`,
+        vec(mid.x, py),
+        0.8 * this.numberHeight,
+        norm.y > 0 ? TextAlign.BottomCenter : TextAlign.TopCenter
+      )
     );
 
     return this;
@@ -152,12 +142,12 @@ export class RebarPathForm extends RebarForm {
 
     const preVec = preEnd.sub(corner);
     const curVec = curEnd.sub(corner);
-    const dir = preVec.cross(curVec) > 0
-      ? RotateDirection.counterclockwise
-      : RotateDirection.clockwise;
+    const dir =
+      preVec.cross(curVec) > 0
+        ? RotateDirection.counterclockwise
+        : RotateDirection.clockwise;
 
-    if (this.guideLine)
-      this.notes.push(this.guideLine);
+    if (this.guideLine) this.notes.push(this.guideLine);
 
     const arc = new Arc(
       corner,

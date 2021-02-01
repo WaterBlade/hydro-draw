@@ -119,7 +119,7 @@ export class Line extends DrawItem implements LineGeometry {
     const ds = divideBySpace(0, this.calcLength(), space, side, minimunRatio);
     const start = this.start;
     const dir = this.end.sub(this.start).unit();
-    this.points = ds.map(d => start.add(dir.mul(d)));
+    this.points = ds.map((d) => start.add(dir.mul(d)));
     return this;
     // const length = this.calcLength();
     // const dir = this.end.sub(this.start).unit();
@@ -160,7 +160,7 @@ export class Line extends DrawItem implements LineGeometry {
     const ds = divideByCount(0, this.calcLength(), count);
     const start = this.start;
     const dir = this.end.sub(this.start).unit();
-    this.points = ds.map(d => start.add(dir.mul(d)));
+    this.points = ds.map((d) => start.add(dir.mul(d)));
     return this;
     // const space = this.calcLength() / count;
     // const start = this.start;
@@ -253,7 +253,7 @@ export class Line extends DrawItem implements LineGeometry {
     if (pt.sub(start).length() > pt.sub(end).length()) return end;
     return start;
   }
-  removeBothPt(): this{
+  removeBothPt(): this {
     this.removeStartPt();
     this.removeEndPt();
     return this;

@@ -114,14 +114,12 @@ export class TableBuilder implements Builder<CompositeItem> {
     }
     return ws;
   }
-  setHeight(row: number, height: number): this{
+  setHeight(row: number, height: number): this {
     this.heightMap.set(row, height);
     return this;
   }
   computeCellHeight(height: number): number {
-    return (
-      this.unitSize * Math.max(Math.ceil(height / this.unitSize ), 1)
-    );
+    return this.unitSize * Math.max(Math.ceil(height / this.unitSize), 1);
   }
   computeHeightList(): number[] {
     const hs = Array(this.rowCount).fill(0);
@@ -132,9 +130,9 @@ export class TableBuilder implements Builder<CompositeItem> {
     for (const c of this.cells) {
       if (c.rowSpan > 1) continue;
       const id = c.row;
-      if(settled.includes(id)) continue;
+      if (settled.includes(id)) continue;
       const height = this.computeCellHeight(c.getBoundingBox().height);
-      if(!isNaN(height)){
+      if (!isNaN(height)) {
         hs[id] = Math.max(hs[id], height);
       }
     }

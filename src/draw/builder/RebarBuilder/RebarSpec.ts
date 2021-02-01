@@ -80,14 +80,14 @@ export class RebarSpec {
   get structure(): string {
     return this._structure;
   }
-  setStructure(name: string): this {
+  setName(name: string): this {
     this._structure = name;
     return this;
   }
 }
 
-export class UnitRebarSpec extends RebarSpec{
-  set(grade: RebarGrade, diameter: RebarDiameter): this{
+export class UnitRebarSpec extends RebarSpec {
+  set(grade: RebarGrade, diameter: RebarDiameter): this {
     this.setGrade(grade);
     this.setDiameter(diameter);
     return this;

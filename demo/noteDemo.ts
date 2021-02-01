@@ -8,7 +8,7 @@ export default function runNoteDemo():void{
   const paper = new ScriptPaper();
 
   const r1 = new RebarSpec('HPB300', 8, 10, new RebarCircleForm(8).circle(900));
-  r1.setId('1').setStructure('槽身');
+  r1.setId('1').setName('槽身');
 
   // simple
   const a0 = new PlaneRebar().rebar(

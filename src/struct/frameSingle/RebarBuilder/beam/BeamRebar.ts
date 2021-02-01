@@ -4,14 +4,14 @@ import { Mid } from "./Mid";
 import { Stir } from "./Stir";
 import { Top } from "./Top";
 
-export class BeamRebar extends CompositeRebarBase{
-  init(): void{
+export class BeamRebar extends CompositeRebarBase {
+  init(): void {
     this.push(
-      new Bottom(this.struct, this.specs, this.figures),
-      new Top(this.struct, this.specs, this.figures),
-      new Mid(this.struct, this.specs, this.figures),
-      new Stir(this.struct, this.specs, this.figures)
+      new Bottom(this.struct, this.rebars, this.figures),
+      new Top(this.struct, this.rebars, this.figures),
+      new Mid(this.struct, this.rebars, this.figures),
+      new Stir(this.struct, this.rebars, this.figures)
     );
-    this.setName('横梁');
+    this.setName("横梁");
   }
 }

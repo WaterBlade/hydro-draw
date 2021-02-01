@@ -22,10 +22,10 @@ test("bounding box", () => {
   expect(b.top).toEqual(6);
 });
 
-test('proper anlge', ()=>{
+test("proper anlge", () => {
   expect(Text.properAngle(0)).toEqual(0);
   expect(Text.properAngle(90)).toEqual(90);
   expect(Text.properAngle(180)).toEqual(0);
   expect(Text.properAngle(270)).toEqual(90);
   expect(Text.properAngle(360)).toEqual(0);
-})
+});

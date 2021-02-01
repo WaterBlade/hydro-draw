@@ -4,23 +4,22 @@ import { BoxContainer } from "./BoxContainer";
 import { Cell } from "./Cell";
 import { Row } from "./Row";
 
-
 export class Column extends BoxContainer {
   constructor(topLeft: Vector, protected border: Boundary) {
     super(topLeft);
   }
   boxs: Row[] = [];
-  fill(cell: Cell): boolean{
+  fill(cell: Cell): boolean {
     const tail = last(this.boxs);
-    if(tail && tail.fill(cell, this.right)){
+    if (tail && tail.fill(cell, this.right)) {
       this.resetSize();
       return true;
-    }else{
+    } else {
       const row = new Row(vec(this.left, this.bottom), this.border);
-      if(row.fill(cell)){
+      if (row.fill(cell)) {
         this.add(row);
         return true;
-      }else{
+      } else {
         return false;
       }
     }
@@ -34,12 +33,20 @@ export class Column extends BoxContainer {
     this.height = this.topLeft.y - last(this.boxs).bottom;
   }
   arrange(boundary: Boundary): void {
-    const b = boundary.genSubByH(this.left-this.leftSpace/2, this.right+this.rightSpace/2);
+    const b = boundary.genSubByH(
+      this.left - this.leftSpace / 2,
+      this.right + this.rightSpace / 2
+    );
     this.vArrange(b);
-    this.boxs.forEach(row => row.arrange(b));
+    this.boxs.forEach((row) => row.arrange(b));
     this.resetSize();
   }
-  hMinSpace(left: number, preCount: number, preTotalWidth: number, boundary: Boundary): number {
+  hMinSpace(
+    left: number,
+    preCount: number,
+    preTotalWidth: number,
+    boundary: Boundary
+  ): number {
     if (this.crossTest(boundary) && this.boxs.length !== 0) {
       const spaceList = [];
       for (const row of this.boxs) {

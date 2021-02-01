@@ -33,7 +33,7 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
     title?: DrawItem,
     centerAligned = false,
     titlePosKeep = false,
-    baseAligned = false,
+    baseAligned = false
   ): void {
     this.itemWrappers.push(
       new ItemWrapper(
@@ -71,7 +71,9 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
         if (title) title.scale(factor);
       }
 
-      if (container.fill(item, title, centerAligned, titlePosKeep, baseAligned)) {
+      if (
+        container.fill(item, title, centerAligned, titlePosKeep, baseAligned)
+      ) {
         continue;
       } else {
         if (!container.isEmpty()) {
@@ -80,7 +82,9 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
           allItems.push(comp);
         }
         container = this.genContainer();
-        if (container.fill(item, title, centerAligned, titlePosKeep, baseAligned)) {
+        if (
+          container.fill(item, title, centerAligned, titlePosKeep, baseAligned)
+        ) {
           continue;
         } else {
           allItems.push(item);

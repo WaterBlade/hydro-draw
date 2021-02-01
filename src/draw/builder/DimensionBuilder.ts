@@ -70,7 +70,7 @@ export class DimensionBuilder implements Builder<CompositeItem> {
     this._pt = this._start;
     return this;
   }
-  skip(dist: number): this{
+  skip(dist: number): this {
     this._pt = this._pt.add(this._dir.mul(dist));
     return this;
   }

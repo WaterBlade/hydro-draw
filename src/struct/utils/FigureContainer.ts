@@ -41,7 +41,7 @@ export class FigureContainer {
   recordFigures: FigureInBorder[] = [];
   specId = new SpecIdGen();
   sectId = new SectIdGen();
-  record(fig: FigureInBorder): void {
-    this.recordFigures.push(fig);
+  record(...figs: FigureInBorder[]): void {
+    this.recordFigures.push(...figs);
   }
 }

@@ -385,7 +385,7 @@ export class Arc extends DrawItem implements ArcGeometry {
     if (pt.sub(start).length() > pt.sub(end).length()) return end;
     return start;
   }
-  removeBothPt(): this{
+  removeBothPt(): this {
     this.removeStartPt();
     this.removeEndPt();
     return this;

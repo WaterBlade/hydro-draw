@@ -1,21 +1,6 @@
-import {
-  Circle,
-
-  DrawItem,
-  Line,
-  Text
-} from "@/draw/drawItem";
-import {
-  last,
-
-
-
-
-  TextAlign,
-  vec
-} from "@/draw/misc";
+import { Circle, DrawItem, Line, Text } from "@/draw/drawItem";
+import { last, TextAlign, vec } from "@/draw/misc";
 import { RebarForm } from "./RebarForm";
-
 
 export class RebarCircleForm extends RebarForm {
   get entities(): DrawItem[] {

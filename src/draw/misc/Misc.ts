@@ -84,16 +84,26 @@ export function angleMirrorByYAxis(angle: number): number {
   return 540 - angle;
 }
 
-export function divideByCount(start: number, end: number, count: number): number[]{
-  const d = (end-start)/count;
+export function divideByCount(
+  start: number,
+  end: number,
+  count: number
+): number[] {
+  const d = (end - start) / count;
   const res = [];
-  for(let i = 0; i < count+1; i++){
+  for (let i = 0; i < count + 1; i++) {
     res.push(start + i * d);
   }
   return res;
 }
 
-export function divideBySpace(start: number, end: number, space: number, side = StrecthSide.both, minimunRatio = 0.5): number[] {
+export function divideBySpace(
+  start: number,
+  end: number,
+  space: number,
+  side = StrecthSide.both,
+  minimunRatio = 0.5
+): number[] {
   const res = [];
   const length = end - start;
   const count = Math.floor(Math.abs(length) / space);

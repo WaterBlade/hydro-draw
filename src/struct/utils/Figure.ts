@@ -47,7 +47,7 @@ export class Figure implements FigureInBorder {
     this._centerAligned = true;
     return this;
   }
-  baseAligned(): this{
+  baseAligned(): this {
     this._baseAligned = true;
     return this;
   }
@@ -73,29 +73,28 @@ export class Figure implements FigureInBorder {
     return this._outline;
   }
   // note
-  leader(content: string | Content, start: Vector, end: Vector): this{
-    this.composite.push(
-      Note.leader(content, start, end, this.textHeight)
-    );
+  leader(content: string | Content, start: Vector, end: Vector): this {
+    this.composite.push(Note.leader(content, start, end, this.textHeight));
     return this;
   }
-  leaderSpec(content: string | Content, center: Vector, radius: number, end: Vector): this{
+  leaderSpec(
+    content: string | Content,
+    center: Vector,
+    radius: number,
+    end: Vector
+  ): this {
     this.composite.push(
       Note.leaderSpec(content, center, radius, end, this.textHeight)
     );
     return this;
   }
   // symbol
-  breakline(start: Vector, end: Vector): this{
-    this.composite.push(
-      Sym.breakline(start, end, this.textHeight)
-    );
+  breakline(start: Vector, end: Vector): this {
+    this.composite.push(Sym.breakline(start, end, this.textHeight));
     return this;
   }
-  sectSymbol(content: string | Content, start: Vector, end: Vector): this{
-    this.composite.push(
-      Sym.sectSymbol(content, start, end, this.textHeight)
-    );
+  sectSymbol(content: string | Content, start: Vector, end: Vector): this {
+    this.composite.push(Sym.sectSymbol(content, start, end, this.textHeight));
     return this;
   }
   // dim
@@ -209,18 +208,18 @@ export class Figure implements FigureInBorder {
   }
 }
 
-export class PosFigure<T> extends Figure{
-  constructor(public pos: T){
+export class PosFigure<T> extends Figure {
+  constructor(public pos: T) {
     super();
   }
 }
 
 export class RebarTableFigure implements FigureInBorder {
   protected table = new RebarTable();
-  constructor(...specs: RebarSpec[]){
+  constructor(...specs: RebarSpec[]) {
     this.table.push(...specs);
   }
-  push(...specs: RebarSpec[]): this{
+  push(...specs: RebarSpec[]): this {
     this.table.push(...specs);
     return this;
   }
@@ -232,10 +231,10 @@ export class RebarTableFigure implements FigureInBorder {
 
 export class MaterialTableFigure implements FigureInBorder {
   protected table = new MaterialTable();
-  constructor(...specs: RebarSpec[]){
+  constructor(...specs: RebarSpec[]) {
     this.table.push(...specs);
   }
-  push(...specs: RebarSpec[]): this{
+  push(...specs: RebarSpec[]): this {
     this.table.push(...specs);
     return this;
   }

@@ -3,12 +3,12 @@ import { sum, vec } from "@/draw/misc";
 import { Boundary } from "../Boundary";
 import { Box } from "./Box";
 
-export class BoxContainer extends Box{
+export class BoxContainer extends Box {
   boxs: Box[] = [];
-  isEmpty(): boolean{
+  isEmpty(): boolean {
     return this.boxs.length === 0;
   }
-  hArrange(boundary: Boundary): void{
+  hArrange(boundary: Boundary): void {
     const leftMost = boundary.left;
     const cols = this.boxs;
     const colCount = cols.length;
@@ -19,7 +19,9 @@ export class BoxContainer extends Box{
         const rightCol = cols[j];
         const count = j - i;
         const preTotalWidth = sum(...cols.slice(i, j).map((c) => c.width));
-        spaceList.push(rightCol.hMinSpace(left, count, preTotalWidth, boundary));
+        spaceList.push(
+          rightCol.hMinSpace(left, count, preTotalWidth, boundary)
+        );
       }
       const col = cols[i];
       const space = Math.min(...spaceList);
@@ -29,7 +31,7 @@ export class BoxContainer extends Box{
     }
     this.resetSize();
   }
-  vArrange(boundary: Boundary): void{
+  vArrange(boundary: Boundary): void {
     const topMost = this.topLeft.y;
     const rows = this.boxs;
     const rowCount = rows.length;
@@ -39,15 +41,20 @@ export class BoxContainer extends Box{
       for (let j = i; j < rowCount; j++) {
         const bottomRow = rows[j];
         const count = j - i;
-        const preTotalHeight = sum(...rows.slice(i, j).map(c => c.height));
-        spaceList.push(bottomRow.vMinSpace(top, count, preTotalHeight, boundary));
+        const preTotalHeight = sum(...rows.slice(i, j).map((c) => c.height));
+        spaceList.push(
+          bottomRow.vMinSpace(top, count, preTotalHeight, boundary)
+        );
       }
       const row = rows[i];
       row.topLeft = vec(this.left, top - Math.min(...spaceList));
     }
     this.resetSize();
   }
-  getItems(): DrawItem[]{
-    return this.boxs.reduce((pre: DrawItem[], cur)=> pre.concat(cur.getItems()), []);
+  getItems(): DrawItem[] {
+    return this.boxs.reduce(
+      (pre: DrawItem[], cur) => pre.concat(cur.getItems()),
+      []
+    );
   }
 }

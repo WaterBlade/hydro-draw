@@ -217,7 +217,11 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
   }
 
   genContainer(): Container {
-    return new Container(this.genBoundary(), this.widthFactor, this.heightFactor);
+    return new Container(
+      this.genBoundary(),
+      this.widthFactor,
+      this.heightFactor
+    );
   }
 
   protected isMultipleBorder = false;
@@ -280,7 +284,7 @@ export abstract class HydroBorderBuilder extends BorderBuilder {
 }
 
 export class HydroA1Builder extends HydroBorderBuilder {
-  constructor(widthFactor=1, heightFactor=1) {
+  constructor(widthFactor = 1, heightFactor = 1) {
     super(594, 841, 10, 25, 71, 180, widthFactor, heightFactor);
   }
   getTitle(): CompositeItem {
@@ -301,7 +305,7 @@ export class HydroA1Builder extends HydroBorderBuilder {
 }
 
 export class HydroA2Builder extends HydroBorderBuilder {
-  constructor(widthFactor=1, heightFactor=1) {
+  constructor(widthFactor = 1, heightFactor = 1) {
     super(420, 594, 10, 25, 68, 120, widthFactor, heightFactor);
   }
   getTitle(): CompositeItem {
@@ -322,7 +326,7 @@ export class HydroA2Builder extends HydroBorderBuilder {
 }
 
 export class HydroA3Builder extends HydroBorderBuilder {
-  constructor(widthFactor=1, heightFactor=1) {
+  constructor(widthFactor = 1, heightFactor = 1) {
     super(297, 420, 10, 25, 68, 120, widthFactor, heightFactor);
   }
   getTitle(): CompositeItem {

@@ -1,16 +1,16 @@
 import { Builder } from "./Builder";
 
-export abstract class FigureBuilder<T, U, P> extends Builder<T, U, P>{
-  initFigure(): this{
+export abstract class FigureBuilder<T, U, P> extends Builder<T, U, P> {
+  initFigure(): this {
     return this;
   }
-  buildPos(): this{
+  buildPos(): this {
     return this;
   }
-  buildOutline(): this{
+  buildOutline(): this {
     return this;
   }
-  buildDim(): this{
+  buildDim(): this {
     return this;
   }
   buildNote(): this {
@@ -36,8 +36,8 @@ export abstract class CompositeFigureBuilder<T, U, P> extends FigureBuilder<
     this.builders.forEach((b) => b.initFigure());
     return this;
   }
-  buildPos(): this{
-    this.builders.forEach(b=>b.buildPos());
+  buildPos(): this {
+    this.builders.forEach((b) => b.buildPos());
     return this;
   }
   buildOutline(): this {

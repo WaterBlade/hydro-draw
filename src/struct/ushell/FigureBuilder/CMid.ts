@@ -1,7 +1,7 @@
-import { Line, Polyline, RotateDirection, vec } from "@/draw";
-import { FigureBase } from "./Base";
+import { Line, Polyline, RotateDirection, Side, vec } from "@/draw";
+import { UShellFigureContext } from "../UShell";
 
-export class CMid extends FigureBase {
+export class CMid extends UShellFigureContext {
   initFigure(): this {
     this.figures.cMid
       .resetScale(1, 50)
@@ -12,7 +12,12 @@ export class CMid extends FigureBase {
     this.figures.record(this.figures.cMid);
     return this;
   }
-  buildOutline(): this {
+  build(): void {
+    this.buildOutline();
+    this.buildRebar();
+    this.buildDim();
+  }
+  protected buildOutline(): this {
     const u = this.struct;
     const [transPt0, transPt1] = u.transPt;
     const angle = u.transAngle;
@@ -53,7 +58,15 @@ export class CMid extends FigureBase {
     );
     return this;
   }
-  buildDim(): this {
+  protected buildRebar(): void {
+    this.drawCInner();
+    this.drawCOuter();
+    this.drawLInner();
+    this.drawLOuter();
+    this.drawMain();
+    this.drawTopBeam();
+  }
+  protected buildDim(): this {
     const u = this.struct;
     const fig = this.figures.cMid;
     const dim = fig.dimBuilder();
@@ -102,5 +115,147 @@ export class CMid extends FigureBase {
 
     fig.push(dim.generate());
     return this;
+  }
+  protected drawCInner(): void {
+    const u = this.struct;
+    const bar = this.rebars.shell.cInner;
+    const fig = this.figures.cMid;
+    const as = this.rebars.as;
+    const path = this.shape.shell
+      .cInner()
+      .offset(as, Side.Right)
+      .removeStart()
+      .removeEnd();
+    const pt = vec(-u.shell.r + 3 * fig.textHeight, u.shell.hd / 5);
+    fig.push(
+      fig
+        .planeRebar()
+        .spec(bar, 0, bar.space)
+        .rebar(path)
+        .leaderNote(pt, vec(1, 0))
+        .generate()
+    );
+  }
+  protected drawCOuter(): void {
+    const u = this.struct;
+    const bar = this.rebars.shell.cOuter;
+    const as = this.rebars.as;
+    const fig = this.figures.cMid;
+    const path = this.shape.shell.cOuter().offset(as).removeStart().removeEnd();
+    const pt = vec(-u.shell.r - u.shell.t - 3 * fig.textHeight, u.shell.hd / 5);
+    fig.push(
+      fig
+        .planeRebar()
+        .spec(bar, 0, bar.space)
+        .rebar(path)
+        .leaderNote(pt, vec(1, 0))
+        .generate()
+    );
+  }
+  protected drawLInner(): void {
+    const u = this.struct;
+    const bar = this.rebars.shell.lInner;
+    const as = this.rebars.as;
+    const fig = this.figures.cMid;
+    const p = this.pos.shell
+      .lInner()
+      .offset(as + fig.drawRadius, Side.Right)
+      .removeStart()
+      .removeEnd()
+      .divide(bar.space);
+    fig.push(
+      fig
+        .polylinePointRebar()
+        .spec(bar, bar.count, bar.space)
+        .polyline(p)
+        .offset(2 * fig.textHeight)
+        .onlineNote(vec(0, -u.shell.r / 2))
+        .generate()
+    );
+  }
+  protected drawLOuter(): void {
+    const u = this.struct;
+    const bar = this.rebars.shell.lOuter;
+    const fig = this.figures.cMid;
+    const as = this.rebars.as;
+    const pLeft = this.pos.shell.lOuter(as + fig.r);
+
+    const pRight = pLeft.mirrorByVAxis();
+    fig.push(
+      fig
+        .polylinePointRebar()
+        .spec(bar, bar.count / 2, bar.space)
+        .polyline(pLeft)
+        .offset(2 * fig.textHeight, Side.Right)
+        .onlineNote(vec(-u.shell.r, -u.shell.r / 4))
+        .generate(),
+      fig
+        .polylinePointRebar()
+        .spec(bar, bar.count / 2, bar.space)
+        .polyline(pRight)
+        .offset(2 * fig.textHeight)
+        .onlineNote(vec(u.shell.r, -u.shell.r / 4))
+        .generate()
+    );
+  }
+  protected drawMain(): void {
+    const u = this.struct;
+    const bar = this.rebars.shell.main;
+    const fig = this.figures.cMid;
+    const as = this.rebars.as;
+    const y = u.bottom + as + fig.drawRadius;
+    const left = vec(-u.shell.wb / 2, y);
+    const right = vec(u.shell.wb / 2, y);
+    const pt = vec(0, y - 2 * fig.textHeight);
+    if (bar.layerCount > 1) {
+      fig.push(
+        fig
+          .layerPointRebar()
+          .spec(bar, bar.count)
+          .layers(left, right, bar.singleCount, bar.layerSpace, bar.layerCount)
+          .onlineNote(pt, vec(1, 0))
+          .generate()
+      );
+    } else {
+      fig.push(
+        fig
+          .linePointRebar()
+          .spec(bar, bar.count)
+          .line(new Line(left, right).divideByCount(bar.count - 1))
+          .onlineNote()
+          .generate()
+      );
+    }
+  }
+  protected drawTopBeam(): void {
+    const u = this.struct;
+    const bar = this.rebars.shell.topBeam;
+    const fig = this.figures.cMid;
+    const as = this.rebars.as;
+    const pLeft = this.shape.shell
+      .topBeam()
+      .offset(as, Side.Right)
+      .removeStart()
+      .removeEnd();
+    const pRight = pLeft.mirrorByVAxis();
+    const ptLeft = vec(
+      -u.shell.r + u.iBeam.w + 1.5 * fig.textHeight,
+      u.shell.hd + 2 * fig.textHeight
+    );
+    const ptRight = ptLeft.mirrorByVAxis();
+    fig.push(
+      fig
+        .planeRebar()
+        .spec(bar, 0, bar.space)
+        .rebar(pLeft)
+        .leaderNote(ptLeft, vec(1, 1), vec(1, 0))
+        .generate(),
+      fig
+        .planeRebar()
+        .spec(bar, 0, bar.space)
+        .rebar(pRight)
+        .leaderNote(ptRight, vec(1, -1), vec(-1, 0))
+        .generate()
+    );
   }
 }

@@ -15,7 +15,7 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
   abstract generate(): CompositeItem;
   protected _content = new Content();
   protected _id = "";
-  spec(s: RebarSpec, count = 0, space = 0, denSpace=0): this {
+  spec(s: RebarSpec, count = 0, space = 0, denSpace = 0): this {
     this._content = new Content();
     this._id = s.id;
     if (count) this._content.text(`${count}`);
@@ -25,8 +25,8 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
     return this;
   }
   protected _mulIds: string[] = [];
-  mulSpec(...specs: RebarSpec[]): this{
-    this._mulIds.push(...specs.map(s=>s.id));
+  mulSpec(...specs: RebarSpec[]): this {
+    this._mulIds.push(...specs.map((s) => s.id));
     return this;
   }
   protected genNoteLength(): number {
@@ -58,13 +58,13 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
         this.textHeight,
         Text.properAlign(angle, align),
         Text.properAngle(angle)
-      )
+      ),
     ];
 
-    if(this._mulIds.length > 0){
+    if (this._mulIds.length > 0) {
       const v = dir.unit().mul(2 * r);
       let p = centerPt.add(v);
-      for(const id of this._mulIds){
+      for (const id of this._mulIds) {
         res.push(
           new Circle(p, r),
           new Text(
@@ -74,7 +74,7 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
             TextAlign.MiddleCenter,
             Text.properAngle(angle)
           )
-        )
+        );
         p = p.add(v);
       }
     }
@@ -123,29 +123,17 @@ export abstract class RebarDrawBuilder implements Builder<CompositeItem> {
         TextAlign.MiddleCenter,
         angle
       ),
-      new Text(
-        this._content,
-        insertPt,
-        this.textHeight,
-        align,
-        angle
-      ),
+      new Text(this._content, insertPt, this.textHeight, align, angle),
     ];
 
-    if(this._mulIds.length > 0){
+    if (this._mulIds.length > 0) {
       const v = dir.unit().mul(-2 * r);
       let p = centerPt.add(v);
-      for(const id of this._mulIds){
+      for (const id of this._mulIds) {
         res.push(
           new Circle(p, r),
-          new Text(
-            id,
-            p,
-            this.textHeight,
-            TextAlign.MiddleCenter,
-            angle
-          )
-        )
+          new Text(id, p, this.textHeight, TextAlign.MiddleCenter, angle)
+        );
         p = p.add(v);
       }
     }

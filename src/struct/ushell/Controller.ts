@@ -3,31 +3,21 @@ import { Drawing, MaterialTableFigure, RebarTableFigure } from "../utils";
 import { UShellFigureBuilder } from "./FigureBuilder";
 import { UShellRebarBuilder } from "./RebarBuilder";
 import { UShell } from "./UShell";
-import { UShellFigure } from "./UShellFigure";
-import { UShellRebar } from "./UShellRebar";
 
 export class UShellController {
-  struct = new UShell();
-  rebar = new UShellRebar();
+  ushell = new UShell();
+  struct = this.ushell.struct;
+  rebar = this.ushell.rebars;
   drawing = new Drawing();
   generate(): DrawItem[] {
-    const figure = new UShellFigure();
+    const figBuilder = new UShellFigureBuilder(this.ushell);
+    const rebarBuilder = new UShellRebarBuilder(this.ushell);
 
-    const figBuilder = new UShellFigureBuilder(this.struct, this.rebar, figure);
-    const rebarBuilder = new UShellRebarBuilder(
-      this.struct,
-      this.rebar,
-      figure
-    );
-
-    figBuilder.initFigure();
-    figBuilder.buildOutline();
     rebarBuilder.build();
-    figBuilder.buildNote();
-    figBuilder.buildDim();
+    figBuilder.build();
 
     this.drawing.push(
-      ...figure.recordFigures,
+      ...figBuilder.figures.recordFigures,
       new RebarTableFigure(...this.rebar.recordRebars),
       new MaterialTableFigure(...this.rebar.recordRebars)
     );

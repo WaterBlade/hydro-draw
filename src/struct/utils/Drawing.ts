@@ -10,7 +10,7 @@ import { FigureInBorder } from "./Figure";
 
 export class Drawing implements Builder<DrawItem[]> {
   protected figures: FigureInBorder[] = [];
-  constructor(public widthFactor=1, public heightFactor=1){}
+  constructor(public widthFactor = 1, public heightFactor = 1) {}
   push(...figures: FigureInBorder[]): this {
     this.figures.push(...figures);
     return this;
@@ -23,7 +23,7 @@ export class Drawing implements Builder<DrawItem[]> {
     return border.generate();
   }
 
-  setSize(size: 'A1' | 'A2' | 'A3'): this{
+  setSize(size: "A1" | "A2" | "A3"): this {
     this.size = size;
     return this;
   }

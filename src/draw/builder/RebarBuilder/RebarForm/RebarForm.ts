@@ -193,5 +193,3 @@ export abstract class RebarForm implements Builder<CompositeItem> {
     return this;
   }
 }
-
-
