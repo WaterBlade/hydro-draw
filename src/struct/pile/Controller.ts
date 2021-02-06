@@ -1,26 +1,24 @@
 import { DrawItem } from "@/draw";
 import { Drawing, MaterialTableFigure } from "../utils";
-import { PileFigureBuilder } from "./FigureBuilder";
-import { Pile } from "./Pile";
+import { PileFigure } from "./PileFigure";
+import { PileRebar } from "./PileRebar";
 import { PileRebarTableFigure } from "./PileRebarTable";
-import { PileRebarBuilder } from "./RebarBuilder";
+import { PileStruct } from "./PileStruct";
 
 export class PileController {
-  pile = new Pile();
-  struct = this.pile.struct;
-  rebar = this.pile.rebars;
+  struct = new PileStruct();
+  rebar = new PileRebar();
   drawing = new Drawing(1, 0.75);
   generate(): DrawItem[] {
-    const rebarBuilder = new PileRebarBuilder(this.pile);
 
-    const figBuilder = new PileFigureBuilder(this.pile);
+    const figure = new PileFigure();
 
-    rebarBuilder.build();
-    figBuilder.build();
+    this.rebar.build(this.struct);
+    figure.build(this.struct, this.rebar);
 
     this.drawing.setSize("A2");
 
-    this.drawing.push(...figBuilder.figures.recordFigures);
+    this.drawing.push(...figure.figures);
 
     const material = new MaterialTableFigure();
     for (const pile of this.piles) {
@@ -30,11 +28,11 @@ export class PileController {
       this.struct.count = pile.count;
       this.struct.load = pile.load;
       this.rebar.clear();
-      rebarBuilder.build();
+      this.rebar.build(this.struct);
       this.drawing.push(
-        new PileRebarTableFigure(this.struct, this.rebar.recordRebars)
+        new PileRebarTableFigure(this.struct, this.rebar.rebars)
       );
-      material.push(...this.rebar.recordRebars);
+      material.push(...this.rebar.rebars);
     }
     this.drawing.push(material);
 

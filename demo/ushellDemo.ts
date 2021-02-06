@@ -65,10 +65,10 @@ export default function runUshellDemo(): void{
   // 钢筋
   const bar = ctrl.rebar;
   // 钢筋保护层厚度
-  bar.as = 35;
-  bar.asBar = 25;
+  bar.info.as = 35;
+  bar.info.asBar = 25;
   // 加密长度
-  bar.denseL = 3740;
+  bar.info.denseL = 3740;
   // 槽壳钢筋
   // 主筋
   bar.shell.main.set( 'HRB400', 28, 9, 2, 50);
@@ -90,13 +90,14 @@ export default function runUshellDemo(): void{
   bar.end.bMid.set('HRB400', 12, 3, 4);
   bar.end.bStir.set('HPB300', 10, 200);
   bar.end.wStir.set('HPB300', 10, 200);
+  bar.end.topBeam.set('HRB400', 16);
 
   // 渐变段钢筋
   bar.trans.direct.set('HRB400', 16, 200);
   bar.trans.arc.set('HRB400', 16, 200);
 
   // 拉杆钢筋
-  bar.bar.main.set('HRB400', 16, 4);
+  bar.bar.main.set('HRB400', 16);
   bar.bar.stir.set('HPB300', 10, 300);
 
 

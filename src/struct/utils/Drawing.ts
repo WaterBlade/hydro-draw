@@ -6,7 +6,7 @@ import {
   HydroA3Builder,
   Builder,
 } from "@/draw";
-import { FigureInBorder } from "./Figure";
+import { FigureInBorder } from "./FigureContent";
 
 export class Drawing implements Builder<DrawItem[]> {
   protected figures: FigureInBorder[] = [];

@@ -10,10 +10,10 @@ class IdGenerator {
   }
 }
 
-export class RebarContainer {
+export class RebarContainerOld {
   id: IdGenerator;
   recordRebars: RebarSpec[];
-  constructor(parent?: RebarContainer){
+  constructor(parent?: RebarContainerOld){
     this.id = parent ? parent.id : new IdGenerator();
     this.recordRebars = parent ? parent.recordRebars : [];
   }

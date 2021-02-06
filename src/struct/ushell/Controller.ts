@@ -1,25 +1,23 @@
 import { DrawItem } from "@/draw";
 import { Drawing, MaterialTableFigure, RebarTableFigure } from "../utils";
-import { UShellFigureBuilder } from "./FigureBuilder";
-import { UShellRebarBuilder } from "./RebarBuilder";
-import { UShell } from "./UShell";
+import { UShellFigure } from "./UShellFigure/indext";
+import { UShellRebar } from "./UShellRebar";
+import { UShellStruct } from "./UShellStruct";
 
 export class UShellController {
-  ushell = new UShell();
-  struct = this.ushell.struct;
-  rebar = this.ushell.rebars;
+  struct = new UShellStruct();
+  rebar = new UShellRebar();
   drawing = new Drawing();
   generate(): DrawItem[] {
-    const figBuilder = new UShellFigureBuilder(this.ushell);
-    const rebarBuilder = new UShellRebarBuilder(this.ushell);
+    const figure = new UShellFigure();
+    this.rebar.build(this.struct);
+    figure.build(this.struct, this.rebar);
 
-    rebarBuilder.build();
-    figBuilder.build();
 
     this.drawing.push(
-      ...figBuilder.figures.recordFigures,
-      new RebarTableFigure(...this.rebar.recordRebars),
-      new MaterialTableFigure(...this.rebar.recordRebars)
+      ...figure.figures,
+      new RebarTableFigure(...this.rebar.rebars),
+      new MaterialTableFigure(...this.rebar.rebars)
     );
 
     return this.drawing.generate();

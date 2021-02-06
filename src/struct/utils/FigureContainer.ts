@@ -1,4 +1,4 @@
-import { FigureInBorder } from "./Figure";
+import { FigureInBorder } from "./FigureContent";
 
 class SpecIdGen {
   protected _id = 0;
@@ -37,7 +37,7 @@ class SectIdGen {
     };
   }
 }
-export class FigureContainer {
+export class FigureContainerOld {
   recordFigures: FigureInBorder[] = [];
   specId = new SpecIdGen();
   sectId = new SectIdGen();

@@ -1,40 +1,23 @@
 import { DrawItem } from "@/draw";
 import { Drawing, MaterialTableFigure, RebarTableFigure } from "../utils";
-import { FrameSingleFigureBuilder } from "./FigureBuilder";
-import { FrameSingle } from "./FrameSingle";
-import { FrameSingleFigure } from "./FrameSingleFigure";
-import { FrameSingleRebar } from "./FrameSingleRebar";
-import { FrameSingleRebarBuilder } from "./RebarBuilder";
+import { FrameFigure } from "./FrameFigure";
+import { FrameRebar } from "./FrameRebar";
+import { FrameStruct } from "./FrameStruct";
 
 export class FrameSingleController {
-  struct = new FrameSingle();
-  rebar = new FrameSingleRebar();
+  struct = new FrameStruct();
+  rebar = new FrameRebar();
   drawing = new Drawing();
   generate(): DrawItem[] {
-    const figure = new FrameSingleFigure();
+    const figure = new FrameFigure();
 
-    const figBuilder = new FrameSingleFigureBuilder(
-      this.struct,
-      this.rebar,
-      figure
-    );
-    const rebarBuilder = new FrameSingleRebarBuilder(
-      this.struct,
-      this.rebar,
-      figure
-    );
-
-    figBuilder.initFigure();
-    figBuilder.buildOutline();
-    figBuilder.buildPos();
-    rebarBuilder.build();
-    figBuilder.buildNote();
-    figBuilder.buildDim();
+    this.rebar.build(this.struct);
+    figure.build(this.struct, this.rebar);
 
     this.drawing.push(
-      ...figure.recordFigures,
-      new RebarTableFigure(...this.rebar.recordRebars),
-      new MaterialTableFigure(...this.rebar.recordRebars)
+      ...figure.figures,
+      new RebarTableFigure(...this.rebar.rebars),
+      new MaterialTableFigure(...this.rebar.rebars)
     );
 
     return this.drawing.generate();

@@ -1,30 +1,16 @@
-import { PileStructInfo } from "./PileInfo";
-
 export class PileStruct {
-  d;
-  hs;
+  d = 0;
+  hs = 0;
 
-  id;
-  count;
-  top;
-  bottom;
-  load;
+  id = '';
+  count = 0;
+  top = 10;
+  bottom = 0;
+  load = 0;
 
   topAngle = 15;
   botAngle = 5;
   hp = 1500;
-
-  constructor(protected info: PileStructInfo){
-    const t = info;
-    this.d = t.d;
-    this.hs = t.hs;
-
-    this.id = t.id;
-    this.count = t.count;
-    this.top = t.top;
-    this.bottom = t.bottom;
-    this.load = t.load;
-  }
 
   get h(): number {
     return (this.top - this.bottom) * 1000;

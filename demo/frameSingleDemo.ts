@@ -39,21 +39,23 @@ export default function runFrameSingleDemo(): void{
   f.found.s = 150;
 
   const bar = ctrl.rebar;
-  bar.as = 50;
-  bar.column.corner.set('HRB400', 22);
-  bar.column.along.set('HRB400', 22, 3);
-  bar.column.cross.set('HRB400', 22, 3);
-  bar.column.stir.set('HPB300', 10, 200, 100);
+  bar.info.as = 50;
+  bar.col.corner.set('HRB400', 22);
+  bar.col.along.set('HRB400', 22, 3);
+  bar.col.cross.set('HRB400', 22, 3);
+  bar.col.stir.set('HPB300', 10, 200, 100);
 
   bar.topBeam.bot.set('HRB400', 20, 4);
   bar.topBeam.top.set('HRB400', 20, 4);
   bar.topBeam.mid.set('HRB400', 12, 2);
   bar.topBeam.stir.set('HPB300', 10, 125);
+  bar.topBeam.tendon.set('HPB300', 8, 400);
   
   bar.beam.bot.set('HRB400', 20, 4);
   bar.beam.top.set('HRB400', 20, 4);
   bar.beam.mid.set('HRB400', 12, 2);
   bar.beam.stir.set('HPB300', 10, 125);
+  bar.beam.tendon.set('HPB300', 8, 400);
 
   bar.corbel.main.set('HRB400', 20, 4);
   bar.corbel.hStir.set('HPB300', 10, 150);

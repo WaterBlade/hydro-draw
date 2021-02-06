@@ -21,10 +21,10 @@ export default function runPileDemo(): void{
   const bar = ctrl.rebar;
   bar.main.set('HRB400', 22, 17);
   bar.stir.set('HPB300', 10, 200, 100);
-  bar.topStir.set('HPB300', 10, 200);
+  bar.stirTop.set('HPB300', 10, 200);
   bar.rib.set('HRB400', 16, 2000);
   bar.fix.set('HRB400', 16, 2000);
-  bar.as = 60;
+  bar.info.as = 60;
 
   ctrl.add('5', 241.035, 230.035, 2);
   ctrl.add('6', 234.728, 223.728, 4);

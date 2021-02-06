@@ -9,7 +9,7 @@ import {
   vec,
 } from "@/draw";
 import { FigureInBorder } from "@/struct/utils";
-import { PileStruct } from "./Pile/PileStruct";
+import { PileStruct } from "./PileStruct";
 
 export class PileRebarTableFigure implements FigureInBorder {
   protected table = new TableBuilder();
