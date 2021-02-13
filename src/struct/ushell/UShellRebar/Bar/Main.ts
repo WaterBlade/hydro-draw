@@ -3,8 +3,8 @@ import { UnitRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class BarMain extends UnitRebar<UShellRebarInfo>{
-  build(u: UShellStruct, name: string): void{
+export class BarMain extends UnitRebar<UShellRebarInfo> {
+  build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.asBar;
     const pts = u.genBarCenters();

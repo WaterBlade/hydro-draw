@@ -2,7 +2,7 @@ export class PileStruct {
   d = 0;
   hs = 0;
 
-  id = '';
+  id = "";
   count = 0;
   top = 10;
   bottom = 0;
@@ -15,5 +15,4 @@ export class PileStruct {
   get h(): number {
     return (this.top - this.bottom) * 1000;
   }
-
 }

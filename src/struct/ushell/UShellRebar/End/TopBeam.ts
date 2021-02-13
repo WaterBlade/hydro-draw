@@ -1,18 +1,25 @@
-import { Polyline, RebarPathForm, RebarSpec, Side, toDegree, vec } from "@/draw";
+import {
+  Polyline,
+  RebarPathForm,
+  RebarSpec,
+  Side,
+  toDegree,
+  vec,
+} from "@/draw";
 import { CountRebar, UnitRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class EndTopBeam extends UnitRebar<UShellRebarInfo>{
+export class EndTopBeam extends UnitRebar<UShellRebarInfo> {
   protected _specCant?: RebarSpec;
-  get specCant(): RebarSpec{
-    if(!this._specCant) throw Error('spec sub not init');
+  get specCant(): RebarSpec {
+    if (!this._specCant) throw Error("spec sub not init");
     return this._specCant;
   }
-  set specCant(val: RebarSpec){
+  set specCant(val: RebarSpec) {
     this._specCant = val;
   }
-  build(u: UShellStruct, name: string, cOuter: CountRebar): void{
+  build(u: UShellStruct, name: string, cOuter: CountRebar): void {
     if (u.cantCount < 2) {
       this.spec = this.genSpec();
       const count = cOuter.singleCount;
@@ -85,5 +92,4 @@ export class EndTopBeam extends UnitRebar<UShellRebarInfo>{
     path.resetEnd(path.end.add(d));
     return path;
   }
-
 }

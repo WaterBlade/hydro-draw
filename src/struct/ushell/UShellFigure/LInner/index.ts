@@ -25,7 +25,12 @@ export class LInner extends Figure {
       .keepTitlePos();
     this.container.record(this.fig);
   }
-  build(u: UShellStruct, rebars: UShellRebar, sBeam: SEndBeam, sBar: SBar): void {
+  build(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    sBeam: SEndBeam,
+    sBar: SBar
+  ): void {
     this.buildOutline(u);
     this.buildRebar(u, rebars);
     this.buildNote(u, sBeam, sBar);

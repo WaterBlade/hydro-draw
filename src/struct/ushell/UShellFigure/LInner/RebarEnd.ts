@@ -3,14 +3,18 @@ import { FigureContent } from "@/struct/utils";
 import { UShellRebar } from "../../UShellRebar";
 import { UShellStruct } from "../../UShellStruct";
 
-export class RebarEnd{
+export class RebarEnd {
   build(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
     this.drawBeamBot(u, rebars, fig);
     this.drawBeamMid(u, rebars, fig);
     this.drawBeamTop(u, rebars, fig);
     this.drawBeamStir(u, rebars, fig);
   }
-  protected drawBeamBot(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawBeamBot(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.end.bBot;
     const as = rebars.info.as;
     const r = fig.drawRadius;
@@ -33,7 +37,11 @@ export class RebarEnd{
     );
     fig.push(...leftBars, ...rightBars);
   }
-  protected drawBeamMid(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawBeamMid(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.end.bMid;
     const as = rebars.info.as;
     const r = fig.drawRadius;
@@ -51,7 +59,11 @@ export class RebarEnd{
       fig.push(...pts.map((p) => new Circle(p, r).thickLine()));
     }
   }
-  protected drawBeamStir(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawBeamStir(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const as = rebars.info.as;
     const w = u.endSect.b - 2 * as;
     const yLeft =
@@ -89,7 +101,11 @@ export class RebarEnd{
         .thickLine()
     );
   }
-  protected drawBeamTop(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawBeamTop(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.end.bTop;
     const r = fig.drawRadius;
     const as = rebars.info.as;
@@ -112,7 +128,11 @@ export class RebarEnd{
     const rightBars = rightPts.map((p) => new Circle(p, r).thickLine());
     fig.push(...leftBars, ...rightBars);
   }
-  protected drawShellCInner(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawShellCInner(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.cInner;
     const paths = bar.pos(u);
     fig.push(

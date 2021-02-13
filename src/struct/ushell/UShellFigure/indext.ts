@@ -10,7 +10,7 @@ import { SBar } from "./SBar";
 import { SEndBeam } from "./SEndBeam";
 import { SEndWall } from "./SEndWall";
 
-export class UShellFigure extends FigureContainer{
+export class UShellFigure extends FigureContainer {
   lInner = new LInner(this);
   lOuter = new LOuter(this);
   cEnd = new CEnd(this);
@@ -20,7 +20,7 @@ export class UShellFigure extends FigureContainer{
   sWall = new SEndWall(this);
   sBar = new SBar(this);
 
-  build(u: UShellStruct, rebars: UShellRebar): void{
+  build(u: UShellStruct, rebars: UShellRebar): void {
     this.lOuter.initFigure();
     this.lInner.initFigure();
     this.cMid.initFigure();
@@ -39,5 +39,4 @@ export class UShellFigure extends FigureContainer{
     this.sWall.build(u, rebars);
     this.sBar.build(u, rebars);
   }
-
 }

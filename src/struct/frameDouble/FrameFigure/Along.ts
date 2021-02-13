@@ -1,25 +1,26 @@
 import { Line, Polyline, Text, TextAlign, vec } from "@/draw";
 import {
   BeamViewGenerator,
-  ColumnViewCrossGenerator,
+  ColumnViewAlongGenerator,
 } from "@/struct/component";
 import { Figure, FigureContent } from "@/struct/utils";
-import { FrameSingleRebar } from "../FrameRebar";
-import { FrameSingleStruct } from "../FrameStruct";
+import { FrameDoubleRebar } from "../FrameRebar";
+import { FrameDoubleStruct } from "../FrameStruct";
 
 interface SectFigContainer {
-  along: Figure;
-  sTopBeam: Figure;
-  sBeam: Figure;
+  sTopAlong: Figure;
+  sBeamAlong: Figure;
   sCol: Figure;
 }
 
-export class FrameCross extends Figure {
+export class FrameAlong extends Figure {
   initFigure(): void {
     this.fig = new FigureContent();
+    const { id, title } = this.container.sectId;
     this.fig
       .resetScale(1, 50)
-      .setTitle("垂直水流向立面钢筋图")
+      .setId(id)
+      .setTitle(title)
       .displayScale()
       .centerAligned()
       .baseAligned()
@@ -27,8 +28,8 @@ export class FrameCross extends Figure {
     this.container.record(this.fig);
   }
   build(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar,
+    t: FrameDoubleStruct,
+    rebars: FrameDoubleRebar,
     figContainer: SectFigContainer
   ): void {
     this.buildOutline(t);
@@ -36,29 +37,29 @@ export class FrameCross extends Figure {
     this.buildNote(t, rebars, figContainer);
     this.buildDim(t);
   }
-  protected buildOutline(t: FrameSingleStruct): void {
+  protected buildOutline(t: FrameDoubleStruct): void {
     this.fig.addOutline(
-      new Polyline(-t.w / 2, 0)
+      new Polyline(-t.wAlong / 2, 0)
         .lineBy(0, t.h)
-        .lineBy(t.w, 0)
+        .lineBy(t.wAlong, 0)
         .lineBy(0, -t.h)
         .greyLine(),
-      new Polyline(-t.w / 2 + t.col.w, 0)
-        .lineBy(0, t.h - t.topBeam.h - t.topBeam.ha)
-        .lineBy(t.topBeam.ha, t.topBeam.ha)
-        .lineBy(t.hs - t.col.w - 2 * t.topBeam.ha, 0)
-        .lineBy(t.topBeam.ha, -t.topBeam.ha)
-        .lineBy(0, -t.h + t.topBeam.h + t.topBeam.ha)
+      new Polyline(-t.wAlong / 2 + t.col.h, 0)
+        .lineBy(0, t.h - t.topAlong.h - t.topAlong.ha)
+        .lineBy(t.topAlong.ha, t.topAlong.ha)
+        .lineBy(t.hsAlong - t.col.h - 2 * t.topAlong.ha, 0)
+        .lineBy(t.topAlong.ha, -t.topAlong.ha)
+        .lineBy(0, -t.h + t.topAlong.h + t.topAlong.ha)
         .greyLine()
     );
 
-    const w = t.hs - t.col.w;
+    const w = t.hsAlong - t.col.h;
     const x0 = -w / 2;
-    const ha = t.beam.ha;
+    const ha = t.beamAlong.ha;
 
     for (let i = 1; i < t.n + 1; i++) {
       const y0 = t.h - i * t.vs;
-      const y1 = y0 - t.beam.h;
+      const y1 = y0 - t.beamAlong.h;
       this.fig.addOutline(
         new Polyline(x0, y0 + ha)
           .lineBy(ha, -ha)
@@ -75,57 +76,52 @@ export class FrameCross extends Figure {
 
     this.fig.addOutline(
       new Line(
-        vec(-t.w / 2 - t.col.w, 0),
-        vec(t.w / 2 + t.col.w, 0)
+        vec(-t.wAlong / 2 - t.col.h, 0),
+        vec(t.wAlong / 2 + t.col.h, 0)
       ).greyLine(),
       new Line(
-        vec(-t.w / 2 - t.col.w, -t.found.h),
-        vec(t.w / 2 + t.col.w, -t.found.h)
+        vec(-t.wAlong / 2 - t.col.h, -t.found.h),
+        vec(t.wAlong / 2 + t.col.h, -t.found.h)
       ).greyLine()
     );
   }
   protected buildNote(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar,
+    t: FrameDoubleStruct,
+    rebars: FrameDoubleRebar,
     figContainer: SectFigContainer
   ): void {
-    const { along, sTopBeam, sBeam, sCol } = figContainer;
+    const { sTopAlong, sBeamAlong, sCol } = figContainer;
     const fig = this.fig;
     const { left, right } = fig.outline.getBoundingBox();
     fig.breakline(vec(left, 0), vec(left, -t.found.h));
     fig.breakline(vec(right, 0), vec(right, -t.found.h));
-    const { top, bottom } = fig.getBoundingBox();
-    fig.sectSymbol(
-      along.fig.id,
-      vec(-t.w / 2, bottom - fig.h),
-      vec(-t.w / 2, top + fig.h)
-    );
+    const { top } = fig.getBoundingBox();
 
     fig.sectSymbol(
-      sTopBeam.fig.id,
-      vec(0, t.h - t.topBeam.h - 3 * fig.h),
+      sTopAlong.fig.id,
+      vec(0, t.h - t.topAlong.h - 3 * fig.h),
       vec(0, top + fig.h)
     );
     if (t.n > 0) {
-      const y = t.h - t.vs - t.beam.h;
+      const y = t.h - t.vs - t.beamAlong.h;
       fig.sectSymbol(
-        sBeam.fig.id,
+        sBeamAlong.fig.id,
         vec(0, y - 2 * fig.h),
-        vec(0, y + t.beam.h + 2 * fig.h)
+        vec(0, y + t.beamAlong.h + 2 * fig.h)
       );
     }
     const y = t.h - 6 * fig.h;
     fig.sectSymbol(
       sCol.fig.id,
-      vec(-t.w / 2 - fig.h, y),
-      vec(-t.w / 2 + t.col.w + fig.h, y)
+      vec(-t.wAlong / 2 - fig.h, y),
+      vec(-t.wAlong / 2 + t.col.w + fig.h, y)
     );
 
     this.drawSpaceNote(t, rebars);
   }
   protected drawSpaceNote(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar
+    t: FrameDoubleStruct,
+    rebars: FrameDoubleRebar
   ): void {
     const fig = this.fig;
     const x = fig.getBoundingBox().left - fig.h;
@@ -159,7 +155,7 @@ export class FrameCross extends Figure {
       h -= l;
     }
   }
-  protected buildDim(t: FrameSingleStruct): void {
+  protected buildDim(t: FrameDoubleStruct): void {
     const fig = this.fig;
     const { right, top, left } = fig.getBoundingBox();
     const dim = fig.dimBuilder();
@@ -167,13 +163,13 @@ export class FrameCross extends Figure {
 
     const n = t.n;
     if (n === 0) {
-      dim.dim(t.topBeam.h).dim(t.h - t.topBeam.h);
+      dim.dim(t.topAlong.h).dim(t.h - t.topAlong.h);
     } else {
-      dim.dim(t.topBeam.h).dim(t.hs - t.topBeam.h);
+      dim.dim(t.topAlong.h).dim(t.hsAlong - t.topAlong.h);
       for (let i = 1; i < n; i++) {
-        dim.dim(t.beam.h).dim(t.hs - t.beam.h);
+        dim.dim(t.beamAlong.h).dim(t.hsAlong - t.beamAlong.h);
       }
-      dim.dim(t.beam.h).dim(t.h - n * t.hs - t.beam.h);
+      dim.dim(t.beamAlong.h).dim(t.h - n * t.hsAlong - t.beamAlong.h);
     }
     dim.next().dim(t.h).dim(t.found.h);
 
@@ -184,32 +180,32 @@ export class FrameCross extends Figure {
     }
 
     dim
-      .hTop(-t.w / 2, top + fig.h)
-      .dim(t.col.w)
-      .dim(t.hs - t.col.w)
-      .dim(t.col.w)
+      .hTop(-t.wAlong / 2, top + fig.h)
+      .dim(t.col.h)
+      .dim(t.hsAlong - t.col.h)
+      .dim(t.col.h)
       .next()
-      .dim(t.w);
+      .dim(t.wAlong);
     fig.push(dim.generate());
   }
-  protected colGen = new ColumnViewCrossGenerator();
+  protected colGen = new ColumnViewAlongGenerator();
   protected beamGen = new BeamViewGenerator();
-  protected buildRebar(t: FrameSingleStruct, rebars: FrameSingleRebar): void {
+  protected buildRebar(t: FrameDoubleStruct, rebars: FrameDoubleRebar): void {
     const fig = this.fig;
     // col
     const left = this.colGen.generate(fig, t.col, rebars.col);
-    left.move(vec(-t.hs / 2, 0));
+    left.move(vec(-t.hsAlong / 2, 0));
     const right = left.mirrorByVAxis();
     fig.push(left, right);
-    // topBeam
-    const topBeam = this.beamGen.generate(fig, t.topBeam, rebars.topBeam);
-    topBeam.move(vec(0, t.h - t.topBeam.h / 2));
-    fig.push(topBeam);
+    // topAlong
+    const topAlong = this.beamGen.generate(fig, t.topAlong, rebars.topAlong);
+    topAlong.move(vec(0, t.h - t.topAlong.h / 2));
+    fig.push(topAlong);
     // beam
     if (t.n > 1) {
       for (let i = 1; i < t.n + 1; i++) {
-        const beam = this.beamGen.generate(fig, t.beam, rebars.beam);
-        beam.move(vec(0, t.h - t.vs * i - t.beam.h / 2));
+        const beam = this.beamGen.generate(fig, t.beamAlong, rebars.beamAlong);
+        beam.move(vec(0, t.h - t.vs * i - t.beamAlong.h / 2));
         fig.push(beam);
       }
     }

@@ -3,7 +3,7 @@ import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class ShellTopBeam extends SpaceRebar<UShellRebarInfo>{
+export class ShellTopBeam extends SpaceRebar<UShellRebarInfo> {
   build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.as;
@@ -44,8 +44,7 @@ export class ShellTopBeam extends SpaceRebar<UShellRebarInfo>{
       }
       this.spec
         .setCount(
-          this.pos(u)
-            .reduce((pre: number, cur) => pre + cur.points.length, 0)
+          this.pos(u).reduce((pre: number, cur) => pre + cur.points.length, 0)
         )
         .setForm(form)
         .setId(this.container.id)
@@ -61,10 +60,10 @@ export class ShellTopBeam extends SpaceRebar<UShellRebarInfo>{
         .moveTo(
           -u.shell.r,
           u.shell.hd -
-          u.oBeam.hd -
-          u.oBeam.hs -
-          u.shell.t * (u.oBeam.hs / u.oBeam.w) +
-          1
+            u.oBeam.hd -
+            u.oBeam.hs -
+            u.shell.t * (u.oBeam.hs / u.oBeam.w) +
+            1
         )
         .lineBy(0, -1)
         .lineTo(-u.shell.r - u.shell.t - u.oBeam.w, u.shell.hd - u.oBeam.hd)
@@ -81,9 +80,9 @@ export class ShellTopBeam extends SpaceRebar<UShellRebarInfo>{
         .lineTo(
           -u.shell.r - u.shell.t,
           u.shell.hd -
-          u.iBeam.hd -
-          u.iBeam.hs -
-          u.shell.t * (u.iBeam.hs / u.iBeam.w)
+            u.iBeam.hd -
+            u.iBeam.hs -
+            u.shell.t * (u.iBeam.hs / u.iBeam.w)
         )
         .lineBy(0, 1);
     } else {

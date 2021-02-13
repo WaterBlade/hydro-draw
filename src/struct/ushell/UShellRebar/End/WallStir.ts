@@ -3,16 +3,16 @@ import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class EndWallStir extends SpaceRebar<UShellRebarInfo>{
+export class EndWallStir extends SpaceRebar<UShellRebarInfo> {
   protected _specCant?: RebarSpec;
-  get specCant(): RebarSpec{
-    if(!this._specCant) throw Error('spec sub not init');
+  get specCant(): RebarSpec {
+    if (!this._specCant) throw Error("spec sub not init");
     return this._specCant;
   }
-  set specCant(val: RebarSpec){
+  set specCant(val: RebarSpec) {
     this._specCant = val;
   }
-  build(u: UShellStruct, name: string): void{
+  build(u: UShellStruct, name: string): void {
     if (u.cantCount < 2) {
       this.spec = this.genSpec();
       const as = this.info.as;
@@ -53,8 +53,9 @@ export class EndWallStir extends SpaceRebar<UShellRebarInfo>{
     const leftEdge = u.genEndCOuterLeft().offset(as);
     const rightEdge = u.genEndCInnerLeft().offset(gap + as, Side.Right);
 
-    const pts = new Line(vec(0, y0), vec(0, y1)).divide(this.space).removeEndPt()
-      .points;
+    const pts = new Line(vec(0, y0), vec(0, y1))
+      .divide(this.space)
+      .removeEndPt().points;
     return pts.map(
       (p) =>
         new Line(
@@ -63,5 +64,4 @@ export class EndWallStir extends SpaceRebar<UShellRebarInfo>{
         )
     );
   }
-
 }

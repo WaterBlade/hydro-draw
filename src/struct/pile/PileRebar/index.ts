@@ -7,15 +7,15 @@ import { Fix } from "./Fix";
 import { Rib } from "./Rib";
 import { PileRebarInfo } from "./Info";
 
-export class PileRebar extends RebarContainer{
+export class PileRebar extends RebarContainer {
   info = new PileRebarInfo();
   main = new Main(this, this.info);
   stir = new Stir(this, this.info);
   stirTop = new StirTop(this, this.info);
   fix = new Fix(this, this.info);
   rib = new Rib(this, this.info);
-  
-  build(t: PileStruct): this{
+
+  build(t: PileStruct): this {
     this.main.build(t);
     this.stir.build(t);
     this.stirTop.build(t, this.main);

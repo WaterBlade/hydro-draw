@@ -3,7 +3,7 @@ import { FigureContent } from "@/struct/utils";
 import { UShellRebar } from "../../UShellRebar";
 import { UShellStruct } from "../../UShellStruct";
 
-export class RebarShell{
+export class RebarShell {
   build(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
     this.drawCInner(u, rebars, fig);
     this.drawCInnerSub(u, rebars, fig);
@@ -11,7 +11,11 @@ export class RebarShell{
     this.drawLInner(u, rebars, fig);
     this.drawMain(u, rebars, fig);
   }
-  protected drawCInner(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawCInner(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.cInner;
     const paths = bar.pos(u);
     fig.push(
@@ -38,7 +42,11 @@ export class RebarShell{
         .generate()
     );
   }
-  protected drawCInnerSub(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawCInnerSub(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.cInner;
     const as = rebars.info.as;
     const r = fig.drawRadius;
@@ -97,7 +105,11 @@ export class RebarShell{
       );
     }
   }
-  protected drawCOuter(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawCOuter(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.cOuter;
     const paths = bar.pos(u);
     let i = 0;
@@ -148,7 +160,11 @@ export class RebarShell{
       );
     }
   }
-  protected drawLInner(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawLInner(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.lInner;
     const as = rebars.info.as;
     const y = -u.shell.r - as - fig.drawRadius;
@@ -173,7 +189,11 @@ export class RebarShell{
         .generate()
     );
   }
-  protected drawMain(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawMain(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.main;
     const as = rebars.info.as;
     const y = -u.shell.r - u.shell.t - u.shell.hb + as + fig.drawRadius;

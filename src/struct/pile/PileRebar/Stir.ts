@@ -3,8 +3,8 @@ import { PileStruct } from "../PileStruct";
 import { SpaceRebar } from "../../utils";
 import { PileRebarInfo } from "./Info";
 
-export class Stir extends SpaceRebar<PileRebarInfo>{
-  build(t: PileStruct): void{
+export class Stir extends SpaceRebar<PileRebarInfo> {
+  build(t: PileStruct): void {
     this.spec = this.genSpec();
     const as = this.info.as;
     const peri = Math.PI * (t.d - 2 * as);
@@ -30,7 +30,7 @@ export class Stir extends SpaceRebar<PileRebarInfo>{
       );
     this.container.record(this.spec);
   }
-  pos(t: PileStruct): number[]{
+  pos(t: PileStruct): number[] {
     const ln = t.d * this.info.denseFactor;
     if (t.h < ln) {
       return divideBySpace(t.hs, -t.h, this.denseSpace, StrecthSide.head);

@@ -3,8 +3,8 @@ import { PileStruct } from "../PileStruct";
 import { Rebar, SpaceRebar } from "../../utils";
 import { PileRebarInfo } from "./Info";
 
-export class StirTop extends SpaceRebar<PileRebarInfo>{
-  build(t: PileStruct, mainBar: Rebar): void{
+export class StirTop extends SpaceRebar<PileRebarInfo> {
+  build(t: PileStruct, mainBar: Rebar): void {
     this.spec = this.genSpec();
     const lines = this.shape(t, mainBar);
     this.spec

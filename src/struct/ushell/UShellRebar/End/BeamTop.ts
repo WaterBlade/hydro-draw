@@ -3,13 +3,11 @@ import { CountRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class EndBeamTop extends CountRebar<UShellRebarInfo>{
-  build(u: UShellStruct, name: string): void{
+export class EndBeamTop extends CountRebar<UShellRebarInfo> {
+  build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     this.spec
-      .setForm(
-        RebarFormPreset.Line(this.diameter, this.shape(u).calcLength())
-      )
+      .setForm(RebarFormPreset.Line(this.diameter, this.shape(u).calcLength()))
       .setCount(this.singleCount * 2)
       .setId(this.container.id)
       .setName(name);
@@ -25,5 +23,4 @@ export class EndBeamTop extends CountRebar<UShellRebarInfo>{
     const right = rightEdge.rayIntersect(vec(0, y), vec(1, 0))[0];
     return new Line(left, right);
   }
-
 }

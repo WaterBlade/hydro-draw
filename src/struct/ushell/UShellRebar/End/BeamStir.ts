@@ -3,16 +3,16 @@ import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class EndBeamStir extends SpaceRebar<UShellRebarInfo>{
+export class EndBeamStir extends SpaceRebar<UShellRebarInfo> {
   protected _specCant?: RebarSpec;
-  get specCant(): RebarSpec{
-    if(!this._specCant) throw Error('spec sub not init');
+  get specCant(): RebarSpec {
+    if (!this._specCant) throw Error("spec sub not init");
     return this._specCant;
   }
-  set specCant(val: RebarSpec){
+  set specCant(val: RebarSpec) {
     this._specCant = val;
   }
-  build(u: UShellStruct, name: string): void{
+  build(u: UShellStruct, name: string): void {
     if (u.cantCount < 2) {
       this.spec = this.genSpec();
       const as = this.info.as;
@@ -26,7 +26,7 @@ export class EndBeamStir extends SpaceRebar<UShellRebarInfo>{
         .setName(name);
       this.container.record(this.spec);
     }
-    if(u.cantCount > 0){
+    if (u.cantCount > 0) {
       this.specCant = this.genSpec();
       const as = this.info.as;
       const lens = this.shapeCant(u).map((l) => l.calcLength());
@@ -57,5 +57,4 @@ export class EndBeamStir extends SpaceRebar<UShellRebarInfo>{
     const topEdge = new Arc(vec(0, 0), u.shell.r + gap + as, 180, 0);
     return pts.map((p) => new Line(p, topEdge.rayIntersect(p, vec(0, 1))[0]));
   }
-
 }

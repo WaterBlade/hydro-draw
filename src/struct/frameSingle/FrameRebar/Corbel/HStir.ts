@@ -1,9 +1,9 @@
 import { Line, Polyline, RebarFormPreset, vec } from "@/draw";
 import { SpaceRebar } from "@/struct/utils";
-import { FrameStruct } from "../../FrameStruct";
+import { FrameSingleStruct } from "../../FrameStruct";
 
-export class CorbelHStir extends SpaceRebar{
-  build(t: FrameStruct, name: string): this {
+export class CorbelHStir extends SpaceRebar {
+  build(t: FrameSingleStruct, name: string): this {
     this.spec = this.genSpec();
     const as = this.info.as;
     const lines = this.shape(t);
@@ -20,7 +20,7 @@ export class CorbelHStir extends SpaceRebar{
     this.container.record(this.spec);
     return this;
   }
-  shape(t: FrameStruct): Line[] {
+  shape(t: FrameSingleStruct): Line[] {
     const as = this.info.as;
     const pts = new Line(vec(0, t.h - as), vec(0, t.h - t.corbel.h + as))
       .divide(this.space)

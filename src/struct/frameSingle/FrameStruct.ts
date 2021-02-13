@@ -1,13 +1,13 @@
 import { BeamStruct, ColumnStruct } from "../component";
 
-export class FrameStruct{
+export class FrameSingleStruct {
   col = new ColumnStruct();
   topBeam = new BeamStruct();
   beam = new BeamStruct();
   corbel = new Corbel();
   found = new Foundation();
 
-  initComponent(): void{
+  initComponent(): void {
     // col;
     const col = this.col;
     col.hBeam = this.beam.h;
@@ -21,7 +21,7 @@ export class FrameStruct{
     const beam = this.beam;
     beam.l = this.w;
     beam.ln = this.hsn;
-    beam.n = this.n-1;
+    beam.n = this.n - 1;
     // topBeam
     const tb = this.topBeam;
     tb.l = this.w;
@@ -41,9 +41,6 @@ export class FrameStruct{
   }
   get hsn(): number {
     return this.hs - this.col.w;
-  }
-  get h0(): number {
-    return this.hs - this.beam.h;
   }
 }
 

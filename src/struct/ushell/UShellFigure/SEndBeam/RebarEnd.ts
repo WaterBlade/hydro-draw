@@ -3,14 +3,23 @@ import { FigureContent } from "@/struct/utils";
 import { UShellRebar } from "../../UShellRebar";
 import { UShellStruct } from "../../UShellStruct";
 
-export class RebarEnd{
-  build(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
+export class RebarEnd {
+  build(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
     this.drawBeamBot(u, rebars, fig);
     this.drawBeamMid(u, rebars, fig);
     this.drawBeamStir(u, rebars, fig, isCant);
     this.drawBeamTop(u, rebars, fig, isCant);
   }
-  protected drawBeamBot(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawBeamBot(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.end.bBot;
     const as = rebars.info.as;
     const r = fig.drawRadius;
@@ -32,7 +41,11 @@ export class RebarEnd{
         .generate()
     );
   }
-  protected drawBeamMid(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawBeamMid(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.end.bMid;
     const as = rebars.info.as;
     const r = fig.drawRadius;
@@ -58,8 +71,13 @@ export class RebarEnd{
         .generate()
     );
   }
-  protected drawBeamStir(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
-    const bar =  rebars.end.bStir;
+  protected drawBeamStir(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
+    const bar = rebars.end.bStir;
     const spec = isCant ? bar.specCant : bar.spec;
     const gap = isCant ? 0 : u.waterStop.h;
     const as = rebars.info.as;
@@ -88,7 +106,12 @@ export class RebarEnd{
         .generate()
     );
   }
-  protected drawBeamTop(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
+  protected drawBeamTop(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
     const bar = rebars.end.bTop;
     const as = rebars.info.as;
     const r = fig.drawRadius;

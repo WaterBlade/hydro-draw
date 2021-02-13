@@ -3,8 +3,8 @@ import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class ShellLInner extends SpaceRebar<UShellRebarInfo>{
-  build(u: UShellStruct, name: string): void{
+export class ShellLInner extends SpaceRebar<UShellRebarInfo> {
+  build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.as;
     const path = this.pos(u)

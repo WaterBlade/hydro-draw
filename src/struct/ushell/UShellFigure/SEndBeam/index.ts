@@ -12,19 +12,19 @@ export class SEndBeam extends Figure {
   protected shell = new RebarShell();
   protected trans = new RebarTrans();
   protected _leftFig?: FigureContent;
-  get leftFig(): FigureContent{
-    if(!this._leftFig) throw Error('left fig not init');
+  get leftFig(): FigureContent {
+    if (!this._leftFig) throw Error("left fig not init");
     return this._leftFig;
   }
-  set leftFig(val: FigureContent){
+  set leftFig(val: FigureContent) {
     this._leftFig = val;
   }
   protected _rightFig?: FigureContent;
-  get rightFig(): FigureContent{
-    if(!this._rightFig) throw Error('right fig not init');
+  get rightFig(): FigureContent {
+    if (!this._rightFig) throw Error("right fig not init");
     return this._rightFig;
   }
-  set rightFig(val: FigureContent){
+  set rightFig(val: FigureContent) {
     this._rightFig = val;
   }
   initFigure(u: UShellStruct): void {
@@ -58,7 +58,7 @@ export class SEndBeam extends Figure {
       fig.mirror();
     }
     if (u.isLeftCantFigureExist()) {
-      const fig = this.leftFig
+      const fig = this.leftFig;
       const len = u.cantLeft;
       this.buildOutlineCant(u, fig, len);
       this.buildRebar(u, rebars, fig, true);
@@ -97,7 +97,11 @@ export class SEndBeam extends Figure {
       fig.addOutline(new Line(vec(0, y), vec(u.endSect.b, y)).greyLine());
     }
   }
-  protected buildOutlineCant(u: UShellStruct, fig: FigureContent, lenCant: number): void {
+  protected buildOutlineCant(
+    u: UShellStruct,
+    fig: FigureContent,
+    lenCant: number
+  ): void {
     const left = -lenCant;
     const right = u.endSect.b + u.lenTrans + 1.25 * (u.shell.t + u.shell.hb);
     const h = u.endHeight - u.shell.r - u.shell.hd;
@@ -123,7 +127,12 @@ export class SEndBeam extends Figure {
       fig.addOutline(new Line(vec(0, y), vec(u.endSect.b, y)).greyLine());
     }
   }
-  protected buildRebar(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
+  protected buildRebar(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
     this.end.build(u, rebars, fig, isCant);
     this.shell.build(u, rebars, fig, isCant);
     this.trans.build(u, rebars, fig, isCant);
@@ -153,7 +162,11 @@ export class SEndBeam extends Figure {
     }
     fig.push(dim.generate());
   }
-  protected buildDimCant(u: UShellStruct, fig: FigureContent, lenCant: number): void {
+  protected buildDimCant(
+    u: UShellStruct,
+    fig: FigureContent,
+    lenCant: number
+  ): void {
     const box = fig.getBoundingBox();
 
     const dim = fig.dimBuilder();

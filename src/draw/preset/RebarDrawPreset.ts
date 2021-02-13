@@ -35,8 +35,8 @@ export const RebarDraw = {
   vLineHook(l: number, r = 0): Polyline {
     if (l <= 0 || r < 0) throw Error("negative dimension");
     const d = 25;
-    const top = polar(r, 225).add(vec(0, l / 2 - r));
-    const bottom = polar(r, 135).add(vec(0, -l / 2 + r));
+    const top = polar(r, 135).add(vec(0, l / 2 - r));
+    const bottom = polar(r, 225).add(vec(0, -l / 2 + r));
     return new Polyline(bottom.x - d, bottom.y + d)
       .lineBy(d, -d)
       .arcTo(r, -l / 2 + r, 135)

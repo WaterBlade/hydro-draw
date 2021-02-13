@@ -3,11 +3,21 @@ import { FigureContent } from "@/struct/utils";
 import { UShellRebar } from "../../UShellRebar";
 import { UShellStruct } from "../../UShellStruct";
 
-export class RebarTrans{
-  build(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
+export class RebarTrans {
+  build(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
     this.drawDirect(u, rebars, fig, isCant);
   }
-  protected drawDirect(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
+  protected drawDirect(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
     const as = rebars.info.as;
     const bar = rebars.trans.direct;
     const path = new Polyline(u.endSect.b - 1, -u.shell.t - u.oBeam.w)

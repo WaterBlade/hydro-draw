@@ -3,8 +3,8 @@ import { CountRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class EndBeamBot extends CountRebar<UShellRebarInfo>{
-  build(u: UShellStruct, name: string): void{
+export class EndBeamBot extends CountRebar<UShellRebarInfo> {
+  build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const line = this.shape(u);
     this.spec

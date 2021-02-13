@@ -3,11 +3,15 @@ import { FigureContent } from "@/struct/utils";
 import { UShellRebar } from "../../UShellRebar";
 import { UShellStruct } from "../../UShellStruct";
 
-export class RebarTrans{
+export class RebarTrans {
   build(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
     this.drawArc(u, rebars, fig);
   }
-  protected drawArc(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawArc(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.trans.arc;
     const left = bar.shapeEnd(u);
     const right = left.mirrorByVAxis();

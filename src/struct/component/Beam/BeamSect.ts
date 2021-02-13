@@ -1,10 +1,18 @@
-import { divideByCount, Line, Polyline, RebarDraw, Side, sum, vec } from "@/draw";
+import {
+  divideByCount,
+  Line,
+  Polyline,
+  RebarDraw,
+  Side,
+  sum,
+  vec,
+} from "@/draw";
 import { Figure, FigureContent } from "@/struct/utils";
 import { BeamStruct } from "./BeamStruct";
 import { BeamRebar } from "./BeamRebar";
 
-export class BeamSect extends Figure{
-  initFigure(): void{
+export class BeamSect extends Figure {
+  initFigure(): void {
     this.fig = new FigureContent();
     const { id, title } = this.container.sectId;
     this.fig
@@ -16,12 +24,12 @@ export class BeamSect extends Figure{
       .keepTitlePos();
     this.container.record(this.fig);
   }
-  build(t: BeamStruct, rebars: BeamRebar): void{
+  build(t: BeamStruct, rebars: BeamRebar): void {
     this.buildOutline(t);
     this.buildRebar(t, rebars);
     this.buildDim(t);
   }
-  protected buildOutline( t: BeamStruct): void{
+  protected buildOutline(t: BeamStruct): void {
     this.fig.addOutline(
       new Polyline(-t.w / 2, t.h / 2)
         .lineBy(t.w, 0)
@@ -31,13 +39,13 @@ export class BeamSect extends Figure{
         .greyLine()
     );
   }
-  protected buildRebar( t: BeamStruct, rebars: BeamRebar): void{
-    this.drawBot( t, rebars);
-    this.drawTop( t, rebars);
-    this.drawMid( t, rebars);
-    this.drawStirAndTendon( t, rebars);
+  protected buildRebar(t: BeamStruct, rebars: BeamRebar): void {
+    this.drawBot(t, rebars);
+    this.drawTop(t, rebars);
+    this.drawMid(t, rebars);
+    this.drawStirAndTendon(t, rebars);
   }
-  protected buildDim( t: BeamStruct): void{
+  protected buildDim(t: BeamStruct): void {
     const fig = this.fig;
     const { right, bottom } = fig.getBoundingBox();
     const dim = fig.dimBuilder();
@@ -45,7 +53,7 @@ export class BeamSect extends Figure{
     dim.hBottom(-t.w / 2, bottom - fig.h).dim(t.w);
     fig.push(dim.generate());
   }
-  protected drawBot( t: BeamStruct, rebars: BeamRebar): void{
+  protected drawBot(t: BeamStruct, rebars: BeamRebar): void {
     const fig = this.fig;
     const bar = rebars.bot;
     const as = rebars.info.as;
@@ -64,7 +72,7 @@ export class BeamSect extends Figure{
         .generate()
     );
   }
-  protected drawTop( t: BeamStruct, rebars: BeamRebar): void{
+  protected drawTop(t: BeamStruct, rebars: BeamRebar): void {
     const fig = this.fig;
     const bar = rebars.top;
     const as = rebars.info.as;
@@ -83,7 +91,7 @@ export class BeamSect extends Figure{
         .generate()
     );
   }
-  protected drawMid( t: BeamStruct, rebars: BeamRebar): void{
+  protected drawMid(t: BeamStruct, rebars: BeamRebar): void {
     const fig = this.fig;
     const bar = rebars.mid;
     const as = rebars.info.as;
@@ -104,12 +112,16 @@ export class BeamSect extends Figure{
     const right = left.mirrorByVAxis();
     fig.push(left, right);
   }
-  protected drawStirAndTendon( t: BeamStruct, rebars: BeamRebar): void{
+  protected drawStirAndTendon(t: BeamStruct, rebars: BeamRebar): void {
     const fig = this.fig;
     const bar = rebars.stir;
     const as = rebars.info.as;
-    const ys = divideByCount(-t.h/2+as+fig.r, t.h/2-as-fig.r, rebars.mid.singleCount+1);
-    const y = sum(...ys.slice(-2))*0.5;
+    const ys = divideByCount(
+      -t.h / 2 + as + fig.r,
+      t.h / 2 - as - fig.r,
+      rebars.mid.singleCount + 1
+    );
+    const y = sum(...ys.slice(-2)) * 0.5;
     fig.push(
       fig
         .planeRebar()
@@ -118,7 +130,9 @@ export class BeamSect extends Figure{
         .leaderNote(vec(-t.w / 2 - 2 * fig.h, y), vec(1, 0))
         .generate()
     );
-    const rebar = fig.planeRebar().spec(rebars.tendon.spec, 0, rebars.tendon.space);
+    const rebar = fig
+      .planeRebar()
+      .spec(rebars.tendon.spec, 0, rebars.tendon.space);
 
     for (const y of ys.slice(1, -1)) {
       const l = RebarDraw.hLineHook(t.w - 2 * as, fig.r);
@@ -128,9 +142,7 @@ export class BeamSect extends Figure{
     fig.push(
       rebar
         .cross(
-          new Polyline(0, -t.h / 2)
-            .lineTo(0, y)
-            .lineBy(t.w / 2 + fig.h, 0)
+          new Polyline(0, -t.h / 2).lineTo(0, y).lineBy(t.w / 2 + fig.h, 0)
         )
         .note()
         .generate()

@@ -24,7 +24,7 @@ class SpecIdGen {
       title: `大样${id}`,
     };
   }
-  clear(): void{
+  clear(): void {
     this._id = 0;
   }
 }
@@ -39,7 +39,7 @@ class SectIdGen {
       title: `${id}--${id}`,
     };
   }
-  clear(): void{
+  clear(): void {
     this._id = 0;
   }
 }
@@ -47,33 +47,33 @@ export class FigureContainer {
   protected records: FigureInBorder[] = [];
   protected specIdGen = new SpecIdGen();
   protected sectIdGen = new SectIdGen();
-  get figures(): FigureInBorder[]{
+  get figures(): FigureInBorder[] {
     return this.records;
   }
-  get specId(): {id: string, title: string}{
+  get specId(): { id: string; title: string } {
     return this.specIdGen.gen();
   }
-  get sectId(): {id: string, title: string}{
+  get sectId(): { id: string; title: string } {
     return this.sectIdGen.gen();
   }
   record(...figs: FigureInBorder[]): void {
     this.records.push(...figs);
   }
-  clear(): void{
+  clear(): void {
     this.specIdGen.clear();
     this.sectIdGen.clear();
     this.records.splice(0);
   }
 }
 
-export class Figure{
+export class Figure {
   protected _fig?: FigureContent;
-  get fig(): FigureContent{
-    if(!this._fig) throw Error('fig not init');
+  get fig(): FigureContent {
+    if (!this._fig) throw Error("fig not init");
     return this._fig;
   }
-  set fig(val: FigureContent){
+  set fig(val: FigureContent) {
     this._fig = val;
   }
-  constructor(protected container: FigureContainer){}
+  constructor(protected container: FigureContainer) {}
 }

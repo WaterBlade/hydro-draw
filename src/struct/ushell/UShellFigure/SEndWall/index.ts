@@ -6,24 +6,24 @@ import { RebarShell } from "./RebarShell";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebar } from "../../UShellRebar";
 
-export class SEndWall extends Figure{
+export class SEndWall extends Figure {
   protected end = new ReBarEnd();
   protected shell = new RebarShell();
   protected trans = new RebarTrans();
   protected _leftFig?: FigureContent;
-  get leftFig(): FigureContent{
-    if(!this._leftFig) throw Error('left fig not init');
+  get leftFig(): FigureContent {
+    if (!this._leftFig) throw Error("left fig not init");
     return this._leftFig;
   }
-  set leftFig(val: FigureContent){
+  set leftFig(val: FigureContent) {
     this._leftFig = val;
   }
   protected _rightFig?: FigureContent;
-  get rightFig(): FigureContent{
-    if(!this._rightFig) throw Error('right fig not init');
+  get rightFig(): FigureContent {
+    if (!this._rightFig) throw Error("right fig not init");
     return this._rightFig;
   }
-  set rightFig(val: FigureContent){
+  set rightFig(val: FigureContent) {
     this._rightFig = val;
   }
   initFigure(u: UShellStruct): void {
@@ -91,7 +91,11 @@ export class SEndWall extends Figure{
         .greyLine()
     );
   }
-  protected buildOutlineCant(u: UShellStruct, fig: FigureContent, lenCant: number): void {
+  protected buildOutlineCant(
+    u: UShellStruct,
+    fig: FigureContent,
+    lenCant: number
+  ): void {
     const right = u.endSect.b + u.lenTrans + 1.25 * u.shell.t;
     fig.addOutline(
       new Polyline(-lenCant, -u.waterStop.h)
@@ -109,7 +113,12 @@ export class SEndWall extends Figure{
         .greyLine()
     );
   }
-  protected buildRebar(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
+  protected buildRebar(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
     this.end.build(u, rebars, fig, isCant);
     this.shell.build(u, rebars, fig, isCant);
     this.trans.build(u, rebars, fig, isCant);
@@ -135,7 +144,11 @@ export class SEndWall extends Figure{
 
     fig.push(dim.generate());
   }
-  protected buildDimCant(u: UShellStruct, fig: FigureContent, lenCant: number): void {
+  protected buildDimCant(
+    u: UShellStruct,
+    fig: FigureContent,
+    lenCant: number
+  ): void {
     const box = fig.getBoundingBox();
 
     const dim = fig.dimBuilder();

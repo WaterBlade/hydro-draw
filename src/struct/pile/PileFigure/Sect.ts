@@ -4,7 +4,7 @@ import { Figure } from "../../utils/Figure";
 import { PileRebar } from "../PileRebar";
 import { PileStruct } from "../PileStruct";
 
-export class Sect extends Figure{
+export class Sect extends Figure {
   initFigure(): this {
     this.fig = new FigureContent();
     const { id, title } = this.container.sectId;
@@ -24,7 +24,7 @@ export class Sect extends Figure{
     this.buildDim(t);
   }
   buildOutline(t: PileStruct): this {
-    const fig = this.fig
+    const fig = this.fig;
     fig.addOutline(new Circle(vec(0, 0), t.d / 2).greyLine());
     return this;
   }

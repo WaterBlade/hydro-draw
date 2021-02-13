@@ -4,12 +4,21 @@ import { UShellRebar } from "../../UShellRebar";
 import { UShellStruct } from "../../UShellStruct";
 
 export class ReBarEnd {
-  build(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
+  build(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
     this.drawCOuter(u, rebars, fig);
     this.drawWStir(u, rebars, fig, isCant);
   }
 
-  protected drawCOuter(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawCOuter(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.end.cOuter;
     const as = rebars.info.as;
     const r = fig.drawRadius;
@@ -31,7 +40,12 @@ export class ReBarEnd {
         .generate()
     );
   }
-  protected drawWStir(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant: boolean): void {
+  protected drawWStir(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant: boolean
+  ): void {
     const bar = rebars.end.wStir;
     const spec = isCant ? bar.specCant : bar.spec;
     const gap = isCant ? 0 : u.waterStop.h;

@@ -3,11 +3,15 @@ import { FigureContent } from "@/struct/utils";
 import { UShellRebar } from "../../UShellRebar";
 import { UShellStruct } from "../../UShellStruct";
 
-export class RebarEnd{
+export class RebarEnd {
   build(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
     this.drawCOuter(u, rebars, fig);
   }
-  protected drawCOuter(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawCOuter(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.end.cOuter;
     const as = rebars.info.as;
     const y0 = u.shell.hd - as;

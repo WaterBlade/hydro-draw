@@ -120,10 +120,7 @@ export class CMid extends Figure {
     const bar = rebars.shell.cInner;
     const fig = this.fig;
     const as = rebars.info.as;
-    const path = bar.shape(u)
-      .offset(as, Side.Right)
-      .removeStart()
-      .removeEnd();
+    const path = bar.shape(u).offset(as, Side.Right).removeStart().removeEnd();
     const pt = vec(-u.shell.r + 3 * fig.textHeight, u.shell.hd / 5);
     fig.push(
       fig
@@ -153,7 +150,8 @@ export class CMid extends Figure {
     const bar = rebars.shell.lInner;
     const as = rebars.info.as;
     const fig = this.fig;
-    const p = bar.pos(u)
+    const p = bar
+      .pos(u)
       .offset(as + fig.drawRadius, Side.Right)
       .removeStart()
       .removeEnd()
@@ -214,7 +212,7 @@ export class CMid extends Figure {
         fig
           .linePointRebar()
           .spec(bar.spec, bar.singleCount)
-          .line(new Line(left, right).divideByCount(bar.singleCount- 1))
+          .line(new Line(left, right).divideByCount(bar.singleCount - 1))
           .onlineNote()
           .generate()
       );
@@ -224,10 +222,7 @@ export class CMid extends Figure {
     const bar = rebars.shell.topBeam;
     const fig = this.fig;
     const as = rebars.info.as;
-    const pLeft = bar.shape(u)
-      .offset(as, Side.Right)
-      .removeStart()
-      .removeEnd();
+    const pLeft = bar.shape(u).offset(as, Side.Right).removeStart().removeEnd();
     const pRight = pLeft.mirrorByVAxis();
     const ptLeft = vec(
       -u.shell.r + u.iBeam.w + 1.5 * fig.textHeight,

@@ -10,7 +10,6 @@ export class PileController {
   rebar = new PileRebar();
   drawing = new Drawing(1, 0.75);
   generate(): DrawItem[] {
-
     const figure = new PileFigure();
 
     this.rebar.build(this.struct);

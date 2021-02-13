@@ -1,7 +1,7 @@
-export class ColumnStruct{
+export class ColumnStruct {
   h = 0;
   w = 0;
-  
+
   //
   l = 0;
   ld = 0;
@@ -11,7 +11,7 @@ export class ColumnStruct{
   hTopBeam = 0;
   hBeam = 0;
   partitionCount = 0;
-  partition(): number[]{
+  partition(): number[] {
     const n = this.partitionCount;
     const h0 = this.lSpace - this.hBeam;
     const d = Math.ceil(Math.max(this.h, h0 / 6, 500) / 100) * 100;

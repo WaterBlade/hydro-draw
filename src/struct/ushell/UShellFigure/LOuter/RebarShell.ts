@@ -3,16 +3,21 @@ import { FigureContent } from "@/struct/utils";
 import { UShellRebar } from "../../UShellRebar";
 import { UShellStruct } from "../../UShellStruct";
 
-export class RebarShell{
+export class RebarShell {
   build(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
     this.drawLOuter(u, rebars, fig);
     this.drawCOuter(u, rebars, fig);
     this.drawMain(u, rebars, fig);
   }
-  protected drawLOuter(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawLOuter(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.lOuter;
     const as = rebars.info.as;
-    const ys = bar.pos(u)
+    const ys = bar
+      .pos(u)
       .removeStart()
       .points.map((p) => p.y);
     const start = -u.len / 2 + as;
@@ -33,7 +38,11 @@ export class RebarShell{
         .generate()
     );
   }
-  protected drawCOuter(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawCOuter(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.cOuter;
     const as = rebars.info.as;
     const paths = bar.pos(u);
@@ -56,7 +65,11 @@ export class RebarShell{
         .generate()
     );
   }
-  protected drawMain(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawMain(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.main;
     const as = rebars.info.as;
     const y = -u.shell.r - u.shell.t - u.shell.hb + as;

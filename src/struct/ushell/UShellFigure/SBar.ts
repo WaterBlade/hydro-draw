@@ -3,7 +3,7 @@ import { Figure, FigureContent } from "@/struct/utils";
 import { UShellRebar } from "../UShellRebar";
 import { UShellStruct } from "../UShellStruct";
 
-export class SBar extends Figure{
+export class SBar extends Figure {
   initFigure(): void {
     this.fig = new FigureContent();
     const { id, title } = this.container.specId;

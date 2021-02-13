@@ -3,8 +3,8 @@ import { PileStruct } from "../PileStruct";
 import { SpaceRebar } from "../../utils";
 import { PileRebarInfo } from "./Info";
 
-export class Fix extends SpaceRebar<PileRebarInfo>{
-  build(t: PileStruct): void{
+export class Fix extends SpaceRebar<PileRebarInfo> {
+  build(t: PileStruct): void {
     this.spec = this.genSpec();
 
     const fixCount = this.info.fixCount;
@@ -34,5 +34,4 @@ export class Fix extends SpaceRebar<PileRebarInfo>{
     const as = this.info.as;
     return divideBySpace(0, -t.h + as, this.space).slice(1, -1);
   }
-
 }

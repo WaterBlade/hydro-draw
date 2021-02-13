@@ -5,7 +5,7 @@ import { RebarEnd } from "./RebarEnd";
 import { RebarShell } from "./RebarShell";
 import { RebarTrans } from "./RebarTrans";
 
-export class LOuter extends Figure{
+export class LOuter extends Figure {
   protected end = new RebarEnd();
   protected shell = new RebarShell();
   protected trans = new RebarTrans();

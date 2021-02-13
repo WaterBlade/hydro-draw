@@ -3,12 +3,16 @@ import { FigureContent } from "@/struct/utils";
 import { UShellRebar } from "../../UShellRebar";
 import { UShellStruct } from "../../UShellStruct";
 
-export class RebarBar{
+export class RebarBar {
   build(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
     this.drawMain(u, rebars, fig);
     this.drawStir(u, rebars, fig);
   }
-  protected drawMain(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawMain(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const { w, h } = u.bar;
     const r = fig.drawRadius;
     const as = rebars.info.asBar;
@@ -24,7 +28,11 @@ export class RebarBar{
       );
     }
   }
-  protected drawStir(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawStir(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const as = rebars.info.asBar;
     const w0 = u.bar.w - 2 * as;
     const h0 = u.bar.h - 2 * as;

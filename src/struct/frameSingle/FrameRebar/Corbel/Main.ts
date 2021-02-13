@@ -1,9 +1,9 @@
 import { Polyline, RebarFormPreset, Side } from "@/draw";
 import { CountRebar } from "@/struct/utils";
-import { FrameStruct } from "../../FrameStruct";
+import { FrameSingleStruct } from "../../FrameStruct";
 
 export class CorbelMain extends CountRebar {
-  build(t: FrameStruct,name: string): this {
+  build(t: FrameSingleStruct, name: string): this {
     this.spec = this.genSpec();
     const lens = this.shape(t).lengths;
     const form = RebarFormPreset.CorbelDouble(
@@ -20,7 +20,7 @@ export class CorbelMain extends CountRebar {
     this.container.record(this.spec);
     return this;
   }
-  shape(t: FrameStruct): Polyline {
+  shape(t: FrameSingleStruct): Polyline {
     const as = this.info.as;
     return new Polyline(-t.col.h / 2, t.h - t.corbel.h)
       .lineBy(-t.corbel.w, t.corbel.hs)

@@ -8,7 +8,7 @@ import { ShellLOuter } from "./LOuter";
 import { ShellMain } from "./Main";
 import { ShellTopBeam } from "./TopBeam";
 
-export class ShellContainer extends CompositeRebar<UShellRebarInfo>{
+export class ShellContainer extends CompositeRebar<UShellRebarInfo> {
   cInner = new ShellCInner(this.container, this.info);
   cOuter = new ShellCOuter(this.container, this.info);
   lInner = new ShellLInner(this.container, this.info);
@@ -16,7 +16,7 @@ export class ShellContainer extends CompositeRebar<UShellRebarInfo>{
   main = new ShellMain(this.container, this.info);
   topBeam = new ShellTopBeam(this.container, this.info);
 
-  build(u: UShellStruct, name: string, endCOuter: CountRebar): void{
+  build(u: UShellStruct, name: string, endCOuter: CountRebar): void {
     this.cInner.build(u, name, endCOuter);
     this.cOuter.build(u, name);
     this.lInner.build(u, name);
@@ -24,5 +24,4 @@ export class ShellContainer extends CompositeRebar<UShellRebarInfo>{
     this.main.build(u, name);
     this.topBeam.build(u, name);
   }
-
 }

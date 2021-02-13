@@ -9,7 +9,7 @@ import { EndCOuter } from "./COuter";
 import { EndTopBeam } from "./TopBeam";
 import { EndWallStir } from "./WallStir";
 
-export class EndContainer extends CompositeRebar<UShellRebarInfo>{
+export class EndContainer extends CompositeRebar<UShellRebarInfo> {
   bBot = new EndBeamBot(this.container, this.info);
   bMid = new EndBeamMid(this.container, this.info);
   bStir = new EndBeamStir(this.container, this.info);
@@ -17,8 +17,8 @@ export class EndContainer extends CompositeRebar<UShellRebarInfo>{
   cOuter = new EndCOuter(this.container, this.info);
   topBeam = new EndTopBeam(this.container, this.info);
   wStir = new EndWallStir(this.container, this.info);
-  
-  build(u: UShellStruct, name: string): void{
+
+  build(u: UShellStruct, name: string): void {
     this.bBot.build(u, name);
     this.bTop.build(u, name);
     this.bMid.build(u, name);

@@ -3,17 +3,27 @@ import { FigureContent } from "@/struct/utils";
 import { UShellRebar } from "../../UShellRebar";
 import { UShellStruct } from "../../UShellStruct";
 
-export class RebarShell{
-  build(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
+export class RebarShell {
+  build(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
     this.drawCInner(u, rebars, fig, isCant);
     this.drawCInnerSub(u, rebars, fig, isCant);
     this.drawCOuter(u, rebars, fig, isCant);
     this.drawLInner(u, rebars, fig);
     this.drawMain(u, rebars, fig);
   }
-  protected drawCInner(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant: boolean): void {
+  protected drawCInner(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant: boolean
+  ): void {
     const bar = rebars.shell.cInner;
-    const r = fig.drawRadius
+    const r = fig.drawRadius;
     const as = rebars.info.as;
     const right = fig.outline.getBoundingBox().right;
     const left = isCant
@@ -36,7 +46,12 @@ export class RebarShell{
         .generate()
     );
   }
-  protected drawCInnerSub(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
+  protected drawCInnerSub(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
     const bar = rebars.shell.cInner;
     const r = fig.drawRadius;
     const as = rebars.info.as;
@@ -68,7 +83,12 @@ export class RebarShell{
         .generate()
     );
   }
-  protected drawCOuter(u: UShellStruct, rebars: UShellRebar, fig: FigureContent, isCant = false): void {
+  protected drawCOuter(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent,
+    isCant = false
+  ): void {
     const bar = rebars.shell.cOuter;
     const as = rebars.info.as;
     const right = fig.outline.getBoundingBox().right;
@@ -99,7 +119,11 @@ export class RebarShell{
         .generate()
     );
   }
-  protected drawLInner(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawLInner(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.lInner;
     const as = rebars.info.as;
     const y = -as;
@@ -118,7 +142,11 @@ export class RebarShell{
         .generate()
     );
   }
-  protected drawMain(u: UShellStruct, rebars: UShellRebar, fig: FigureContent): void {
+  protected drawMain(
+    u: UShellStruct,
+    rebars: UShellRebar,
+    fig: FigureContent
+  ): void {
     const bar = rebars.shell.main;
     const as = rebars.info.as;
     const left = fig.outline.getBoundingBox().left;

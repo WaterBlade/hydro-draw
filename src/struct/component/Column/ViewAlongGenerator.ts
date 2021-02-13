@@ -3,13 +3,21 @@ import { FigureContent } from "@/struct/utils";
 import { ColumnRebar } from "./ColumnRebar";
 import { ColumnStruct } from "./ColumnStruct";
 
-export class ColumnViewAlongGenerator{
+export class ColumnViewAlongGenerator {
   protected yLeader = 0;
   protected dot: number[] = [];
-  generate(fig: FigureContent, t: ColumnStruct, rebars: ColumnRebar): CompositeItem{
+  generate(
+    fig: FigureContent,
+    t: ColumnStruct,
+    rebars: ColumnRebar
+  ): CompositeItem {
     const as = rebars.info.as;
     this.yLeader = t.l - t.hTopBeam;
-    this.dot = divideByCount(-t.h/2+as, t.h/2-as, rebars.along.singleCount + 1);
+    this.dot = divideByCount(
+      -t.h / 2 + as,
+      t.h / 2 - as,
+      rebars.along.singleCount + 1
+    );
 
     const comp = new CompositeItem();
     this.corner(fig, comp, t, rebars);
@@ -17,8 +25,13 @@ export class ColumnViewAlongGenerator{
     this.stir(fig, comp, t, rebars);
     return comp;
   }
-  protected corner(fig: FigureContent, comp: CompositeItem, t: ColumnStruct, rebars: ColumnRebar): void{
-    this.yLeader -= 3*fig.h;
+  protected corner(
+    fig: FigureContent,
+    comp: CompositeItem,
+    t: ColumnStruct,
+    rebars: ColumnRebar
+  ): void {
+    this.yLeader -= 3 * fig.h;
     const bar = rebars.corner;
     const as = rebars.info.as;
     comp.push(
@@ -37,25 +50,35 @@ export class ColumnViewAlongGenerator{
         .generate()
     );
   }
-  protected along(fig: FigureContent, comp: CompositeItem, t: ColumnStruct, rebars: ColumnRebar): void{
-    this.yLeader -= 3*fig.h;
+  protected along(
+    fig: FigureContent,
+    comp: CompositeItem,
+    t: ColumnStruct,
+    rebars: ColumnRebar
+  ): void {
+    this.yLeader -= 3 * fig.h;
     const bar = rebars.along;
     const as = rebars.info.as;
-    const xs = divideByCount(-t.h/2+as, t.h/2-as, bar.singleCount + 1).slice(1, -1);
+    const xs = divideByCount(
+      -t.h / 2 + as,
+      t.h / 2 - as,
+      bar.singleCount + 1
+    ).slice(1, -1);
     comp.push(
       fig
         .planeRebar()
-        .rebar(
-          ...xs.map(
-            (x) => new Line(vec(x, t.l - as), vec(x, -t.ld + as))
-          )
-        )
+        .rebar(...xs.map((x) => new Line(vec(x, t.l - as), vec(x, -t.ld + as))))
         .spec(bar.spec, bar.singleCount)
         .leaderNote(vec(-t.h / 2 - fig.h, this.yLeader), vec(1, 0))
         .generate()
     );
   }
-  protected stir(fig: FigureContent, comp: CompositeItem, t: ColumnStruct, rebars: ColumnRebar): void{
+  protected stir(
+    fig: FigureContent,
+    comp: CompositeItem,
+    t: ColumnStruct,
+    rebars: ColumnRebar
+  ): void {
     const bar = rebars.stir;
     const as = rebars.info.as;
     const ys = bar.pos(t);

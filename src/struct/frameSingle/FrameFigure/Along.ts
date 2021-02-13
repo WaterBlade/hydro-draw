@@ -1,8 +1,8 @@
 import { Line, Polyline, vec, Text, TextAlign } from "@/draw";
 import { ColumnViewAlongGenerator } from "@/struct/component";
 import { Figure, FigureContent } from "@/struct/utils";
-import { FrameRebar } from "../FrameRebar";
-import { FrameStruct } from "../FrameStruct";
+import { FrameSingleRebar } from "../FrameRebar";
+import { FrameSingleStruct } from "../FrameStruct";
 
 export class FrameAlong extends Figure {
   initFigure(): void {
@@ -18,13 +18,13 @@ export class FrameAlong extends Figure {
       .keepTitlePos();
     this.container.record(this.fig);
   }
-  build(t: FrameStruct, rebars: FrameRebar): void{
+  build(t: FrameSingleStruct, rebars: FrameSingleRebar): void {
     this.buildOutline(t);
     this.buildRebar(t, rebars);
     this.buildNote(t, rebars);
     this.buildDim(t);
   }
-  protected buildOutline(t: FrameStruct): void {
+  protected buildOutline(t: FrameSingleStruct): void {
     this.fig.addOutline(
       new Polyline(-t.col.h / 2, 0)
         .lineBy(0, t.h - t.corbel.h)
@@ -76,7 +76,7 @@ export class FrameAlong extends Figure {
       ).greyLine()
     );
   }
-  protected buildNote(t: FrameStruct, rebars: FrameRebar): void {
+  protected buildNote(t: FrameSingleStruct, rebars: FrameSingleRebar): void {
     const fig = this.fig;
     const left = fig.outline.getBoundingBox().left;
     const right = fig.outline.getBoundingBox().right;
@@ -84,8 +84,11 @@ export class FrameAlong extends Figure {
     fig.breakline(vec(right, 0), vec(right, -t.found.h));
     this.drawSpaceNote(t, rebars);
   }
-  protected drawSpaceNote(t: FrameStruct, rebars: FrameRebar): void {
-    const fig = this.fig
+  protected drawSpaceNote(
+    t: FrameSingleStruct,
+    rebars: FrameSingleRebar
+  ): void {
+    const fig = this.fig;
     const x = fig.getBoundingBox().left - fig.h;
     const lens = t.col.partition();
     let h = t.h;
@@ -117,7 +120,7 @@ export class FrameAlong extends Figure {
       h -= l;
     }
   }
-  protected buildDim(t: FrameStruct): this {
+  protected buildDim(t: FrameSingleStruct): this {
     const fig = this.fig;
     const { right, top, left } = fig.getBoundingBox();
     const dim = fig.dimBuilder();
@@ -153,16 +156,17 @@ export class FrameAlong extends Figure {
     return this;
   }
   protected colGen = new ColumnViewAlongGenerator();
-  protected buildRebar(t: FrameStruct, rebars: FrameRebar): void{
+  protected buildRebar(t: FrameSingleStruct, rebars: FrameSingleRebar): void {
     const fig = this.fig;
-    fig.push(
-      this.colGen.generate(fig, t.col, rebars.col)
-    );
+    fig.push(this.colGen.generate(fig, t.col, rebars.col));
     this.buildCorbelMain(t, rebars);
     this.buildCorbelHStir(t, rebars);
     this.buildCorbelVStir(t, rebars);
   }
-  protected buildCorbelMain(t: FrameStruct, rebars: FrameRebar): void{
+  protected buildCorbelMain(
+    t: FrameSingleStruct,
+    rebars: FrameSingleRebar
+  ): void {
     const fig = this.fig;
     const bar = rebars.corbel.main;
     fig.push(
@@ -178,7 +182,10 @@ export class FrameAlong extends Figure {
         .generate()
     );
   }
-  protected buildCorbelHStir(t: FrameStruct, rebars: FrameRebar): void{
+  protected buildCorbelHStir(
+    t: FrameSingleStruct,
+    rebars: FrameSingleRebar
+  ): void {
     const bar = rebars.corbel.hStir;
     const fig = this.fig;
     const lens = bar.shape(t);
@@ -195,7 +202,10 @@ export class FrameAlong extends Figure {
         .generate()
     );
   }
-  protected buildCorbelVStir(t: FrameStruct, rebars: FrameRebar): void{
+  protected buildCorbelVStir(
+    t: FrameSingleStruct,
+    rebars: FrameSingleRebar
+  ): void {
     const bar = rebars.corbel.vStir;
     const fig = this.fig;
     const as = rebars.info.as;

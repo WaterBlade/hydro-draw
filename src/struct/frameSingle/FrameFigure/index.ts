@@ -1,18 +1,18 @@
 import { BeamSect, ColumnSect } from "@/struct/component";
 import { FigureContainer } from "@/struct/utils";
-import { FrameRebar } from "../FrameRebar";
-import { FrameStruct } from "../FrameStruct";
+import { FrameSingleRebar } from "../FrameRebar";
+import { FrameSingleStruct } from "../FrameStruct";
 import { FrameAlong } from "./Along";
 import { FrameCross } from "./Cross";
 
-export class FrameFigure extends FigureContainer{
+export class FrameSingleFigure extends FigureContainer {
   cross = new FrameCross(this);
   along = new FrameAlong(this);
   sCol = new ColumnSect(this);
   sTopBeam = new BeamSect(this);
   sBeam = new BeamSect(this);
 
-  build(t: FrameStruct, rebars: FrameRebar): void{
+  build(t: FrameSingleStruct, rebars: FrameSingleRebar): void {
     this.cross.initFigure();
     this.along.initFigure();
     this.sCol.initFigure();

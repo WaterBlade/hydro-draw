@@ -72,7 +72,7 @@ export class FigureContent implements FigureInBorder {
   get outline(): CompositeItem {
     return this._outline;
   }
-  clear(): this{
+  clear(): this {
     this._outline = new CompositeItem();
     this.composite = new CompositeItem();
     return this;

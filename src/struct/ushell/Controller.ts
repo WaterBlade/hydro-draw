@@ -13,7 +13,6 @@ export class UShellController {
     this.rebar.build(this.struct);
     figure.build(this.struct, this.rebar);
 
-
     this.drawing.push(
       ...figure.figures,
       new RebarTableFigure(...this.rebar.rebars),

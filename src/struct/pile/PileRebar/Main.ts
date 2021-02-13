@@ -3,11 +3,11 @@ import { PileStruct } from "../PileStruct";
 import { CountRebar } from "../../utils";
 import { PileRebarInfo } from "./Info";
 
-export class Main extends CountRebar<PileRebarInfo>{
-  build(t: PileStruct): void{
+export class Main extends CountRebar<PileRebarInfo> {
+  build(t: PileStruct): void {
     const as = this.info.as;
     this.spec = this.genSpec();
-    
+
     this.spec
       .setId(this.container.id)
       .setCount(this.singleCount * t.count)

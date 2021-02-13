@@ -4,7 +4,7 @@ import { Figure } from "../../utils/Figure";
 import { PileRebar } from "../PileRebar";
 import { PileStruct } from "../PileStruct";
 
-export class Ele extends Figure{
+export class Ele extends Figure {
   initFigure(): this {
     this.fig = new FigureContent();
     this.fig
@@ -39,7 +39,7 @@ export class Ele extends Figure{
     return this;
   }
   buildNote(): this {
-    const fig = this.fig
+    const fig = this.fig;
     const { left, right, top } = fig.outline.getBoundingBox();
     fig.breakline(vec(left, 0), vec(left, top));
     fig.breakline(vec(right, 0), vec(right, top));
@@ -144,9 +144,9 @@ export class Ele extends Figure{
     const bar = rebars.rib;
     const fig = this.fig;
     const as = rebars.info.as;
-    const lines = bar.pos(t).map(
-      (y) => new Line(vec(-t.d / 2 + as, y), vec(t.d / 2 - as, y))
-    );
+    const lines = bar
+      .pos(t)
+      .map((y) => new Line(vec(-t.d / 2 + as, y), vec(t.d / 2 - as, y)));
     fig.push(
       fig
         .planeRebar()

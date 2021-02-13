@@ -3,8 +3,8 @@ import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class TransDirect extends SpaceRebar<UShellRebarInfo>{
-  build(u: UShellStruct, name: string): void{
+export class TransDirect extends SpaceRebar<UShellRebarInfo> {
+  build(u: UShellStruct, name: string): void {
     if (u.oBeam.w > 0) {
       this.spec = this.genSpec();
       const as = this.info.as;
@@ -27,7 +27,6 @@ export class TransDirect extends SpaceRebar<UShellRebarInfo>{
 
       this.container.record(this.spec);
     }
-
   }
   shape(u: UShellStruct): Line[] {
     const as = this.info.as;

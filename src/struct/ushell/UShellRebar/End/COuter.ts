@@ -3,8 +3,8 @@ import { CountRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class EndCOuter extends CountRebar<UShellRebarInfo>{
-  build(u: UShellStruct, name: string): void{
+export class EndCOuter extends CountRebar<UShellRebarInfo> {
+  build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const path = this.shape(u);
     const lens = path.segments.map((s) => s.calcLength());
@@ -44,5 +44,4 @@ export class EndCOuter extends CountRebar<UShellRebarInfo>{
       .removeStart();
     return path;
   }
-
 }

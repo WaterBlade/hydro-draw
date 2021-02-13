@@ -3,8 +3,8 @@ import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class ShellCOuter extends SpaceRebar<UShellRebarInfo>{
-  build(u: UShellStruct, name: string): void{
+export class ShellCOuter extends SpaceRebar<UShellRebarInfo> {
+  build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const angle = u.transAngle;
     const as = this.info.as;
@@ -28,13 +28,12 @@ export class ShellCOuter extends SpaceRebar<UShellRebarInfo>{
       .lineBy(0, 1.5)
       .dimLength(lens[6], Side.Right);
     this.spec
-    .setForm(form)
-    .setCount(
-      this.pos(u)
-        .reduce((pre: number, cur) => pre + cur.points.length, 0)
-    )
-    .setId(this.container.id)
-    .setName(name);
+      .setForm(form)
+      .setCount(
+        this.pos(u).reduce((pre: number, cur) => pre + cur.points.length, 0)
+      )
+      .setId(this.container.id)
+      .setName(name);
     this.container.record(this.spec);
   }
   shape(u: UShellStruct): Polyline {

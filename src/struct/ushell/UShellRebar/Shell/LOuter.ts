@@ -3,15 +3,16 @@ import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class ShellLOuter extends SpaceRebar<UShellRebarInfo>{
-  build(u: UShellStruct, name: string): void{
+export class ShellLOuter extends SpaceRebar<UShellRebarInfo> {
+  build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.as;
-    const path = this.pos(u, as + this.diameter / 2)
+    const path = this.pos(u, as + this.diameter / 2);
     this.spec
       .setCount(2 * path.points.length)
       .setForm(RebarFormPreset.Line(this.diameter, u.len - 2 * as))
-    .setId(this.container.id).setName(name);
+      .setId(this.container.id)
+      .setName(name);
     this.container.record(this.spec);
   }
   pos(u: UShellStruct, offsetDist?: number): Polyline {
@@ -40,5 +41,4 @@ export class ShellLOuter extends SpaceRebar<UShellRebarInfo>{
       .divide(this.space)
       .removeBothPt();
   }
-
 }

@@ -3,27 +3,24 @@ import { CountRebar, SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
-export class ShellCInner extends SpaceRebar<UShellRebarInfo>{
+export class ShellCInner extends SpaceRebar<UShellRebarInfo> {
   protected _specSub?: RebarSpec;
-  get specSub(): RebarSpec{
-    if(!this._specSub) throw Error('spec sub not init');
+  get specSub(): RebarSpec {
+    if (!this._specSub) throw Error("spec sub not init");
     return this._specSub;
   }
-  set specSub(val: RebarSpec){
+  set specSub(val: RebarSpec) {
     this._specSub = val;
   }
-  
-  build(u: UShellStruct, name: string, endCOuter: CountRebar): void{
+
+  build(u: UShellStruct, name: string, endCOuter: CountRebar): void {
     this.buildCInner(u, name);
     this.buildCInnerSub(u, name, endCOuter);
   }
-  protected buildCInner(u: UShellStruct, name: string): void{
+  protected buildCInner(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.as;
-    const path = this.shape(u)
-      .offset(as, Side.Right)
-      .removeStart()
-      .removeEnd();
+    const path = this.shape(u).offset(as, Side.Right).removeStart().removeEnd();
     const lens = path.segments.map((s) => s.calcLength());
     const form = new RebarPathForm(this.diameter)
       .lineBy(0, -1.6)
@@ -37,14 +34,17 @@ export class ShellCInner extends SpaceRebar<UShellRebarInfo>{
     this.spec
       .setForm(form)
       .setCount(
-        this.pos(u)
-          .reduce((pre: number, cur) => pre + cur.points.length, 0)
+        this.pos(u).reduce((pre: number, cur) => pre + cur.points.length, 0)
       )
       .setId(this.container.id)
       .setName(name);
     this.container.record(this.spec);
   }
-  protected buildCInnerSub(u: UShellStruct, name: string, endCOuter: CountRebar): void{
+  protected buildCInnerSub(
+    u: UShellStruct,
+    name: string,
+    endCOuter: CountRebar
+  ): void {
     this.specSub = this.genSpec();
     const as = this.info.as;
     const lens = this.shape(u)
@@ -127,5 +127,4 @@ export class ShellCInner extends SpaceRebar<UShellRebarInfo>{
     if (u.cantRight === 0) res[2].removeEndPt();
     return res;
   }
-
 }
