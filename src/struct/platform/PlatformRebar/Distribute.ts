@@ -14,6 +14,7 @@ export class PlatformDistribute extends SpaceRebar{
     this.buildLBot(t);
     this.buildWTop(t);
     this.buildWBot(t);
+    this.buildRound(t);
   }
   protected buildLTop(t: PlatformStruct): void{
     const as = this.info.as;
@@ -22,7 +23,7 @@ export class PlatformDistribute extends SpaceRebar{
     this.lTop
       .setForm(RebarFormPreset.UShape(this.diameter, t.h-t.hs-2*as, t.l-2*as))
       .setId(this.container.id)
-      .setCount(this.lPos(t).length)
+      .setCount(this.wPos(t).length)
     this.container.record(this.lTop);
   }
   protected buildLBot(t: PlatformStruct): void{
@@ -32,7 +33,7 @@ export class PlatformDistribute extends SpaceRebar{
     this.lBot
       .setForm(RebarFormPreset.UShape(this.diameter, 10*this.diameter, t.l-2*as))
       .setId(this.container.id)
-      .setCount(this.lPos(t).length)
+      .setCount(this.wPos(t).length)
     this.container.record(this.lBot);
   }
   protected buildWTop(t: PlatformStruct): void{
@@ -42,7 +43,7 @@ export class PlatformDistribute extends SpaceRebar{
     this.wTop
       .setForm(RebarFormPreset.UShape(this.diameter, t.h-t.hs-2*as, t.w-2*as))
       .setId(this.container.id)
-      .setCount(this.wPos(t).length)
+      .setCount(this.lPos(t).length)
     this.container.record(this.wTop);
   }
   protected buildWBot(t: PlatformStruct): void{
@@ -52,7 +53,7 @@ export class PlatformDistribute extends SpaceRebar{
     this.wBot
       .setForm(RebarFormPreset.UShape(this.diameter, 10*this.diameter, t.w-2*as))
       .setId(this.container.id)
-      .setCount(this.wPos(t).length)
+      .setCount(this.lPos(t).length)
     this.container.record(this.wBot);
   }
   protected buildRound(t: PlatformStruct): void{
