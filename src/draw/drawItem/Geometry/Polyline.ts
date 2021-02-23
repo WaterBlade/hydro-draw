@@ -280,8 +280,8 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     }
     return removeDuplicate((left, right) => left.closeTo(right, 1e-6), res);
   }
-  accept(paper: Paper, insertPoint: Vector): void {
-    paper.visitPolyline(this, insertPoint);
+  accept(paper: Paper): void {
+    paper.visitPolyline(this);
   }
   protected moveItem(v: Vector): void {
     for (const seg of this.segments) {

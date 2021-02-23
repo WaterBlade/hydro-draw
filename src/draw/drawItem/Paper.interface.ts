@@ -1,14 +1,14 @@
 import { LineType, Vector, RotateDirection, TextAlign } from "@/draw/misc";
 
 export interface Paper {
-  visitArc(item: PaperArc, insertPoint: Vector): void;
-  visitArrow(item: PaperArrow, insertPoint: Vector): void;
-  visitCircle(item: PaperCircle, insertPoint: Vector): void;
-  visitDimAligned(item: PaperDimAligned, insertPoint: Vector): void;
-  visitLine(item: PaperLine, insertPoint: Vector): void;
-  visitMText(item: PaperMText, insertPoint: Vector): void;
-  visitPolyline(item: PaperPolyline, insertPoint: Vector): void;
-  visitText(item: PaperText, insertPoint: Vector): void;
+  visitArc(item: PaperArc): void;
+  visitArrow(item: PaperArrow): void;
+  visitCircle(item: PaperCircle): void;
+  visitDimAligned(item: PaperDimAligned): void;
+  visitLine(item: PaperLine): void;
+  visitMText(item: PaperMText): void;
+  visitPolyline(item: PaperPolyline): void;
+  visitText(item: PaperText): void;
 
   visitContent(item: PaperContent): string;
   visitString(item: PaperContentString): string;
@@ -17,7 +17,7 @@ export interface Paper {
 
 export interface PaperDrawItem {
   lineType: LineType;
-  accept(paper: Paper, insertPoint: Vector): void;
+  accept(paper: Paper): void;
 }
 
 export interface PaperArc extends PaperDrawItem {

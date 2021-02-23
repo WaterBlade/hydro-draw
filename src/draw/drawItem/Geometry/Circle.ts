@@ -131,8 +131,8 @@ export class Circle extends DrawItem implements CircleGeometry {
       }, []);
     return removeDuplicate((left, right) => left.closeTo(right, 1e-6), iters);
   }
-  accept(paper: Paper, insertPoint: Vector): void {
-    paper.visitCircle(this, insertPoint);
+  accept(paper: Paper): void {
+    paper.visitCircle(this);
   }
   protected scaleItem(factor: number): void {
     this.center = this.center.mul(factor);

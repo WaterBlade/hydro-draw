@@ -1,9 +1,10 @@
-import { RebarFormPreset } from "@/draw";
+import { RebarFormPreset, RebarSpec } from "@/draw";
 import { UnitRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class BarMain extends UnitRebar<UShellRebarInfo> {
+  spec = new RebarSpec();
   build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.asBar;

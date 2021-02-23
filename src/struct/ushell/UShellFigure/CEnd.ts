@@ -271,10 +271,10 @@ export class CEnd extends Figure {
         .leaderNote(
           vec(
             -u.shell.r -
-              u.shell.t -
-              u.oBeam.w +
-              u.endSect.w -
-              2 * fig.textHeight,
+            u.shell.t -
+            u.oBeam.w +
+            u.endSect.w -
+            2 * fig.textHeight,
             y
           ),
           vec(1, 0)
@@ -342,26 +342,28 @@ export class CEnd extends Figure {
     fig: FigureContent,
     isCant: boolean
   ): void {
-    const bar = rebars.end.topBeam;
-    const spec = isCant ? bar.specCant : bar.spec;
-    const left = isCant ? bar.shapeCant(u) : bar.shape(u);
-    const right = left.mirrorByVAxis();
-    const x = u.shell.r - u.iBeam.w - 1.5 * fig.textHeight;
-    const y = u.shell.hd - u.iBeam.hd - 2 * fig.textHeight;
-    fig.push(
-      fig
-        .planeRebar()
-        .rebar(left)
-        .spec(spec)
-        .leaderNote(vec(-x, y), vec(-1, 1), vec(1, 0))
-        .generate(),
-      fig
-        .planeRebar()
-        .rebar(right)
-        .spec(spec)
-        .leaderNote(vec(x, y), vec(1, 1), vec(-1, 0))
-        .generate()
-    );
+    if (u.iBeam.w > 0) {
+      const bar = rebars.end.topBeam;
+      const spec = isCant ? bar.specCant : bar.spec;
+      const left = isCant ? bar.shapeCant(u) : bar.shape(u);
+      const right = left.mirrorByVAxis();
+      const x = u.shell.r - u.iBeam.w - 1.5 * fig.textHeight;
+      const y = u.shell.hd - u.iBeam.hd - 2 * fig.textHeight;
+      fig.push(
+        fig
+          .planeRebar()
+          .rebar(left)
+          .spec(spec)
+          .leaderNote(vec(-x, y), vec(-1, 1), vec(1, 0))
+          .generate(),
+        fig
+          .planeRebar()
+          .rebar(right)
+          .spec(spec)
+          .leaderNote(vec(x, y), vec(1, 1), vec(-1, 0))
+          .generate()
+      );
+    }
   }
   protected drawWallStir(
     u: UShellStruct,
@@ -380,10 +382,10 @@ export class CEnd extends Figure {
         .cross(
           new Polyline(
             -u.shell.r -
-              u.shell.t -
-              u.oBeam.w +
-              u.endSect.w +
-              Math.max(u.support.w / 2, 200),
+            u.shell.t -
+            u.oBeam.w +
+            u.endSect.w +
+            Math.max(u.support.w / 2, 200),
             u.shell.hd - u.endHeight
           )
             .lineBy(-u.endSect.w, u.endSect.hs)
@@ -398,10 +400,10 @@ export class CEnd extends Figure {
         .cross(
           new Polyline(
             u.shell.r +
-              u.shell.t +
-              u.oBeam.w -
-              u.endSect.w -
-              Math.max(u.support.w / 2, 200),
+            u.shell.t +
+            u.oBeam.w -
+            u.endSect.w -
+            Math.max(u.support.w / 2, 200),
             u.shell.hd - u.endHeight
           )
             .lineBy(u.endSect.w, u.endSect.hs)
@@ -418,7 +420,7 @@ export class CEnd extends Figure {
     isCant = false
   ): void {
     const bar = rebars.shell.cInner;
-    const spec = isCant ? bar.specSub : bar.spec;
+    const spec = isCant ? bar.spec : bar.specSub;
     const as = rebars.info.as;
     const gap = isCant ? 0 : u.waterStop.h;
     const space = isCant ? rebars.shell.cInner.space : 0;

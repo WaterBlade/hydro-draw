@@ -266,8 +266,8 @@ export class Line extends DrawItem implements LineGeometry {
     this.points.pop();
     return this;
   }
-  accept(paper: Paper, insertPoint: Vector): void {
-    paper.visitLine(this, insertPoint);
+  accept(paper: Paper): void {
+    paper.visitLine(this);
   }
   protected scaleItem(factor: number): void {
     this.start = this.start.mul(factor);

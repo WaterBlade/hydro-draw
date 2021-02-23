@@ -3,7 +3,7 @@ import { Paper, PaperDrawItem } from "./Paper.interface";
 
 export abstract class DrawItem implements PaperDrawItem {
   lineType = LineType.Thin;
-  abstract accept(paper: Paper, insertPoint: Vector): void;
+  abstract accept(paper: Paper): void;
   scale(factor: number): void {
     if (this._boundingBox) this._boundingBox.scale(factor);
     this.scaleItem(factor);

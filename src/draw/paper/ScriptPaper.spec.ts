@@ -22,12 +22,12 @@ test("pack", () => {
     accept: jest.fn(),
   };
   paper.push(mock);
-  paper.pack();
+  paper.generate();
   expect(mock.accept.mock.calls.length).toEqual(1);
 });
 test("pack init", () => {
   const paper = new ScriptPaper();
-  const res = paper.pack();
+  const res = paper.generate();
   expect(res).toEqual(
     [
       "-layer",
@@ -97,8 +97,8 @@ test("pack init", () => {
 
 test("arc counterclockwise", () => {
   const paper = new ScriptPaper();
-  const arc = new Arc(vec(0, 0), 2, 0, 180);
-  paper.visitArc(arc, vec(1, 1));
+  const arc = new Arc(vec(1, 1), 2, 0, 180);
+  paper.visitArc(arc);
   expect(paper.scriptList).toEqual([
     ScriptPaper.ESCChar + "-layer",
     "S",
@@ -113,8 +113,8 @@ test("arc counterclockwise", () => {
 });
 test("arc clockwise", () => {
   const paper = new ScriptPaper();
-  const arc = new Arc(vec(0, 0), 2, 0, 180, RotateDirection.clockwise);
-  paper.visitArc(arc, vec(1, 1));
+  const arc = new Arc(vec(1, 1), 2, 0, 180, RotateDirection.clockwise);
+  paper.visitArc(arc);
   expect(paper.scriptList).toEqual([
     ScriptPaper.ESCChar + "-layer",
     "S",
@@ -129,8 +129,8 @@ test("arc clockwise", () => {
 });
 test("arrow", () => {
   const paper = new ScriptPaper();
-  const arrow = new Arrow(vec(0, 0), vec(1, 0), 2);
-  paper.visitArrow(arrow, vec(1, 1));
+  const arrow = new Arrow(vec(1, 1), vec(2, 1), 2);
+  paper.visitArrow(arrow);
   expect(paper.scriptList).toEqual([
     ScriptPaper.ESCChar + "-layer",
     "S",
@@ -149,8 +149,8 @@ test("arrow", () => {
 });
 test("circle", () => {
   const paper = new ScriptPaper();
-  const circle = new Circle(vec(0, 0), 2);
-  paper.visitCircle(circle, vec(1, 1));
+  const circle = new Circle(vec(1, 1), 2);
+  paper.visitCircle(circle);
   expect(paper.scriptList).toEqual([
     ScriptPaper.ESCChar + "-layer",
     "S",
@@ -163,9 +163,9 @@ test("circle", () => {
 });
 test("dimaligned with used scale", () => {
   const paper = new ScriptPaper();
-  const dim = new DimAligned(vec(0, 0), vec(1, 0), vec(0.5, 1.5), 1, 1, "100");
+  const dim = new DimAligned(vec(1, 1), vec(2, 1), vec(1.5, 2.5), 1, 1, "100");
   paper.dimStyleNameList.push("1-1");
-  paper.visitDimAligned(dim, vec(1, 1));
+  paper.visitDimAligned(dim);
   expect(paper.scriptList).toEqual([
     ScriptPaper.ESCChar + "-layer",
     "S",
@@ -184,8 +184,8 @@ test("dimaligned with used scale", () => {
 });
 test("dimaligned with unused scale", () => {
   const paper = new ScriptPaper();
-  const dim = new DimAligned(vec(0, 0), vec(1, 0), vec(0.5, 1.5), 1, 1);
-  paper.visitDimAligned(dim, vec(1, 1));
+  const dim = new DimAligned(vec(1, 1), vec(2, 1), vec(1.5, 2.5), 1, 1);
+  paper.visitDimAligned(dim);
   expect(paper.scriptList).toEqual([
     ScriptPaper.ESCChar + "-layer",
     "S",
@@ -227,8 +227,8 @@ test("dimaligned with unused scale", () => {
 });
 test("line", () => {
   const paper = new ScriptPaper();
-  const line = new Line(vec(0, 0), vec(1, 0));
-  paper.visitLine(line, vec(1, 1));
+  const line = new Line(vec(1, 1), vec(2, 1));
+  paper.visitLine(line);
   expect(paper.scriptList).toEqual([
     ScriptPaper.ESCChar + "-layer",
     "S",
@@ -242,8 +242,8 @@ test("line", () => {
 });
 test("mtext", () => {
   const paper = new ScriptPaper();
-  const mtext = new MText(["hello", "world"], vec(0, 0), 2.5, 20);
-  paper.visitMText(mtext, vec(1, 2));
+  const mtext = new MText(["hello", "world"], vec(1, 2), 2.5, 20);
+  paper.visitMText(mtext);
   expect(paper.scriptList).toEqual([
     ScriptPaper.ESCChar + "-layer",
     "S",
@@ -268,8 +268,8 @@ test("mtext", () => {
 });
 test("text", () => {
   const paper = new ScriptPaper();
-  const text = new Text("Hello", vec(1, 0), 2.5);
-  paper.visitText(text, vec(1, 1));
+  const text = new Text("Hello", vec(2, 1), 2.5);
+  paper.visitText(text);
   expect(paper.scriptList).toEqual([
     ScriptPaper.ESCChar + "-layer",
     "S",

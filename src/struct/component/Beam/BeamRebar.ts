@@ -1,4 +1,4 @@
-import { divideBySpace, RebarFormPreset } from "@/draw";
+import { divideBySpace, RebarFormPreset, RebarSpec } from "@/draw";
 import { CompositeRebar, CountRebar, SpaceRebar } from "@/struct/utils";
 import { BeamStruct } from "./BeamStruct";
 
@@ -20,6 +20,7 @@ export class BeamRebar extends CompositeRebar {
 }
 
 class BeamBot extends CountRebar {
+  spec = new RebarSpec();
   build(t: BeamStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.as;
@@ -34,6 +35,7 @@ class BeamBot extends CountRebar {
 }
 
 class BeamTop extends CountRebar {
+  spec = new RebarSpec();
   build(t: BeamStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.as;
@@ -48,6 +50,7 @@ class BeamTop extends CountRebar {
 }
 
 class BeamMid extends CountRebar {
+  spec = new RebarSpec();
   build(t: BeamStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.as;
@@ -62,6 +65,7 @@ class BeamMid extends CountRebar {
 }
 
 class Stir extends SpaceRebar {
+  spec = new RebarSpec();
   build(t: BeamStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.as;
@@ -82,6 +86,7 @@ class Stir extends SpaceRebar {
 }
 
 export class Tendon extends SpaceRebar {
+  spec = new RebarSpec();
   build(t: BeamStruct, midBar: CountRebar, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.as;

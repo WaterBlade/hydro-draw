@@ -4,14 +4,8 @@ import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class ShellCInner extends SpaceRebar<UShellRebarInfo> {
-  protected _specSub?: RebarSpec;
-  get specSub(): RebarSpec {
-    if (!this._specSub) throw Error("spec sub not init");
-    return this._specSub;
-  }
-  set specSub(val: RebarSpec) {
-    this._specSub = val;
-  }
+  spec = new RebarSpec();
+  specSub = new RebarSpec();
 
   build(u: UShellStruct, name: string, endCOuter: CountRebar): void {
     this.buildCInner(u, name);

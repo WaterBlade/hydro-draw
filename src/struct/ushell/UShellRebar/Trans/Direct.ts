@@ -1,9 +1,10 @@
-import { Line, RebarFormPreset, vec } from "@/draw";
+import { Line, RebarFormPreset, RebarSpec, vec } from "@/draw";
 import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class TransDirect extends SpaceRebar<UShellRebarInfo> {
+  spec = new RebarSpec();
   build(u: UShellStruct, name: string): void {
     if (u.oBeam.w > 0) {
       this.spec = this.genSpec();

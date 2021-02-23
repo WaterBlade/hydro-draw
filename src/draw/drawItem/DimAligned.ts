@@ -22,8 +22,8 @@ export class DimAligned extends DrawItem implements PaperDimAligned {
       this.override = override;
     }
   }
-  accept(paper: Paper, insertPoint: Vector): void {
-    paper.visitDimAligned(this, insertPoint);
+  accept(paper: Paper): void {
+    paper.visitDimAligned(this);
   }
   mirrorByVAxis(x = 0): DimAligned {
     const start = this.start.mirrorByVAxis(x);

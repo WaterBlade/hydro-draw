@@ -1,36 +1,26 @@
-import { Line, Polyline, RebarPathForm, Side, toDegree, vec } from "@/draw";
+import { Line, Polyline, RebarPathForm, RebarSpec, Side, toDegree, vec } from "@/draw";
 import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class ShellTopBeam extends SpaceRebar<UShellRebarInfo> {
+  spec = new RebarSpec();
   build(u: UShellStruct, name: string): void {
+    if(u.oBeam.w === 0) throw Error('ushell obeam width is zero');
     this.spec = this.genSpec();
-    const as = this.info.as;
     if (u.oBeam.w + u.iBeam.w > 0) {
       const form = new RebarPathForm(this.diameter);
-      const segs = this.shape(u)
-        .offset(as, Side.Right)
-        .removeStart()
-        .removeEnd().segments;
+      const segs = this.shape(u, this.info.as).segments;
       let i = 0;
-      if (u.oBeam.w > 0) {
-        const angle = 90 + toDegree(Math.asin(u.oBeam.hs / u.oBeam.w));
-        form
-          .lineBy(-1.5, 1)
-          .dimLength(segs[i++].calcLength())
-          .lineBy(0, 1.2)
-          .dimAngle(angle)
-          .dimLength(segs[i++].calcLength())
-          .lineBy(3.2, 0)
-          .dimLength(segs[i++].calcLength());
-      } else {
-        form
-          .lineBy(0, 1.5)
-          .dimLength(segs[i++].calcLength())
-          .lineBy(2.5, 0)
-          .dimLength(segs[i++].calcLength());
-      }
+      const angle = 90 + toDegree(Math.asin(u.oBeam.hs / u.oBeam.w));
+      form
+        .lineBy(-1.5, 1)
+        .dimLength(segs[i++].calcLength())
+        .lineBy(0, 1.2)
+        .dimAngle(angle)
+        .dimLength(segs[i++].calcLength())
+        .lineBy(3.2, 0)
+        .dimLength(segs[i++].calcLength());
       if (u.iBeam.w > 0) {
         const angle = 90 + toDegree(Math.asin(u.iBeam.hs / u.iBeam.w));
         form
@@ -40,7 +30,7 @@ export class ShellTopBeam extends SpaceRebar<UShellRebarInfo> {
           .dimAngle(angle)
           .dimLength(segs[i++].calcLength());
       } else {
-        form.lineBy(0, 1.5).dimLength(segs[i++].calcLength());
+        form.lineBy(0, -1.5).dimLength(segs[i++].calcLength());
       }
       this.spec
         .setCount(
@@ -52,28 +42,22 @@ export class ShellTopBeam extends SpaceRebar<UShellRebarInfo> {
       this.container.record(this.spec);
     }
   }
-  shape(u: UShellStruct): Polyline {
+  shape(u: UShellStruct, dist: number): Polyline {
     const path = new Polyline();
     const as = this.info.as;
-    if (u.oBeam.w > 0) {
-      path
-        .moveTo(
-          -u.shell.r,
-          u.shell.hd -
-            u.oBeam.hd -
-            u.oBeam.hs -
-            u.shell.t * (u.oBeam.hs / u.oBeam.w) +
-            1
-        )
-        .lineBy(0, -1)
-        .lineTo(-u.shell.r - u.shell.t - u.oBeam.w, u.shell.hd - u.oBeam.hd)
-        .lineBy(0, u.oBeam.hd);
-    } else {
-      path
-        .moveTo(-u.shell.r - u.shell.t, u.shell.hd - 40 * this.diameter - as)
-        .lineTo(-u.shell.r - u.shell.t, u.shell.hd);
-    }
-    path.lineBy(u.beamWidth, 0);
+    path
+      .moveTo(
+        -u.shell.r,
+        u.shell.hd -
+        u.oBeam.hd -
+        u.oBeam.hs -
+        u.shell.t * (u.oBeam.hs / u.oBeam.w) +
+        1
+      )
+      .lineBy(0, -1)
+      .lineTo(-u.shell.r - u.shell.t - u.oBeam.w, u.shell.hd - u.oBeam.hd)
+      .lineBy(0, u.oBeam.hd)
+      .lineBy(u.beamWidth, 0);
     if (u.iBeam.w > 0) {
       path
         .lineBy(0, -u.iBeam.hd)
@@ -85,11 +69,12 @@ export class ShellTopBeam extends SpaceRebar<UShellRebarInfo> {
             u.shell.t * (u.iBeam.hs / u.iBeam.w)
         )
         .lineBy(0, 1);
+      
+      return path.offset(dist, Side.Right).removeStart().removeEnd();
     } else {
       path.lineBy(0, -40 * this.diameter - as);
+      return path.offset(dist, Side.Right).removeStart();
     }
-
-    return path;
   }
   pos(u: UShellStruct, offsetDist?: number): Line[] {
     const res: Line[] = [];

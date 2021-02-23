@@ -22,7 +22,7 @@ export class RebarTable implements Builder<CompositeItem> {
     const title = this._content ? this._content : "钢 筋 表";
     t.title(title);
     const withStructure = this.rebarSpecs[0]
-      ? this.rebarSpecs[0].structure !== ""
+      ? this.rebarSpecs[0].name !== ""
       : false;
     const start = withStructure ? 1 : 0;
 
@@ -32,7 +32,7 @@ export class RebarTable implements Builder<CompositeItem> {
       t.cell(0, 0).text("部位");
       t.setWidth(0, 2 * h);
 
-      const labelInGroup = groupBy(this.rebarSpecs.map((r) => r.structure));
+      const labelInGroup = groupBy(this.rebarSpecs.map((r) => r.name));
       let row = 1;
       for (const group of labelInGroup) {
         const len = group.length;

@@ -107,7 +107,7 @@ export default function runNoteDemo():void{
     a16.generate()
   );
   paper.push(layout.generate());
-  fs.writeFile('demoNote.txt', paper.pack(), ()=>{
+  fs.writeFile('demoNote.txt', paper.generate(), ()=>{
     console.log('note demo finished');
   })
 }

@@ -1,9 +1,10 @@
-import { Line, Polyline, RebarPathForm, Side, vec } from "@/draw";
+import { Line, Polyline, RebarPathForm, RebarSpec, Side, vec } from "@/draw";
 import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class ShellCOuter extends SpaceRebar<UShellRebarInfo> {
+  spec = new RebarSpec();
   build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const angle = u.transAngle;

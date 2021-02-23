@@ -52,17 +52,19 @@ export class Rebar<T = DefaultRebarInfoInterface> {
     if (!this._diameter) throw Error("diameter not init");
     return this._diameter;
   }
-  protected _spec?: RebarSpec;
-  get spec(): RebarSpec {
-    if (!this._spec) throw Error("spec not init");
-    return this._spec;
-  }
-  set spec(val: RebarSpec) {
-    this._spec = val;
-  }
   constructor(protected container: RebarContainer, protected info: T) {}
   genSpec(): RebarSpec {
     return new RebarSpec().setGrade(this.grade).setDiameter(this.diameter);
+  }
+  protected _layerCount?: number;
+  get layerCount(): number {
+    if (!this._layerCount) throw Error("layerCount not init");
+    return this._layerCount;
+  }
+  protected _layerSpace?: number;
+  get layerSpace(): number {
+    if (!this._layerSpace) throw Error("layerSpace not init");
+    return this._layerSpace;
   }
 }
 
@@ -88,19 +90,9 @@ export class CountRebar<T = DefaultRebarInfoInterface> extends Rebar<T> {
     this._layerSpace = layerSpace;
   }
   protected _singleCount?: number;
-  protected _layerCount?: number;
-  protected _layerSpace?: number;
   get singleCount(): number {
     if (!this._singleCount) throw Error("singleCount not init");
     return this._singleCount;
-  }
-  get layerCount(): number {
-    if (!this._layerCount) throw Error("layerCount not init");
-    return this._layerCount;
-  }
-  get layerSpace(): number {
-    if (!this._layerSpace) throw Error("layerSpace not init");
-    return this._layerSpace;
   }
 }
 
@@ -109,12 +101,16 @@ export class SpaceRebar<T = DefaultRebarInfoInterface> extends Rebar<T> {
     grade: RebarGrade,
     diameter: RebarDiameter,
     space: number,
-    denseSpace = 0
+    denseSpace = 0,
+    layerCount = 1,
+    layerSpace = 50
   ): void {
     this._grade = grade;
     this._diameter = diameter;
     this._space = space;
     this._denseSpace = denseSpace ? denseSpace : space / 2;
+    this._layerCount = layerCount;
+    this._layerSpace = layerSpace;
   }
   protected _space?: number;
   protected _denseSpace?: number;

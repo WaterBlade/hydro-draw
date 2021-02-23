@@ -1,9 +1,10 @@
-import { divideBySpace, RebarFormPreset } from "@/draw";
+import { divideBySpace, RebarFormPreset, RebarSpec } from "@/draw";
 import { PileStruct } from "../PileStruct";
 import { Rebar, SpaceRebar } from "../../utils";
 import { PileRebarInfo } from "./Info";
 
 export class Rib extends SpaceRebar<PileRebarInfo> {
+  spec = new RebarSpec();
   build(t: PileStruct, mainBar: Rebar): void {
     this.spec = this.genSpec();
     const as = this.info.as;

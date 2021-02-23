@@ -1,9 +1,10 @@
-import { Arc, Line, Polyline, RebarFormPreset, Side, vec } from "@/draw";
+import { Arc, Line, Polyline, RebarFormPreset, RebarSpec, Side, vec } from "@/draw";
 import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class TransArc extends SpaceRebar<UShellRebarInfo> {
+  spec = new RebarSpec();
   build(u: UShellStruct, name: string): void {
     if (u.oBeam.w > 0) {
       this.spec = this.genSpec();

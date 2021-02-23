@@ -6,8 +6,8 @@ export class Arrow extends DrawItem implements PaperArrow {
   constructor(public start: Vector, public end: Vector, public width: number) {
     super();
   }
-  accept(paper: Paper, insertPoint: Vector): void {
-    paper.visitArrow(this, insertPoint);
+  accept(paper: Paper): void {
+    paper.visitArrow(this);
   }
   mirrorByVAxis(x = 0): Arrow {
     const start = this.start.mirrorByVAxis(x);

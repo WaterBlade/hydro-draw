@@ -79,7 +79,7 @@ export default function runFrameDoubleDemo(): void{
   layout.push(...ctrl.generate());
   paper.push(layout.generate());
 
-  fs.writeFile('demoFrameDouble.txt', paper.pack(), ()=>{
+  fs.writeFile('demoFrameDouble.txt', paper.generate(), ()=>{
     console.log('frame double demo finished');
   })
   

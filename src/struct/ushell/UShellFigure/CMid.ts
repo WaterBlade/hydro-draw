@@ -150,18 +150,13 @@ export class CMid extends Figure {
     const bar = rebars.shell.lInner;
     const as = rebars.info.as;
     const fig = this.fig;
-    const p = bar
-      .pos(u)
-      .offset(as + fig.drawRadius, Side.Right)
-      .removeStart()
-      .removeEnd()
-      .divide(bar.space);
+    const p = bar.pos(u, as+fig.r);
     fig.push(
       fig
         .polylinePointRebar()
         .spec(bar.spec, bar.spec.count, bar.space)
         .polyline(p)
-        .offset(2 * fig.textHeight)
+        .offset(2 * fig.h)
         .onlineNote(vec(0, -u.shell.r / 2))
         .generate()
     );
@@ -221,8 +216,7 @@ export class CMid extends Figure {
   protected drawTopBeam(u: UShellStruct, rebars: UShellRebar): void {
     const bar = rebars.shell.topBeam;
     const fig = this.fig;
-    const as = rebars.info.as;
-    const pLeft = bar.shape(u).offset(as, Side.Right).removeStart().removeEnd();
+    const pLeft = bar.shape(u, rebars.info.as);
     const pRight = pLeft.mirrorByVAxis();
     const ptLeft = vec(
       -u.shell.r + u.iBeam.w + 1.5 * fig.textHeight,

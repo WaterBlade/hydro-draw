@@ -11,63 +11,59 @@ import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class EndTopBeam extends UnitRebar<UShellRebarInfo> {
-  protected _specCant?: RebarSpec;
-  get specCant(): RebarSpec {
-    if (!this._specCant) throw Error("spec sub not init");
-    return this._specCant;
-  }
-  set specCant(val: RebarSpec) {
-    this._specCant = val;
-  }
+  spec = new RebarSpec();
+  specCant = new RebarSpec();
   build(u: UShellStruct, name: string, cOuter: CountRebar): void {
-    if (u.cantCount < 2) {
-      this.spec = this.genSpec();
-      const count = cOuter.singleCount;
-      const segs = this.shape(u).segments;
-      const angle = 90 + toDegree(Math.asin(u.iBeam.hs / u.iBeam.w));
-      let i = 0;
-      this.spec
-        .setCount((2 - u.cantCount) * count)
-        .setId(this.container.id)
-        .setName(name)
-        .setForm(
-          new RebarPathForm(this.diameter)
-            .lineBy(0, 1.6)
-            .dimLength(40 * this.diameter)
-            .lineBy(2.5, 0)
-            .dimLength(segs[i++].calcLength())
-            .lineBy(0, -1.2)
-            .dimLength(segs[i++].calcLength())
-            .lineBy(-1.2, -0.8)
-            .dimLength(segs[i++].calcLength())
-            .dimAngle(angle)
-        );
-      this.container.record(this.spec);
-    }
-    if (u.cantCount > 0) {
-      this.specCant = this.genSpec();
-      const count = cOuter.singleCount;
-      const segs = this.shapeCant(u).segments;
-      const angle = 90 + toDegree(Math.asin(u.iBeam.hs / u.iBeam.w));
-      let i = 0;
-      this.specCant
-        .setCount((2 - u.cantCount) * count)
-        .setId(this.container.id)
-        .setName(name)
-        .setForm(
-          new RebarPathForm(this.diameter)
-            .lineBy(0, 1.6)
-            .dimLength(40 * this.diameter)
-            .lineBy(2.5, 0)
-            .dimLength(segs[i++].calcLength())
-            .lineBy(0, -1.2)
-            .dimLength(segs[i++].calcLength())
-            .lineBy(-1.2, -0.8)
-            .dimLength(segs[i++].calcLength())
-            .dimAngle(angle)
-        );
+    if (u.iBeam.w > 0) {
+      if (u.cantCount < 2) {
+        this.spec = this.genSpec();
+        const count = cOuter.singleCount;
+        const segs = this.shape(u).segments;
+        const angle = 90 + toDegree(Math.asin(u.iBeam.hs / u.iBeam.w));
+        let i = 0;
+        this.spec
+          .setCount((2 - u.cantCount) * count)
+          .setId(this.container.id)
+          .setName(name)
+          .setForm(
+            new RebarPathForm(this.diameter)
+              .lineBy(0, 1.6)
+              .dimLength(40 * this.diameter)
+              .lineBy(2.5, 0)
+              .dimLength(segs[i++].calcLength())
+              .lineBy(0, -1.2)
+              .dimLength(segs[i++].calcLength())
+              .lineBy(-1.2, -0.8)
+              .dimLength(segs[i++].calcLength())
+              .dimAngle(angle)
+          );
+        this.container.record(this.spec);
+      }
+      if (u.cantCount > 0) {
+        this.specCant = this.genSpec();
+        const count = cOuter.singleCount;
+        const segs = this.shapeCant(u).segments;
+        const angle = 90 + toDegree(Math.asin(u.iBeam.hs / u.iBeam.w));
+        let i = 0;
+        this.specCant
+          .setCount((2 - u.cantCount) * count)
+          .setId(this.container.id)
+          .setName(name)
+          .setForm(
+            new RebarPathForm(this.diameter)
+              .lineBy(0, 1.6)
+              .dimLength(40 * this.diameter)
+              .lineBy(2.5, 0)
+              .dimLength(segs[i++].calcLength())
+              .lineBy(0, -1.2)
+              .dimLength(segs[i++].calcLength())
+              .lineBy(-1.2, -0.8)
+              .dimLength(segs[i++].calcLength())
+              .dimAngle(angle)
+          );
 
-      this.container.record(this.specCant);
+        this.container.record(this.specCant);
+      }
     }
   }
   shape(u: UShellStruct): Polyline {

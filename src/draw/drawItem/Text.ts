@@ -33,7 +33,7 @@ export class Text extends DrawItem implements PaperText {
   }
   static properAngle(angle: number): number {
     if (angle > 90 && angle <= 270) return (angle + 180) % 360;
-    return angle;
+    return angle % 360;
   }
   static properAlign(angle: number, align: TextAlign): TextAlign {
     if (angle > 90 && angle <= 270) {
@@ -60,8 +60,8 @@ export class Text extends DrawItem implements PaperText {
     }
     return align;
   }
-  accept(paper: Paper, insertPoint: Vector): void {
-    paper.visitText(this, insertPoint);
+  accept(paper: Paper): void {
+    paper.visitText(this);
   }
   mirrorByVAxis(x = 0): Text {
     const insertPoint = this.insertPoint.mirrorByVAxis(x);

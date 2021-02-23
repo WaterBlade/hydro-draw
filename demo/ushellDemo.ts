@@ -1,10 +1,10 @@
 import { UShellController } from "@/struct";
-import { CompositeItem, HLayoutBuilder, HydroA1Builder, Polyline, ScriptPaper } from "@/draw";
+import { CompositeItem, HLayoutBuilder, HydroA1Builder, Polyline, DXFPaper } from "@/draw";
 import { LineType, polar, RotateDirection, Side, toDegree } from "@/draw/misc";
 import fs from "fs";
 
 export default function runUshellDemo(): void{
-  const paper = new ScriptPaper();
+  const paper = new DXFPaper();
   const ctrl = new UShellController();
   const draw = ctrl.drawing;
   draw.company = '湖南省水利水电勘测设计研究总院';
@@ -40,11 +40,11 @@ export default function runUshellDemo(): void{
   // 外挑斜高
   u.oBeam.hs = 200;
   // 内挑长
-  u.iBeam.w = 500;
+  u.iBeam.w = 0;
   // 内挑直高
-  u.iBeam.hd = 200;
+  u.iBeam.hd = 0;
   // 内挑斜高
-  u.iBeam.hs = 200;
+  u.iBeam.hs = 0;
   // 止水槽
   u.waterStop.w = 130;
   u.waterStop.h = 50;
@@ -105,7 +105,7 @@ export default function runUshellDemo(): void{
   layout.push(...ctrl.generate());
   paper.push(layout.generate());
 
-  fs.writeFile('demoUshell.txt', paper.pack(), ()=>{
+  fs.writeFile('demoUshell.dxf', paper.generate(), ()=>{
     console.log('ushell demo finished');
   })
   

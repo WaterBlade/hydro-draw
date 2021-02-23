@@ -398,8 +398,8 @@ export class Arc extends DrawItem implements ArcGeometry {
     this.points.pop();
     return this;
   }
-  accept(paper: Paper, insertPoint: Vector): void {
-    paper.visitArc(this, insertPoint);
+  accept(paper: Paper): void {
+    paper.visitArc(this);
   }
   protected scaleItem(factor: number): void {
     this.center = this.center.mul(factor);

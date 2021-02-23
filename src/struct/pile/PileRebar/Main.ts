@@ -1,9 +1,10 @@
-import { divideByCount, RebarPathForm, Side } from "@/draw";
+import { divideByCount, RebarPathForm, RebarSpec, Side } from "@/draw";
 import { PileStruct } from "../PileStruct";
 import { CountRebar } from "../../utils";
 import { PileRebarInfo } from "./Info";
 
 export class Main extends CountRebar<PileRebarInfo> {
+  spec = new RebarSpec();
   build(t: PileStruct): void {
     const as = this.info.as;
     this.spec = this.genSpec();

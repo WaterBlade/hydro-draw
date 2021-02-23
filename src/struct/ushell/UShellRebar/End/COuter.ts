@@ -1,9 +1,10 @@
-import { Polyline, RebarPathForm, Side, toDegree } from "@/draw";
+import { Polyline, RebarPathForm, RebarSpec, Side, toDegree } from "@/draw";
 import { CountRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class EndCOuter extends CountRebar<UShellRebarInfo> {
+  spec = new RebarSpec();
   build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const path = this.shape(u);

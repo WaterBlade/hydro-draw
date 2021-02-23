@@ -25,8 +25,8 @@ export class MText extends DrawItem implements PaperMText {
       ...this.content.map((c) => c.length * this.height * this.widthFactor)
     );
   }
-  accept(paper: Paper, insertPoint: Vector): void {
-    paper.visitMText(this, insertPoint);
+  accept(paper: Paper): void {
+    paper.visitMText(this);
   }
   mirrorByVAxis(x = 0): MText {
     const insertPoint = this.insertPoint.mirrorByVAxis(x);

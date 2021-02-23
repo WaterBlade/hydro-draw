@@ -47,7 +47,7 @@ export default function runPileDemo(): void{
   layout.push(...ctrl.generate());
   paper.push(layout.generate());
 
-  fs.writeFile('demoPile.txt', paper.pack(), ()=>{
+  fs.writeFile('demoPile.txt', paper.generate(), ()=>{
     console.log('pile demo finished');
   })
   

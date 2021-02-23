@@ -4,14 +4,8 @@ import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class EndBeamStir extends SpaceRebar<UShellRebarInfo> {
-  protected _specCant?: RebarSpec;
-  get specCant(): RebarSpec {
-    if (!this._specCant) throw Error("spec sub not init");
-    return this._specCant;
-  }
-  set specCant(val: RebarSpec) {
-    this._specCant = val;
-  }
+  spec = new RebarSpec();
+  specCant = new RebarSpec();
   build(u: UShellStruct, name: string): void {
     if (u.cantCount < 2) {
       this.spec = this.genSpec();

@@ -1,9 +1,10 @@
-import { Line, polar, RebarFormPreset, vec } from "@/draw";
+import { Line, polar, RebarFormPreset, RebarSpec, vec } from "@/draw";
 import { PileStruct } from "../PileStruct";
 import { Rebar, SpaceRebar } from "../../utils";
 import { PileRebarInfo } from "./Info";
 
 export class StirTop extends SpaceRebar<PileRebarInfo> {
+  spec = new RebarSpec();
   build(t: PileStruct, mainBar: Rebar): void {
     this.spec = this.genSpec();
     const lines = this.shape(t, mainBar);

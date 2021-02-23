@@ -1,9 +1,10 @@
-import { divideBySpace, RebarFormPreset } from "@/draw";
+import { divideBySpace, RebarFormPreset, RebarSpec } from "@/draw";
 import { SpaceRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class BarStir extends SpaceRebar<UShellRebarInfo> {
+  spec = new RebarSpec();
   build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     const as = this.info.asBar;

@@ -13,7 +13,7 @@ export class LOuter extends Figure {
     this.fig = new FigureContent();
     this.fig
       .resetScale(1, 50)
-      .setTitle("槽身跨中钢筋图")
+      .setTitle("槽身外层钢筋图")
       .displayScale()
       .centerAligned()
       .keepTitlePos();

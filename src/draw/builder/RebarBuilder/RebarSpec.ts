@@ -67,8 +67,9 @@ export class RebarSpec {
     return this.length * this.count * 0.001;
   }
 
-  protected _id = "";
+  protected _id?: string;
   get id(): string {
+    if(!this._id) throw Error('id not init');
     return this._id;
   }
   setId(id: string): this {
@@ -76,67 +77,12 @@ export class RebarSpec {
     return this;
   }
 
-  protected _structure = "";
-  get structure(): string {
-    return this._structure;
+  protected _name = "";
+  get name(): string {
+    return this._name;
   }
   setName(name: string): this {
-    this._structure = name;
-    return this;
-  }
-}
-
-export class UnitRebarSpec extends RebarSpec {
-  set(grade: RebarGrade, diameter: RebarDiameter): this {
-    this.setGrade(grade);
-    this.setDiameter(diameter);
-    return this;
-  }
-}
-
-export class CountRebarSpec extends RebarSpec {
-  protected _singleCount = 0;
-  get singleCount(): number {
-    if (!this._singleCount) throw Error("single count not init");
-    return this._singleCount;
-  }
-
-  layerCount = 1;
-  layerSpace = 50;
-  set(
-    grade: RebarGrade,
-    dia: RebarDiameter,
-    singleCount: number,
-    layerCount = 1,
-    layerSpace = 50
-  ): this {
-    this.setGrade(grade);
-    this.setDiameter(dia);
-    this.setCount(singleCount * layerCount);
-    this._singleCount = singleCount;
-    this.layerCount = layerCount;
-    this.layerSpace = layerSpace;
-    return this;
-  }
-}
-
-export class SpaceRebarSpec extends RebarSpec {
-  protected _space?: number;
-  get space(): number {
-    if (!this._space) throw Error("space not init");
-    return this._space;
-  }
-  denseSpace = 0;
-  set(
-    grade: RebarGrade,
-    dia: RebarDiameter,
-    space: number,
-    denseSpace = 0
-  ): this {
-    this.setGrade(grade);
-    this.setDiameter(dia);
-    this._space = space;
-    this.denseSpace = denseSpace ? denseSpace : space / 2;
+    this._name = name;
     return this;
   }
 }

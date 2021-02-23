@@ -65,7 +65,7 @@ export default function runFrameSingleDemo(): void{
   layout.push(...ctrl.generate());
   paper.push(layout.generate());
 
-  fs.writeFile('demoFrameSingle.txt', paper.pack(), ()=>{
+  fs.writeFile('demoFrameSingle.txt', paper.generate(), ()=>{
     console.log('frame demo finished');
   })
   

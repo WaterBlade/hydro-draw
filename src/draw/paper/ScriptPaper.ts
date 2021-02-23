@@ -15,7 +15,6 @@ import {
 } from "@/draw/drawItem";
 import {
   polar,
-  Vector,
   LineType,
   RotateDirection,
   TextAlign,
@@ -30,12 +29,11 @@ export class ScriptPaper implements Paper {
   }
 
   scriptList: string[] = [];
-  pack(): string {
+  generate(): string {
     this.initLayer();
     this.initTextStyle();
-    const pt = new Vector(0, 0);
     for (const item of this.itemList) {
-      item.accept(this, pt);
+      item.accept(this);
     }
     this.finishScript();
     return this.scriptList.join("\r\n");
@@ -193,9 +191,9 @@ export class ScriptPaper implements Paper {
     this.scriptList.push("j", align);
   }
 
-  visitArc(arc: PaperArc, insertPoint: Vector): void {
+  visitArc(arc: PaperArc): void {
     this.setLayer(arc.lineType);
-    const c = arc.center.add(insertPoint);
+    const c = arc.center;
     this.scriptList.push(ScriptPaper.ESCChar + "arc", "c", c.toFixed(4));
     if (arc.direction === RotateDirection.counterclockwise) {
       this.scriptList.push(
@@ -210,33 +208,31 @@ export class ScriptPaper implements Paper {
     }
   }
 
-  visitArrow(arrow: PaperArrow, insertPoint: Vector): void {
-    arrow;
-    insertPoint;
+  visitArrow(arrow: PaperArrow): void {
     this.setLayer(arrow.lineType);
     this.scriptList.push(
       ScriptPaper.ESCChar + "pline",
-      arrow.start.add(insertPoint).toFixed(4),
+      arrow.start.toFixed(4),
       "w",
       "0",
       arrow.width.toFixed(4),
-      arrow.end.add(insertPoint).toFixed(4),
+      arrow.end.toFixed(4),
       "",
       "plinewid",
       "0"
     );
   }
 
-  visitCircle(circle: PaperCircle, insertPoint: Vector): void {
+  visitCircle(circle: PaperCircle): void {
     this.setLayer(circle.lineType);
     this.scriptList.push(
       ScriptPaper.ESCChar + "circle",
-      circle.center.add(insertPoint).toFixed(4),
+      circle.center.toFixed(4),
       circle.radius.toFixed(4)
     );
   }
 
-  visitDimAligned(dim: PaperDimAligned, insertPoint: Vector): void {
+  visitDimAligned(dim: PaperDimAligned): void {
     this.setLayer(dim.lineType);
 
     if (this.isUsedDimStyle(dim.unitScale, dim.borderScale, dim.drawScale)) {
@@ -247,32 +243,32 @@ export class ScriptPaper implements Paper {
 
     this.scriptList.push(
       ScriptPaper.ESCChar + "dimaligned",
-      dim.start.add(insertPoint).toFixed(4),
-      dim.end.add(insertPoint).toFixed(4)
+      dim.start.toFixed(4),
+      dim.end.toFixed(4)
     );
 
     if (dim.override) {
       this.scriptList.push("T", dim.override.accept(this));
     }
 
-    this.scriptList.push(dim.textPoint.add(insertPoint).toFixed(4));
+    this.scriptList.push(dim.textPoint.toFixed(4));
   }
 
-  visitLine(line: PaperLine, insertPoint: Vector): void {
+  visitLine(line: PaperLine): void {
     this.setLayer(line.lineType);
     this.scriptList.push(
       ScriptPaper.ESCChar + "line",
-      line.start.add(insertPoint).toFixed(4),
-      line.end.add(insertPoint).toFixed(4),
+      line.start.toFixed(4),
+      line.end.toFixed(4),
       ""
     );
   }
 
-  visitMText(mtext: PaperMText, insertPoint: Vector): void {
+  visitMText(mtext: PaperMText): void {
     this.setLayer(mtext.lineType);
     this.scriptList.push(
       ScriptPaper.ESCChar + "-mtext",
-      mtext.insertPoint.add(insertPoint).toFixed(4),
+      mtext.insertPoint.toFixed(4),
       "s",
       "hz",
       "h",
@@ -288,18 +284,18 @@ export class ScriptPaper implements Paper {
     );
   }
 
-  visitPolyline(pline: PaperPolyline, insertPoint: Vector): void {
+  visitPolyline(pline: PaperPolyline): void {
     for (const seg of pline.segments) {
-      seg.accept(this, insertPoint);
+      seg.accept(this);
     }
   }
 
-  visitText(text: PaperText, insertPoint: Vector): void {
+  visitText(text: PaperText): void {
     this.setLayer(text.lineType);
     this.scriptList.push(ScriptPaper.ESCChar + "-text", "s", "hz");
     this.setTextAlign(text.textAlign);
     this.scriptList.push(
-      text.insertPoint.add(insertPoint).toFixed(4),
+      text.insertPoint.toFixed(4),
       text.height.toFixed(4),
       text.rotateAngle.toFixed(4),
       text.content.accept(this)

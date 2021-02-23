@@ -26,7 +26,7 @@ export default function runBorderDemo():void{
   const layout = new HLayoutBuilder(10);
   layout.push(...border.generate());
   paper.push(layout.generate());
-  fs.writeFile('demoBorder.txt', paper.pack(), ()=>{
+  fs.writeFile('demoBorder.txt', paper.generate(), ()=>{
     console.log('border demo finished');
   })
 }

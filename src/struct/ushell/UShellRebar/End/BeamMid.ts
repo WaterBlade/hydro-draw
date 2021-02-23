@@ -1,9 +1,10 @@
-import { Line, RebarFormPreset, vec } from "@/draw";
+import { Line, RebarFormPreset, RebarSpec, vec } from "@/draw";
 import { CountRebar } from "@/struct/utils";
 import { UShellStruct } from "../../UShellStruct";
 import { UShellRebarInfo } from "../Info";
 
 export class EndBeamMid extends CountRebar<UShellRebarInfo> {
+  spec = new RebarSpec();
   build(u: UShellStruct, name: string): void {
     this.spec = this.genSpec();
     this.spec

@@ -1,8 +1,9 @@
-import { Polyline, RebarFormPreset, Side } from "@/draw";
+import { Polyline, RebarFormPreset, RebarSpec, Side } from "@/draw";
 import { CountRebar } from "@/struct/utils";
 import { FrameSingleStruct } from "../../FrameStruct";
 
 export class CorbelMain extends CountRebar {
+  spec = new RebarSpec();
   build(t: FrameSingleStruct, name: string): this {
     this.spec = this.genSpec();
     const lens = this.shape(t).lengths;

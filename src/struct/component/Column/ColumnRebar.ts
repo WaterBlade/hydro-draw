@@ -23,6 +23,7 @@ export class ColumnRebar extends CompositeRebar {
 }
 
 class Corner extends UnitRebar {
+  spec = new RebarSpec();
   build(t: ColumnStruct, name: string): void {
     this.spec = this.genSpec();
     const form = RebarFormPreset.SShape(
@@ -44,6 +45,7 @@ class Corner extends UnitRebar {
 }
 
 class Cross extends CountRebar {
+  spec = new RebarSpec();
   build(t: ColumnStruct, name: string): void {
     this.spec = this.genSpec();
     const form = RebarFormPreset.SShape(
@@ -65,6 +67,7 @@ class Cross extends CountRebar {
 }
 
 class Along extends CountRebar {
+  spec = new RebarSpec();
   build(t: ColumnStruct, name: string): void {
     this.spec = this.genSpec();
     const form = RebarFormPreset.SShape(
@@ -88,6 +91,7 @@ class Along extends CountRebar {
 class Stir extends SpaceRebar {
   specCross: RebarSpec[] = [];
   specAlong: RebarSpec[] = [];
+  spec = new RebarSpec();
   build(
     t: ColumnStruct,
     crossBar: CountRebar,

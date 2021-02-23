@@ -21,7 +21,7 @@ export default function runDimDemo():void{
     d3.generate()
   )
   paper.push(layout.generate());
-  fs.writeFile('demoDim.txt', paper.pack(), ()=>{
+  fs.writeFile('demoDim.txt', paper.generate(), ()=>{
     console.log('dim demo finished');
   })
 }

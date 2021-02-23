@@ -102,4 +102,24 @@ export const RebarFormPreset = {
       .hook({ start: Side.Left, end: Side.Left })
       .setLength(len);
   },
+  Rect(
+    dia: RebarDiameter,
+    vLen: number,
+    hLen: number | number[]
+  ): RebarPathForm {
+    let len = 2 * vLen;
+    if (typeof hLen === "number") {
+      len += 2 * hLen;
+    } else {
+      len += 2 * average(...hLen);
+    }
+    return new RebarPathForm(dia)
+      .lineBy(0, -1.6)
+      .dimLength(vLen, Side.Right)
+      .lineBy(4, 0)
+      .dimLength(hLen)
+      .lineBy(0, 1.6)
+      .lineBy(-4, 0)
+      .setLength(len);
+  },
 };

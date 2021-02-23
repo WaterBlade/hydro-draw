@@ -1,8 +1,9 @@
-import { Line, RebarFormPreset, vec } from "@/draw";
+import { Line, RebarFormPreset, RebarSpec, vec } from "@/draw";
 import { SpaceRebar } from "@/struct/utils";
 import { FrameSingleStruct } from "../../FrameStruct";
 
 export class CorbelVStir extends SpaceRebar {
+  spec = new RebarSpec();
   build(t: FrameSingleStruct, name: string): this {
     this.spec = this.genSpec();
     const as = this.info.as;
