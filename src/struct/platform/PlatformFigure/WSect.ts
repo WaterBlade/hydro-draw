@@ -90,7 +90,7 @@ export class WSect extends Figure{
     fig.push(
       rebar
         .spec(bar.spec, 0, bar.space)
-        .leaderNote(vec(-t.w / 2 + 2 * fig.h, y + 2 * fig.h+bar.layerCount * bar.layerSpace), vec(0, 1), vec(1, 0))
+        .leaderNote(vec(-t.w / 2 + 2 * fig.h, y + 5 * fig.h+bar.layerCount * bar.layerSpace), vec(0, 1), vec(1, 0))
         .generate()
     )
   }

@@ -1,4 +1,4 @@
-import { divideBySpace, RebarFormPreset, RebarSpec } from "@/draw";
+import { divideBySpace, Polyline, RebarFormPreset, RebarSpec, Side } from "@/draw";
 import { CompositeRebar, CountRebar, SpaceRebar } from "@/struct/utils";
 import { BeamStruct } from "./BeamStruct";
 
@@ -7,8 +7,8 @@ export class BeamRebar extends CompositeRebar {
   top = new BeamTop(this.container, this.info);
   mid = new BeamMid(this.container, this.info);
   stir = new Stir(this.container, this.info);
-
   tendon = new Tendon(this.container, this.info);
+  haunch = new Haunch(this.container, this.info);
 
   build(t: BeamStruct, name: string): void {
     this.bot.build(t, name);
@@ -16,6 +16,7 @@ export class BeamRebar extends CompositeRebar {
     this.mid.build(t, name);
     this.stir.build(t, name);
     this.tendon.build(t, this.mid, name);
+    this.haunch.build(t, name);
   }
 }
 
@@ -85,7 +86,7 @@ class Stir extends SpaceRebar {
   }
 }
 
-export class Tendon extends SpaceRebar {
+class Tendon extends SpaceRebar {
   spec = new RebarSpec();
   build(t: BeamStruct, midBar: CountRebar, name: string): void {
     this.spec = this.genSpec();
@@ -98,5 +99,29 @@ export class Tendon extends SpaceRebar {
       .setId(this.container.id)
       .setName(name);
     this.container.record(this.spec);
+  }
+}
+
+class Haunch extends CountRebar{
+  spec = new RebarSpec();
+  build(t: BeamStruct, name: string): void{
+    this.spec = this.genSpec();
+    const len = this.shape(t)[0].calcLength();
+    this.spec
+      .setForm(RebarFormPreset.Line(this.diameter, len))
+      .setCount(this.singleCount*t.n)
+      .setId(this.container.id)
+      .setName(name);
+    this.container.record(this.spec);
+  }
+  shape(t: BeamStruct): Polyline[]{
+    const w = (t.l - t.ln)/2;
+    const bot = new Polyline(-t.l/2, -t.h/2 - t.ha - w + 1)
+      .lineBy(0, -1).lineBy(w+t.ha+t.h, w+t.ha+t.h).lineBy(-1, 0)
+      .offset(this.info.as).removeStart().removeEnd();
+    const top = new Polyline(-t.l/2, t.h/2 + t.ha + w - 1)
+      .lineBy(0, 1).lineBy(w+t.ha+t.h, -w-t.ha-t.h).lineBy(-1, 0)
+      .offset(this.info.as, Side.Right).removeStart().removeEnd();
+    return [bot, top];
   }
 }

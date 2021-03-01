@@ -15,6 +15,7 @@ export class DimAligned extends DrawItem implements PaperDimAligned {
     override?: string | Content
   ) {
     super();
+    if(start.sub(end).length() < 1e-6) throw Error('zero dim');
     this.borderScale = this.drawScale;
     if (typeof override === "string") {
       this.override = new Content().text(override);

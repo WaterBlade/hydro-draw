@@ -10,7 +10,7 @@ import { FigureContent } from "@/struct/utils";
 import { BeamRebar } from "./BeamRebar";
 import { BeamStruct } from "./BeamStruct";
 
-export class BeamViewGenerator {
+export class BeamViewCross {
   generate(
     fig: FigureContent,
     t: BeamStruct,
@@ -21,6 +21,7 @@ export class BeamViewGenerator {
     this.top(fig, comp, t, rebars);
     this.mid(fig, comp, t, rebars);
     this.stir(fig, comp, t, rebars);
+    this.haunch(fig, comp, t, rebars);
     return comp;
   }
   protected bot(
@@ -33,14 +34,14 @@ export class BeamViewGenerator {
     const as = rebars.info.as;
     const x0 = -t.l / 2 + as;
     const x1 = -x0;
-    const x2 = t.ln / 2 - 4 * fig.h;
+    const x2 = -t.ln / 2 +  4*fig.h;
     const y = -t.h / 2 + as;
     comp.push(
       fig
         .planeRebar()
         .rebar(new Line(vec(x0, y), vec(x1, y)))
         .spec(bar.spec)
-        .leaderNote(vec(x2, y - as - 2 * fig.h), vec(0, 1))
+        .leaderNote(vec(x2, -t.h/2 - 0.5*fig.h), vec(0, 1))
         .generate()
     );
   }
@@ -61,7 +62,7 @@ export class BeamViewGenerator {
         .planeRebar()
         .rebar(new Line(vec(x0, y), vec(x1, y)))
         .spec(bar.spec)
-        .leaderNote(vec(x2, y + 2 * fig.h), vec(0, 1))
+        .leaderNote(vec(x2, t.h/2 +  0.5*fig.h), vec(0, 1))
         .generate()
     );
   }
@@ -80,7 +81,7 @@ export class BeamViewGenerator {
     ).slice(1, -1);
     const x0 = -t.l / 2 + as;
     const x1 = -x0;
-    const x2 = t.ln / 2 - 8 * fig.h;
+    const x2 = t.ln / 2 - 4 * fig.h;
     const rebar = fig.planeRebar();
     for (const y of ys) {
       rebar.rebar(new Line(vec(x0, y), vec(x1, y)));
@@ -88,7 +89,7 @@ export class BeamViewGenerator {
     comp.push(
       rebar
         .spec(bar.spec, bar.singleCount)
-        .leaderNote(vec(x2, t.h / 2 + 2 * fig.h), vec(0, 1))
+        .leaderNote(vec(x2, -t.h / 2 - 0.5*fig.h), vec(0, 1))
         .generate()
     );
   }
@@ -113,7 +114,25 @@ export class BeamViewGenerator {
         .rebar(...xs.map((x) => new Line(vec(x, y0), vec(x, y1))))
         .spec(bar.spec, xs.length, bar.space)
         .cross(new Polyline(-t.l / 2, y2).lineTo(t.l / 2, y2))
-        .leaderNote(vec(x1, t.h / 2 + 2 * fig.h), vec(0, 1))
+        .leaderNote(vec(x1, t.h / 2 + 0.5*fig.h), vec(0, 1))
+        .generate()
+    );
+  }
+  protected haunch(
+    fig: FigureContent,
+    comp: CompositeItem,
+    t: BeamStruct,
+    rebars: BeamRebar
+  ): void{
+    const bar = rebars.haunch;
+    const left = bar.shape(t);
+    const right = left.map(l => l.mirrorByVAxis());
+    comp.push(
+      ...left.map(l => l.thickLine()),
+      fig.planeRebar()
+        .rebar(...right)
+        .spec(bar.spec, bar.singleCount)
+        .leaderNote(vec(t.ln/2-t.ha/2, t.h/2+8*fig.h), vec(0, 1), vec(-1, 0))
         .generate()
     );
   }

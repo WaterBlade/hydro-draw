@@ -11,6 +11,7 @@ export class ColumnStruct {
   hTopBeam = 0;
   hBeam = 0;
   partitionCount = 0;
+  toTop = true;
   partition(): number[] {
     const n = this.partitionCount;
     const h0 = this.lSpace - this.hBeam;
@@ -31,7 +32,7 @@ export class ColumnStruct {
         }
       }
       const h = this.l - n * this.lSpace;
-      if (h < 2 * d + this.hBeam) {
+      if (h <= 2 * d + this.hBeam) {
         res.push(h + d);
       } else {
         res.push(2 * d + this.hBeam, h - 2 * d - this.hBeam, d);

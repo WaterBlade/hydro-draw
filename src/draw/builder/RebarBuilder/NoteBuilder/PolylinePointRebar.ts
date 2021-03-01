@@ -59,8 +59,8 @@ export class PolylinePointRebar extends PointRebar {
       }
     }
     const nearPt = nearSeg.getNearestPt(pt);
-    const dir = nearSeg.getPointTangent(nearPt);
-    this.notes.push(...this.genOnlineText(nearPt, dir, this._offsetSide, d));
+      const dir = nearSeg.getPointTangent(nearPt);
+      this.notes.push(...this.genOnlineText(nearPt, dir, this._offsetSide, d));
 
     return this;
   }

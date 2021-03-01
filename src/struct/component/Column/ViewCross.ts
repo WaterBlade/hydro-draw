@@ -3,7 +3,7 @@ import { FigureContent } from "@/struct/utils";
 import { ColumnRebar } from "./ColumnRebar";
 import { ColumnStruct } from "./ColumnStruct";
 
-export class ColumnViewCrossGenerator {
+export class ColumnViewCross {
   protected yLeader = 0;
   protected dot: number[] = [];
   generate(

@@ -45,7 +45,7 @@ export class PlatformStruct {
     x += space;
     res.push(x);
 
-    for(let i = 0; i < this.nl; i++){
+    for(let i = 0; i < this.nw; i++){
       x += this.d;
       res.push(x);
       if(i < this.nw - 1){

@@ -121,11 +121,11 @@ class Stir extends SpaceRebar {
     const res: number[] = [];
     const as = this.info.as;
     const count = partition.length;
-    let h = t.l - as;
+    let h = t.l - as - (t.toTop ? 0 : t.hTopBeam);
     for (let i = 0; i < count; i++) {
       let l;
       if (i === 0) {
-        l = partition[0] - as;
+        l = partition[0] - as - (t.toTop ? 0 : t.hTopBeam);
       } else if (i < count - 1) {
         l = partition[i];
       } else {

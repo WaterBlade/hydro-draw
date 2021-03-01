@@ -1,7 +1,10 @@
 import { toDegree, toRadian } from "./Misc";
 
 export class Vector {
-  constructor(public x: number, public y: number) {}
+  constructor(public x: number, public y: number) {
+    if(x === undefined) throw Error('x is undefined');
+    if(y === undefined) throw Error('y is undefined');
+  }
   toFixed(digit: number): string {
     return this.x.toFixed(digit) + "," + this.y.toFixed(digit);
   }

@@ -1,5 +1,5 @@
 import { Line, Polyline, vec, Text, TextAlign } from "@/draw";
-import { ColumnViewAlong } from "@/struct/component";
+import { ColumnViewAlong, TopBeamViewAlong } from "@/struct/component";
 import { Figure, FigureContent } from "@/struct/utils";
 import { FrameSingleRebar } from "../FrameRebar";
 import { FrameSingleStruct } from "../FrameStruct";
@@ -27,24 +27,14 @@ export class FrameAlong extends Figure {
   protected buildOutline(t: FrameSingleStruct): void {
     this.fig.addOutline(
       new Polyline(-t.col.h / 2, 0)
-        .lineBy(0, t.h - t.corbel.h)
-        .lineBy(-t.corbel.w, t.corbel.hs)
-        .lineBy(0, t.corbel.hd)
-        .lineBy(t.corbel.w * 2 + t.col.h, 0)
-        .lineBy(0, -t.corbel.hd)
-        .lineBy(-t.corbel.w, -t.corbel.hs)
-        .lineBy(0, -t.h + t.corbel.h)
+        .lineBy(0, t.h - t.topBeam.h)
+        .lineBy(-t.topBeam.ws, t.topBeam.hs)
+        .lineBy(0, t.topBeam.hd)
+        .lineBy(t.topBeam.ws * 2 + t.col.h, 0)
+        .lineBy(0, -t.topBeam.hd)
+        .lineBy(-t.topBeam.ws, -t.topBeam.hs)
+        .lineBy(0, -t.h + t.topBeam.h)
         .greyLine(),
-      new Polyline(-t.topBeam.w / 2, t.h)
-        .lineBy(t.topBeam.w, 0)
-        .lineBy(0, -t.topBeam.h - t.topBeam.ha)
-        .lineBy(-t.topBeam.w, 0)
-        .lineBy(0, t.topBeam.h + t.topBeam.ha)
-        .dashedLine(),
-      new Line(
-        vec(-t.topBeam.w / 2, t.h - t.topBeam.h),
-        vec(t.topBeam.w / 2, t.h - t.topBeam.h)
-      ).dashedLine()
     );
 
     const ha = t.beam.ha;
@@ -122,108 +112,43 @@ export class FrameAlong extends Figure {
   }
   protected buildDim(t: FrameSingleStruct): this {
     const fig = this.fig;
-    const { right, top, left } = fig.getBoundingBox();
+    const { right, left, top } = fig.getBoundingBox();
     const dim = fig.dimBuilder();
     dim.vRight(right + fig.h, t.h);
-    dim.dim(t.corbel.hd).dim(t.corbel.hs).next();
 
     const n = t.n;
     if (n === 0) {
       dim.dim(t.topBeam.h).dim(t.h - t.topBeam.h);
     } else {
-      dim.dim(t.topBeam.h).dim(t.hs - t.topBeam.h);
+      dim.dim(t.topBeam.h).dim(t.vs - t.topBeam.h);
       for (let i = 1; i < n; i++) {
-        dim.dim(t.beam.h).dim(t.hs - t.beam.h);
+        dim.dim(t.beam.h).dim(t.vs - t.beam.h);
       }
-      dim.dim(t.beam.h).dim(t.h - n * t.hs - t.beam.h);
+      dim.dim(t.beam.h).dim(t.h - n * t.vs - t.beam.h);
     }
     dim.next().dim(t.h).dim(t.found.h);
 
+    dim.hTop(-t.topBeam.w/2, top+fig.h)
+      .dim(t.topBeam.ws).dim(t.topBeam.wb).dim(t.topBeam.ws)
+      .next().dim(t.topBeam.w);
+
     // draw space dim
     dim.vLeft(left, t.h);
+    console.log(t.col.partition());
     for (const l of t.col.partition()) {
       dim.dim(l);
     }
 
-    dim
-      .hTop(-t.corbel.w - t.col.h / 2, top + fig.h)
-      .dim(t.corbel.w)
-      .dim(t.col.h)
-      .dim(t.corbel.w)
-      .next()
-      .dim(t.corbel.w * 2 + t.col.h);
     fig.push(dim.generate());
     return this;
   }
   protected colGen = new ColumnViewAlong();
+  protected topGen = new TopBeamViewAlong();
   protected buildRebar(t: FrameSingleStruct, rebars: FrameSingleRebar): void {
     const fig = this.fig;
     fig.push(this.colGen.generate(fig, t.col, rebars.col));
-    this.buildCorbelMain(t, rebars);
-    this.buildCorbelHStir(t, rebars);
-    this.buildCorbelVStir(t, rebars);
-  }
-  protected buildCorbelMain(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar
-  ): void {
-    const fig = this.fig;
-    const bar = rebars.corbel.main;
-    fig.push(
-      fig
-        .planeRebar()
-        .rebar(bar.shape(t))
-        .spec(bar.spec, bar.singleCount)
-        .leaderNote(
-          vec(t.col.h / 2 + t.corbel.w, t.h - t.corbel.h - t.corbel.w / 2),
-          vec(-1, 1),
-          vec(1, 0)
-        )
-        .generate()
-    );
-  }
-  protected buildCorbelHStir(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar
-  ): void {
-    const bar = rebars.corbel.hStir;
-    const fig = this.fig;
-    const lens = bar.shape(t);
-    fig.push(
-      fig
-        .planeRebar()
-        .rebar(...lens)
-        .spec(bar.spec, lens.length, bar.space)
-        .leaderNote(
-          vec(t.col.h / 2 + bar.space / 2, t.h + 2 * fig.h),
-          vec(0, 1),
-          vec(1, 0)
-        )
-        .generate()
-    );
-  }
-  protected buildCorbelVStir(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar
-  ): void {
-    const bar = rebars.corbel.vStir;
-    const fig = this.fig;
-    const as = rebars.info.as;
-    const left = bar.shape(t);
-    const right = left.map((l) => l.mirrorByVAxis());
-    fig.push(
-      fig
-        .planeRebar()
-        .rebar(...left, ...right)
-        .spec(bar.spec, left.length + right.length)
-        .leaderNote(
-          vec(
-            -t.col.h / 2 - t.corbel.w - fig.h,
-            t.h - as - rebars.corbel.hStir.space / 2
-          ),
-          vec(1, 0)
-        )
-        .generate()
-    );
+    const top = this.topGen.generate(fig, t.topBeam, rebars.topBeam);
+    top.move(vec(0, t.h - t.topBeam.h/2));
+    fig.push(top);
   }
 }

@@ -1,7 +1,7 @@
 import { Line, Polyline, Text, TextAlign, vec } from "@/draw";
 import {
-  BeamViewGenerator,
-  ColumnViewAlongGenerator,
+  BeamViewCross,
+  ColumnViewAlong,
 } from "@/struct/component";
 import { Figure, FigureContent } from "@/struct/utils";
 import { FrameDoubleRebar } from "../FrameRebar";
@@ -188,8 +188,8 @@ export class FrameAlong extends Figure {
       .dim(t.wAlong);
     fig.push(dim.generate());
   }
-  protected colGen = new ColumnViewAlongGenerator();
-  protected beamGen = new BeamViewGenerator();
+  protected colGen = new ColumnViewAlong();
+  protected beamGen = new BeamViewCross();
   protected buildRebar(t: FrameDoubleStruct, rebars: FrameDoubleRebar): void {
     const fig = this.fig;
     // col
