@@ -1,4 +1,4 @@
-export * from "./NoteBuilder";
+export * from "./RebarDraw";
 export * from "./MaterialTable";
 export * from "./RebarForm";
 export * from "./RebarSpec";

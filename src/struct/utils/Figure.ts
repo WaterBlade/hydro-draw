@@ -1,4 +1,5 @@
-import { FigureContent, FigureInBorder } from "./FigureContent";
+import { BorderItem, Content } from "@/draw";
+import { ContextBuilder } from "@/draw/preset/Context";
 
 class SpecIdGen {
   protected _id = 0;
@@ -43,37 +44,103 @@ class SectIdGen {
     this._id = 0;
   }
 }
-export class FigureContainer {
-  protected records: FigureInBorder[] = [];
-  protected specIdGen = new SpecIdGen();
-  protected sectIdGen = new SectIdGen();
-  get figures(): FigureInBorder[] {
-    return this.records;
+
+export class FigureRoot {
+  protected figures: Figure[] = [];
+  init(): void {
+    const specId = new SpecIdGen();
+    const sectId = new SectIdGen();
+    this.figures.forEach((f) => f.init(specId, sectId));
   }
-  get specId(): { id: string; title: string } {
-    return this.specIdGen.gen();
+  genBorderItems(): BorderItem[] {
+    return this.figures.reduce(
+      (pre: BorderItem[], cur) => pre.concat(cur.genBorderItems()),
+      []
+    );
   }
-  get sectId(): { id: string; title: string } {
-    return this.sectIdGen.gen();
-  }
-  record(...figs: FigureInBorder[]): void {
-    this.records.push(...figs);
-  }
-  clear(): void {
-    this.specIdGen.clear();
-    this.sectIdGen.clear();
-    this.records.splice(0);
+  protected add<S extends Figure>(fig: S): S {
+    this.figures.push(fig);
+    return fig;
   }
 }
 
-export class Figure {
-  protected _fig?: FigureContent;
-  get fig(): FigureContent {
-    if (!this._fig) throw Error("fig not init");
-    return this._fig;
+export class FigureConfig {
+  constructor(
+    public centerAligned = false,
+    public titlePosKeep = false,
+    public baseAligned = false
+  ) {}
+}
+
+export interface FigureInterface {
+  id: string;
+}
+
+export abstract class Figure {
+  protected _id?: string;
+  get id(): string {
+    if (!this._id) throw Error("figure id not init");
+    return this._id;
   }
-  set fig(val: FigureContent) {
-    this._fig = val;
+  protected abstract unitScale: number;
+  protected abstract drawScale: number;
+  protected abstract title: string | Content;
+  protected abstract config: FigureConfig;
+
+  protected fig = new ContextBuilder();
+  init(specId: SpecIdGen, sectId: SectIdGen): void {
+    if (this.isExist()) {
+      this.fig.reset(this.unitScale, this.drawScale);
+      this.initSpec(specId);
+      this.initSect(sectId);
+    }
   }
-  constructor(protected container: FigureContainer) {}
+  genBorderItems(): BorderItem[] {
+    if (this.isExist()) {
+      this.draw();
+      const { centerAligned, baseAligned, titlePosKeep } = this.config;
+      return [
+        new BorderItem(
+          this.fig.content,
+          this.fig.title(this.title),
+          this.unitScale,
+          this.drawScale,
+          centerAligned,
+          titlePosKeep,
+          baseAligned
+        ),
+      ];
+    }
+    return [];
+  }
+  protected abstract draw(): void;
+  protected isExist(): boolean {
+    return true;
+  }
+  protected initSpec(specId: SpecIdGen): void {
+    // to override
+    specId;
+  }
+  protected initSect(sectId: SectIdGen): void {
+    // to override
+    sectId;
+  }
+}
+
+export abstract class SectFigure extends Figure {
+  protected title = "";
+  protected initSect(sectId: SectIdGen): void {
+    const { id, title } = sectId.gen();
+    this._id = id;
+    this.title = title;
+  }
+}
+
+export abstract class SpecFigure extends Figure {
+  protected title = "";
+  protected initSpec(specId: SpecIdGen): void {
+    const { id, title } = specId.gen();
+    this._id = id;
+    this.title = title;
+  }
 }

@@ -3,38 +3,33 @@ import {
   last,
   Line,
   Polyline,
-  RebarDraw,
+  RebarDrawPreset,
   Side,
   sum,
   vec,
 } from "@/draw";
-import { Figure, FigureContent } from "@/struct/utils";
+import { SectFigure, FigureConfig } from "@/struct/utils";
 import { ColumnStruct } from "./ColumnStruct";
 import { ColumnRebar } from "./ColumnRebar";
 
-export class ColumnSect extends Figure {
+export class ColumnSect extends SectFigure {
+  constructor(protected struct: ColumnStruct, protected rebars: ColumnRebar) {
+    super();
+  }
+  protected unitScale = 1;
+  protected drawScale = 20;
+  protected config = new FigureConfig(true, true);
+
   protected dotAlong: number[] = [];
   protected dotCross: number[] = [];
 
-  initFigure(): void {
-    this.fig = new FigureContent();
-    const { id, title } = this.container.sectId;
-    this.fig
-      .resetScale(1, 20)
-      .setTitle(title)
-      .setId(id)
-      .displayScale()
-      .centerAligned()
-      .keepTitlePos();
-    this.container.record(this.fig);
+  protected draw(): void {
+    this.buildOutline();
+    this.buildRebar();
+    this.buildDim();
   }
-
-  build(t: ColumnStruct, rebars: ColumnRebar): void {
-    this.buildOutline(t);
-    this.buildRebar(t, rebars);
-    this.buildDim(t);
-  }
-  protected buildOutline(t: ColumnStruct): void {
+  protected buildOutline(): void {
+    const t = this.struct;
     this.fig.addOutline(
       new Polyline(-t.w / 2, t.h / 2)
         .lineBy(t.w, 0)
@@ -44,7 +39,8 @@ export class ColumnSect extends Figure {
         .greyLine()
     );
   }
-  protected buildDim(t: ColumnStruct): void {
+  protected buildDim(): void {
+    const t = this.struct;
     const fig = this.fig;
     const { right, bottom } = fig.getBoundingBox();
     const dim = fig.dimBuilder();
@@ -52,18 +48,20 @@ export class ColumnSect extends Figure {
     dim.hBottom(-t.w / 2, bottom - fig.h).dim(t.w);
     fig.push(dim.generate());
   }
-  protected buildRebar(t: ColumnStruct, rebars: ColumnRebar): void {
-    this.dot(t, rebars);
-    this.corner(t, rebars);
-    this.cross(t, rebars);
-    this.along(t, rebars);
-    this.stir(t, rebars);
-    this.specCross(t, rebars);
-    this.specAlong(t, rebars);
+  protected buildRebar(): void {
+    this.dot();
+    this.corner();
+    this.cross();
+    this.along();
+    this.stir();
+    this.specCross();
+    this.specAlong();
   }
-  protected dot(t: ColumnStruct, rebars: ColumnRebar): void {
+  protected dot(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const countAlong = rebars.along.singleCount;
     const countCross = rebars.cross.singleCount;
     this.dotAlong = divideByCount(
@@ -77,31 +75,35 @@ export class ColumnSect extends Figure {
       countCross + 1
     );
   }
-  protected corner(t: ColumnStruct, rebars: ColumnRebar): void {
+  protected corner(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
     const bar = rebars.corner;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const left = [
       fig
         .sparsePointRebar()
         .points(vec(-t.w / 2 + as + fig.r, t.h / 2 - as - fig.r))
-        .spec(bar.spec)
+        .spec(bar)
         .parallelLeader(vec(-t.w / 2 - fig.h, t.h / 2 + fig.h), vec(1, 0))
         .generate(),
       fig
         .sparsePointRebar()
         .points(vec(-t.w / 2 + as + fig.r, -t.h / 2 + as + fig.r))
-        .spec(bar.spec)
+        .spec(bar)
         .parallelLeader(vec(-t.w / 2 - fig.h, -t.h / 2 - fig.h), vec(1, 0))
         .generate(),
     ];
     const right = left.map((p) => p.mirrorByVAxis());
     fig.push(...left, ...right);
   }
-  protected cross(t: ColumnStruct, rebars: ColumnRebar): void {
+  protected cross(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
     const bar = rebars.cross;
-    const as = rebars.info.as;
+    const as = rebars.as;
 
     const x0 = -t.w / 2 + as + fig.r;
     const x1 = -x0;
@@ -118,23 +120,27 @@ export class ColumnSect extends Figure {
       fig
         .linePointRebar()
         .line(top)
-        .spec(bar.spec, bar.singleCount)
+        .spec(bar)
+        .count(bar.singleCount)
         .offset(2 * Math.max(as, fig.h))
         .onlineNote()
         .generate(),
       fig
         .linePointRebar()
         .line(bot)
-        .spec(bar.spec, bar.singleCount)
+        .spec(bar)
+        .count(bar.singleCount)
         .offset(2 * Math.max(as, fig.h), Side.Right)
         .onlineNote()
         .generate()
     );
   }
-  protected along(t: ColumnStruct, rebars: ColumnRebar): void {
+  protected along(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
     const bar = rebars.along;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const x0 = -t.w / 2 + as + fig.r;
     const y0 = -t.h / 2 + as + fig.r;
     const y1 = -y0;
@@ -145,17 +151,20 @@ export class ColumnSect extends Figure {
           .divideByCount(bar.singleCount + 1)
           .removeBothPt()
       )
-      .spec(bar.spec, bar.singleCount)
+      .spec(bar)
+      .count(bar.singleCount)
       .offset(2 * Math.max(as, fig.h))
       .onlineNote()
       .generate();
     const right = left.mirrorByVAxis();
     fig.push(left, right);
   }
-  protected stir(t: ColumnStruct, rebars: ColumnRebar): void {
+  protected stir(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
     const bar = rebars.stir;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const yLeader = sum(...this.dotAlong.slice(-2)) / 2;
     fig.push(
       fig
@@ -167,14 +176,16 @@ export class ColumnSect extends Figure {
             .lineBy(-t.w + 2 * as, 0)
             .lineBy(0, t.h - 2 * as)
         )
-        .spec(bar.spec)
+        .spec(bar)
         .leaderNote(vec(-t.w / 2 - fig.h, yLeader), vec(1, 0))
         .generate()
     );
   }
-  protected specCross(t: ColumnStruct, rebars: ColumnRebar): void {
+  protected specCross(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const ys = new Line(
       vec(0, t.h / 2 - as - fig.r),
       vec(0, -t.h / 2 + as + fig.r)
@@ -184,15 +195,14 @@ export class ColumnSect extends Figure {
       .points.map((p) => p.y);
     const w = t.w - 2 * as;
     const x = sum(...this.dotCross.slice(0, 2)) / 2;
-    let iStir = 0;
     if (ys.length >= 2) {
       const rebar = fig
         .planeRebar()
-        .spec(rebars.stir.specCross[iStir++], Math.floor(ys.length / 2));
+        .spec(rebars.stirCross, Math.floor(ys.length / 2));
       const h = ys[0] - ys[1] + fig.r * 2;
       let i = 0;
       while (i + 1 < ys.length) {
-        const path = RebarDraw.stir(h, w, fig.r);
+        const path = RebarDrawPreset.stir(h, w, fig.r);
         path.move(vec(0, (ys[i] + ys[i + 1]) / 2));
         rebar.rebar(path);
         i += 2;
@@ -204,21 +214,23 @@ export class ColumnSect extends Figure {
       );
     }
     if (ys.length % 2 === 1) {
-      const path = RebarDraw.hLineHook(w, fig.r);
+      const path = RebarDrawPreset.hLineHook(w, fig.r);
       path.move(vec(0, last(ys)));
       fig.push(
         fig
           .planeRebar()
           .rebar(path)
-          .spec(rebars.stir.specCross[iStir])
+          .spec(rebars.tendonCross)
           .leaderNote(vec(x, -t.h / 2 - 4 * fig.h), vec(0, 1), vec(-1, 0))
           .generate()
       );
     }
   }
-  protected specAlong(t: ColumnStruct, rebars: ColumnRebar): void {
+  protected specAlong(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const xs = new Line(
       vec(-t.w / 2 + as + fig.r, 0),
       vec(t.w / 2 - as - fig.r, 0)
@@ -227,15 +239,14 @@ export class ColumnSect extends Figure {
       .removeBothPt()
       .points.map((p) => p.x);
     const h0 = t.h - 2 * as;
-    let iStir = 0;
     if (xs.length >= 2) {
       const rebar = fig
         .planeRebar()
-        .spec(rebars.stir.specAlong[iStir++], Math.floor(xs.length / 2));
+        .spec(rebars.stirAlong, Math.floor(xs.length / 2));
       const w0 = xs[1] - xs[0] + fig.r * 2;
       let i = 0;
       while (i + 1 < xs.length) {
-        const path = RebarDraw.stir(h0, w0, fig.r);
+        const path = RebarDrawPreset.stir(h0, w0, fig.r);
         path.move(vec((xs[i] + xs[i + 1]) / 2, 0));
         rebar.rebar(path);
         i += 2;
@@ -244,14 +255,14 @@ export class ColumnSect extends Figure {
       fig.push(rebar.leaderNote(vec(t.w / 2 + fig.h, y), vec(1, 0)).generate());
     }
     if (xs.length % 2 === 1) {
-      const path = RebarDraw.vLineHook(h0, fig.r);
+      const path = RebarDrawPreset.vLineHook(h0, fig.r);
       path.move(vec(last(xs), 0));
       const y = sum(...this.dotAlong.slice(0, 2)) / 2;
       fig.push(
         fig
           .planeRebar()
           .rebar(path)
-          .spec(rebars.stir.specAlong[iStir])
+          .spec(rebars.tendonAlong)
           .leaderNote(vec(t.w / 2 + fig.h, y), vec(1, 0))
           .generate()
       );

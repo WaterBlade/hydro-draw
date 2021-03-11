@@ -6,7 +6,7 @@ import { Box } from "./Box";
 export class Cell extends Box {
   protected titleGapRatio = 1;
   constructor(
-    protected item: DrawItem,
+    protected content: DrawItem,
     protected title?: DrawItem,
     protected centerAligned = false,
     protected titlePosKeep = false,
@@ -24,12 +24,12 @@ export class Cell extends Box {
         ? this.title.getBoundingBox().height * (1 + this.titleGapRatio)
         : 0);
     const yMid = (top + yFigBottom) / 2;
-    const { x, y } = this.item.getBoundingBox().Center;
+    const { x, y } = this.content.getBoundingBox().Center;
 
     const xMove = this.centerAligned ? xMid : xMid - x;
     const yMove =
       this.baseAligned && this._baseTop !== 0 ? top - this._baseTop : yMid - y;
-    this.item.move(vec(xMove, yMove));
+    this.content.move(vec(xMove, yMove));
 
     if (this.title) {
       const { x: x0, y: y0 } = this.title.getBoundingBox().BottomCenter;
@@ -51,7 +51,7 @@ export class Cell extends Box {
   }
   get baseTop(): number {
     if (this._baseTop !== 0) return this._baseTop;
-    else return this.item.getBoundingBox().top;
+    else return this.content.getBoundingBox().top;
   }
   setBase(bottom: number, top: number): this {
     this._baseBottom = bottom;
@@ -60,7 +60,7 @@ export class Cell extends Box {
     return this;
   }
   protected resetSize(): void {
-    const box = this.item.getBoundingBox();
+    const box = this.content.getBoundingBox();
     this.width = box.width;
     this._netWidth = box.width;
     this.height = box.height;
@@ -105,7 +105,7 @@ export class Cell extends Box {
   }
   getItems(): DrawItem[] {
     const res: DrawItem[] = [];
-    if (this.item) res.push(this.item);
+    if (this.content) res.push(this.content);
     if (this.title) res.push(this.title);
     return res;
   }

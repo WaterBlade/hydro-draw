@@ -1,8 +1,8 @@
 export class TopBeamStruct {
-  get h(): number{
+  get h(): number {
     return this.hd + this.hs;
   }
-  get w(): number{
+  get w(): number {
     return this.ws * 2 + this.wb;
   }
 

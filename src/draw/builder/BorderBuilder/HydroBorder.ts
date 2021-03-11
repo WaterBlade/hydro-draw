@@ -1,4 +1,4 @@
-import { CompositeItem, Line, Text, MText } from "@/draw/drawItem";
+import { CompositeItem, Line, TextDraw, MText } from "@/draw/drawItem";
 import { vec, TextAlign } from "@/draw/misc";
 import { Boundary } from "./Boundary";
 import { BorderBuilder } from "./BorderBuilder";
@@ -34,27 +34,42 @@ function presetA0A1Title(
     new Line(vec(-90, 14), vec(-90, 0)),
     new Line(vec(-55, 14), vec(-55, 7)),
     new Line(vec(-35, 14), vec(-35, 7)),
-    new Text(company, vec(-90, 63.5), 5, TextAlign.MiddleCenter),
-    new Text("批 准", vec(-170, 52.5), 3.5, TextAlign.MiddleCenter),
-    new Text("核 定", vec(-170, 45.5), 3.5, TextAlign.MiddleCenter),
-    new Text("审 查", vec(-170, 38.5), 3.5, TextAlign.MiddleCenter),
-    new Text("校 核", vec(-170, 31.5), 3.5, TextAlign.MiddleCenter),
-    new Text("设 计", vec(-170, 24.5), 3.5, TextAlign.MiddleCenter),
-    new Text("制 图", vec(-170, 17.5), 3.5, TextAlign.MiddleCenter),
-    new Text("描 图", vec(-170, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text("CAD", vec(-142.5, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text("设计证号", vec(-170, 3.5), 3.5, TextAlign.MiddleCenter),
-    new Text(certificateNumber, vec(-135, 3.5), 3.5, TextAlign.MiddleCenter),
-    new Text(project, vec(-82.5, 49), 4, TextAlign.MiddleCenter),
-    new Text(`${design} 设计`, vec(-27.5, 52.5), 3.5, TextAlign.MiddleCenter),
-    new Text(`${section} 部分`, vec(-27.5, 45.5), 3.5, TextAlign.MiddleCenter),
-    new Text(drawingTitle, vec(-55, 28), 5, TextAlign.MiddleCenter),
-    new Text("比例", vec(-100, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text("如图", vec(-72.5, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text("日期", vec(-45, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text(date, vec(-17.5, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text("图号", vec(-100, 3.5), 3.5, TextAlign.MiddleCenter),
-    new Text(drawingNumber, vec(-45, 3.5), 3.5, TextAlign.MiddleCenter)
+    new TextDraw(company, vec(-90, 63.5), 5, TextAlign.MiddleCenter),
+    new TextDraw("批 准", vec(-170, 52.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("核 定", vec(-170, 45.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("审 查", vec(-170, 38.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("校 核", vec(-170, 31.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("设 计", vec(-170, 24.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("制 图", vec(-170, 17.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("描 图", vec(-170, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("CAD", vec(-142.5, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("设计证号", vec(-170, 3.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw(
+      certificateNumber,
+      vec(-135, 3.5),
+      3.5,
+      TextAlign.MiddleCenter
+    ),
+    new TextDraw(project, vec(-82.5, 49), 4, TextAlign.MiddleCenter),
+    new TextDraw(
+      `${design} 设计`,
+      vec(-27.5, 52.5),
+      3.5,
+      TextAlign.MiddleCenter
+    ),
+    new TextDraw(
+      `${section} 部分`,
+      vec(-27.5, 45.5),
+      3.5,
+      TextAlign.MiddleCenter
+    ),
+    new TextDraw(drawingTitle, vec(-55, 28), 5, TextAlign.MiddleCenter),
+    new TextDraw("比例", vec(-100, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("如图", vec(-72.5, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("日期", vec(-45, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw(date, vec(-17.5, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("图号", vec(-100, 3.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw(drawingNumber, vec(-45, 3.5), 3.5, TextAlign.MiddleCenter)
   );
   return comp;
 }
@@ -89,27 +104,37 @@ function presetA2A3Title(
     new Line(vec(-55, 14), vec(-55, 0)),
     new Line(vec(-35, 14), vec(-35, 7)),
     new Line(vec(-20, 14), vec(-20, 7)),
-    new Text(company, vec(-60, 62), 5, TextAlign.MiddleCenter),
-    new Text("批 准", vec(-112.5, 52.5), 3.5, TextAlign.MiddleCenter),
-    new Text("核 定", vec(-112.5, 45.5), 3.5, TextAlign.MiddleCenter),
-    new Text("审 查", vec(-112.5, 38.5), 3.5, TextAlign.MiddleCenter),
-    new Text("校 核", vec(-112.5, 31.5), 3.5, TextAlign.MiddleCenter),
-    new Text("设 计", vec(-112.5, 24.5), 3.5, TextAlign.MiddleCenter),
-    new Text("制 图", vec(-112.5, 17.5), 3.5, TextAlign.MiddleCenter),
-    new Text("描 图", vec(-112.5, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text("CAD", vec(-92.5, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text("设计证号", vec(-112.5, 3.5), 3.5, TextAlign.MiddleCenter),
-    new Text(certificateNumber, vec(-87.5, 3.5), 3.5, TextAlign.MiddleCenter),
-    new Text(project, vec(-50, 49), 4, TextAlign.MiddleCenter),
-    new Text(`${design} 设计`, vec(-15, 52.5), 3.5, TextAlign.MiddleCenter),
-    new Text(`${section} 部分`, vec(-15, 45.5), 3.5, TextAlign.MiddleCenter),
-    new Text(drawingTitle, vec(-35, 28), 5, TextAlign.MiddleCenter),
-    new Text("比例", vec(-62.5, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text("如图", vec(-45, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text("日期", vec(-27.5, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text(date, vec(-10, 10.5), 3.5, TextAlign.MiddleCenter),
-    new Text("图号", vec(-62.5, 3.5), 3.5, TextAlign.MiddleCenter),
-    new Text(drawingNumber, vec(-27.5, 3.5), 3.5, TextAlign.MiddleCenter)
+    new TextDraw(company, vec(-60, 62), 5, TextAlign.MiddleCenter),
+    new TextDraw("批 准", vec(-112.5, 52.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("核 定", vec(-112.5, 45.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("审 查", vec(-112.5, 38.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("校 核", vec(-112.5, 31.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("设 计", vec(-112.5, 24.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("制 图", vec(-112.5, 17.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("描 图", vec(-112.5, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("CAD", vec(-92.5, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("设计证号", vec(-112.5, 3.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw(
+      certificateNumber,
+      vec(-87.5, 3.5),
+      3.5,
+      TextAlign.MiddleCenter
+    ),
+    new TextDraw(project, vec(-50, 49), 4, TextAlign.MiddleCenter),
+    new TextDraw(`${design} 设计`, vec(-15, 52.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw(
+      `${section} 部分`,
+      vec(-15, 45.5),
+      3.5,
+      TextAlign.MiddleCenter
+    ),
+    new TextDraw(drawingTitle, vec(-35, 28), 5, TextAlign.MiddleCenter),
+    new TextDraw("比例", vec(-62.5, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("如图", vec(-45, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("日期", vec(-27.5, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw(date, vec(-10, 10.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw("图号", vec(-62.5, 3.5), 3.5, TextAlign.MiddleCenter),
+    new TextDraw(drawingNumber, vec(-27.5, 3.5), 3.5, TextAlign.MiddleCenter)
   );
   return comp;
 }
@@ -343,5 +368,62 @@ export class HydroA3Builder extends HydroBorderBuilder {
       `${this.drawingNumberPrefix}${this.drawingNumberStart++}`,
       this.certificateNumber
     );
+  }
+}
+
+export class HydroBorderFactory {
+  company = "（单位名称）";
+  project = "（工程名）";
+  drawingTitle = "（图名）";
+  design = "技施";
+  section = "水工";
+  date = `${new Date().getFullYear()}.${new Date().getMonth() + 1}`;
+  drawingNumberPrefix = "（XX-XX）";
+  drawingNumberStart = 1;
+  certificateNumber = "(设计证号)";
+  size: "A1" | "A2" | "A3" = "A1";
+
+  note: string[] = ["图纸说明"];
+
+  constructor(protected widthFactor = 1, protected heightFactor = 1) {}
+
+  protected assemble(border: HydroBorderBuilder): void {
+    border.company = this.company;
+    border.project = this.project;
+    border.drawingTitle = this.drawingTitle;
+    border.design = this.design;
+    border.section = this.section;
+    border.date = this.date;
+    border.drawingNumberPrefix = this.drawingNumberPrefix;
+    border.drawingNumberStart = this.drawingNumberStart;
+    border.certificateNumber = this.certificateNumber;
+    border.note = this.note;
+  }
+
+  A1(): HydroA1Builder {
+    const b = new HydroA1Builder(this.widthFactor, this.heightFactor);
+    this.assemble(b);
+    return b;
+  }
+  A2(): HydroA2Builder {
+    const b = new HydroA2Builder(this.widthFactor, this.heightFactor);
+    this.assemble(b);
+    return b;
+  }
+  A3(): HydroA3Builder {
+    const b = new HydroA3Builder(this.widthFactor, this.heightFactor);
+    this.assemble(b);
+    return b;
+  }
+
+  border(): HydroBorderBuilder {
+    switch (this.size) {
+      case "A1":
+        return this.A1();
+      case "A2":
+        return this.A2();
+      case "A3":
+        return this.A3();
+    }
   }
 }

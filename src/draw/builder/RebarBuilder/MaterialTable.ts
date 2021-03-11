@@ -9,6 +9,9 @@ export class MaterialTable implements Builder<CompositeItem> {
   protected rebarSpecs: RebarSpec[] = [];
   protected textHeight = 3.5;
   protected table = new TableBuilder(this.textHeight);
+  constructor(...specs: RebarSpec[]) {
+    this.push(...specs);
+  }
   push(...specs: RebarSpec[]): this {
     this.rebarSpecs.push(...specs);
     return this;

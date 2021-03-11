@@ -1,51 +1,25 @@
-import { Line, Polyline, RebarPathForm, RebarSpec, Side, vec } from "@/draw";
-import { CountRebar, SpaceRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import { Line, Polyline, RebarForm, RebarPathForm, Side, vec } from "@/draw";
+import { UShellSpaceRebar } from "../UShellRebar";
 
-export class ShellCInner extends SpaceRebar<UShellRebarInfo> {
-  spec = new RebarSpec();
-  specSub = new RebarSpec();
-
-  build(u: UShellStruct, name: string, endCOuter: CountRebar): void {
-    this.buildCInner(u, name);
-    this.buildCInnerSub(u, name, endCOuter);
+export class ShellCInnerSub extends UShellSpaceRebar {
+  get gap(): number {
+    return this.struct.waterStop.h;
   }
-  protected buildCInner(u: UShellStruct, name: string): void {
-    this.spec = this.genSpec();
-    const as = this.info.as;
-    const path = this.shape(u).offset(as, Side.Right).removeStart().removeEnd();
-    const lens = path.segments.map((s) => s.calcLength());
-    const form = new RebarPathForm(this.diameter)
-      .lineBy(0, -1.6)
-      .dimLength(lens[0])
-      .arcBy(4, 0, 180)
-      .dimArc(u.shell.r + as)
-      .dimLength(lens[1])
-      .lineBy(0, 1.6)
-      .dimLength(lens[2]);
-
-    this.spec
-      .setForm(form)
-      .setCount(
-        this.pos(u).reduce((pre: number, cur) => pre + cur.points.length, 0)
-      )
-      .setId(this.container.id)
-      .setName(name);
-    this.container.record(this.spec);
-  }
-  protected buildCInnerSub(
-    u: UShellStruct,
-    name: string,
-    endCOuter: CountRebar
-  ): void {
-    this.specSub = this.genSpec();
-    const as = this.info.as;
-    const lens = this.shape(u)
-      .offset(u.waterStop.h + as, Side.Right)
+  shape(): Polyline {
+    const u = this.struct;
+    return new Polyline(-u.shell.r - 1, u.shell.hd)
+      .lineBy(1, 0)
+      .lineBy(0, -u.shell.hd)
+      .arcBy(2 * u.shell.r, 0, 180)
+      .lineBy(0, u.shell.hd)
+      .lineBy(1, 0)
+      .offset(this.gap + this.rebars.as, Side.Right)
       .removeStart()
-      .removeEnd().lengths;
-
+      .removeEnd();
+  }
+  get count(): number {
+    const u = this.struct;
+    const endCOuter = this.rebars.end.cOuter;
     let count = 0;
     if (u.cantLeft > 0) {
       count += 1;
@@ -57,37 +31,37 @@ export class ShellCInner extends SpaceRebar<UShellRebarInfo> {
     } else {
       count += endCOuter.singleCount;
     }
-    this.specSub
-      .setForm(
-        new RebarPathForm(this.diameter)
-          .lineBy(0, -1.6)
-          .dimLength(lens[0])
-          .arcBy(4, 0, 180)
-          .dimArc(u.shell.r + u.waterStop.h + as)
-          .dimLength(lens[1])
-          .lineBy(0, 1.6)
-          .dimLength(lens[2])
-      )
-      .setCount(count)
-      .setId(this.container.id)
-      .setName(name);
-    this.container.record(this.specSub);
+    return count;
   }
-  shape(u: UShellStruct): Polyline {
-    const path = new Polyline(-u.shell.r - 1, u.shell.hd)
-      .lineBy(1, 0)
-      .lineBy(0, -u.shell.hd)
-      .arcBy(2 * u.shell.r, 0, 180)
-      .lineBy(0, u.shell.hd)
-      .lineBy(1, 0);
-    return path;
+  get form(): RebarForm {
+    const u = this.struct;
+    const lens = this.shape().lengths;
+    const as = this.rebars.as;
+    return new RebarPathForm(this.diameter)
+      .lineBy(0, -1.6)
+      .dimLength(lens[0])
+      .arcBy(4, 0, 180)
+      .dimArc(u.shell.r + as + this.gap)
+      .dimLength(lens[1])
+      .lineBy(0, 1.6)
+      .dimLength(lens[2]);
   }
-  pos(u: UShellStruct, offsetDist?: number): Line[] {
-    const as = this.info.as;
+}
+
+export class ShellCInner extends ShellCInnerSub {
+  get gap(): number {
+    return 0;
+  }
+  get count(): number {
+    return this.pos().reduce((pre: number, cur) => pre + cur.points.length, 0);
+  }
+  pos(): Line[] {
+    const u = this.struct;
+    const as = this.rebars.as;
     const res: Line[] = [];
     const y = -u.shell.r;
-    const midLeft = -u.len / 2 + u.cantLeft + this.info.denseL;
-    const midRight = u.len / 2 - u.cantRight - this.info.denseL;
+    const midLeft = -u.len / 2 + u.cantLeft + this.rebars.denseL;
+    const midRight = u.len / 2 - u.cantRight - this.rebars.denseL;
 
     let left: number;
     if (u.cantLeft > 0) {
@@ -102,19 +76,17 @@ export class ShellCInner extends SpaceRebar<UShellRebarInfo> {
       right = u.len / 2 - u.endSect.b;
     }
 
-    const dist = offsetDist ? offsetDist : as;
-
     res.push(
       new Line(vec(left, y), vec(midLeft, y))
-        .offset(dist, Side.Right)
+        .offset(as, Side.Right)
         .divide(this.denseSpace),
       new Line(vec(midLeft, y), vec(midRight, y))
-        .offset(dist, Side.Right)
+        .offset(as, Side.Right)
         .divide(this.space)
         .removeStartPt()
         .removeEndPt(),
       new Line(vec(midRight, y), vec(right, y))
-        .offset(dist, Side.Right)
+        .offset(as, Side.Right)
         .divide(this.denseSpace)
     );
     if (u.cantLeft === 0) res[0].removeStartPt();

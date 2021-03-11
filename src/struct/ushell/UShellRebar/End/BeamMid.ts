@@ -1,26 +1,10 @@
-import { Line, RebarFormPreset, RebarSpec, vec } from "@/draw";
-import { CountRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import { Line, RebarForm, RebarFormPreset, vec } from "@/draw";
+import { UShellCountRebar } from "../UShellRebar";
 
-export class EndBeamMid extends CountRebar<UShellRebarInfo> {
-  spec = new RebarSpec();
-  build(u: UShellStruct, name: string): void {
-    this.spec = this.genSpec();
-    this.spec
-      .setForm(
-        RebarFormPreset.Line(
-          this.diameter,
-          this.shape(u).map((p) => p.calcLength())
-        )
-      )
-      .setCount(this.singleCount * 4)
-      .setId(this.container.id)
-      .setName(name);
-    this.container.record(this.spec);
-  }
-  shape(u: UShellStruct): Line[] {
-    const as = this.info.as;
+export class EndBeamMid extends UShellCountRebar {
+  shape(): Line[] {
+    const u = this.struct;
+    const as = this.rebars.as;
     const y0 = -u.shell.r - u.waterStop.h - as;
     const y1 = u.shell.hd - u.endHeight + u.support.h + as;
     const pts = new Line(vec(0, y0), vec(0, y1))
@@ -35,6 +19,15 @@ export class EndBeamMid extends CountRebar<UShellRebarInfo> {
           leftEdge.rayIntersect(p, vec(1, 0))[0],
           rightEdge.rayIntersect(p, vec(1, 0))[0]
         )
+    );
+  }
+  get count(): number {
+    return this.singleCount * 4;
+  }
+  get form(): RebarForm {
+    return RebarFormPreset.Line(
+      this.diameter,
+      this.shape().map((p) => p.calcLength())
     );
   }
 }

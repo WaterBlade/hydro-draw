@@ -1,23 +1,27 @@
-import { DrawItem } from "@/draw";
-import { Drawing, MaterialTableFigure, RebarTableFigure } from "../utils";
+import {
+  DrawItem,
+  HydroBorderFactory,
+  MaterialTable,
+  RebarTable,
+} from "@/draw";
 import { PierSolidFigure } from "./PierSolidFigure";
 import { PierSolidRebar } from "./PierSolidRebar";
 import { PierSolidStruct } from "./PierSolidStruct";
 
-export class PierSolidController{
+export class PierSolidController {
   struct = new PierSolidStruct();
   rebar = new PierSolidRebar();
-  drawing = new Drawing();
-  generate(): DrawItem[]{
+  drawing = new HydroBorderFactory();
+  generate(): DrawItem[] {
     this.rebar.build(this.struct);
-    const fig = new PierSolidFigure();
-    fig.build(this.struct, this.rebar);
+    const figure = new PierSolidFigure();
+    figure.build(this.struct, this.rebar);
 
-    this.drawing.push(
-      ...fig.figures,
-      new RebarTableFigure(...this.rebar.rebars),
-      new MaterialTableFigure(...this.rebar.rebars)
-    );
-    return this.drawing.generate();
+    const border = this.drawing.border();
+    border.add(...figure.figures);
+    border.addContent(new RebarTable(...this.rebar.rebars).generate());
+    border.addContent(new MaterialTable(...this.rebar.rebars).generate());
+
+    return border.generate();
   }
 }

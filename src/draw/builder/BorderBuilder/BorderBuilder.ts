@@ -2,19 +2,12 @@ import { CompositeItem, DrawItem } from "@/draw/drawItem";
 import { Builder } from "../Builder.interface";
 import { Container } from "./Container/Container";
 
-export interface BorderItemBuilder {
-  generate(): CompositeItem;
-  unitScale: number;
-  drawScale: number;
-  title?: DrawItem;
-}
-
-class ItemWrapper {
+export class BorderItem {
   constructor(
-    public item: DrawItem,
-    public unitScale: number,
-    public drawScale: number,
+    public content: DrawItem,
     public title?: DrawItem,
+    public unitScale = 1,
+    public drawScale = 1,
     public centerAligned = false,
     public titlePosKeep = false,
     public baseAligned = false
@@ -22,57 +15,41 @@ class ItemWrapper {
 }
 
 export abstract class BorderBuilder implements Builder<DrawItem[]> {
-  itemWrappers: ItemWrapper[] = [];
+  items: BorderItem[] = [];
   unitScale = 1;
   drawScale = 1;
   constructor(public widthFactor: number, public heightFactor: number) {}
-  addItem(
-    item: DrawItem,
-    unitScale: number,
-    drawScale: number,
-    title?: DrawItem,
-    centerAligned = false,
-    titlePosKeep = false,
-    baseAligned = false
-  ): void {
-    this.itemWrappers.push(
-      new ItemWrapper(
-        item,
-        unitScale,
-        drawScale,
-        title,
-        centerAligned,
-        titlePosKeep,
-        baseAligned
-      )
-    );
+  add(...items: BorderItem[]): void {
+    this.items.push(...items);
+  }
+  addContent(content: DrawItem): void {
+    this.items.push(new BorderItem(content));
   }
   abstract genContainer(): Container;
   abstract drawBorder(itemsInContainer: CompositeItem[]): void;
   generate(): DrawItem[] {
-    this.unitScale = this.itemWrappers[0].unitScale;
-    this.drawScale = this.itemWrappers[0].drawScale;
+    this.unitScale = this.items[0].unitScale;
+    this.drawScale = this.items[0].drawScale;
     let container = this.genContainer();
 
     const allItems: DrawItem[] = [];
     const itemsInContainer: CompositeItem[] = [];
-    for (const itemWrapper of this.itemWrappers) {
+    for (const item of this.items) {
       const factor =
-        ((this.drawScale / itemWrapper.drawScale) * itemWrapper.unitScale) /
-        this.unitScale;
-      const item = itemWrapper.item;
-      const title = itemWrapper.title;
-      const centerAligned = itemWrapper.centerAligned;
-      const titlePosKeep = itemWrapper.titlePosKeep;
-      const baseAligned = itemWrapper.baseAligned;
+        ((this.drawScale / item.drawScale) * item.unitScale) / this.unitScale;
+      const content = item.content;
+      const title = item.title;
+      const centerAligned = item.centerAligned;
+      const titlePosKeep = item.titlePosKeep;
+      const baseAligned = item.baseAligned;
 
       if (Math.abs(factor - 1) > 1e-6) {
-        item.scale(factor);
+        content.scale(factor);
         if (title) title.scale(factor);
       }
 
       if (
-        container.fill(item, title, centerAligned, titlePosKeep, baseAligned)
+        container.fill(content, title, centerAligned, titlePosKeep, baseAligned)
       ) {
         continue;
       } else {
@@ -83,11 +60,17 @@ export abstract class BorderBuilder implements Builder<DrawItem[]> {
         }
         container = this.genContainer();
         if (
-          container.fill(item, title, centerAligned, titlePosKeep, baseAligned)
+          container.fill(
+            content,
+            title,
+            centerAligned,
+            titlePosKeep,
+            baseAligned
+          )
         ) {
           continue;
         } else {
-          allItems.push(item);
+          allItems.push(content);
         }
       }
     }

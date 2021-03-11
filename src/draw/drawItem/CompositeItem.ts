@@ -35,7 +35,7 @@ export class CompositeItem extends DrawItem {
     }
   }
   protected moveItem(vec: Vector): void {
-    for(const item of this.itemList){
+    for (const item of this.itemList) {
       item.move(vec);
     }
   }

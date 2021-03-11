@@ -1,37 +1,10 @@
-import { Polyline, RebarPathForm, RebarSpec, Side, toDegree } from "@/draw";
-import { CountRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import { Polyline, RebarForm, RebarPathForm, Side, toDegree } from "@/draw";
+import { UShellCountRebar } from "../UShellRebar";
 
-export class EndCOuter extends CountRebar<UShellRebarInfo> {
-  spec = new RebarSpec();
-  build(u: UShellStruct, name: string): void {
-    this.spec = this.genSpec();
-    const path = this.shape(u);
-    const lens = path.segments.map((s) => s.calcLength());
-    let i = 0;
-    const angle = 180 - toDegree(Math.atan(u.endSect.w / u.endSect.hs));
-    this.spec
-      .setForm(
-        new RebarPathForm(this.diameter)
-          .lineBy(0, -1.5)
-          .dimLength(lens[i++], Side.Right)
-          .lineBy(0.75, -1.5)
-          .dimLength(lens[i++], Side.Right)
-          .dimAngle(angle)
-          .lineBy(1, 0)
-          .dimLength(lens[i++])
-          .lineBy(0.5, 0.5)
-          .dimLength(500, Side.Right)
-      )
-      .setCount(this.singleCount * 4)
-      .setId(this.container.id)
-      .setName(name);
-    this.container.record(this.spec);
-  }
-  shape(u: UShellStruct, offDist?: number): Polyline {
-    const as = this.info.as;
-    const dist = offDist ? offDist : as;
+export class EndCOuter extends UShellCountRebar {
+  shape(): Polyline {
+    const u = this.struct;
+    const dist = this.rebars.as;
     const path = new Polyline(
       -u.shell.r - u.shell.t - u.oBeam.w + 1,
       u.shell.hd
@@ -44,5 +17,24 @@ export class EndCOuter extends CountRebar<UShellRebarInfo> {
       .offset(dist)
       .removeStart();
     return path;
+  }
+  get form(): RebarForm {
+    const u = this.struct;
+    const lens = this.shape().segments.map((s) => s.calcLength());
+    const angle = 180 - toDegree(Math.atan(u.endSect.w / u.endSect.hs));
+    let i = 0;
+    return new RebarPathForm(this.diameter)
+      .lineBy(0, -1.5)
+      .dimLength(lens[i++], Side.Right)
+      .lineBy(0.75, -1.5)
+      .dimLength(lens[i++], Side.Right)
+      .dimAngle(angle)
+      .lineBy(1, 0)
+      .dimLength(lens[i++])
+      .lineBy(0.5, 0.5)
+      .dimLength(500, Side.Right);
+  }
+  get count(): number {
+    return this.singleCount * 4;
   }
 }

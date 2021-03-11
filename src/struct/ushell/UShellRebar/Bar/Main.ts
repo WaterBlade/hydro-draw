@@ -1,24 +1,16 @@
-import { RebarFormPreset, RebarSpec } from "@/draw";
-import { UnitRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import { RebarForm, RebarFormPreset } from "@/draw";
+import { UShellUnitRebar } from "../UShellRebar";
 
-export class BarMain extends UnitRebar<UShellRebarInfo> {
-  spec = new RebarSpec();
-  build(u: UShellStruct, name: string): void {
-    this.spec = this.genSpec();
-    const as = this.info.asBar;
-    const pts = u.genBarCenters();
-    this.spec
-      .setCount(pts.length * 4)
-      .setId(this.container.id)
-      .setName(name)
-      .setForm(
-        RebarFormPreset.Line(
-          this.diameter,
-          2 * u.shell.r + 2 * u.shell.t + 2 * u.oBeam.w - 2 * as
-        )
-      );
-    this.container.record(this.spec);
+export class BarMain extends UShellUnitRebar {
+  get count(): number {
+    return this.struct.genBarCenters().length * 4;
+  }
+  get form(): RebarForm {
+    const u = this.struct;
+    const as = this.rebars.as;
+    return RebarFormPreset.Line(
+      this.diameter,
+      2 * u.shell.r + 2 * u.shell.t + 2 * u.oBeam.w - 2 * as
+    );
   }
 }

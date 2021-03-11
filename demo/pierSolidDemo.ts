@@ -38,7 +38,7 @@ function pier(config: {height: number, id: number}): DrawItem[]{
   draw.design = '技施';
   draw.drawingTitle = `${id}#实心墩钢筋图`;
   draw.drawingNumberPrefix = "HND/s-4-西干-渡槽-弄石";
-  draw.setSize('A2');
+  draw.size = 'A2';
   draw.note = [
     '图中单位：尺寸为mm',
     '砼强度等级为C25，钢筋采用HRB400，保护层厚度为60mm，钢筋连接采用焊接，单面焊不小于10d，双面焊不小于5d'

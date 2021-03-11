@@ -1,7 +1,7 @@
-import { Circle, CompositeItem, Content, Line, Text } from "../drawItem";
+import { Circle, CompositeItem, Content, Line, TextDraw } from "../drawItem";
 import { TextAlign, vec, Vector } from "../misc";
 
-export const Note = {
+export const NotePreset = {
   leader,
   leaderSpec,
 };
@@ -12,7 +12,7 @@ function leader(
   end: Vector,
   textHeight: number
 ): CompositeItem {
-  const t = new Text(content, end, textHeight);
+  const t = new TextDraw(content, end, textHeight);
   const factor = start.x < end.x ? 1 : -1;
   const angle = end.sub(start).quadrantAngle();
   if (angle > 90 && angle < 270) {

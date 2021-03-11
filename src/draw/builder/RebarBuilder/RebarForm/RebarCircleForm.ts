@@ -1,4 +1,4 @@
-import { Circle, DrawItem, Line, Text } from "@/draw/drawItem";
+import { Circle, DrawItem, Line, TextDraw } from "@/draw/drawItem";
 import { last, TextAlign, vec } from "@/draw/misc";
 import { RebarForm } from "./RebarForm";
 
@@ -21,7 +21,7 @@ export class RebarCircleForm extends RebarForm {
     if (typeof dia === "number") {
       len = Math.PI * dia;
       this.notes.push(
-        new Text(
+        new TextDraw(
           this.genNumContent(dia, { prefix: "D" }),
           vec(0, t),
           h,
@@ -31,13 +31,13 @@ export class RebarCircleForm extends RebarForm {
     } else {
       len = (dia.reduce((pre, cur) => pre + cur, 0) * Math.PI) / dia.length;
       this.notes.push(
-        new Text(
+        new TextDraw(
           this.genNumContent(dia[0], { prefix: "D" }),
           vec(0, t),
           h,
           TextAlign.BottomCenter
         ),
-        new Text(
+        new TextDraw(
           this.genNumContent(last(dia), { prefix: "~D" }),
           vec(0, -t),
           h,
@@ -48,7 +48,7 @@ export class RebarCircleForm extends RebarForm {
 
     this.addUp(len);
     this.notes.push(
-      new Text(
+      new TextDraw(
         this.genNumContent(len),
         vec(r + t, 0),
         this.numberHeight,

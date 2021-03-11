@@ -10,10 +10,10 @@ import { UCSTable } from "./UCS";
 import { ViewTable } from "./View";
 import { VPortTable } from "./Vport";
 
-export {DimStyle} from "./DimStyle";
-export {Layer} from "./Layer";
+export { DimStyle } from "./DimStyle";
+export { Layer } from "./Layer";
 
-export class Tables implements CodeItem{
+export class Tables implements CodeItem {
   vport = new VPortTable(this.handleGen);
   ltype = new LTypeTable(this.handleGen);
   layer = new LayerTable(this.handleGen, this.ltype);
@@ -24,9 +24,9 @@ export class Tables implements CodeItem{
   dimStyle = new DimStyleTable(this.handleGen, this.style);
   blockRecord = new BlockRecordTable(this.handleGen);
 
-  constructor(protected handleGen: HandleGenerator){}
-  toCode(root: GroupCode): void{
-    root.push(0, 'SECTION', 2, 'TABLES')
+  constructor(protected handleGen: HandleGenerator) {}
+  toCode(root: GroupCode): void {
+    root.push(0, "SECTION", 2, "TABLES");
 
     this.vport.toCode(root);
     this.ltype.toCode(root);
@@ -38,6 +38,6 @@ export class Tables implements CodeItem{
     this.dimStyle.toCode(root);
     this.blockRecord.toCode(root);
 
-    root.push(0, 'ENDSEC');
+    root.push(0, "ENDSEC");
   }
 }

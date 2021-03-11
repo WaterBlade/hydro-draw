@@ -1,4 +1,4 @@
-import { Line, Text } from "@/draw/drawItem";
+import { Line, TextDraw } from "@/draw/drawItem";
 import { vec } from "@/draw/misc";
 import {
   Cell,
@@ -61,8 +61,8 @@ describe("cell", () => {
     const c = new Cell(3.5, 0, 0);
     c.text("hello");
     expect(c.items.length).toEqual(1);
-    expect((c.items[0] as Text).insertPoint).toEqual(vec(0, 0));
-    expect((c.items[0] as Text).height).toEqual(3.5);
+    expect((c.items[0] as TextDraw).insertPoint).toEqual(vec(0, 0));
+    expect((c.items[0] as TextDraw).height).toEqual(3.5);
   });
 });
 

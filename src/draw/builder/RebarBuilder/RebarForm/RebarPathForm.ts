@@ -1,4 +1,4 @@
-import { Arc, DrawItem, Line, Text } from "@/draw/drawItem";
+import { Arc, DrawItem, Line, TextDraw } from "@/draw/drawItem";
 import { last, RotateDirection, Side, TextAlign, vec } from "@/draw/misc";
 import { RebarForm } from "./RebarForm";
 
@@ -56,6 +56,11 @@ export class RebarPathForm extends RebarForm {
     this.notes.push(this.genTextOnSeg(seg, content, side));
     return this;
   }
+  dimLengthText(content: string, side=Side.Left): this{
+    const seg = last(this.segments);
+    this.notes.push(this.genTextOnSeg(seg, content, side));
+    return this;
+  }
   dimArc(radius: number | number[], angle?: number): this {
     const arc = last(this.segments);
     if (!(arc instanceof Arc)) {
@@ -104,13 +109,13 @@ export class RebarPathForm extends RebarForm {
       new Line(p0, p1),
       new Line(p1, p2),
       new Line(p2, p0),
-      new Text(
+      new TextDraw(
         `${y}`,
         vec(px + dx, mid.y),
         0.8 * this.numberHeight,
         norm.x > 0 ? TextAlign.MiddleLeft : TextAlign.MiddleRight
       ),
-      new Text(
+      new TextDraw(
         `${x}`,
         vec(mid.x, py),
         0.8 * this.numberHeight,

@@ -1,30 +1,21 @@
-import { CompositeRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import { UShellCompositeRebar } from "../UShellRebar";
 import { EndBeamBot } from "./BeamBot";
 import { EndBeamMid } from "./BeamMid";
-import { EndBeamStir } from "./BeamStir";
+import { EndBeamStir, EndBeamStirCant } from "./BeamStir";
 import { EndBeamTop } from "./BeamTop";
 import { EndCOuter } from "./COuter";
-import { EndTopBeam } from "./TopBeam";
-import { EndWallStir } from "./WallStir";
+import { EndTopBeam, EndTopBeamCant } from "./TopBeam";
+import { EndWallStir, EndWallStirCant } from "./WallStir";
 
-export class EndContainer extends CompositeRebar<UShellRebarInfo> {
-  bBot = new EndBeamBot(this.container, this.info);
-  bMid = new EndBeamMid(this.container, this.info);
-  bStir = new EndBeamStir(this.container, this.info);
-  bTop = new EndBeamTop(this.container, this.info);
-  cOuter = new EndCOuter(this.container, this.info);
-  topBeam = new EndTopBeam(this.container, this.info);
-  wStir = new EndWallStir(this.container, this.info);
-
-  build(u: UShellStruct, name: string): void {
-    this.bBot.build(u, name);
-    this.bTop.build(u, name);
-    this.bMid.build(u, name);
-    this.bStir.build(u, name);
-    this.cOuter.build(u, name);
-    this.topBeam.build(u, name, this.cOuter);
-    this.wStir.build(u, name);
-  }
+export class UShellEndRebar extends UShellCompositeRebar {
+  bBot = this.add(new EndBeamBot(this.struct, this.rebars));
+  bMid = this.add(new EndBeamMid(this.struct, this.rebars));
+  bStir = this.add(new EndBeamStir(this.struct, this.rebars));
+  bStirCant = this.add(new EndBeamStirCant(this.struct, this.rebars));
+  bTop = this.add(new EndBeamTop(this.struct, this.rebars));
+  cOuter = this.add(new EndCOuter(this.struct, this.rebars));
+  topBeam = this.add(new EndTopBeam(this.struct, this.rebars));
+  topBeamCant = this.add(new EndTopBeamCant(this.struct, this.rebars));
+  wStir = this.add(new EndWallStir(this.struct, this.rebars));
+  wStirCant = this.add(new EndWallStirCant(this.struct, this.rebars));
 }

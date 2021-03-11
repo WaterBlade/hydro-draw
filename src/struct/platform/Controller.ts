@@ -1,24 +1,29 @@
-import { DrawItem } from "@/draw";
-import { Drawing, MaterialTableFigure, RebarTableFigure } from "../utils";
+import {
+  DrawItem,
+  HydroBorderFactory,
+  MaterialTable,
+  RebarTable,
+} from "@/draw";
 import { PlatformFigure } from "./PlatformFigure";
 import { PlatformRebar } from "./PlatformRebar";
 import { PlatformStruct } from "./PlatformStruct";
 
 export class PlatformController {
   struct = new PlatformStruct();
-  rebar = new PlatformRebar();
-  drawing = new Drawing();
+  rebar = new PlatformRebar(this.struct);
+  protected figure = new PlatformFigure(this.struct, this.rebar);
+  drawing = new HydroBorderFactory();
   generate(): DrawItem[] {
-    const fig = new PlatformFigure();
-    this.rebar.build(this.struct);
-    fig.build(this.struct, this.rebar);
+    this.rebar.init();
+    this.figure.init();
+    const specs = this.rebar.genSpecs();
+    const items = this.figure.genBorderItems();
 
-    this.drawing.push(
-      ...fig.figures,
-      new RebarTableFigure(...this.rebar.rebars),
-      new MaterialTableFigure(...this.rebar.rebars)
-    );
+    const border = this.drawing.border();
+    border.add(...items);
+    border.addContent(new RebarTable(...specs).generate());
+    border.addContent(new MaterialTable(...specs).generate());
 
-    return this.drawing.generate();
+    return border.generate();
   }
 }

@@ -5,12 +5,12 @@ import { PierSolidAlong } from "./Along";
 import { PierSolidCross } from "./Cross";
 import { PierSolidSect } from "./Sect";
 
-export class PierSolidFigure extends FigureContainer{
+export class PierSolidFigure extends FigureContainer {
   cross = new PierSolidCross(this);
   along = new PierSolidAlong(this);
   sect = new PierSolidSect(this);
 
-  build(t: PierSolidStruct, rebars: PierSolidRebar): void{
+  build(t: PierSolidStruct, rebars: PierSolidRebar): void {
     this.cross.initFigure();
     this.along.initFigure();
     this.sect.initFigure();
@@ -19,5 +19,4 @@ export class PierSolidFigure extends FigureContainer{
     this.along.build(t, rebars);
     this.sect.build(t);
   }
-
 }

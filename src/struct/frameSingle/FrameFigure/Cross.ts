@@ -1,42 +1,30 @@
-import { Line, Polyline, Text, TextAlign, vec } from "@/draw";
-import {
-  BeamViewCross,
-  ColumnViewCross,
-} from "@/struct/component";
-import { Figure, FigureContent } from "@/struct/utils";
+import { Line, Polyline, TextDraw, TextAlign, vec } from "@/draw";
+import { BeamView, ColumnViewCross } from "@/struct/component";
+import { Figure, FigureConfig } from "@/struct/utils";
+import { FrameSingleFigure } from ".";
 import { FrameSingleRebar } from "../FrameRebar";
 import { FrameSingleStruct } from "../FrameStruct";
 
-interface SectFigContainer {
-  along: Figure;
-  sTopBeam: Figure;
-  sBeam: Figure;
-  sCol: Figure;
-}
-
 export class FrameCross extends Figure {
-  initFigure(): void {
-    this.fig = new FigureContent();
-    this.fig
-      .resetScale(1, 50)
-      .setTitle("垂直水流向立面钢筋图")
-      .displayScale()
-      .centerAligned()
-      .baseAligned()
-      .keepTitlePos();
-    this.container.record(this.fig);
+  protected unitScale = 1;
+  protected drawScale = 50;
+  protected title = "垂直水流向立面钢筋图";
+  protected config = new FigureConfig(true, true, true);
+  constructor(
+    protected struct: FrameSingleStruct,
+    protected rebars: FrameSingleRebar,
+    protected figures: FrameSingleFigure
+  ) {
+    super();
   }
-  build(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar,
-    figContainer: SectFigContainer
-  ): void {
-    this.buildOutline(t);
-    this.buildRebar(t, rebars);
-    this.buildNote(t, rebars, figContainer);
-    this.buildDim(t);
+  draw(): void {
+    this.buildOutline();
+    this.buildRebar();
+    this.buildNote();
+    this.buildDim();
   }
-  protected buildOutline(t: FrameSingleStruct): void {
+  protected buildOutline(): void {
+    const t = this.struct;
     this.fig.addOutline(
       new Polyline(-t.w / 2, 0)
         .lineBy(0, t.h)
@@ -84,49 +72,53 @@ export class FrameCross extends Figure {
       ).greyLine()
     );
   }
-  protected buildNote(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar,
-    figContainer: SectFigContainer
-  ): void {
-    const { along, sTopBeam, sBeam, sCol } = figContainer;
+  protected buildNote(): void {
+    const t = this.struct;
+    const { along, sTopBeam, sBeam, sCol } = this.figures;
     const fig = this.fig;
     const { left, right } = fig.outline.getBoundingBox();
-    fig.breakline(vec(left, 0), vec(left, -t.found.h));
-    fig.breakline(vec(right, 0), vec(right, -t.found.h));
+    fig.push(fig.breakline(vec(left, 0), vec(left, -t.found.h)));
+    fig.push(fig.breakline(vec(right, 0), vec(right, -t.found.h)));
     const { top, bottom } = fig.getBoundingBox();
-    fig.sectSymbol(
-      along.fig.id,
-      vec(-t.w / 2, bottom - fig.h),
-      vec(-t.w / 2, top + fig.h)
+    fig.push(
+      fig.sectSymbol(
+        along.id,
+        vec(-t.w / 2, bottom - fig.h),
+        vec(-t.w / 2, top + fig.h)
+      )
     );
 
-    fig.sectSymbol(
-      sTopBeam.fig.id,
-      vec(0, t.h - t.topBeam.h - 3 * fig.h),
-      vec(0, top + fig.h)
+    fig.push(
+      fig.sectSymbol(
+        sTopBeam.id,
+        vec(0, t.h - t.topBeam.h - 3 * fig.h),
+        vec(0, top + fig.h)
+      )
     );
     if (t.n > 0) {
       const y = t.h - t.vs - t.beam.h;
-      fig.sectSymbol(
-        sBeam.fig.id,
-        vec(0, y - 2 * fig.h),
-        vec(0, y + t.beam.h + 2 * fig.h)
+      fig.push(
+        fig.sectSymbol(
+          sBeam.id,
+          vec(0, y - 2 * fig.h),
+          vec(0, y + t.beam.h + 2 * fig.h)
+        )
       );
     }
     const y = t.h - 6 * fig.h;
-    fig.sectSymbol(
-      sCol.fig.id,
-      vec(-t.w / 2 - fig.h, y),
-      vec(-t.w / 2 + t.col.w + fig.h, y)
+    fig.push(
+      fig.sectSymbol(
+        sCol.id,
+        vec(-t.w / 2 - fig.h, y),
+        vec(-t.w / 2 + t.col.w + fig.h, y)
+      )
     );
 
-    this.drawSpaceNote(t, rebars);
+    this.drawSpaceNote();
   }
-  protected drawSpaceNote(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar
-  ): void {
+  protected drawSpaceNote(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
     const x = fig.getBoundingBox().left - fig.h;
     const lens = t.col.partition();
@@ -137,7 +129,7 @@ export class FrameCross extends Figure {
       const l = lens[i];
       if (i % 2 === 0) {
         fig.push(
-          new Text(
+          new TextDraw(
             denseSpaceText,
             vec(x, h - l / 2),
             fig.h,
@@ -147,7 +139,7 @@ export class FrameCross extends Figure {
         );
       } else {
         fig.push(
-          new Text(
+          new TextDraw(
             spaceText,
             vec(x, h - l / 2),
             fig.h,
@@ -159,7 +151,8 @@ export class FrameCross extends Figure {
       h -= l;
     }
   }
-  protected buildDim(t: FrameSingleStruct): void {
+  protected buildDim(): void {
+    const t = this.struct;
     const fig = this.fig;
     const { right, top, left } = fig.getBoundingBox();
     const dim = fig.dimBuilder();
@@ -192,23 +185,37 @@ export class FrameCross extends Figure {
       .dim(t.w);
     fig.push(dim.generate());
   }
-  protected colGen = new ColumnViewCross();
-  protected beamGen = new BeamViewCross();
-  protected buildRebar(t: FrameSingleStruct, rebars: FrameSingleRebar): void {
+  protected colGen = new ColumnViewCross(
+    this.fig,
+    this.struct.col,
+    this.rebars.col
+  );
+  protected beamGen = new BeamView(
+    this.fig,
+    this.struct.beam,
+    this.rebars.beam
+  );
+  protected topBeamGen = new BeamView(
+    this.fig,
+    this.struct.topBeam,
+    this.rebars.topBeam
+  );
+  protected buildRebar(): void {
+    const t = this.struct;
     const fig = this.fig;
     // col
-    const left = this.colGen.generate(fig, t.col, rebars.col);
+    const left = this.colGen.generate();
     left.move(vec(-t.hs / 2, 0));
     const right = left.mirrorByVAxis();
     fig.push(left, right);
     // topBeam
-    const topBeam = this.beamGen.generate(fig, t.topBeam, rebars.topBeam);
+    const topBeam = this.topBeamGen.generate();
     topBeam.move(vec(0, t.h - t.topBeam.h / 2));
     fig.push(topBeam);
     // beam
     if (t.n > 1) {
       for (let i = 1; i < t.n + 1; i++) {
-        const beam = this.beamGen.generate(fig, t.beam, rebars.beam);
+        const beam = this.beamGen.generate();
         beam.move(vec(0, t.h - t.vs * i - t.beam.h / 2));
         fig.push(beam);
       }

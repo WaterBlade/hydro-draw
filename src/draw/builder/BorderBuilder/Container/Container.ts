@@ -6,6 +6,14 @@ import { Cell } from "./Cell";
 import { Column } from "./Column";
 import { Row } from "./Row";
 
+export interface ContainerItem {
+  content: DrawItem;
+  title?: DrawItem;
+  centerAligned: boolean;
+  titlePosKeep: boolean;
+  baseAligned: boolean;
+}
+
 export class Container extends BoxContainer {
   boxs: Column[] = [];
   fillBorder: Boundary;
@@ -26,14 +34,14 @@ export class Container extends BoxContainer {
   }
   protected needWrapColumn = true;
   fill(
-    item: DrawItem,
+    content: DrawItem,
     title?: DrawItem,
     centerAligned = false,
     titlePosKeep = false,
     baseAligned = false
   ): boolean {
     const cell = new Cell(
-      item,
+      content,
       title,
       centerAligned,
       titlePosKeep,

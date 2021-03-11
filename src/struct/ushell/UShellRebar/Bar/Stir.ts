@@ -1,31 +1,23 @@
-import { divideBySpace, RebarFormPreset, RebarSpec } from "@/draw";
-import { SpaceRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import { divideBySpace, RebarForm, RebarFormPreset } from "@/draw";
+import { UShellSpaceRebar } from "../UShellRebar";
 
-export class BarStir extends SpaceRebar<UShellRebarInfo> {
-  spec = new RebarSpec();
-  build(u: UShellStruct, name: string): void {
-    this.spec = this.genSpec();
-    const as = this.info.asBar;
-    const pts = u.genBarCenters();
-    const xs = this.pos(u);
-    this.spec
-      .setId(this.container.id)
-      .setName(name)
-      .setCount(pts.length * xs.length)
-      .setForm(
-        RebarFormPreset.RectStir(
-          this.diameter,
-          u.bar.h - 2 * as,
-          u.bar.w - 2 * as
-        )
-      );
-    this.container.record(this.spec);
-  }
-  pos(u: UShellStruct): number[] {
+export class BarStir extends UShellSpaceRebar {
+  pos(): number[] {
+    const u = this.struct;
     const x0 = -u.shell.r + u.iBeam.w;
     const x1 = -x0;
     return divideBySpace(x0, x1, this.space).slice(1, -1);
+  }
+  get count(): number {
+    return this.pos().length * this.struct.genBarCenters().length;
+  }
+  get form(): RebarForm {
+    const u = this.struct;
+    const as = this.rebars.as;
+    return RebarFormPreset.RectStir(
+      this.diameter,
+      u.bar.h - 2 * as,
+      u.bar.w - 2 * as
+    );
   }
 }

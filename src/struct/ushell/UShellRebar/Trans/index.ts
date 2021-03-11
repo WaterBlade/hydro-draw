@@ -1,14 +1,8 @@
-import { CompositeRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import { UShellCompositeRebar } from "../UShellRebar";
 import { TransArc } from "./Arc";
 import { TransDirect } from "./Direct";
 
-export class TransContainer extends CompositeRebar<UShellRebarInfo> {
-  arc = new TransArc(this.container, this.info);
-  direct = new TransDirect(this.container, this.info);
-  build(u: UShellStruct, name: string): void {
-    this.arc.build(u, name);
-    this.direct.build(u, name);
-  }
+export class UShellTransRebar extends UShellCompositeRebar {
+  arc = this.add(new TransArc(this.struct, this.rebars));
+  direct = this.add(new TransDirect(this.struct, this.rebars));
 }

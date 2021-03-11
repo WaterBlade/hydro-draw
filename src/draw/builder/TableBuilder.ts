@@ -1,4 +1,4 @@
-import { CompositeItem, DrawItem, Line, Text } from "@/draw/drawItem";
+import { CompositeItem, DrawItem, Line, TextDraw } from "@/draw/drawItem";
 import { BoundingBox, sum, vec, Vector, TextAlign } from "@/draw/misc";
 import { Content } from "../drawItem/Content";
 import { Builder } from "./Builder.interface";
@@ -69,7 +69,7 @@ export class TableBuilder implements Builder<CompositeItem> {
     // 绘制标题
     if (this.titleContent) {
       comp.push(
-        new Text(
+        new TextDraw(
           this.titleContent,
           vec(width / 2, this.unitSize * 1.25),
           this.unitSize,
@@ -158,7 +158,7 @@ export class Cell {
 
   private insertPoint = vec(0, 0);
   text(content: string | Content): this {
-    const t = new Text(
+    const t = new TextDraw(
       content,
       this.insertPoint,
       this.textHeight,

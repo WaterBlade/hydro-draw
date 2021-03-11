@@ -1,9 +1,9 @@
 import { FrameSingleController} from "@/struct";
-import { HLayoutBuilder, ScriptPaper } from "@/draw";
+import { HLayoutBuilder, DXFPaper } from "@/draw";
 import fs from "fs";
 
 export default function runFrameSingleDemo(): void{
-  const paper = new ScriptPaper();
+  const paper = new DXFPaper();
   const ctrl = new FrameSingleController();
   const draw = ctrl.drawing;
   draw.company = '湖南省水利水电勘测设计研究总院';
@@ -26,10 +26,13 @@ export default function runFrameSingleDemo(): void{
   f.beam.w = 400;
   f.beam.h = 600;
   f.beam.ha = 200;
+  f.beam.topHa = true;
+  f.beam.botHa = true;
 
   f.topBeam.w = 700;
   f.topBeam.h = 600;
   f.topBeam.ha = 200;
+  f.topBeam.botHa = true;
 
   f.corbel.w = 550;
   f.corbel.hd = 400;
@@ -39,33 +42,39 @@ export default function runFrameSingleDemo(): void{
   f.found.s = 150;
 
   const bar = ctrl.rebar;
-  bar.info.as = 50;
-  bar.col.corner.set('HRB400', 22);
-  bar.col.along.set('HRB400', 22, 3);
-  bar.col.cross.set('HRB400', 22, 3);
-  bar.col.stir.set('HPB300', 10, 200, 100);
+  bar.as = 50;
+  bar.col.corner.setSpec('HRB400', 25);
+  bar.col.along.setSpec('HRB400', 20).setCount(3);
+  bar.col.cross.setSpec('HRB400', 22).setCount(3);
+  bar.col.stir.setSpec('HPB300', 8).setSpace(200, 100);
+  bar.col.stirAlong.setSpec('HPB300', 8).setSpace(200, 100);
+  bar.col.stirCross.setSpec('HPB300', 8).setSpace(200, 100);
+  bar.col.tendonAlong.setSpec('HPB300', 8).setSpace(200, 100);
+  bar.col.tendonCross.setSpec('HPB300', 8).setSpace(200, 100);
 
-  bar.topBeam.bot.set('HRB400', 20, 4);
-  bar.topBeam.top.set('HRB400', 20, 4);
-  bar.topBeam.mid.set('HRB400', 12, 2);
-  bar.topBeam.stir.set('HPB300', 10, 125);
-  bar.topBeam.tendon.set('HPB300', 8, 400);
+  bar.topBeam.bot.setSpec('HRB400', 20).setCount(4);
+  bar.topBeam.top.setSpec('HRB400', 20).setCount(4);
+  bar.topBeam.mid.setSpec('HRB400', 12).setCount(2);
+  bar.topBeam.stir.setSpec('HPB300', 8).setSpace(125);
+  bar.topBeam.tendon.setSpec('HPB300', 8).setSpace(250);
+  bar.topBeam.haunch.setSpec('HRB400', 16).setCount(2);
   
-  bar.beam.bot.set('HRB400', 20, 4);
-  bar.beam.top.set('HRB400', 20, 4);
-  bar.beam.mid.set('HRB400', 12, 2);
-  bar.beam.stir.set('HPB300', 10, 125);
-  bar.beam.tendon.set('HPB300', 8, 400);
+  bar.beam.bot.setSpec('HRB400', 20).setCount(4);
+  bar.beam.top.setSpec('HRB400', 20).setCount(4);
+  bar.beam.mid.setSpec('HRB400', 12).setCount(2);
+  bar.beam.stir.setSpec('HPB300', 8).setSpace(125);
+  bar.beam.tendon.setSpec('HPB300', 8).setSpace(250);
+  bar.beam.haunch.setSpec('HRB400', 16).setCount(2);
 
-  bar.corbel.main.set('HRB400', 20, 4);
-  bar.corbel.hStir.set('HPB300', 10, 150);
-  bar.corbel.vStir.set('HPB300', 10, 200);
+  bar.corbel.main.setSpec('HRB400', 20).setCount(4);
+  bar.corbel.hStir.setSpec('HPB300', 10).setSpace(150);
+  bar.corbel.vStir.setSpec('HPB300', 10).setSpace(200);
 
   const layout = new HLayoutBuilder(100);
   layout.push(...ctrl.generate());
   paper.push(layout.generate());
 
-  fs.writeFile('demoFrameSingle.txt', paper.generate(), ()=>{
+  fs.writeFile('demoFrameSingle.dxf', paper.generate(), ()=>{
     console.log('frame demo finished');
   })
   

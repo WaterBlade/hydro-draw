@@ -1,51 +1,20 @@
-import { Line, RebarFormPreset, RebarSpec, Side, vec } from "@/draw";
-import { SpaceRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import { Line, RebarForm, RebarFormPreset, Side, vec } from "@/draw";
+import { UShellSpaceRebar } from "../UShellRebar";
 
-export class EndWallStir extends SpaceRebar<UShellRebarInfo> {
-  spec = new RebarSpec();
-  specCant = new RebarSpec();
-  build(u: UShellStruct, name: string): void {
-    if (u.cantCount < 2) {
-      this.spec = this.genSpec();
-      const as = this.info.as;
-      const lens = this.shape(u).map((l) => l.calcLength());
-      this.spec
-        .setForm(
-          RebarFormPreset.RectStir(this.diameter, u.endSect.b - 2 * as, lens)
-        )
-        .setCount(lens.length * (2 - u.cantCount))
-        .setId(this.container.id)
-        .setName(name);
-      this.container.record(this.spec);
-    }
-    if (u.cantCount > 0) {
-      this.specCant = this.genSpec();
-      const as = this.info.as;
-      const lens = this.shapeCant(u).map((l) => l.calcLength());
-      this.specCant
-        .setForm(
-          RebarFormPreset.RectStir(this.diameter, u.endSect.b - 2 * as, lens)
-        )
-        .setCount(lens.length * (2 - u.cantCount))
-        .setId(this.container.id)
-        .setName(name);
-      this.container.record(this.specCant);
-    }
+export class EndWallStir extends UShellSpaceRebar {
+  isExist(): boolean {
+    return this.struct.cantCount < 2;
   }
-  shape(u: UShellStruct): Line[] {
-    return this.genWStirAndCant(u, u.waterStop.h);
+  get gap(): number {
+    return this.struct.waterStop.h;
   }
-  shapeCant(u: UShellStruct): Line[] {
-    return this.genWStirAndCant(u, 0);
-  }
-  protected genWStirAndCant(u: UShellStruct, gap: number): Line[] {
-    const as = this.info.as;
+  shape(): Line[] {
+    const u = this.struct;
+    const as = this.rebars.as;
     const y0 = u.shell.hd - as;
-    const y1 = -u.shell.r - gap - as;
+    const y1 = -u.shell.r - this.gap - as;
     const leftEdge = u.genEndCOuterLeft().offset(as);
-    const rightEdge = u.genEndCInnerLeft().offset(gap + as, Side.Right);
+    const rightEdge = u.genEndCInnerLeft().offset(this.gap + as, Side.Right);
 
     const pts = new Line(vec(0, y0), vec(0, y1))
       .divide(this.space)
@@ -57,5 +26,28 @@ export class EndWallStir extends SpaceRebar<UShellRebarInfo> {
           rightEdge.rayIntersect(p, vec(1, 0))[0]
         )
     );
+  }
+  get count(): number {
+    return this.shape().length * (2 - this.struct.cantCount) * 2;
+  }
+  get form(): RebarForm {
+    const lens = this.shape().map((l) => l.calcLength());
+    return RebarFormPreset.RectStir(
+      this.diameter,
+      this.struct.endSect.b - 2 * this.rebars.as,
+      lens
+    );
+  }
+}
+
+export class EndWallStirCant extends EndWallStir {
+  isExist(): boolean {
+    return this.struct.cantCount > 0;
+  }
+  get gap(): number {
+    return 0;
+  }
+  get count(): number {
+    return this.shape().length * this.struct.cantCount * 2;
   }
 }

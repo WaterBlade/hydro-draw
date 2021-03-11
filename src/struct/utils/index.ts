@@ -1,6 +1,8 @@
-export * from "./Drawing";
 export * from "./FigureContent";
 export * from "./PosGen";
 
-export * from "./Figure";
+export * from "./FigureOld";
+export * from "./RebarOld";
+
 export * from "./Rebar";
+export * from "./Figure";

@@ -1,28 +1,23 @@
-import { Line, Polyline, Text, TextAlign, toRadian, vec } from "@/draw";
-import { FigureContent } from "@/struct/utils";
-import { Figure } from "../../utils/Figure";
+import { Line, Polyline, TextDraw, TextAlign, toRadian, vec } from "@/draw";
+import { Figure, FigureConfig } from "@/struct/utils";
 import { PileRebar } from "../PileRebar";
 import { PileStruct } from "../PileStruct";
+import { PileFigure } from "./PileFigure";
 
-export class Ele extends Figure {
-  initFigure(): this {
-    this.fig = new FigureContent();
-    this.fig
-      .resetScale(1, 50)
-      .setTitle("桩身结构钢筋图")
-      .displayScale()
-      .keepTitlePos()
-      .centerAligned();
-    this.container.record(this.fig);
-    return this;
-  }
-  build(t: PileStruct, rebars: PileRebar): void {
-    this.buildOutline(t);
-    this.buildRebar(t, rebars);
+export class Ele extends Figure{
+  constructor(protected struct: PileStruct, protected rebars: PileRebar, protected figures: PileFigure){super();}
+  protected unitScale = 1;
+  protected drawScale = 50;
+  protected title = '桩身结构钢筋图';
+  protected config = new FigureConfig(true, true);
+  protected draw(): void {
+    this.buildOutline();
+    this.buildRebar();
     this.buildNote();
-    this.buildDim(t, rebars);
+    this.buildDim();
   }
-  buildOutline(t: PileStruct): this {
+  protected buildOutline(): void {
+    const t = this.struct;
     const fig = this.fig;
     const s = 500;
     fig.addOutline(
@@ -36,16 +31,19 @@ export class Ele extends Figure {
       new Line(vec(t.d / 2, 0), vec(t.d / 2 + s, 0)).greyLine(),
       new Line(vec(-t.d / 2 - s, t.hp), vec(t.d / 2 + s, t.hp)).greyLine()
     );
-    return this;
   }
-  buildNote(): this {
+  protected buildNote(): void {
     const fig = this.fig;
+    const t = this.struct;
+    const y = -3000;
     const { left, right, top } = fig.outline.getBoundingBox();
-    fig.breakline(vec(left, 0), vec(left, top));
-    fig.breakline(vec(right, 0), vec(right, top));
-    return this;
+    fig.push(fig.breakline(vec(left, 0), vec(left, top)));
+    fig.push(fig.breakline(vec(right, 0), vec(right, top)));
+    fig.push(fig.sectSymbol(this.figures.sect.id, vec(-t.d/2 - fig.h, y), vec(t.d/2 + fig.h, y)));
   }
-  buildDim(t: PileStruct, rebars: PileRebar): this {
+  protected buildDim(): this {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
     const dim = fig.dimBuilder();
     const bar = rebars.stir;
@@ -55,7 +53,7 @@ export class Ele extends Figure {
     if (t.hs > 0) {
       dim.dim(t.hs);
     }
-    const ln = rebars.info.denseFactor * t.d;
+    const ln = rebars.denseFactor * t.d;
     dim
       .dim(ln)
       .dim(t.h - ln, `H-${ln}`)
@@ -66,14 +64,14 @@ export class Ele extends Figure {
     dim.hBottom(-t.d / 2, bottom - fig.h).dim(t.d);
     fig.push(
       dim.generate(),
-      new Text(
+      new TextDraw(
         `间距${bar.denseSpace}`,
         vec(right, -0.5 * ln),
         fig.h,
         TextAlign.BottomCenter,
         90
       ),
-      new Text(
+      new TextDraw(
         `间距${bar.space}`,
         vec(right, (-t.h - ln) / 2),
         fig.h,
@@ -84,22 +82,24 @@ export class Ele extends Figure {
     return this;
   }
 
-  buildRebar(t: PileStruct, rebars: PileRebar): this {
-    this.drawMain(t, rebars);
-    this.drawFix(t, rebars);
-    this.drawStir(t, rebars);
-    this.drawRib(t, rebars);
-    return this;
+  protected buildRebar(): void {
+    this.drawMain();
+    this.drawFix();
+    this.drawStir();
+    this.drawRib();
+    this.drawTopStir();
   }
 
-  protected drawMain(t: PileStruct, rebars: PileRebar): void {
+  protected drawMain(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const bar = rebars.main;
     const fig = this.fig;
-    const xs = bar.pos(t);
+    const xs = bar.pos();
     const n = xs.length;
     const da = (2 * t.topAngle) / (n - 1);
     const h0 =
-      bar.diameter * rebars.info.anchorFactor * Math.cos(toRadian(t.topAngle));
+      bar.diameter * rebars.anchorFactor * Math.cos(toRadian(t.topAngle));
     let a = -t.topAngle;
     const rebar = fig.planeRebar();
     const y0 = h0 + t.hs;
@@ -112,18 +112,20 @@ export class Ele extends Figure {
       a += da;
     }
     rebar
-      .spec(bar.spec)
+      .spec(bar)
       .leaderNote(
         vec(-t.d / 2 - 2 * fig.h, -5.5 * rebars.stir.denseSpace),
         vec(1, 0)
       );
     fig.push(rebar.generate());
   }
-  protected drawFix(t: PileStruct, rebars: PileRebar): void {
+  protected drawFix(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const bar = rebars.fix;
-    const ys = bar.pos(t);
+    const ys = bar.pos();
     for (const y of ys) {
       const left = new Polyline(-t.d / 2 + as, y + 50 + as)
         .lineBy(-as, -as)
@@ -134,36 +136,40 @@ export class Ele extends Figure {
         fig
           .planeRebar()
           .rebar(left, right)
-          .spec(bar.spec, rebars.info.fixCount, bar.space)
+          .spec(bar).count(rebars.fixCount).space(bar.space)
           .leaderNote(vec(-t.d / 2 - fig.h, y), vec(1, 0))
           .generate()
       );
     }
   }
-  protected drawRib(t: PileStruct, rebars: PileRebar): void {
+  protected drawRib(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const bar = rebars.rib;
     const fig = this.fig;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const lines = bar
-      .pos(t)
+      .pos()
       .map((y) => new Line(vec(-t.d / 2 + as, y), vec(t.d / 2 - as, y)));
     fig.push(
       fig
         .planeRebar()
         .rebar(...lines)
-        .spec(bar.spec, lines.length, bar.space)
+        .spec(bar).space(bar.space)
         .leaderNote(vec(t.d / 3, t.hp + 2 * fig.h), vec(0, 1), vec(1, 0))
         .generate()
     );
   }
-  protected drawStir(t: PileStruct, rebars: PileRebar): void {
+  protected drawStir(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const bar = rebars.stir;
     const left = -t.d / 2 + as;
     const right = t.d / 2 - as;
 
-    const ys = bar.pos(t);
+    const ys = bar.pos();
     const rebar = fig.planeRebar();
     for (let i = 1; i < ys.length; i++) {
       const mid = (ys[i - 1] + ys[i]) / 2;
@@ -173,20 +179,22 @@ export class Ele extends Figure {
     }
     fig.push(
       rebar
-        .spec(bar.spec, 0, bar.space, bar.denseSpace)
+        .spec(bar).space(bar.space, bar.denseSpace)
         .leaderNote(vec(-t.d / 3, t.hp + 2 * fig.h), vec(0, 1), vec(-1, 0))
         .generate()
     );
   }
-  protected drawTopStir(t: PileStruct, rebars: PileRebar): void {
+  protected drawTopStir(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const bar = rebars.stirTop;
     const fig = this.fig;
-    const lines = bar.shape(t, rebars.main);
+    const lines = bar.shape();
     fig.push(
       fig
         .planeRebar()
         .rebar(...lines)
-        .spec(bar.spec, lines.length, bar.space)
+        .spec(bar).count(lines.length).space(bar.space)
         .leaderNote(vec(0, t.hp + 6 * fig.h), vec(0, 1), vec(-1, 0))
         .generate()
     );

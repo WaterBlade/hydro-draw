@@ -65,40 +65,44 @@ export default function runUshellDemo(): void{
   // 钢筋
   const bar = ctrl.rebar;
   // 钢筋保护层厚度
-  bar.info.as = 35;
-  bar.info.asBar = 25;
+  bar.as = 35;
+  bar.asBar = 25;
   // 加密长度
-  bar.info.denseL = 3740;
+  bar.denseL = 3740;
   // 槽壳钢筋
   // 主筋
-  bar.shell.main.set( 'HRB400', 28, 9, 2, 50);
+  bar.shell.main.setSpec( 'HRB400', 28).setCount(9).setLayer(2);
   // 内侧纵向钢筋
-  bar.shell.lInner.set('HRB400', 12, 200);
+  bar.shell.lInner.setSpec('HRB400', 12).setSpace(200);
   // 外侧纵向钢筋
-  bar.shell.lOuter.set('HRB400', 12, 200);
+  bar.shell.lOuter.setSpec('HRB400', 12).setSpace(200);
   // 内侧横向钢筋
-  bar.shell.cInner.set('HRB400', 16, 200);
+  bar.shell.cInner.setSpec('HRB400', 16).setSpace(200, 100);
+  bar.shell.cInnerSub.setSpec('HRB400', 16).setSpace(200, 100);
   // 外侧横向钢筋
-  bar.shell.cOuter.set('HRB400', 16, 200);
+  bar.shell.cOuter.setSpec('HRB400', 16).setSpace(200, 100);
   // 顶梁钢筋图
-  bar.shell.topBeam.set('HRB400', 16, 200);
+  bar.shell.topBeam.setSpec('HRB400', 16).setSpace(200, 100);
 
   // 端肋钢筋
-  bar.end.cOuter.set('HRB400', 20, 5, 2);
-  bar.end.bBot.set('HRB400', 28, 5, 2);
-  bar.end.bTop.set('HRB400', 20, 5, 2);
-  bar.end.bMid.set('HRB400', 12, 3, 4);
-  bar.end.bStir.set('HPB300', 10, 200);
-  bar.end.wStir.set('HPB300', 10, 200);
-  bar.end.topBeam.set('HRB400', 16);
+  bar.end.cOuter.setSpec('HRB400', 20).setCount(5);
+  bar.end.bBot.setSpec('HRB400', 28).setCount(5);
+  bar.end.bTop.setSpec('HRB400', 20).setCount(5);
+  bar.end.bMid.setSpec('HRB400', 12).setCount(3);
+  bar.end.bStir.setSpec('HPB300', 10).setSpace(200);
+  bar.end.bStirCant.setSpec('HPB300', 10).setSpace(200);
+  bar.end.wStir.setSpec('HPB300', 10).setSpace(200);
+  bar.end.wStirCant.setSpec('HPB300', 10).setSpace(200);
+  bar.end.topBeam.setSpec('HRB400', 16);
+  bar.end.topBeamCant.setSpec('HRB400', 16);
 
   // 渐变段钢筋
-  bar.trans.direct.set('HRB400', 16, 200);
-  bar.trans.arc.set('HRB400', 16, 200);
+  bar.trans.direct.setSpec('HRB400', 16).setSpace(200);
+  bar.trans.arc.setSpec('HRB400', 16).setSpace(200);
 
   // 拉杆钢筋
-  bar.bar.main.set('HRB400', 16);
-  bar.bar.stir.set('HPB300', 10, 300);
+  bar.bar.main.setSpec('HRB400', 16);
+  bar.bar.stir.setSpec('HPB300', 10).setSpace(300);
 
 
   const layout = new HLayoutBuilder(100);

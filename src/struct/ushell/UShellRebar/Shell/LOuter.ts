@@ -1,24 +1,18 @@
-import { Polyline, RebarFormPreset, RebarSpec } from "@/draw";
-import { SpaceRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import { Polyline, RebarForm, RebarFormPreset } from "@/draw";
+import { UShellSpaceRebar } from "../UShellRebar";
 
-export class ShellLOuter extends SpaceRebar<UShellRebarInfo> {
-  spec = new RebarSpec();
-  build(u: UShellStruct, name: string): void {
-    this.spec = this.genSpec();
-    const as = this.info.as;
-    const path = this.pos(u, as + this.diameter / 2);
-    this.spec
-      .setCount(2 * path.points.length)
-      .setForm(RebarFormPreset.Line(this.diameter, u.len - 2 * as))
-      .setId(this.container.id)
-      .setName(name);
-    this.container.record(this.spec);
+export class ShellLOuter extends UShellSpaceRebar {
+  get count(): number {
+    return this.pos().points.length;
   }
-  pos(u: UShellStruct, offsetDist?: number): Polyline {
-    const as = this.info.as;
-    const dist = offsetDist ? offsetDist : as;
+  get form(): RebarForm {
+    const u = this.struct;
+    const as = this.rebars.as;
+    return RebarFormPreset.Line(this.diameter, u.len - 2 * as);
+  }
+  pos(r = 0): Polyline {
+    const u = this.struct;
+    const dist = this.rebars.as + r;
     const path = new Polyline(-u.shell.r + u.iBeam.w, u.shell.hd - 1)
       .lineBy(0, 1)
       .lineBy(-u.beamWidth, 0);

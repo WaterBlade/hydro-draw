@@ -1,125 +1,117 @@
-import { divideBySpace, last, RebarFormPreset, RebarSpec, Side } from "@/draw";
+import { divideBySpace, last, RebarForm, RebarFormPreset, Side } from "@/draw";
 import {
   CompositeRebar,
   CountRebar,
   Rebar,
+  RebarRoot,
   SpaceRebar,
-  UnitRebar,
 } from "@/struct/utils";
 import { ColumnStruct } from "./ColumnStruct";
 
 export class ColumnRebar extends CompositeRebar {
-  corner = new Corner(this.container, this.info);
-  cross = new Cross(this.container, this.info);
-  along = new Along(this.container, this.info);
-  stir = new Stir(this.container, this.info);
+  corner = this.add(new Corner(this.struct, this));
+  cross = this.add(new Cross(this.struct, this));
+  along = this.add(new Along(this.struct, this));
+  stir = this.add(new Stir(this.struct, this));
+  stirAlong = this.add(new StirAlong(this.struct, this));
+  tendonAlong = this.add(new TendonAlong(this.struct, this));
+  stirCross = this.add(new StirCross(this.struct, this));
+  tendonCross = this.add(new TendonCross(this.struct, this));
 
-  build(t: ColumnStruct, name: string): void {
-    this.corner.build(t, name);
-    this.cross.build(t, name);
-    this.along.build(t, name);
-    this.stir.build(t, this.cross, this.along, this.corner, name);
+  constructor(
+    protected struct: ColumnStruct,
+    protected rebars: RebarRoot,
+    protected name = ""
+  ) {
+    super();
+  }
+
+  get as(): number {
+    return this.rebars.as;
   }
 }
 
-class Corner extends UnitRebar {
-  spec = new RebarSpec();
-  build(t: ColumnStruct, name: string): void {
-    this.spec = this.genSpec();
-    const form = RebarFormPreset.SShape(
+class Corner extends Rebar {
+  constructor(protected struct: ColumnStruct, protected rebars: ColumnRebar) {
+    super();
+  }
+  get count(): number {
+    return 4 * this.struct.n;
+  }
+  get form(): RebarForm {
+    const t = this.struct;
+    return RebarFormPreset.SShape(
       this.diameter,
-      500,
-      t.l + t.ld - this.info.as * 2,
       300,
+      t.l + t.ld - this.rebars.as * 2,
+      500,
       7
     )
       .text("柱顶", Side.Left, true)
       .text("柱底", Side.Right, true);
-    this.spec
-      .setCount(4 * t.n)
-      .setForm(form)
-      .setId(this.container.id)
-      .setName(name);
-    this.container.record(this.spec);
   }
 }
 
 class Cross extends CountRebar {
-  spec = new RebarSpec();
-  build(t: ColumnStruct, name: string): void {
-    this.spec = this.genSpec();
-    const form = RebarFormPreset.SShape(
+  constructor(protected struct: ColumnStruct, protected rebars: ColumnRebar) {
+    super();
+  }
+  get count(): number {
+    return this.singleCount * this.struct.n * 2;
+  }
+  get form(): RebarForm {
+    const t = this.struct;
+    return RebarFormPreset.SShape(
       this.diameter,
-      500,
-      t.l + t.ld - this.info.as * 2,
       300,
+      t.l + t.ld - this.rebars.as * 2,
+      500,
       7
     )
       .text("柱顶", Side.Left, true)
       .text("柱底", Side.Right, true);
-    this.spec
-      .setCount(this.singleCount * t.n * 2)
-      .setForm(form)
-      .setId(this.container.id)
-      .setName(name);
-    this.container.record(this.spec);
   }
 }
 
 class Along extends CountRebar {
-  spec = new RebarSpec();
-  build(t: ColumnStruct, name: string): void {
-    this.spec = this.genSpec();
-    const form = RebarFormPreset.SShape(
+  constructor(protected struct: ColumnStruct, protected rebars: ColumnRebar) {
+    super();
+  }
+  get count(): number {
+    return this.singleCount * this.struct.n * 2;
+  }
+  get form(): RebarForm {
+    const t = this.struct;
+    return RebarFormPreset.SShape(
       this.diameter,
-      500,
-      t.l + t.ld - this.info.as * 2,
       300,
+      t.l + t.ld - this.rebars.as * 2,
+      500,
       7
     )
       .text("柱顶", Side.Left, true)
       .text("柱底", Side.Right, true);
-    this.spec
-      .setCount(this.singleCount * t.n * 2)
-      .setForm(form)
-      .setId(this.container.id)
-      .setName(name);
-    this.container.record(this.spec);
   }
 }
 
 class Stir extends SpaceRebar {
-  specCross: RebarSpec[] = [];
-  specAlong: RebarSpec[] = [];
-  spec = new RebarSpec();
-  build(
-    t: ColumnStruct,
-    crossBar: CountRebar,
-    alongBar: CountRebar,
-    cornerBar: Rebar,
-    name: string
-  ): void {
-    this.spec = this.genSpec();
-    const as = this.info.as;
-    const form = RebarFormPreset.RectStir(
-      this.diameter,
-      t.w - 2 * as,
-      t.h - 2 * as
-    );
-    const aboveCount = this.pos(t).length * t.n;
-    this.spec
-      .setCount(aboveCount)
-      .setForm(form)
-      .setId(this.container.id)
-      .setName(name);
-    this.container.record(this.spec);
-    this.stirCross(t, alongBar, cornerBar, name);
-    this.stirAlong(t, crossBar, cornerBar, name);
+  constructor(protected struct: ColumnStruct, protected rebars: ColumnRebar) {
+    super();
   }
-  pos(t: ColumnStruct): number[] {
+  get count(): number {
+    return this.pos().length * this.struct.n;
+  }
+  get form(): RebarForm {
+    const t = this.struct;
+    const as = this.rebars.as;
+    return RebarFormPreset.RectStir(this.diameter, t.w - 2 * as, t.h - 2 * as);
+  }
+
+  pos(): number[] {
+    const t = this.struct;
     const partition = t.partition();
     const res: number[] = [];
-    const as = this.info.as;
+    const as = this.rebars.as;
     const count = partition.length;
     let h = t.l - as - (t.toTop ? 0 : t.hTopBeam);
     for (let i = 0; i < count; i++) {
@@ -142,70 +134,64 @@ class Stir extends SpaceRebar {
     }
     return res;
   }
-  protected stirCross(
-    t: ColumnStruct,
-    alongBar: CountRebar,
-    cornerBar: Rebar,
-    name: string
-  ): void {
-    this.specCross = [];
-    const as = this.info.as;
-    const count = this.pos(t).length * t.n;
-    const countAlong = alongBar.singleCount;
-    const h =
-      (t.h - 2 * as - cornerBar.diameter) / (countAlong + 1) +
-      alongBar.diameter;
-    const w = t.w - 2 * as;
-    const spec = this.genSpec();
-    spec
-      .setCount(count * Math.floor(countAlong / 2))
-      .setForm(RebarFormPreset.RectStir(this.diameter, h, w))
-      .setId(this.container.id)
-      .setName(name);
-    this.specCross.push(spec);
-    this.container.record(spec);
-    if (countAlong % 2 === 1) {
-      const spec = this.genSpec();
-      spec
-        .setCount(count)
-        .setForm(RebarFormPreset.HookLine(this.diameter, w, 4))
-        .setId(this.container.id)
-        .setName(name);
-      this.specCross.push(spec);
-      this.container.record(spec);
-    }
+}
+
+class StirAlong extends Stir {
+  get count(): number {
+    return super.count * Math.floor(this.rebars.cross.singleCount / 2);
   }
-  protected stirAlong(
-    t: ColumnStruct,
-    crossBar: CountRebar,
-    cornerBar: Rebar,
-    name: string
-  ): void {
-    this.specAlong = [];
-    const as = this.info.as;
-    const countCross = crossBar.singleCount;
-    const count = this.pos(t).length * t.n;
+  get form(): RebarForm {
+    const t = this.struct;
+    const as = this.rebars.as;
+    const corner = this.rebars.corner;
+    const cross = this.rebars.cross;
     const h =
-      (t.w - 2 * as - cornerBar.diameter) / (countCross + 1) +
-      crossBar.diameter;
+      (t.w - 2 * as - corner.diameter) / (cross.singleCount + 1) +
+      cross.diameter;
     const w = t.h - 2 * as;
-    const spec = this.genSpec();
-    spec
-      .setCount(count * Math.floor(countCross / 2))
-      .setForm(RebarFormPreset.RectStir(this.diameter, h, w))
-      .setId(this.container.id)
-      .setName(name);
-    this.specAlong.push(spec);
-    this.container.record(spec);
-    if (countCross % 2 === 1) {
-      const spec = this.genSpec();
-      spec
-        .setCount(count)
-        .setForm(RebarFormPreset.HookLine(this.diameter, w, 4))
-        .setId(this.container.id)
-        .setName(name);
-      this.specAlong.push(spec);
-      this.container.record(spec);
-    }
+    return RebarFormPreset.RectStir(this.diameter, h, w);
+  }
+  isExist(): boolean {
+    return this.rebars.cross.singleCount > 1;
+  }
+}
+
+class TendonAlong extends Stir {
+  get form(): RebarForm {
+    const w = this.struct.h - 2 * this.rebars.as;
+    return RebarFormPreset.HookLine(this.diameter, w, 4);
+  }
+  isExist(): boolean {
+    return this.rebars.cross.singleCount % 2 === 1;
+  }
+}
+
+class StirCross extends Stir {
+  get count(): number {
+    return super.count * Math.floor(this.rebars.along.singleCount / 2);
+  }
+  get form(): RebarForm {
+    const t = this.struct;
+    const as = this.rebars.as;
+    const corner = this.rebars.corner;
+    const along = this.rebars.along;
+    const h =
+      (t.h - 2 * as - corner.diameter) / (along.singleCount + 1) +
+      along.diameter;
+    const w = t.w - 2 * as;
+    return RebarFormPreset.RectStir(this.diameter, h, w);
+  }
+  isExist(): boolean {
+    return this.rebars.along.singleCount > 1;
+  }
+}
+
+class TendonCross extends Stir {
+  get form(): RebarForm {
+    const w = this.struct.w - 2 * this.rebars.as;
+    return RebarFormPreset.HookLine(this.diameter, w, 4);
+  }
+  isExist(): boolean {
+    return this.rebars.along.singleCount % 2 === 1;
   }
 }

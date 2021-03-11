@@ -1,25 +1,32 @@
-import { DrawItem } from "@/draw";
-import { Drawing, MaterialTableFigure, RebarTableFigure } from "../utils";
+import {
+  DrawItem,
+  HydroBorderFactory,
+  MaterialTable,
+  RebarTable,
+} from "@/draw";
 import { FrameDoubleFigure } from "./FrameFigure";
 import { FrameDoubleRebar } from "./FrameRebar";
 import { FrameDoubleStruct } from "./FrameStruct";
 
 export class FrameDoubleController {
   struct = new FrameDoubleStruct();
-  rebar = new FrameDoubleRebar();
-  drawing = new Drawing();
+  rebar = new FrameDoubleRebar(this.struct);
+  protected figure = new FrameDoubleFigure(this.struct, this.rebar);
+  drawing = new HydroBorderFactory();
   generate(): DrawItem[] {
-    const figure = new FrameDoubleFigure();
+    this.struct.initComponent();
+    this.rebar.init();
+    this.figure.init();
 
-    this.rebar.build(this.struct);
-    figure.build(this.struct, this.rebar);
+    const specs = this.rebar.genSpecs();
+    const items = this.figure.genBorderItems();
 
-    this.drawing.push(
-      ...figure.figures,
-      new RebarTableFigure(...this.rebar.rebars),
-      new MaterialTableFigure(...this.rebar.rebars)
-    );
+    const border = this.drawing.border();
 
-    return this.drawing.generate();
+    border.add(...items);
+    border.addContent(new RebarTable(...specs).generate());
+    border.addContent(new MaterialTable(...specs).generate());
+
+    return border.generate();
   }
 }

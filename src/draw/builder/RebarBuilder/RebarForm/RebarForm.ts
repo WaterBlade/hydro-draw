@@ -4,7 +4,7 @@ import {
   CompositeItem,
   DrawItem,
   Line,
-  Text,
+  TextDraw,
 } from "@/draw/drawItem";
 import {
   RebarDiameter,
@@ -27,7 +27,7 @@ export abstract class RebarForm implements Builder<CompositeItem> {
   protected pt = vec(0, 0);
   hooks: (Arc | Line)[] = [];
   notes: DrawItem[] = [];
-  texts: Text[] = [];
+  texts: TextDraw[] = [];
 
   abstract get entities(): DrawItem[];
 
@@ -71,7 +71,7 @@ export abstract class RebarForm implements Builder<CompositeItem> {
     tangent: Vector,
     side: Side
   ): [Arc, Line] {
-    this.addUp(6.25 * this.diameter);
+    this.addUp(7.5 * this.diameter);
     const r = this.hookRadius;
     const dir = side === Side.Left ? 1 : -1;
     norm = norm.mul(dir * r);
@@ -116,7 +116,7 @@ export abstract class RebarForm implements Builder<CompositeItem> {
     seg: Arc | Line,
     content: string,
     side = Side.Left
-  ): Text {
+  ): TextDraw {
     const mid = seg.mid;
     let pt: Vector, angle: number, align: TextAlign;
     if (seg instanceof Line) {
@@ -151,7 +151,7 @@ export abstract class RebarForm implements Builder<CompositeItem> {
       }
     }
     if (angle > 90 && angle <= 270) angle = (angle + 180) % 360;
-    return new Text(content, pt, this.numberHeight, align, angle);
+    return new TextDraw(content, pt, this.numberHeight, align, angle);
   }
   protected genArrow(start: Vector, end: Vector): Arrow {
     return new Arrow(
@@ -187,7 +187,7 @@ export abstract class RebarForm implements Builder<CompositeItem> {
     const angle = vertical ? 90 : 0;
 
     this.texts.push(
-      new Text(content, pt.add(vec(d, 0)), this.textHeight, align, angle)
+      new TextDraw(content, pt.add(vec(d, 0)), this.textHeight, align, angle)
     );
 
     return this;

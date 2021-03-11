@@ -1,30 +1,27 @@
-import { Line, Polyline, vec, Text, TextAlign } from "@/draw";
+import { Line, Polyline, vec, TextDraw, TextAlign } from "@/draw";
 import { ColumnViewAlong } from "@/struct/component";
-import { Figure, FigureContent } from "@/struct/utils";
+import { SectFigure, FigureConfig } from "@/struct/utils";
 import { FrameSingleRebar } from "../FrameRebar";
 import { FrameSingleStruct } from "../FrameStruct";
 
-export class FrameAlong extends Figure {
-  initFigure(): void {
-    this.fig = new FigureContent();
-    const { id, title } = this.container.sectId;
-    this.fig
-      .resetScale(1, 50)
-      .setTitle(title)
-      .setId(id)
-      .displayScale()
-      .centerAligned()
-      .baseAligned()
-      .keepTitlePos();
-    this.container.record(this.fig);
+export class FrameAlong extends SectFigure {
+  constructor(
+    protected struct: FrameSingleStruct,
+    protected rebars: FrameSingleRebar
+  ) {
+    super();
   }
-  build(t: FrameSingleStruct, rebars: FrameSingleRebar): void {
-    this.buildOutline(t);
-    this.buildRebar(t, rebars);
-    this.buildNote(t, rebars);
-    this.buildDim(t);
+  protected unitScale = 1;
+  protected drawScale = 50;
+  protected config = new FigureConfig(true, true, true);
+  draw(): void {
+    this.buildOutline();
+    this.buildRebar();
+    this.buildNote();
+    this.buildDim();
   }
-  protected buildOutline(t: FrameSingleStruct): void {
+  protected buildOutline(): void {
+    const t = this.struct;
     this.fig.addOutline(
       new Polyline(-t.col.h / 2, 0)
         .lineBy(0, t.h - t.corbel.h)
@@ -76,18 +73,18 @@ export class FrameAlong extends Figure {
       ).greyLine()
     );
   }
-  protected buildNote(t: FrameSingleStruct, rebars: FrameSingleRebar): void {
+  protected buildNote(): void {
+    const t = this.struct;
     const fig = this.fig;
     const left = fig.outline.getBoundingBox().left;
     const right = fig.outline.getBoundingBox().right;
-    fig.breakline(vec(left, 0), vec(left, -t.found.h));
-    fig.breakline(vec(right, 0), vec(right, -t.found.h));
-    this.drawSpaceNote(t, rebars);
+    fig.push(fig.breakline(vec(left, 0), vec(left, -t.found.h)));
+    fig.push(fig.breakline(vec(right, 0), vec(right, -t.found.h)));
+    this.drawSpaceNote();
   }
-  protected drawSpaceNote(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar
-  ): void {
+  protected drawSpaceNote(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
     const x = fig.getBoundingBox().left - fig.h;
     const lens = t.col.partition();
@@ -98,7 +95,7 @@ export class FrameAlong extends Figure {
       const l = lens[i];
       if (i % 2 === 0) {
         fig.push(
-          new Text(
+          new TextDraw(
             denseSpaceText,
             vec(x, h - l / 2),
             fig.h,
@@ -108,7 +105,7 @@ export class FrameAlong extends Figure {
         );
       } else {
         fig.push(
-          new Text(
+          new TextDraw(
             spaceText,
             vec(x, h - l / 2),
             fig.h,
@@ -120,7 +117,8 @@ export class FrameAlong extends Figure {
       h -= l;
     }
   }
-  protected buildDim(t: FrameSingleStruct): this {
+  protected buildDim(): this {
+    const t = this.struct;
     const fig = this.fig;
     const { right, top, left } = fig.getBoundingBox();
     const dim = fig.dimBuilder();
@@ -155,25 +153,29 @@ export class FrameAlong extends Figure {
     fig.push(dim.generate());
     return this;
   }
-  protected colGen = new ColumnViewAlong();
-  protected buildRebar(t: FrameSingleStruct, rebars: FrameSingleRebar): void {
+  protected colGen = new ColumnViewAlong(
+    this.fig,
+    this.struct.col,
+    this.rebars.col
+  );
+  protected buildRebar(): void {
     const fig = this.fig;
-    fig.push(this.colGen.generate(fig, t.col, rebars.col));
-    this.buildCorbelMain(t, rebars);
-    this.buildCorbelHStir(t, rebars);
-    this.buildCorbelVStir(t, rebars);
+    fig.push(this.colGen.generate());
+    this.buildCorbelMain();
+    this.buildCorbelHStir();
+    this.buildCorbelVStir();
   }
-  protected buildCorbelMain(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar
-  ): void {
+  protected buildCorbelMain(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
     const bar = rebars.corbel.main;
     fig.push(
       fig
         .planeRebar()
-        .rebar(bar.shape(t))
-        .spec(bar.spec, bar.singleCount)
+        .rebar(bar.shape())
+        .spec(bar)
+        .count(bar.singleCount)
         .leaderNote(
           vec(t.col.h / 2 + t.corbel.w, t.h - t.corbel.h - t.corbel.w / 2),
           vec(-1, 1),
@@ -182,18 +184,19 @@ export class FrameAlong extends Figure {
         .generate()
     );
   }
-  protected buildCorbelHStir(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar
-  ): void {
+  protected buildCorbelHStir(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const bar = rebars.corbel.hStir;
     const fig = this.fig;
-    const lens = bar.shape(t);
+    const lens = bar.shape();
     fig.push(
       fig
         .planeRebar()
         .rebar(...lens)
-        .spec(bar.spec, lens.length, bar.space)
+        .spec(bar)
+        .count(lens.length)
+        .space(bar.space)
         .leaderNote(
           vec(t.col.h / 2 + bar.space / 2, t.h + 2 * fig.h),
           vec(0, 1),
@@ -202,20 +205,20 @@ export class FrameAlong extends Figure {
         .generate()
     );
   }
-  protected buildCorbelVStir(
-    t: FrameSingleStruct,
-    rebars: FrameSingleRebar
-  ): void {
+  protected buildCorbelVStir(): void {
+    const t = this.struct;
+    const rebars = this.rebars;
     const bar = rebars.corbel.vStir;
     const fig = this.fig;
-    const as = rebars.info.as;
-    const left = bar.shape(t);
+    const as = rebars.as;
+    const left = bar.shape();
     const right = left.map((l) => l.mirrorByVAxis());
     fig.push(
       fig
         .planeRebar()
         .rebar(...left, ...right)
-        .spec(bar.spec, left.length + right.length)
+        .spec(bar)
+        .count(left.length + right.length)
         .leaderNote(
           vec(
             -t.col.h / 2 - t.corbel.w - fig.h,

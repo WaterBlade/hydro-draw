@@ -1,24 +1,30 @@
-import { DrawItem } from "@/draw";
-import { Drawing, MaterialTableFigure, RebarTableFigure } from "../utils";
+import {
+  DrawItem,
+  HydroBorderFactory,
+  MaterialTable,
+  RebarTable,
+} from "@/draw";
 import { UShellFigure } from "./UShellFigure/indext";
 import { UShellRebar } from "./UShellRebar";
 import { UShellStruct } from "./UShellStruct";
 
 export class UShellController {
   struct = new UShellStruct();
-  rebar = new UShellRebar();
-  drawing = new Drawing();
+  rebar = new UShellRebar(this.struct);
+  protected figure = new UShellFigure(this.struct, this.rebar);
+  drawing = new HydroBorderFactory();
   generate(): DrawItem[] {
-    const figure = new UShellFigure();
-    this.rebar.build(this.struct);
-    figure.build(this.struct, this.rebar);
+    this.rebar.init();
+    this.figure.init();
 
-    this.drawing.push(
-      ...figure.figures,
-      new RebarTableFigure(...this.rebar.rebars),
-      new MaterialTableFigure(...this.rebar.rebars)
-    );
+    const specs = this.rebar.genSpecs();
+    const items = this.figure.genBorderItems();
 
-    return this.drawing.generate();
+    const border = this.drawing.border();
+    border.add(...items);
+    border.addContent(new RebarTable(...specs).generate());
+    border.addContent(new MaterialTable(...specs).generate());
+
+    return border.generate();
   }
 }

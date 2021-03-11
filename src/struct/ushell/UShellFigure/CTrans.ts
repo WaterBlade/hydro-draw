@@ -1,24 +1,19 @@
 import { Line, Polyline, vec } from "@/draw";
-import { Figure, FigureContent } from "@/struct/utils";
-import { UShellRebar } from "../UShellRebar";
-import { UShellStruct } from "../UShellStruct";
+import { FigureConfig } from "@/struct/utils";
+import { UShellBasicFigure } from "./UShellFigure";
 
-export class CTrans extends Figure {
-  initFigure(): void {
-    this.fig = new FigureContent();
-    this.fig
-      .resetScale(1, 50)
-      .setTitle("槽身渐变段钢筋图")
-      .displayScale()
-      .keepTitlePos()
-      .centerAligned();
-    this.container.record(this.fig);
+export class CTrans extends UShellBasicFigure {
+  protected unitScale = 1;
+  protected drawScale = 50;
+  protected title = "槽身渐变段钢筋图";
+  protected config = new FigureConfig(true, true);
+  draw(): void {
+    this.drawOutline();
+    this.drawArc();
+    this.drawDirect();
   }
-  build(u: UShellStruct, rebars: UShellRebar): void {
-    this.buildOutline(u);
-    this.buildRebar(u, rebars);
-  }
-  protected buildOutline(u: UShellStruct): void {
+  protected drawOutline(): void {
+    const u = this.struct;
     this.fig.addOutline(
       u.genCInner().greyLine(),
       u.genTransCOuter().greyLine(),
@@ -33,19 +28,19 @@ export class CTrans extends Figure {
       ).greyLine()
     );
   }
-  protected buildRebar(u: UShellStruct, rebars: UShellRebar): void {
-    this.drawArc(u, rebars);
-    this.drawDirect(u, rebars);
-  }
-  protected drawArc(u: UShellStruct, rebars: UShellRebar): void {
+  protected drawArc(): void {
+    const u = this.struct;
+    const rebars = this.rebars;
     const fig = this.fig;
     const bar = rebars.trans.arc;
     const x = 0;
-    const lines = bar.shape(u);
+    const lines = bar.shape();
     fig.push(
       fig
         .planeRebar()
-        .spec(bar.spec, lines.length, bar.space)
+        .spec(bar)
+        .count(lines.length)
+        .space(bar.space)
         .rebar(...lines)
         .cross(
           new Polyline(-u.shell.r - u.shell.t / 2 - u.oBeam.w / 2, 0).arcTo(
@@ -58,15 +53,18 @@ export class CTrans extends Figure {
         .generate()
     );
   }
-  protected drawDirect(u: UShellStruct, rebars: UShellRebar): void {
+  protected drawDirect(): void {
+    const u = this.struct;
     const fig = this.fig;
-    const bar = rebars.trans.direct;
-    const left = bar.shape(u);
+    const bar = this.rebars.trans.direct;
+    const left = bar.shape();
     const right = left.map((l) => l.mirrorByVAxis());
     fig.push(
       fig
         .planeRebar()
-        .spec(bar.spec, left.length, bar.space)
+        .spec(bar)
+        .count(left.length)
+        .space(bar.space)
         .rebar(...left)
         .leaderNote(
           vec(-u.shell.r - (u.shell.t + u.oBeam.w) / 2, u.shell.hd + 2 * fig.h),
@@ -76,7 +74,9 @@ export class CTrans extends Figure {
         .generate(),
       fig
         .planeRebar()
-        .spec(bar.spec, left.length, bar.space)
+        .spec(bar)
+        .count(left.length)
+        .space(bar.space)
         .rebar(...right)
         .leaderNote(
           vec(u.shell.r + (u.shell.t + u.oBeam.w) / 2, u.shell.hd + 2 * fig.h),

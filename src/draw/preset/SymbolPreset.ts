@@ -1,7 +1,7 @@
-import { CompositeItem, Content, Line, Polyline, Text } from "../drawItem";
+import { CompositeItem, Content, Line, Polyline, TextDraw } from "../drawItem";
 import { TextAlign, Vector } from "../misc";
 
-export const Sym = {
+export const SymbolPreset = {
   breakline,
   sectSymbol,
 };
@@ -50,14 +50,14 @@ function sectSymbol(
 
   const n = dir.norm().mul(textHeight * 0.25);
 
-  const propAngle = Text.properAngle(angle);
-  const propAlign = Text.properAlign(angle, align);
+  const propAngle = TextDraw.properAngle(angle);
+  const propAlign = TextDraw.properAlign(angle, align);
 
   comp.push(
     new Line(extStart, start),
     new Line(extEnd, end),
-    new Text(content, ptStart.add(n), textHeight, propAlign, propAngle),
-    new Text(content, ptEnd.add(n), textHeight, propAlign, propAngle)
+    new TextDraw(content, ptStart.add(n), textHeight, propAlign, propAngle),
+    new TextDraw(content, ptEnd.add(n), textHeight, propAlign, propAngle)
   );
 
   return comp;

@@ -13,12 +13,7 @@ import {
   PaperPolyline,
   PaperText,
 } from "@/draw/drawItem";
-import {
-  polar,
-  LineType,
-  RotateDirection,
-  TextAlign,
-} from "@/draw/misc";
+import { polar, LineType, RotateDirection, TextAlign } from "@/draw/misc";
 
 export class ScriptPaper implements Paper {
   static ESCChar = "\u001b";

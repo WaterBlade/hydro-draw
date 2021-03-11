@@ -11,7 +11,7 @@ import {
 import { Paper, PaperText } from "./Paper.interface";
 import { Content } from "./Content";
 
-export class Text extends DrawItem implements PaperText {
+export class TextDraw extends DrawItem implements PaperText {
   public content;
   constructor(
     content: string | Content,
@@ -29,7 +29,7 @@ export class Text extends DrawItem implements PaperText {
     }
   }
   static properVector(v: Vector): Vector {
-    return polar(1, Text.properAngle(v.quadrantAngle()));
+    return polar(1, TextDraw.properAngle(v.quadrantAngle()));
   }
   static properAngle(angle: number): number {
     if (angle > 90 && angle <= 270) return (angle + 180) % 360;
@@ -63,7 +63,7 @@ export class Text extends DrawItem implements PaperText {
   accept(paper: Paper): void {
     paper.visitText(this);
   }
-  mirrorByVAxis(x = 0): Text {
+  mirrorByVAxis(x = 0): TextDraw {
     const insertPoint = this.insertPoint.mirrorByVAxis(x);
     // let align: TextAlign;
     // switch (this.textAlign) {
@@ -96,12 +96,12 @@ export class Text extends DrawItem implements PaperText {
     //       break;
     // }
     const angle = angleMirrorByYAxis(this.rotateAngle);
-    const t = new Text(
+    const t = new TextDraw(
       this.content,
       insertPoint,
       this.height,
-      Text.properAlign(angle, this.textAlign),
-      Text.properAngle(angle)
+      TextDraw.properAlign(angle, this.textAlign),
+      TextDraw.properAngle(angle)
     );
     t.lineType = this.lineType;
     return t;

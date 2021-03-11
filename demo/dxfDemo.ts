@@ -1,4 +1,4 @@
-import { Arc, Arrow, Circle, DimAligned, DXFPaper, Line, MText, Text, TextAlign, vec } from "@/draw";
+import { Arc, Arrow, Circle, DimAligned, DXFPaper, Line, MText, TextDraw, TextAlign, vec } from "@/draw";
 import fs from "fs";
 
 export default function runDXFDemo():void{
@@ -7,7 +7,7 @@ export default function runDXFDemo():void{
   paper.push(
     new Arc(vec(0, 0), 50, 0, 180),
     new Circle(vec(0, 0), 100),
-    new Text('hello world', vec(0, 0), 25, TextAlign.MiddleCenter),
+    new TextDraw('hello world', vec(0, 0), 25, TextAlign.MiddleCenter),
     new Line(vec(0, 0), vec(100, 100)),
     new Arrow(vec(0, 0), vec(20, 0), 10),
     new MText(['hello', 'world'], vec(0, 100), 25, 500),

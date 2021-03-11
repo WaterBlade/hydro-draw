@@ -1,47 +1,48 @@
-import { RebarDiameter, RebarGrade, RebarSpec } from "@/draw";
+import { RebarDiameter, RebarForm, RebarGrade, RebarSpec } from "@/draw";
 
-class IdGenerator {
-  protected _id = 1;
-  gen(): number {
-    return this._id++;
-  }
-  clear(): void {
-    this._id = 1;
+class IdGen {
+  private index = 1;
+  get id(): string {
+    return `${this.index++}`;
   }
 }
 
-interface DefaultRebarInfoInterface {
-  as: number;
+export interface RebarComponent {
+  init(outerIdGen: IdGen): void;
+  genSpecs(name: string): RebarSpec[];
 }
 
-export class DefaulRebarInfo {
+export class CompositeRebar implements RebarComponent {
+  protected name = "";
+  protected components: RebarComponent[] = [];
+  init(outerIdGen?: IdGen): void {
+    const idGen = outerIdGen ? outerIdGen : new IdGen();
+    this.components.forEach((c) => c.init(idGen));
+  }
+  genSpecs(outerName = ""): RebarSpec[] {
+    const name = outerName !== "" ? outerName : this.name;
+    return this.components.reduce(
+      (pre: RebarSpec[], cur) => pre.concat(cur.genSpecs(name)),
+      []
+    );
+  }
+  protected add<S extends RebarComponent>(comp: S): S {
+    this.components.push(comp);
+    return comp;
+  }
+}
+
+export abstract class RebarRoot extends CompositeRebar {
   as = 0;
 }
 
-export class RebarContainer {
-  protected idGen = new IdGenerator();
-  protected records: RebarSpec[] = [];
-  info: DefaultRebarInfoInterface = new DefaulRebarInfo();
-  get rebars(): RebarSpec[] {
-    return this.records;
-  }
+export abstract class Rebar implements RebarComponent {
+  protected _id?: string;
   get id(): string {
-    return `${this.idGen.gen()}`;
+    if (!this._id) throw Error("id not init");
+    return this._id;
   }
-  record(spec: RebarSpec): void {
-    this.records.push(spec);
-  }
-  clear(): void {
-    this.idGen.clear();
-    this.records.splice(0);
-  }
-}
 
-export class CompositeRebar<T = DefaultRebarInfoInterface> {
-  constructor(public container: RebarContainer, public info: T) {}
-}
-
-export class Rebar<T = DefaultRebarInfoInterface> {
   protected _grade?: RebarGrade;
   get grade(): RebarGrade {
     if (!this._grade) throw Error("grade not init");
@@ -52,66 +53,64 @@ export class Rebar<T = DefaultRebarInfoInterface> {
     if (!this._diameter) throw Error("diameter not init");
     return this._diameter;
   }
-  constructor(protected container: RebarContainer, protected info: T) {}
-  genSpec(): RebarSpec {
-    return new RebarSpec().setGrade(this.grade).setDiameter(this.diameter);
+  setSpec(grade: RebarGrade, dia: RebarDiameter): this {
+    this._grade = grade;
+    this._diameter = dia;
+    return this;
   }
-  protected _layerCount?: number;
-  get layerCount(): number {
-    if (!this._layerCount) throw Error("layerCount not init");
-    return this._layerCount;
+
+  layerCount = 1;
+  layerSpace = 50;
+  setLayer(count: number, space = 50): this {
+    this.layerCount = count;
+    this.layerSpace = space;
+    return this;
   }
-  protected _layerSpace?: number;
-  get layerSpace(): number {
-    if (!this._layerSpace) throw Error("layerSpace not init");
-    return this._layerSpace;
+
+  isExist(): boolean {
+    return true;
+  }
+  init(idGen: IdGen): void {
+    if (this.isExist()) {
+      this._id = idGen.id;
+    }
+  }
+  genSpecs(name: string): RebarSpec[] {
+    if (this.isExist()) {
+      return [
+        new RebarSpec()
+          .setId(this.id)
+          .setGrade(this.grade)
+          .setDiameter(this.diameter)
+          .setForm(this.form)
+          .setCount(this.count)
+          .setName(name)
+          .setDesp(this.desp),
+      ];
+    }
+    return [];
+  }
+
+  abstract get form(): RebarForm;
+  abstract get count(): number;
+  get desp(): string {
+    return "";
   }
 }
 
-export class UnitRebar<T = DefaultRebarInfoInterface> extends Rebar<T> {
-  set(grade: RebarGrade, diameter: RebarDiameter): void {
-    this._grade = grade;
-    this._diameter = diameter;
-  }
-}
-
-export class CountRebar<T = DefaultRebarInfoInterface> extends Rebar<T> {
-  set(
-    grade: RebarGrade,
-    diameter: RebarDiameter,
-    singleCount: number,
-    layerCount = 1,
-    layerSpace = 50
-  ): void {
-    this._grade = grade;
-    this._diameter = diameter;
-    this._singleCount = singleCount;
-    this._layerCount = layerCount;
-    this._layerSpace = layerSpace;
-  }
+export abstract class CountRebar extends Rebar {
   protected _singleCount?: number;
   get singleCount(): number {
     if (!this._singleCount) throw Error("singleCount not init");
     return this._singleCount;
   }
+  setCount(singleCount: number): this {
+    this._singleCount = singleCount;
+    return this;
+  }
 }
 
-export class SpaceRebar<T = DefaultRebarInfoInterface> extends Rebar<T> {
-  set(
-    grade: RebarGrade,
-    diameter: RebarDiameter,
-    space: number,
-    denseSpace = 0,
-    layerCount = 1,
-    layerSpace = 50
-  ): void {
-    this._grade = grade;
-    this._diameter = diameter;
-    this._space = space;
-    this._denseSpace = denseSpace ? denseSpace : space / 2;
-    this._layerCount = layerCount;
-    this._layerSpace = layerSpace;
-  }
+export abstract class SpaceRebar extends Rebar {
   protected _space?: number;
   protected _denseSpace?: number;
   get space(): number {
@@ -121,5 +120,10 @@ export class SpaceRebar<T = DefaultRebarInfoInterface> extends Rebar<T> {
   get denseSpace(): number {
     if (!this._denseSpace) throw Error("denseSpace not init");
     return this._denseSpace;
+  }
+  setSpace(space: number, denseSpace?: number): this {
+    this._space = space;
+    if (denseSpace) this._denseSpace = denseSpace;
+    return this;
   }
 }

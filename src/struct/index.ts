@@ -1,6 +1,6 @@
 export * from "./frameDouble";
 export * from "./frameSingle";
-export * from "./frameSingle2";
+export * from "./frameSingleTop";
 export * from "./pierSolid";
 export * from "./pile";
 export * from "./platform";

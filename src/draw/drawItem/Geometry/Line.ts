@@ -29,7 +29,7 @@ export class Line extends DrawItem implements LineGeometry {
     super();
     // if (start.sub(end).length() < 1e-6) {
     //   throw Error(`zero length ling:
-    //   start is${start.x.toFixed(4)},${start.y.toFixed(4)}, 
+    //   start is${start.x.toFixed(4)},${start.y.toFixed(4)},
     //   end is${end.x.toFixed(4)},${end.y.toFixed(4)}`);
     // }
   }

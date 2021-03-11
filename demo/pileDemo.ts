@@ -1,9 +1,9 @@
 import { PileController } from "@/struct";
-import { HLayoutBuilder, ScriptPaper } from "@/draw";
+import { HLayoutBuilder, DXFPaper } from "@/draw";
 import fs from "fs";
 
 export default function runPileDemo(): void{
-  const paper = new ScriptPaper();
+  const paper = new DXFPaper();
   const ctrl = new PileController();
   const draw = ctrl.drawing;
   draw.company = '湖南省水利水电勘测设计研究总院';
@@ -17,14 +17,15 @@ export default function runPileDemo(): void{
 
   const pile = ctrl.struct;
   pile.d = 1200;
+  pile.hs = 150;
 
   const bar = ctrl.rebar;
-  bar.main.set('HRB400', 22, 17);
-  bar.stir.set('HPB300', 10, 200, 100);
-  bar.stirTop.set('HPB300', 10, 200);
-  bar.rib.set('HRB400', 16, 2000);
-  bar.fix.set('HRB400', 16, 2000);
-  bar.info.as = 60;
+  bar.main.setSpec('HRB400', 22).setCount(17);
+  bar.stir.setSpec('HPB300', 10).setSpace(200, 100);
+  bar.stirTop.setSpec('HPB300', 10).setSpace(200);
+  bar.rib.setSpec('HRB400', 16).setSpace(2000);
+  bar.fix.setSpec('HRB400', 16).setSpace(2000);
+  bar.as = 60;
 
   ctrl.add('5', 241.035, 230.035, 2);
   ctrl.add('6', 234.728, 223.728, 4);
@@ -47,7 +48,7 @@ export default function runPileDemo(): void{
   layout.push(...ctrl.generate());
   paper.push(layout.generate());
 
-  fs.writeFile('demoPile.txt', paper.generate(), ()=>{
+  fs.writeFile('demoPile.dxf', paper.generate(), ()=>{
     console.log('pile demo finished');
   })
   

@@ -1,55 +1,48 @@
-import {
-  CompositeItem,
-  Line,
-  Polyline,
-  vec,
-} from "@/draw";
-import { FigureContent } from "@/struct/utils";
+import { CompositeItem, Line, Polyline, vec } from "@/draw";
+import { ContextBuilder } from "@/draw/preset/Context";
 import { TopBeamRebar } from "./TopBeamRebar";
 import { TopBeamStruct } from "./TopBeamStruct";
 
 export class TopBeamViewCross {
-  generate(
-    fig: FigureContent,
-    t: TopBeamStruct,
-    rebars: TopBeamRebar
-  ): CompositeItem {
+  constructor(
+    protected fig: ContextBuilder,
+    protected struct: TopBeamStruct,
+    protected rebars: TopBeamRebar
+  ) {}
+  generate(): CompositeItem {
     const comp = new CompositeItem();
-    this.bot(fig, comp, t, rebars);
-    this.top(fig, comp, t, rebars);
-    this.mid(fig, comp, t, rebars);
-    this.stir(fig, comp, t, rebars);
+    this.bot(comp);
+    this.top(comp);
+    this.mid(comp);
+    this.stir(comp);
     return comp;
   }
-  protected bot(
-    fig: FigureContent,
-    comp: CompositeItem,
-    t: TopBeamStruct,
-    rebars: TopBeamRebar
-  ): void {
+  protected bot(comp: CompositeItem): void {
+    const t = this.struct;
+    const rebars = this.rebars;
+    const fig = this.fig;
     const bar = rebars.bot;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const x0 = -t.l / 2 + as;
     const x1 = -x0;
-    const x2 = -t.ln / 2 + 4*fig.h;
+    const x2 = -t.ln / 2 + 4 * fig.h;
     const y = -t.h / 2 + as;
     comp.push(
       fig
         .planeRebar()
         .rebar(new Line(vec(x0, y), vec(x1, y)))
-        .spec(bar.spec)
-        .leaderNote(vec(x2, -t.h/2 -  0.5*fig.h), vec(0, 1))
+        .spec(bar)
+        .leaderNote(vec(x2, -t.h / 2 - 0.5 * fig.h), vec(0, 1))
         .generate()
     );
   }
-  protected top(
-    fig: FigureContent,
-    comp: CompositeItem,
-    t: TopBeamStruct,
-    rebars: TopBeamRebar
-  ): void {
+  protected top(comp: CompositeItem): void {
+    const t = this.struct;
+    const rebars = this.rebars;
+    const fig = this.fig;
+
     const bar = rebars.top;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const x0 = -t.l / 2 + as;
     const x1 = -x0;
     const x2 = t.ln / 2 - 4 * fig.h;
@@ -58,20 +51,18 @@ export class TopBeamViewCross {
       fig
         .planeRebar()
         .rebar(new Line(vec(x0, y), vec(x1, y)))
-        .spec(bar.spec)
-        .leaderNote(vec(x2, t.h/2 + 0.5* fig.h), vec(0, 1))
+        .spec(bar)
+        .leaderNote(vec(x2, t.h / 2 + 0.5 * fig.h), vec(0, 1))
         .generate()
     );
   }
-  protected mid(
-    fig: FigureContent,
-    comp: CompositeItem,
-    t: TopBeamStruct,
-    rebars: TopBeamRebar
-  ): void {
+  protected mid(comp: CompositeItem): void {
+    const t = this.struct;
+    const rebars = this.rebars;
+    const fig = this.fig;
     const bar = rebars.mid;
-    const as = rebars.info.as;
-    const ys = bar.pos(t).map(p => p.y);
+    const as = rebars.as;
+    const ys = bar.pos().map((p) => p.y);
     const x0 = -t.l / 2 + as;
     const x1 = -x0;
     const x2 = t.ln / 2 - 4 * fig.h;
@@ -81,20 +72,19 @@ export class TopBeamViewCross {
     }
     comp.push(
       rebar
-        .spec(bar.spec, ys.length)
-        .leaderNote(vec(x2, -t.h / 2 -  0.5*fig.h), vec(0, 1))
+        .spec(bar)
+        .count(ys.length)
+        .leaderNote(vec(x2, -t.h / 2 - 0.5 * fig.h), vec(0, 1))
         .generate()
     );
   }
-  protected stir(
-    fig: FigureContent,
-    comp: CompositeItem,
-    t: TopBeamStruct,
-    rebars: TopBeamRebar
-  ): void {
+  protected stir(comp: CompositeItem): void {
+    const t = this.struct;
+    const rebars = this.rebars;
+    const fig = this.fig;
     const bar = rebars.stir;
-    const as = rebars.info.as;
-    const xs = bar.pos(t);
+    const as = rebars.as;
+    const xs = bar.pos();
     const y0 = -t.h / 2 + as;
     const y1 = t.h / 2 - as;
     const y2 = 0;
@@ -104,9 +94,11 @@ export class TopBeamViewCross {
       fig
         .planeRebar()
         .rebar(...xs.map((x) => new Line(vec(x, y0), vec(x, y1))))
-        .spec(bar.spec, xs.length, bar.space)
+        .spec(bar)
+        .count(xs.length)
+        .space(bar.space)
         .cross(new Polyline(-t.l / 2, y2).lineTo(t.l / 2, y2))
-        .leaderNote(vec(x1, t.h / 2 +  0.5*fig.h), vec(0, 1))
+        .leaderNote(vec(x1, t.h / 2 + 0.5 * fig.h), vec(0, 1))
         .generate()
     );
   }

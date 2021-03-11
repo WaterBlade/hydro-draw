@@ -30,7 +30,7 @@ function XiGanNongShiDanPaiJia(note: string[]): DrawItem[]{
   draw.design = '技施';
   draw.drawingTitle = "单排架承台钢筋图";
   draw.drawingNumberPrefix = "HND/s-4-西干-渡槽-弄石";
-  draw.setSize('A2');
+  draw.size = 'A2';
   draw.note = [...note ];
 
   const plat = ctrl.struct;
@@ -45,10 +45,14 @@ function XiGanNongShiDanPaiJia(note: string[]): DrawItem[]{
   plat.hs = 150;
 
   const bar = ctrl.rebar;
-  bar.lMain.set('HRB400', 25, 200);
-  bar.wMain.set('HRB400', 25, 200);
-  bar.dist.set('HRB400', 14, 200);
-  bar.info.as = 60;
+  bar.lMain.setSpec('HRB400', 25).setSpace(200);
+  bar.wMain.setSpec('HRB400', 25).setSpace(200);
+  bar.lTop.setSpec('HRB400', 14).setSpace(200);
+  bar.lBot.setSpec('HRB400', 14).setSpace(200);
+  bar.wTop.setSpec('HRB400', 14).setSpace(200);
+  bar.wBot.setSpec('HRB400', 14).setSpace(200);
+  bar.round.setSpec('HRB400', 14).setSpace(200);
+  bar.as = 60;
 
   return ctrl.generate();
 }
@@ -62,7 +66,7 @@ function XiGanNongShiShiXinDun(note: string[]): DrawItem[]{
   draw.design = '技施';
   draw.drawingTitle = "实心墩承台钢筋图";
   draw.drawingNumberPrefix = "HND/s-4-西干-渡槽-弄石-";
-  draw.setSize('A2');
+  draw.size = 'A2';
   draw.note = [...note ];
 
   const plat = ctrl.struct;
@@ -77,10 +81,14 @@ function XiGanNongShiShiXinDun(note: string[]): DrawItem[]{
   plat.hs = 150;
 
   const bar = ctrl.rebar;
-  bar.lMain.set('HRB400', 25, 200, 100, 2);
-  bar.wMain.set('HRB400', 25, 200, 100, 2);
-  bar.dist.set('HRB400', 14, 200);
-  bar.info.as = 60;
+  bar.lMain.setSpec('HRB400', 25).setSpace(200).setLayer(2);
+  bar.wMain.setSpec('HRB400', 25).setSpace(200).setLayer(2);
+  bar.lTop.setSpec('HRB400', 14).setSpace(200);
+  bar.lBot.setSpec('HRB400', 14).setSpace(200);
+  bar.wTop.setSpec('HRB400', 14).setSpace(200);
+  bar.wBot.setSpec('HRB400', 14).setSpace(200);
+  bar.round.setSpec('HRB400', 14).setSpace(200);
+  bar.as = 60;
 
   return ctrl.generate();
 }

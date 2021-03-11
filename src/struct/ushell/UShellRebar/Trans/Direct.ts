@@ -1,36 +1,27 @@
-import { Line, RebarFormPreset, RebarSpec, vec } from "@/draw";
-import { SpaceRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import { Line, RebarForm, RebarFormPreset, vec } from "@/draw";
+import { UShellSpaceRebar } from "../UShellRebar";
 
-export class TransDirect extends SpaceRebar<UShellRebarInfo> {
-  spec = new RebarSpec();
-  build(u: UShellStruct, name: string): void {
-    if (u.oBeam.w > 0) {
-      this.spec = this.genSpec();
-      const as = this.info.as;
-      const lines = this.shape(u);
-      const count =
-        (2 + (u.cantLeft > 0 ? 1 : 0) + (u.cantRight > 0 ? 1 : 0)) *
-        lines.length *
-        2;
-      const factor = Math.sqrt(u.lenTrans ** 2 + u.oBeam.w ** 2) / u.oBeam.w;
-      this.spec
-        .setCount(count)
-        .setForm(
-          RebarFormPreset.Line(
-            this.diameter,
-            factor * (u.shell.t + u.oBeam.w - 2 * as)
-          )
-        )
-        .setId(this.container.id)
-        .setName(name);
-
-      this.container.record(this.spec);
-    }
+export class TransDirect extends UShellSpaceRebar {
+  get count(): number {
+    const u = this.struct;
+    return (
+      (2 + (u.cantLeft > 0 ? 1 : 0) + (u.cantRight > 0 ? 1 : 0)) *
+      this.shape().length *
+      2
+    );
   }
-  shape(u: UShellStruct): Line[] {
-    const as = this.info.as;
+  get form(): RebarForm {
+    const u = this.struct;
+    const factor = Math.sqrt(u.lenTrans ** 2 + u.oBeam.w ** 2) / u.oBeam.w;
+
+    return RebarFormPreset.Line(
+      this.diameter,
+      factor * (u.shell.t + u.oBeam.w - 2 * this.rebars.as)
+    );
+  }
+  shape(): Line[] {
+    const u = this.struct;
+    const as = this.rebars.as;
     const x = -u.shell.r - u.shell.t - u.oBeam.w + as;
     const top = u.shell.hd - u.oBeam.hd - u.oBeam.hs - as;
     const bottom = 0;

@@ -1,64 +1,42 @@
 import { Line, Polyline, Side, vec } from "@/draw";
-import { Figure, FigureContent } from "@/struct/utils";
-import { UShellRebar } from "../UShellRebar";
-import { UShellStruct } from "../UShellStruct";
-import { SEndWall } from "./SEndWall";
+import { FigureConfig } from "@/struct/utils";
+import { UShellBasicFigure } from "./UShellFigure";
 
-export class CEnd extends Figure {
-  protected _figCant?: FigureContent;
-  get figCant(): FigureContent {
-    if (!this._figCant) throw Error("fig cant not init");
-    return this._figCant;
-  }
-  set figCant(val: FigureContent) {
-    this._figCant = val;
-  }
-  initFigure(u: UShellStruct): void {
+abstract class UniformCEnd extends UShellBasicFigure {
+  protected unitScale = 1;
+  protected drawScale = 50;
+  protected config = new FigureConfig(true, true);
+
+  protected abstract isCant: boolean;
+  protected get title(): string {
+    const u = this.struct;
     const bothExist = u.cantCount === 1;
-    if (u.cantCount < 2) {
-      this.fig = new FigureContent();
-      const title = bothExist ? "槽身端肋钢筋图（非悬挑侧）" : "槽身端肋钢筋图";
-      this.fig
-        .resetScale(1, 50)
-        .setTitle(title)
-        .displayScale()
-        .centerAligned()
-        .keepTitlePos();
-      this.container.record(this.fig);
-    }
-    if (u.cantCount > 0) {
-      this.figCant = new FigureContent();
-      const title = bothExist ? "槽身端肋钢筋图（悬挑侧）" : "槽身端肋钢筋图";
-      this.figCant
-        .resetScale(1, 50)
-        .setTitle(title)
-        .displayScale()
-        .centerAligned()
-        .keepTitlePos();
-      this.container.record(this.figCant);
+    if (bothExist) {
+      return this.isCant
+        ? "槽身端肋钢筋图（悬挑侧）"
+        : "槽身端肋钢筋图（非悬挑侧）";
+    } else {
+      return "槽身端肋钢筋图";
     }
   }
-  build(u: UShellStruct, rebars: UShellRebar, sWall: SEndWall): void {
-    if (u.cantCount < 2) {
-      const fig = this.fig;
-      this.buildOutline(u, fig);
-      this.buildRebar(u, rebars, fig);
-      this.buildNote(u, sWall, fig);
-      this.buildDim(u, fig);
-    }
-    if (u.cantCount > 0) {
-      const fig = this.figCant;
-      this.buildOutline(u, fig, true);
-      this.buildRebar(u, rebars, fig, true);
-      this.buildNote(u, sWall, fig, true);
-      this.buildDim(u, fig);
-    }
+  draw(): void {
+    this.drawOutline();
+
+    this.drawBeamBot();
+    this.drawBeamMid();
+    this.drawBeamStir();
+    this.drawBeamTop();
+    this.drawCOuter();
+    this.drawTopBeam();
+    this.drawWallStir();
+    this.drawCInner();
+
+    this.drawNote();
+    this.drawDim();
   }
-  protected buildOutline(
-    u: UShellStruct,
-    fig: FigureContent,
-    isCant = false
-  ): void {
+  protected drawOutline(): void {
+    const u = this.struct;
+    const fig = this.fig;
     const path = new Polyline(
       -u.shell.r - u.shell.t - u.oBeam.w,
       u.shell.hd
@@ -107,7 +85,7 @@ export class CEnd extends Figure {
       ).greyLine()
     );
 
-    if (!isCant) {
+    if (!this.isCant) {
       const gap = u.waterStop.h;
       const inner = new Polyline(-u.shell.r + u.iBeam.w, u.shell.hd);
       if (u.iBeam.w > 0) {
@@ -124,44 +102,36 @@ export class CEnd extends Figure {
       fig.addOutline(inner.offset(gap, Side.Right).greyLine());
     }
   }
-  protected buildRebar(
-    u: UShellStruct,
-    rebars: UShellRebar,
-    fig: FigureContent,
-    isCant = false
-  ): void {
-    this.drawBeamBot(u, rebars, fig);
-    this.drawBeamMid(u, rebars, fig);
-    this.drawBeamStir(u, rebars, fig, isCant);
-    this.drawBeamTop(u, rebars, fig);
-    this.drawCOuter(u, rebars, fig);
-    this.drawTopBeam(u, rebars, fig, isCant);
-    this.drawWallStir(u, rebars, fig, isCant);
-    this.drawCInner(u, rebars, fig, isCant);
-  }
-  protected buildNote(
-    u: UShellStruct,
-    sWall: SEndWall,
-    fig: FigureContent,
-    isCant = false
-  ): void {
+  protected drawNote(): void {
+    const u = this.struct;
+    const fig = this.fig;
     let id;
-    if (isCant) {
-      id = u.isLeftCantFigureExist() ? sWall.leftFig.id : sWall.rightFig.id;
+    if (this.isCant) {
+      id =
+        u.cantLeft > 0
+          ? this.figures.sEndWallLeft.id
+          : this.figures.sEndWallRight.id;
     } else {
-      id = u.isLeftFigureExist() ? sWall.leftFig.id : sWall.rightFig.id;
+      id =
+        u.cantLeft === 0
+          ? this.figures.sEndWallLeft.id
+          : this.figures.sEndWallRight.id;
     }
-    fig.sectSymbol(
-      id,
-      vec(-u.shell.r - u.shell.t - u.oBeam.w - 0.5 * fig.h, fig.h),
-      vec(-u.shell.r + 0.5 * fig.h, fig.h)
+    fig.push(
+      fig.sectSymbol(
+        id,
+        vec(-u.shell.r - u.shell.t - u.oBeam.w - 0.5 * fig.h, fig.h),
+        vec(-u.shell.r + 0.5 * fig.h, fig.h)
+      )
     );
   }
-  protected buildDim(u: UShellStruct, fig: FigureContent): void {
+  protected drawDim(): void {
+    const u = this.struct;
+    const fig = this.fig;
     const box = fig.getBoundingBox();
     const dim = fig.dimBuilder();
     dim
-      .hTop(-u.shell.r - u.shell.t - u.oBeam.w, box.top + 2 * fig.textHeight)
+      .hTop(-u.shell.r - u.shell.t - u.oBeam.w, box.top + 2 * fig.h)
       .dim(u.oBeam.w + u.shell.t);
     if (u.iBeam.w > 0) dim.dim(u.iBeam.w);
     dim.dim(2 * u.shell.r - 2 * u.iBeam.w);
@@ -171,7 +141,7 @@ export class CEnd extends Figure {
       .next()
       .dim(2 * u.oBeam.w + 2 * u.shell.t + 2 * u.shell.r);
 
-    dim.vRight(box.right + 2 * fig.textHeight, u.shell.hd);
+    dim.vRight(box.right + 2 * fig.h, u.shell.hd);
     if (u.iBeam.hd > 0) dim.dim(u.iBeam.hd);
     if (u.iBeam.hs > 0) dim.dim(u.iBeam.hs);
     dim
@@ -187,10 +157,7 @@ export class CEnd extends Figure {
       .dim(u.endSect.hd + u.endSect.hs);
 
     dim
-      .hBottom(
-        -u.shell.r - u.shell.t - u.oBeam.w,
-        box.bottom - 2 * fig.textHeight
-      )
+      .hBottom(-u.shell.r - u.shell.t - u.oBeam.w, box.bottom - 2 * fig.h)
       .dim(u.endSect.w);
     if (u.support.h > 0) {
       dim.dim(u.support.w).dim(u.support.h);
@@ -211,232 +178,218 @@ export class CEnd extends Figure {
     fig.push(dim.generate());
   }
 
-  protected drawBeamBot(
-    u: UShellStruct,
-    rebars: UShellRebar,
-    fig: FigureContent
-  ): void {
+  protected drawBeamBot(): void {
+    const u = this.struct;
+    const fig = this.fig;
+    const rebars = this.rebars;
     const bar = rebars.end.bBot;
     fig.push(
       fig
         .planeRebar()
-        .rebar(bar.shape(u))
-        .spec(bar.spec)
+        .rebar(bar.shape())
+        .spec(bar)
         .leaderNote(
-          vec(-u.shell.r / 4, u.shell.hd - u.endHeight - 2 * fig.textHeight),
+          vec(-u.shell.r / 4, u.shell.hd - u.endHeight - 2 * fig.h),
           vec(0, 1),
           vec(-1, 0)
         )
         .generate()
     );
   }
-  protected drawBeamMid(
-    u: UShellStruct,
-    rebars: UShellRebar,
-    fig: FigureContent
-  ): void {
+  protected drawBeamMid(): void {
+    const u = this.struct;
+    const fig = this.fig;
+    const rebars = this.rebars;
     const bar = rebars.end.bMid;
     fig.push(
       fig
         .planeRebar()
-        .rebar(...bar.shape(u))
-        .spec(bar.spec)
+        .rebar(...bar.shape())
+        .spec(bar)
         .leaderNote(
-          vec(u.shell.r / 4, u.shell.hd - u.endHeight - 2 * fig.textHeight),
+          vec(u.shell.r / 4, u.shell.hd - u.endHeight - 2 * fig.h),
           vec(0, 1),
           vec(1, 0)
         )
         .generate()
     );
   }
-  protected drawBeamStir(
-    u: UShellStruct,
-    rebars: UShellRebar,
-    fig: FigureContent,
-    isCant: boolean
-  ): void {
-    const bar = rebars.end.bStir;
-    const spec = isCant ? bar.specCant : bar.spec;
+  protected drawBeamStir(): void {
+    const u = this.struct;
+    const fig = this.fig;
+    const rebars = this.rebars;
+    const bar = this.isCant ? rebars.end.bStir : rebars.end.bStirCant;
     const midCount = rebars.end.bMid.singleCount;
-    const as = rebars.info.as;
+    const as = rebars.as;
     const y0 = u.shell.hd - u.endHeight + u.support.h + as;
     const y1 = -u.shell.r - u.waterStop.h - as;
     const y = y0 + (0.5 * (y1 - y0)) / (midCount + 1);
-    const lens = isCant ? bar.shapeCant(u) : bar.shape(u);
+    const lens = bar.shape();
     fig.push(
       fig
         .planeRebar()
-        .spec(spec, lens.length, bar.space)
+        .spec(bar)
+        .count(lens.length)
+        .space(bar.space)
         .rebar(...lens)
         .leaderNote(
-          vec(
-            -u.shell.r -
-            u.shell.t -
-            u.oBeam.w +
-            u.endSect.w -
-            2 * fig.textHeight,
-            y
-          ),
+          vec(-u.shell.r - u.shell.t - u.oBeam.w + u.endSect.w - 2 * fig.h, y),
           vec(1, 0)
         )
         .generate()
     );
   }
-  protected drawBeamTop(
-    u: UShellStruct,
-    rebars: UShellRebar,
-    fig: FigureContent
-  ): void {
+  protected drawBeamTop(): void {
+    const u = this.struct;
+    const fig = this.fig;
+    const rebars = this.rebars;
     const bar = rebars.end.bTop;
     fig.push(
       fig
         .planeRebar()
-        .rebar(bar.shape(u))
-        .spec(bar.spec)
+        .rebar(bar.shape())
+        .spec(bar)
         .leaderNote(
-          vec(-u.shell.r / 4, -u.shell.r + 4 * fig.textHeight),
+          vec(-u.shell.r / 4, -u.shell.r + 4 * fig.h),
           vec(0, 1),
           vec(1, 0)
         )
         .generate()
     );
   }
-  protected drawCOuter(
-    u: UShellStruct,
-    rebars: UShellRebar,
-    fig: FigureContent
-  ): void {
+  protected drawCOuter(): void {
+    const u = this.struct;
+    const fig = this.fig;
+    const rebars = this.rebars;
     const bar = rebars.end.cOuter;
-    const left = bar.shape(u);
+    const left = bar.shape();
     const right = left.mirrorByVAxis();
     fig.push(
       fig
         .planeRebar()
         .rebar(left)
-        .spec(bar.spec)
+        .spec(bar)
         .leaderNote(
-          vec(
-            -u.shell.r - u.shell.t - u.oBeam.w - 2 * fig.textHeight,
-            u.shell.hd / 2
-          ),
+          vec(-u.shell.r - u.shell.t - u.oBeam.w - 2 * fig.h, u.shell.hd / 2),
           vec(1, 0)
         )
         .generate(),
       fig
         .planeRebar()
         .rebar(right)
-        .spec(bar.spec)
+        .spec(bar)
         .leaderNote(
-          vec(
-            u.shell.r + u.shell.t + u.oBeam.w + 2 * fig.textHeight,
-            u.shell.hd / 2
-          ),
+          vec(u.shell.r + u.shell.t + u.oBeam.w + 2 * fig.h, u.shell.hd / 2),
           vec(1, 0)
         )
         .generate()
     );
   }
-  protected drawTopBeam(
-    u: UShellStruct,
-    rebars: UShellRebar,
-    fig: FigureContent,
-    isCant: boolean
-  ): void {
+  protected drawTopBeam(): void {
+    const u = this.struct;
+    const fig = this.fig;
+    const rebars = this.rebars;
     if (u.iBeam.w > 0) {
-      const bar = rebars.end.topBeam;
-      const spec = isCant ? bar.specCant : bar.spec;
-      const left = isCant ? bar.shapeCant(u) : bar.shape(u);
+      const bar = this.isCant ? rebars.end.topBeam : rebars.end.topBeamCant;
+      const left = bar.shape();
       const right = left.mirrorByVAxis();
-      const x = u.shell.r - u.iBeam.w - 1.5 * fig.textHeight;
-      const y = u.shell.hd - u.iBeam.hd - 2 * fig.textHeight;
+      const x = u.shell.r - u.iBeam.w - 1.5 * fig.h;
+      const y = u.shell.hd - u.iBeam.hd - 2 * fig.h;
       fig.push(
         fig
           .planeRebar()
           .rebar(left)
-          .spec(spec)
+          .spec(bar)
           .leaderNote(vec(-x, y), vec(-1, 1), vec(1, 0))
           .generate(),
         fig
           .planeRebar()
           .rebar(right)
-          .spec(spec)
+          .spec(bar)
           .leaderNote(vec(x, y), vec(1, 1), vec(-1, 0))
           .generate()
       );
     }
   }
-  protected drawWallStir(
-    u: UShellStruct,
-    rebars: UShellRebar,
-    fig: FigureContent,
-    isCant: boolean
-  ): void {
-    const bar = rebars.end.wStir;
-    const spec = isCant ? bar.specCant : bar.spec;
-    const lines = isCant ? bar.shapeCant(u) : bar.shape(u);
+  protected drawWallStir(): void {
+    const u = this.struct;
+    const fig = this.fig;
+    const rebars = this.rebars;
+    const bar = this.isCant ? rebars.end.wStirCant : rebars.end.wStir;
+    const lines = bar.shape();
     fig.push(
       fig
         .planeRebar()
-        .spec(spec, lines.length, bar.space)
+        .spec(bar)
+        .count(lines.length)
+        .space(bar.space)
         .rebar(...lines.reverse())
         .cross(
           new Polyline(
             -u.shell.r -
-            u.shell.t -
-            u.oBeam.w +
-            u.endSect.w +
-            Math.max(u.support.w / 2, 200),
+              u.shell.t -
+              u.oBeam.w +
+              u.endSect.w +
+              Math.max(u.support.w / 2, 200),
             u.shell.hd - u.endHeight
           )
             .lineBy(-u.endSect.w, u.endSect.hs)
-            .lineBy(0, u.endSect.hd + 3 * fig.textHeight)
+            .lineBy(0, u.endSect.hd + 3 * fig.h)
         )
         .note(vec(1, 0))
         .generate(),
       fig
         .planeRebar()
-        .spec(spec, lines.length, bar.space)
+        .spec(bar)
+        .count(lines.length)
+        .space(bar.space)
         .rebar(...lines.map((l) => l.mirrorByVAxis()))
         .cross(
           new Polyline(
             u.shell.r +
-            u.shell.t +
-            u.oBeam.w -
-            u.endSect.w -
-            Math.max(u.support.w / 2, 200),
+              u.shell.t +
+              u.oBeam.w -
+              u.endSect.w -
+              Math.max(u.support.w / 2, 200),
             u.shell.hd - u.endHeight
           )
             .lineBy(u.endSect.w, u.endSect.hs)
-            .lineBy(0, u.endSect.hd + 3 * fig.textHeight)
+            .lineBy(0, u.endSect.hd + 3 * fig.h)
         )
         .note(vec(-1, 0))
         .generate()
     );
   }
-  protected drawCInner(
-    u: UShellStruct,
-    rebars: UShellRebar,
-    fig: FigureContent,
-    isCant = false
-  ): void {
-    const bar = rebars.shell.cInner;
-    const spec = isCant ? bar.spec : bar.specSub;
-    const as = rebars.info.as;
-    const gap = isCant ? 0 : u.waterStop.h;
-    const space = isCant ? rebars.shell.cInner.space : 0;
-    const path = bar
-      .shape(u)
-      .offset(as + gap, Side.Right)
-      .removeStart()
-      .removeEnd();
-    const pt = vec(u.shell.r - 3 * fig.textHeight, u.shell.hd / 5);
+  protected drawCInner(): void {
+    const u = this.struct;
+    const fig = this.fig;
+    const rebars = this.rebars;
+    const bar = this.isCant ? rebars.shell.cInner : rebars.shell.cInnerSub;
+    const space = this.isCant ? rebars.shell.cInner.space : 0;
+    const path = bar.shape();
+    const pt = vec(u.shell.r - 3 * fig.h, u.shell.hd / 5);
     fig.push(
       fig
         .planeRebar()
-        .spec(spec, 0, space)
+        .spec(bar)
+        .space(space)
         .rebar(path)
         .leaderNote(pt, vec(1, 0))
         .generate()
     );
+  }
+}
+
+export class CEnd extends UniformCEnd {
+  protected isCant = false;
+  isExist(): boolean {
+    return this.struct.cantCount < 2;
+  }
+}
+
+export class CEndCant extends UniformCEnd {
+  protected isCant = true;
+  isExist(): boolean {
+    return this.struct.cantCount > 0;
   }
 }

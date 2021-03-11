@@ -1,34 +1,34 @@
-import { Arc, Line, Polyline, RebarFormPreset, RebarSpec, Side, vec } from "@/draw";
-import { SpaceRebar } from "@/struct/utils";
-import { UShellStruct } from "../../UShellStruct";
-import { UShellRebarInfo } from "../Info";
+import {
+  Arc,
+  Line,
+  Polyline,
+  RebarForm,
+  RebarFormPreset,
+  Side,
+  vec,
+} from "@/draw";
+import { UShellSpaceRebar } from "../UShellRebar";
 
-export class TransArc extends SpaceRebar<UShellRebarInfo> {
-  spec = new RebarSpec();
-  build(u: UShellStruct, name: string): void {
-    if (u.oBeam.w > 0) {
-      this.spec = this.genSpec();
-      const lines = this.shape(u);
-      const count =
-        (2 + (u.cantLeft > 0 ? 1 : 0) + (u.cantRight > 0 ? 1 : 0)) *
-        lines.length;
-      const factor = Math.sqrt(u.lenTrans ** 2 + u.oBeam.w ** 2) / u.oBeam.w;
-      this.spec
-        .setCount(count)
-        .setForm(
-          RebarFormPreset.Line(
-            this.diameter,
-            lines.map((l) => factor * l.calcLength())
-          )
-        )
-        .setId(this.container.id)
-        .setName(name);
-
-      this.container.record(this.spec);
-    }
+export class TransArc extends UShellSpaceRebar {
+  get count(): number {
+    const u = this.struct;
+    return (
+      (2 + (u.cantLeft > 0 ? 1 : 0) + (u.cantRight > 0 ? 1 : 0)) *
+      this.shape().length
+    );
   }
-  shape(u: UShellStruct): Line[] {
-    const as = this.info.as;
+  get form(): RebarForm {
+    const u = this.struct;
+    const factor = Math.sqrt(u.lenTrans ** 2 + u.oBeam.w ** 2) / u.oBeam.w;
+
+    return RebarFormPreset.Line(
+      this.diameter,
+      this.shape().map((l) => factor * l.calcLength())
+    );
+  }
+  shape(): Line[] {
+    const u = this.struct;
+    const as = this.rebars.as;
     const pts = new Arc(vec(0, 0), u.shell.r + as, 180, 0)
       .divide(this.space)
       .removeStartPt()
@@ -49,8 +49,9 @@ export class TransArc extends SpaceRebar<UShellRebarInfo> {
       return new Line(p, end);
     });
   }
-  shapeEnd(u: UShellStruct): Polyline {
-    const as = this.info.as;
+  shapeEnd(): Polyline {
+    const u = this.struct;
+    const as = this.rebars.as;
     const d =
       u.endHeight -
       u.shell.hd -

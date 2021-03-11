@@ -6,7 +6,7 @@ import {
   DimAligned,
   Line,
   MText,
-  Text,
+  TextDraw,
 } from "@/draw/drawItem";
 import { vec, LineType, RotateDirection } from "@/draw/misc";
 
@@ -268,7 +268,7 @@ test("mtext", () => {
 });
 test("text", () => {
   const paper = new ScriptPaper();
-  const text = new Text("Hello", vec(2, 1), 2.5);
+  const text = new TextDraw("Hello", vec(2, 1), 2.5);
   paper.visitText(text);
   expect(paper.scriptList).toEqual([
     ScriptPaper.ESCChar + "-layer",

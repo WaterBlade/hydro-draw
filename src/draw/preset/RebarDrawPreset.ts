@@ -1,7 +1,7 @@
 import { Polyline } from "../drawItem";
 import { polar, RotateDirection, vec } from "../misc";
 
-export const RebarDraw = {
+export const RebarDrawPreset = {
   stir(h: number, w: number, r = 0): Polyline {
     if (h <= 0 || w <= 0 || r < 0) throw Error("negative dimension");
     const d = 25;

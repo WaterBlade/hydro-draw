@@ -9,9 +9,9 @@ export class PlatformStruct {
   sw = 0;
 
   hs = 150;
-  lBottomDivide(): number[]{
-    const space = (this.l - (this.nl - 1) * this.sl - this.d)/2;
-    if(space < 1e-6) throw Error('no space left');
+  lBottomDivide(): number[] {
+    const space = (this.l - (this.nl - 1) * this.sl - this.d) / 2;
+    if (space < 1e-6) throw Error("no space left");
     const res = [];
 
     let x = -this.l / 2;
@@ -20,10 +20,10 @@ export class PlatformStruct {
     x += space;
     res.push(x);
 
-    for(let i = 0; i < this.nl; i++){
+    for (let i = 0; i < this.nl; i++) {
       x += this.d;
       res.push(x);
-      if(i < this.nl - 1){
+      if (i < this.nl - 1) {
         x += this.sl - this.d;
         res.push(x);
       }
@@ -34,9 +34,9 @@ export class PlatformStruct {
 
     return res;
   }
-  wBottomDivide(): number[]{
-    const space = (this.w - (this.nw - 1) * this.sw - this.d)/2;
-    if(space < 1e-6) throw Error('no space left');
+  wBottomDivide(): number[] {
+    const space = (this.w - (this.nw - 1) * this.sw - this.d) / 2;
+    if (space < 1e-6) throw Error("no space left");
     const res = [];
 
     let x = -this.w / 2;
@@ -45,10 +45,10 @@ export class PlatformStruct {
     x += space;
     res.push(x);
 
-    for(let i = 0; i < this.nw; i++){
+    for (let i = 0; i < this.nw; i++) {
       x += this.d;
       res.push(x);
-      if(i < this.nw - 1){
+      if (i < this.nw - 1) {
         x += this.sw - this.d;
         res.push(x);
       }
