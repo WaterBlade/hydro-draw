@@ -1,9 +1,24 @@
 import { FrameSingleController} from "@/struct";
-import { HLayoutBuilder, DXFPaper } from "@/draw";
+import { HLayoutBuilder, DXFPaper, DrawItem } from "@/draw";
 import fs from "fs";
 
 export default function runFrameSingleDemo(): void{
+
   const paper = new DXFPaper();
+  const layout = new HLayoutBuilder(100);
+  for(let i = 2; i < 20; i++){
+    layout.push(...genFrame(i*1000));
+  }
+  paper.push(layout.generate());
+
+  fs.writeFile('左三排架标准钢筋图.dxf', paper.generate(), ()=>{
+    console.log('完成左三排架标准钢筋图');
+  })
+  
+}
+
+
+function genFrame(height: number): DrawItem[]{
   const ctrl = new FrameSingleController();
   const draw = ctrl.drawing;
   draw.company = '湖南省水利水电勘测设计研究总院';
@@ -16,8 +31,8 @@ export default function runFrameSingleDemo(): void{
   ]
 
   const f = ctrl.struct;
-  f.h = 15000;
-  f.hs = 4000;
+  f.h = height;
+  f.hs = 3600;
   f.vs = 4000;
 
   f.col.w = 500;
@@ -34,7 +49,7 @@ export default function runFrameSingleDemo(): void{
   f.topBeam.ha = 200;
   f.topBeam.botHa = true;
 
-  f.corbel.w = 550;
+  f.corbel.w = 450;
   f.corbel.hd = 400;
   f.corbel.hs = 450;
 
@@ -43,9 +58,15 @@ export default function runFrameSingleDemo(): void{
 
   const bar = ctrl.rebar;
   bar.as = 50;
-  bar.col.corner.setSpec('HRB400', 25);
-  bar.col.along.setSpec('HRB400', 20).setCount(3);
-  bar.col.cross.setSpec('HRB400', 22).setCount(3);
+  if(height <= 12000){
+    bar.col.corner.setSpec('HRB400', 25);
+    bar.col.along.setSpec('HRB400', 22).setCount(3);
+    bar.col.cross.setSpec('HRB400', 22).setCount(3);
+  }else{
+    bar.col.corner.setSpec('HRB400', 28);
+    bar.col.along.setSpec('HRB400', 25).setCount(3);
+    bar.col.cross.setSpec('HRB400', 25).setCount(3);
+  }
   bar.col.stir.setSpec('HPB300', 8).setSpace(200, 100);
   bar.col.stirAlong.setSpec('HPB300', 8).setSpace(200, 100);
   bar.col.stirCross.setSpec('HPB300', 8).setSpace(200, 100);
@@ -70,12 +91,5 @@ export default function runFrameSingleDemo(): void{
   bar.corbel.hStir.setSpec('HPB300', 10).setSpace(150);
   bar.corbel.vStir.setSpec('HPB300', 10).setSpace(200);
 
-  const layout = new HLayoutBuilder(100);
-  layout.push(...ctrl.generate());
-  paper.push(layout.generate());
-
-  fs.writeFile('demoFrameSingle.dxf', paper.generate(), ()=>{
-    console.log('frame demo finished');
-  })
-  
+  return ctrl.generate();
 }

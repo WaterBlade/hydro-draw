@@ -74,7 +74,7 @@ export class FrameCross extends Figure {
   }
   protected buildNote(): void {
     const t = this.struct;
-    const { along, sTopBeam, sBeam, sCol } = this.figures;
+    const { along, sTopBeam, sBeam, sCol, sBeamEnd } = this.figures;
     const fig = this.fig;
     const { left, right } = fig.outline.getBoundingBox();
     fig.push(fig.breakline(vec(left, 0), vec(left, -t.found.h)));
@@ -102,6 +102,11 @@ export class FrameCross extends Figure {
           sBeam.id,
           vec(0, y - 2 * fig.h),
           vec(0, y + t.beam.h + 2 * fig.h)
+        ),
+        fig.sectSymbol(
+          sBeamEnd.id,
+          vec(t.hsn/2-0.25*fig.h, y - 2*fig.h),
+          vec(t.hsn/2-0.25*fig.h, y + t.beam.h + 2 * fig.h),
         )
       );
     }
@@ -162,11 +167,11 @@ export class FrameCross extends Figure {
     if (n === 0) {
       dim.dim(t.topBeam.h).dim(t.h - t.topBeam.h);
     } else {
-      dim.dim(t.topBeam.h).dim(t.hs - t.topBeam.h);
+      dim.dim(t.topBeam.h).dim(t.vs - t.topBeam.h);
       for (let i = 1; i < n; i++) {
-        dim.dim(t.beam.h).dim(t.hs - t.beam.h);
+        dim.dim(t.beam.h).dim(t.vs - t.beam.h);
       }
-      dim.dim(t.beam.h).dim(t.h - n * t.hs - t.beam.h);
+      dim.dim(t.beam.h).dim(t.h - n * t.vs - t.beam.h);
     }
     dim.next().dim(t.h).dim(t.found.h);
 
@@ -213,7 +218,7 @@ export class FrameCross extends Figure {
     topBeam.move(vec(0, t.h - t.topBeam.h / 2));
     fig.push(topBeam);
     // beam
-    if (t.n > 1) {
+    if (t.n > 0) {
       for (let i = 1; i < t.n + 1; i++) {
         const beam = this.beamGen.generate();
         beam.move(vec(0, t.h - t.vs * i - t.beam.h / 2));

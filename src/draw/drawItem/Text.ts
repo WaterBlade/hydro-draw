@@ -6,7 +6,8 @@ import {
   toRadian,
   TextAlign,
   polar,
-  angleMirrorByYAxis,
+  angleMirrorByVAxis,
+  angleMirrorByHAxis,
 } from "@/draw/misc";
 import { Paper, PaperText } from "./Paper.interface";
 import { Content } from "./Content";
@@ -65,37 +66,20 @@ export class TextDraw extends DrawItem implements PaperText {
   }
   mirrorByVAxis(x = 0): TextDraw {
     const insertPoint = this.insertPoint.mirrorByVAxis(x);
-    // let align: TextAlign;
-    // switch (this.textAlign) {
-    //     case TextAlign.BottomRight:
-    //       align = TextAlign.BottomLeft;
-    //       break;
-    //     case TextAlign.BottomLeft:
-    //       align = TextAlign.BottomRight;
-    //       break;
-    //     case TextAlign.BottomCenter:
-    //       align = TextAlign.BottomCenter;
-    //       break;
-    //     case TextAlign.TopRight:
-    //       align = TextAlign.TopLeft;
-    //       break;
-    //     case TextAlign.TopLeft:
-    //       align = TextAlign.TopRight;
-    //       break;
-    //     case TextAlign.TopCenter:
-    //       align = TextAlign.TopCenter;
-    //       break;
-    //     case TextAlign.MiddleRight:
-    //       align = TextAlign.MiddleLeft;
-    //       break;
-    //     case TextAlign.MiddleLeft:
-    //       align = TextAlign.MiddleRight;
-    //       break;
-    //     case TextAlign.MiddleCenter:
-    //       align = TextAlign.MiddleCenter;
-    //       break;
-    // }
-    const angle = angleMirrorByYAxis(this.rotateAngle);
+    const angle = angleMirrorByVAxis(this.rotateAngle);
+    const t = new TextDraw(
+      this.content,
+      insertPoint,
+      this.height,
+      TextDraw.properAlign(angle, this.textAlign),
+      TextDraw.properAngle(angle)
+    );
+    t.lineType = this.lineType;
+    return t;
+  }
+  mirrorByHAxis(y = 0): TextDraw {
+    const insertPoint = this.insertPoint.mirrorByHAxis(y);
+    const angle = angleMirrorByHAxis(this.rotateAngle);
     const t = new TextDraw(
       this.content,
       insertPoint,

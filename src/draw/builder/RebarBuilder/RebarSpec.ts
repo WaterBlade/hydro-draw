@@ -17,6 +17,12 @@ export class RebarSpec {
     if (form) this.setForm(form);
   }
 
+  multiple = 1;
+  setMultiple(multiple: number): this{
+    this.multiple = multiple;
+    return this;
+  }
+
   protected _grade?: RebarGrade;
   get grade(): RebarGrade {
     if (this._grade === undefined) throw Error("grade not init");
@@ -108,10 +114,16 @@ export class RebarSpec {
     ];
   }
   genIdSpec(textHeight: number): DrawItem[]{
+    let content;
+    if(this.multiple === 1){
+      content = new Content().special(this.grade).text(`${this.diameter}`);
+    }else{
+      content = new Content().text(`${this.multiple.toFixed(0)}`).special(this.grade).text(`${this.diameter}`);
+    }
     return [
       ...this.genId(textHeight),
       new TextDraw(
-        new Content().special(this.grade).text(`${this.diameter}`),
+        content,
         vec(textHeight, 0),
         textHeight,
         TextAlign.MiddleLeft

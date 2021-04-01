@@ -163,7 +163,7 @@ abstract class AbstractSEndWall extends UShellSectFigure {
             .lineBy(-w0, 0)
             .lineBy(0, h0)
         )
-        .spec(spec, 0, bar.space)
+        .spec(spec).space(bar.space)
         .leaderNote(pos, vec(1, 0))
         .generate()
     );

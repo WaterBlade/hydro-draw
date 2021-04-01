@@ -13,7 +13,7 @@ export class FrameSingleController {
   rebar = new FrameSingleRebar(this.struct);
   protected figure = new FrameSingleFigure(this.struct, this.rebar);
   drawing = new HydroBorderFactory();
-  generate(): DrawItem[] {
+  generate(H?: number): DrawItem[] {
     this.struct.initComponent();
     this.rebar.init();
     this.figure.init();
@@ -23,8 +23,15 @@ export class FrameSingleController {
 
     const border = this.drawing.border();
     border.add(...items);
-    border.addContent(new RebarTable(...specs).generate());
-    border.addContent(new MaterialTable(...specs).generate());
+
+    const rTable = new RebarTable(...specs);
+    const mTable = new MaterialTable(...specs);
+    if(H){
+      rTable.title(`钢筋表(H=${H.toFixed(0)})`);
+      mTable.title(`材料表(H=${H.toFixed(0)})`);
+    }
+    border.addContent(rTable.generate());
+    border.addContent(mTable.generate());
 
     return border.generate();
   }

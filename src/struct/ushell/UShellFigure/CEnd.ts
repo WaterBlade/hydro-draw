@@ -218,7 +218,7 @@ abstract class UniformCEnd extends UShellBasicFigure {
     const u = this.struct;
     const fig = this.fig;
     const rebars = this.rebars;
-    const bar = this.isCant ? rebars.end.bStir : rebars.end.bStirCant;
+    const bar = this.isCant ? rebars.end.bStirCant : rebars.end.bStir;
     const midCount = rebars.end.bMid.singleCount;
     const as = rebars.as;
     const y0 = u.shell.hd - u.endHeight + u.support.h + as;

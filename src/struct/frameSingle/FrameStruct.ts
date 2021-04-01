@@ -21,7 +21,7 @@ export class FrameSingleStruct {
     const beam = this.beam;
     beam.l = this.w;
     beam.ln = this.hsn;
-    beam.n = this.n - 1;
+    beam.n = this.n;
     // topBeam
     const tb = this.topBeam;
     tb.l = this.w;
@@ -35,9 +35,7 @@ export class FrameSingleStruct {
     return this.hs + this.col.w;
   }
   get n(): number {
-    return Math.floor(
-      (this.h - 0.5 * this.topBeam.h + 0.5 * this.beam.h) / this.vs
-    );
+    return Math.floor((this.h - this.beam.h - this.beam.ha) / this.vs);
   }
   get hsn(): number {
     return this.hs - this.col.w;

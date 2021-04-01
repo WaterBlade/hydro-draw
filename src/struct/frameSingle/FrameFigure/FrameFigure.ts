@@ -1,4 +1,4 @@
-import { BeamMidSect, ColumnSect } from "@/struct/component";
+import { BeamEndSect, BeamMidSect, ColumnSect } from "@/struct/component";
 import { FigureRoot } from "@/struct/utils";
 import { FrameSingleRebar } from "../FrameRebar";
 import { FrameSingleStruct } from "../FrameStruct";
@@ -13,6 +13,7 @@ export class FrameSingleFigure extends FigureRoot {
     new BeamMidSect(this.struct.topBeam, this.rebars.topBeam)
   );
   sBeam = this.add(new BeamMidSect(this.struct.beam, this.rebars.beam));
+  sBeamEnd = this.add(new BeamEndSect(this.struct.beam, this.rebars.beam));
 
   constructor(
     protected struct: FrameSingleStruct,

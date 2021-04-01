@@ -31,6 +31,12 @@ export class Circle extends DrawItem implements CircleGeometry {
     c.lineType = this.lineType;
     return c;
   }
+  mirrorByHAxis(x = 0): Circle {
+    const c = new Circle(this.center.mirrorByHAxis(x), this.radius);
+    c.points = this.points.map((p) => p.mirrorByHAxis(x));
+    c.lineType = this.lineType;
+    return c;
+  }
   includeTest(pt: Vector): boolean {
     if (Math.abs(pt.sub(this.center).length() - this.radius) > 1e-6)
       return false;

@@ -238,7 +238,7 @@ abstract class AbstractEndBeam extends UShellSpecFigure {
             .lineBy(-w, 0)
             .lineBy(0, h)
         )
-        .spec(spec, 0, bar.space)
+        .spec(spec).space(bar.space)
         .leaderNote(pos, vec(1, 0))
         .generate()
     );
@@ -261,7 +261,7 @@ abstract class AbstractEndBeam extends UShellSpecFigure {
             vec(u.endSect.b - as - r, y)
           ).divideByCount(bar.singleCount - 1).points
         )
-        .spec(bar, bar.singleCount)
+        .spec(bar).count(bar.singleCount)
         .parallelLeader(vec(-2 * fig.h, y - 2 * fig.h), vec(-1, 0))
         .generate()
     );

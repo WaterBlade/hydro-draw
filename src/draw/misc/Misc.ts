@@ -79,9 +79,13 @@ export function flip(side: Side): Side {
   else return Side.Left;
 }
 
-export function angleMirrorByYAxis(angle: number): number {
+export function angleMirrorByVAxis(angle: number): number {
   if (angle <= 180) return 180 - angle;
   return 540 - angle;
+}
+
+export function angleMirrorByHAxis(angle: number): number{
+  return 360 - angle;
 }
 
 export function divideByCount(

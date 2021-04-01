@@ -54,6 +54,12 @@ export class Line extends DrawItem implements LineGeometry {
     l.lineType = this.lineType;
     return l;
   }
+  mirrorByHAxis(x = 0): Line {
+    const l = new Line(this.start.mirrorByHAxis(x), this.end.mirrorByHAxis(x));
+    l.points = this.points.map((p) => p.mirrorByHAxis(x));
+    l.lineType = this.lineType;
+    return l;
+  }
   offsetStart(dist: number, side: Side): Vector {
     return this.offsetPoint(this.start, dist, side);
   }

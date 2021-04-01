@@ -59,6 +59,12 @@ export abstract class Rebar implements RebarComponent {
     return this;
   }
 
+  multiple = 1
+  setMultiple(multiple: number): this{
+    this.multiple = multiple;
+    return this;
+  }
+
   layerCount = 1;
   layerSpace = 50;
   setLayer(count: number, space = 50): this {
@@ -83,6 +89,7 @@ export abstract class Rebar implements RebarComponent {
           .setGrade(this.grade)
           .setDiameter(this.diameter)
           .setForm(this.form)
+          .setMultiple(this.multiple)
           .setCount(this.count)
           .setName(name)
           .setDesp(this.desp),

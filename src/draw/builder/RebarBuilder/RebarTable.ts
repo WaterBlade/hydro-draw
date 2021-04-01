@@ -66,9 +66,10 @@ export class RebarTable implements Builder<CompositeItem> {
       const spec = this.rebarSpecs[i];
       const row = i + 1;
       t.cell(row, start + 0).push(...this.genId(spec.id));
-      t.cell(row, start + 1).text(
-        new Content().special(spec.grade).text(`${spec.diameter}`)
-      );
+      let content;
+      if(spec.multiple === 1) content = new Content().special(spec.grade).text(`${spec.diameter}`);
+      else content = new Content().text(`${spec.multiple.toFixed(0)}`).special(spec.grade).text(`${spec.diameter}`);
+      t.cell(row, start + 1).text(content);
       t.cell(row, start + 2).push(spec.form.generate());
       t.cell(row, start + 3).text(`${spec.length.toFixed(0)}`);
       t.cell(row, start + 4).text(`${spec.count}`);

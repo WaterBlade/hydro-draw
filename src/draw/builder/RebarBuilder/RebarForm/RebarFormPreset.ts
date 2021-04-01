@@ -85,7 +85,7 @@ export const RebarFormPreset = {
     vLen: number,
     hLen: number | number[]
   ): RebarPathForm {
-    let len = 2 * vLen + 12.5 * dia;
+    let len = 2 * vLen + 15 * dia;
     if (typeof hLen === "number") {
       len += 2 * hLen;
     } else {

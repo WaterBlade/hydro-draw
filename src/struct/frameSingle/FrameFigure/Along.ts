@@ -129,11 +129,11 @@ export class FrameAlong extends SectFigure {
     if (n === 0) {
       dim.dim(t.topBeam.h).dim(t.h - t.topBeam.h);
     } else {
-      dim.dim(t.topBeam.h).dim(t.hs - t.topBeam.h);
+      dim.dim(t.topBeam.h).dim(t.vs - t.topBeam.h);
       for (let i = 1; i < n; i++) {
-        dim.dim(t.beam.h).dim(t.hs - t.beam.h);
+        dim.dim(t.beam.h).dim(t.vs - t.beam.h);
       }
-      dim.dim(t.beam.h).dim(t.h - n * t.hs - t.beam.h);
+      dim.dim(t.beam.h).dim(t.h - n * t.vs - t.beam.h);
     }
     dim.next().dim(t.h).dim(t.found.h);
 
@@ -198,7 +198,7 @@ export class FrameAlong extends SectFigure {
         .count(lens.length)
         .space(bar.space)
         .leaderNote(
-          vec(t.col.h / 2 + bar.space / 2, t.h + 2 * fig.h),
+          vec(t.col.h / 2, t.h + 2 * fig.h),
           vec(0, 1),
           vec(1, 0)
         )

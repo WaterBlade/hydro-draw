@@ -1,76 +1,73 @@
 import { Line, Polyline, vec } from "@/draw";
-import { FigureOld, FigureContent } from "@/struct/utils";
+import { SectFigure, FigureConfig } from "@/struct/utils";
+import { PierSolidFigure } from "./PierSolidFigure";
 import { PierSolidRebar } from "../PierSolidRebar";
 import { PierSolidStruct } from "../PierSolidStruct";
 
-export class PierSolidAlong extends FigureOld {
-  initFigure(): void {
-    this.fig = new FigureContent();
-    const { id, title } = this.container.sectId;
-    this.fig
-      .resetScale(1, 100)
-      .setTitle(title)
-      .setId(id)
-      .setDisplayScale()
-      .setCenterAligned()
-      .setBaseAligned()
-      .setKeepTitlePos();
-    this.container.record(this.fig);
+export class PierSolidAlong extends SectFigure{
+  protected unitScale = 1;
+  protected drawScale = 50;
+  protected config = new FigureConfig(true, true, true);
+  constructor(protected struct: PierSolidStruct, protected rebars: PierSolidRebar, protected figures: PierSolidFigure){super();}
+  draw(): void {
+    this.buildOutline();
+    this.buildRebar();
+    this.buildDim();
   }
-  build(t: PierSolidStruct, rebars: PierSolidRebar): void {
-    this.buildOutline(t);
-    this.buildRebar(t, rebars);
-    this.buildDim(t);
-  }
-  protected buildOutline(t: PierSolidStruct): void {
+  protected buildOutline(): void {
+    const t = this.struct;
     const fig = this.fig;
     fig.addOutline(
-      new Polyline(-t.topBeam.w.val / 2, t.h.val)
-        .lineBy(0, t.topBeam.h.val)
-        .lineBy(t.topBeam.w.val, 0)
-        .lineBy(0, -t.topBeam.h.val)
-        .lineBy(-t.topBeam.w.val, 0)
+      new Polyline(-t.topBeam.w / 2, t.h)
+        .lineBy(0, t.topBeam.h)
+        .lineBy(t.topBeam.w, 0)
+        .lineBy(0, -t.topBeam.h)
+        .lineBy(-t.topBeam.w, 0)
         .greyLine(),
-      new Line(vec(-t.w.val / 2, t.h.val), vec(-t.w.val / 2, 0)).greyLine(),
-      new Line(vec(t.w.val / 2, t.h.val), vec(t.w.val / 2, 0)).greyLine(),
-      new Polyline(-t.found.w.val / 2, 0)
-        .lineBy(0, -t.found.h.val)
-        .lineBy(t.found.w.val, 0)
-        .lineBy(0, t.found.h.val)
-        .lineBy(-t.found.w.val, 0)
+      new Line(vec(-t.w / 2, t.h), vec(-t.w / 2, 0)).greyLine(),
+      new Line(vec(t.w / 2, t.h), vec(t.w / 2, 0)).greyLine(),
+      new Polyline(-t.found.w / 2, 0)
+        .lineBy(0, -t.found.h)
+        .lineBy(t.found.w, 0)
+        .lineBy(0, t.found.h)
+        .lineBy(-t.found.w, 0)
         .greyLine()
     );
   }
-  protected buildDim(t: PierSolidStruct): void {
+  protected buildDim(): void {
+    const t = this.struct;
     const fig = this.fig;
     const dim = fig.dimBuilder();
     const { top, right } = fig.getBoundingBox();
     dim
-      .vRight(right + fig.h, t.h.val + t.topBeam.h.val)
-      .dim(t.topBeam.h.val)
-      .dim(t.h.val)
-      .dim(t.found.h.val);
+      .vRight(right + fig.h, t.h + t.topBeam.h)
+      .dim(t.topBeam.h)
+      .dim(t.h)
+      .dim(t.found.h);
 
-    dim.hTop(-t.w.val / 2, top + fig.h).dim(t.w.val);
+    dim.hTop(-t.w / 2, top + fig.h).dim(t.w);
 
     fig.push(dim.generate());
   }
-  protected buildRebar(t: PierSolidStruct, rebars: PierSolidRebar): void {
-    this.lMain(t, rebars);
-    this.wMain(t, rebars);
+  protected buildRebar(): void {
+    this.lMain();
+    this.wMain();
+    this.stir();
   }
-  protected lMain(t: PierSolidStruct, rebars: PierSolidRebar): void {
+  protected lMain(): void {
     const fig = this.fig;
+    const t = this.struct;
+    const rebars = this.rebars;
     const bar = rebars.lMain;
-    const as = rebars.info.as;
+    const as = rebars.as;
 
-    const pos = bar.pos(t);
+    const pos = bar.pos();
 
     const plLeft = new Polyline(
-      -t.w.val / 2 + as,
-      t.h.val + t.topBeam.h.val - as
+      -t.w / 2 + as,
+      t.h + t.topBeam.h - as
     )
-      .lineBy(0, -t.h.val - t.topBeam.h.val - t.found.h.val + 2 * as)
+      .lineBy(0, -t.h - t.topBeam.h - t.found.h + 2 * as)
       .lineBy(-500, 0);
 
     const plRight = plLeft.mirrorByVAxis();
@@ -79,20 +76,22 @@ export class PierSolidAlong extends FigureOld {
       fig
         .planeRebar()
         .rebar(plLeft, plRight)
-        .spec(bar.spec, pos.length, bar.space)
+        .spec(bar).count(pos.length).space(bar.space)
         .leaderNote(
-          vec(-t.w.val / 2 - 2 * fig.h, t.h.val - 3 * fig.h),
+          vec(-t.w / 2 - 2 * fig.h, t.h - 3 * fig.h),
           vec(1, 0)
         )
         .generate()
     );
   }
-  protected wMain(t: PierSolidStruct, rebars: PierSolidRebar): void {
+  protected wMain(): void {
     const fig = this.fig;
+    const t = this.struct;
+    const rebars = this.rebars;
     const bar = rebars.wMain;
-    const as = rebars.info.as;
+    const as = rebars.as;
 
-    const pos = bar.pos(t);
+    const pos = bar.pos();
 
     fig.push(
       fig
@@ -101,17 +100,40 @@ export class PierSolidAlong extends FigureOld {
           ...pos.map(
             (x) =>
               new Line(
-                vec(x, -t.found.h.val + as),
-                vec(x, t.h.val + t.topBeam.h.val - as)
+                vec(x, -t.found.h + as),
+                vec(x, t.h + t.topBeam.h - as)
               )
           )
         )
-        .spec(bar.spec, pos.length, bar.space)
+        .spec(bar).count(pos.length).space(bar.space)
         .leaderNote(
-          vec(-t.w.val / 2 - 2 * fig.h, t.h.val - 6 * fig.h),
+          vec(-t.w / 2 - 2 * fig.h, t.h - 6 * fig.h),
           vec(1, 0)
         )
         .generate()
     );
+  }
+  protected stir(): void{
+    const fig = this.fig;
+    const t = this.struct;
+    const rebars= this.rebars;
+    const as = rebars.as;
+    const bar = rebars.stir;
+    const pos = bar.pos();
+    fig.push(
+      fig.planeRebar()
+        .rebar(
+          ...pos.map(
+            y => new Line(vec(-t.w/2+as, y), vec(t.w/2-as, y))
+          )
+        )
+        .spec(bar).count(pos.length).space(bar.space)
+        .leaderNote(
+          vec(0, t.h+ t.topBeam.h+2*fig.h),
+          vec(0, 1),
+          vec(-1, 0)
+        )
+        .generate()
+    )
   }
 }

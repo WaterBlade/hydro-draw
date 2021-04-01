@@ -16,6 +16,13 @@ export class Arrow extends DrawItem implements PaperArrow {
     a.lineType = this.lineType;
     return a;
   }
+  mirrorByHAxis(x = 0): Arrow {
+    const start = this.start.mirrorByHAxis(x);
+    const end = this.end.mirrorByHAxis(x);
+    const a = new Arrow(start, end, this.width);
+    a.lineType = this.lineType;
+    return a;
+  }
   protected scaleItem(factor: number): void {
     this.start = this.start.mul(factor);
     this.end = this.end.mul(factor);

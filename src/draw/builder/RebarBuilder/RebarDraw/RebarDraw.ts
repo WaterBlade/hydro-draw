@@ -14,23 +14,23 @@ interface RebarInfo {
   id: string;
   grade: RebarGrade;
   diameter: RebarDiameter;
+  multiple: number;
 }
 
 export abstract class RebarDraw implements Builder<CompositeItem> {
   constructor(public textHeight = 3.5) {}
   abstract generate(): CompositeItem;
-  spec(s: RebarInfo, count = 0, space = 0, denSpace = 0): this {
+  spec(s: RebarInfo): this {
     this._idList.push(s.id);
     this._grade = s.grade;
     this._diameter = s.diameter;
-    this._count = count;
-    this._space = space;
-    this._denSpace = denSpace;
+    this._multiple = s.multiple;
     return this;
   }
   protected _idList: string[] = [];
   protected _grade: RebarGrade = "HRB400";
   protected _diameter: RebarDiameter = 8;
+  protected _multiple = 1;
   protected _count = 0;
   count(count: number): this {
     this._count = count;
@@ -46,6 +46,10 @@ export abstract class RebarDraw implements Builder<CompositeItem> {
   protected genNoteContent(): Content {
     const content = new Content();
     if (this._count) content.text(`${this._count}`);
+    if (this._multiple !== 1) {
+      if(this._count) content.text('x');
+      content.text(`${this._multiple}`);
+    }
     content.special(this._grade).text(`${this._diameter}`);
     if (this._space) content.text(`@${this._space}`);
     if (this._denSpace) content.text(`/${this._denSpace}`);

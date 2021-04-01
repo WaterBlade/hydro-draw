@@ -9,7 +9,8 @@ import {
   vec,
   remainIf,
   removeDuplicate,
-  angleMirrorByYAxis,
+  angleMirrorByVAxis,
+  angleMirrorByHAxis,
 } from "@/draw/misc";
 import { DrawItem } from "../DrawItem";
 import { Paper } from "../Paper.interface";
@@ -100,14 +101,27 @@ export class Arc extends DrawItem implements ArcGeometry {
   }
   mirrorByVAxis(x = 0): Arc {
     const c = this.center.mirrorByVAxis(x);
-    const start = angleMirrorByYAxis(this.startAngle);
-    const end = angleMirrorByYAxis(this.endAngle);
+    const start = angleMirrorByVAxis(this.startAngle);
+    const end = angleMirrorByVAxis(this.endAngle);
     const dir =
       this.direction === RotateDirection.counterclockwise
         ? RotateDirection.clockwise
         : RotateDirection.counterclockwise;
     const a = new Arc(c, this.radius, start, end, dir);
     a.points = this.points.map((p) => p.mirrorByVAxis(x));
+    a.lineType = this.lineType;
+    return a;
+  }
+  mirrorByHAxis(x = 0): Arc {
+    const c = this.center.mirrorByHAxis(x);
+    const start = angleMirrorByHAxis(this.startAngle);
+    const end = angleMirrorByHAxis(this.endAngle);
+    const dir =
+      this.direction === RotateDirection.counterclockwise
+        ? RotateDirection.clockwise
+        : RotateDirection.counterclockwise;
+    const a = new Arc(c, this.radius, start, end, dir);
+    a.points = this.points.map((p) => p.mirrorByHAxis(x));
     a.lineType = this.lineType;
     return a;
   }

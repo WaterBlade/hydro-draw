@@ -34,6 +34,12 @@ export class MText extends DrawItem implements PaperMText {
     mt.lineType = this.lineType;
     return mt;
   }
+  mirrorByHAxis(x = 0): MText {
+    const insertPoint = this.insertPoint.mirrorByHAxis(x);
+    const mt = new MText(this.content, insertPoint, this.height, this.maxWidth);
+    mt.lineType = this.lineType;
+    return mt;
+  }
   protected scaleItem(factor: number): void {
     this.insertPoint = this.insertPoint.mul(factor);
     this.height *= factor;

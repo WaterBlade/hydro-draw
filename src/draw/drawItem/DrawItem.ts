@@ -14,6 +14,7 @@ export abstract class DrawItem implements PaperDrawItem {
     this.moveItem(vec);
   }
   abstract mirrorByVAxis(x: number): DrawItem;
+  abstract mirrorByHAxis(x: number): DrawItem;
   protected abstract moveItem(v: Vector): void;
   getBoundingBox(): BoundingBox {
     if (this._boundingBox) return this._boundingBox;

@@ -39,6 +39,9 @@ export class Vector {
   mirrorByVAxis(x = 0): Vector {
     return new Vector(2 * x - this.x, this.y);
   }
+  mirrorByHAxis(y=0): Vector{
+    return new Vector(this.x, 2*y - this.y);
+  }
   rotate(angle: number): Vector {
     // counterclockwise rotate
     const rad = toRadian(angle);

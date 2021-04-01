@@ -32,10 +32,11 @@ export class ColumnStruct {
         }
       }
       const h = this.l - n * this.lSpace;
-      if (h <= 2 * d + this.hBeam) {
+      const botD = Math.ceil((this.lSpace / 3)/100)*100;
+      if (h <=  d + this.hBeam + botD) {
         res.push(h + d);
       } else {
-        res.push(2 * d + this.hBeam, h - 2 * d - this.hBeam, d);
+        res.push(2 * d + this.hBeam, h - d - this.hBeam - botD, botD);
       }
       return res;
     }

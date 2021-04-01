@@ -1,22 +1,27 @@
-import { Required } from "@/misc";
-
 export class PierSolidStruct {
-  h = new Required<number>("pier height");
-  l = new Required<number>("pier section length(cross view)");
-  w = new Required<number>("pier section width(along view)");
-  fr = new Required<number>("pier fillet radius");
+  h = 0;
+  l = 0;
+  w = 0;
+  fr = 0;
   topBeam = new TopBeam();
   found = new Found();
+  partition(): number[]{
+    if(this.h <= 8000){
+      return [this.h];
+    }else{
+      return [4000, this.h - 8000, 4000];
+    }
+  }
 }
 
 class TopBeam {
-  h = new Required<number>("pier top beam height");
-  w = new Required<number>("pier top beam width(along view)");
-  l = new Required<number>("pier top beam length(cross view)");
+  h = 0;
+  w = 0;
+  l = 0;
 }
 
 class Found {
-  h = new Required<number>("pier foundation height");
-  w = new Required<number>("pier foundation width(along view)");
-  l = new Required<number>("pier foundation length(cross view)");
+  h = 0;
+  w = 0;
+  l = 0;
 }

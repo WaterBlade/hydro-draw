@@ -29,6 +29,12 @@ export class CompositeItem extends DrawItem {
     comp.lineType = this.lineType;
     return comp;
   }
+  mirrorByHAxis(x = 0): CompositeItem {
+    const comp = new CompositeItem();
+    comp.push(...this.itemList.map((item) => item.mirrorByHAxis(x)));
+    comp.lineType = this.lineType;
+    return comp;
+  }
   protected scaleItem(factor: number): void {
     for (const item of this.itemList) {
       item.scale(factor);

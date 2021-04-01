@@ -116,6 +116,13 @@ export class Polyline extends DrawItem implements PolylineGeometry {
     p.closed = this.closed;
     return p;
   }
+  mirrorByHAxis(x = 0): Polyline {
+    const p = new Polyline();
+    p.segments = this.segments.map((s) => s.mirrorByHAxis(x));
+    p.lineType = this.lineType;
+    p.closed = this.closed;
+    return p;
+  }
   removeStart(): this {
     this.segments.shift();
     return this;

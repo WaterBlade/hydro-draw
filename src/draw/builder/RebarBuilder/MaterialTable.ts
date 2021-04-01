@@ -44,7 +44,7 @@ export class MaterialTable implements Builder<CompositeItem> {
       const specGroup = specGroups[i];
       const spec = specGroup[0];
       const u = this.genUnitWeight(spec.diameter);
-      const l = sum(...specGroup.map((s) => s.totalLength));
+      const l = sum(...specGroup.map((s) => s.totalLength * s.multiple));
       const w = u * l;
       totalWeight += w;
 

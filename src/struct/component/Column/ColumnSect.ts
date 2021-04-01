@@ -198,7 +198,7 @@ export class ColumnSect extends SectFigure {
     if (ys.length >= 2) {
       const rebar = fig
         .planeRebar()
-        .spec(rebars.stirCross, Math.floor(ys.length / 2));
+        .spec(rebars.stirCross).count(Math.floor(ys.length / 2));
       const h = ys[0] - ys[1] + fig.r * 2;
       let i = 0;
       while (i + 1 < ys.length) {
@@ -242,7 +242,7 @@ export class ColumnSect extends SectFigure {
     if (xs.length >= 2) {
       const rebar = fig
         .planeRebar()
-        .spec(rebars.stirAlong, Math.floor(xs.length / 2));
+        .spec(rebars.stirAlong).count(Math.floor(xs.length / 2));
       const w0 = xs[1] - xs[0] + fig.r * 2;
       let i = 0;
       while (i + 1 < xs.length) {

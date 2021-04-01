@@ -12,6 +12,7 @@ export interface Geometry extends DrawItem {
   includeTest(pt: Vector): boolean;
   calcLength(): number;
   mirrorByVAxis(x: number): Geometry;
+  mirrorByHAxis(x: number): Geometry;
   offset(dist: number, side: Side): Geometry;
   divide(space: number, side: StrecthSide, minimunRatio: number): this;
   project(side: StrecthSide, minimunRatio: number): Geometry;
