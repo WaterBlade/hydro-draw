@@ -1,4 +1,4 @@
-import { Side, vec } from "@/draw";
+import { Line, Side, vec } from "@/draw";
 import { FigureConfig } from "@/struct/utils";
 import { PierHollowSectFigure } from "./PierHollowFigure";
 
@@ -42,6 +42,8 @@ export class PlateSect extends PierHollowSectFigure{
     this.draw_lStir();
     this.draw_wStir();
     this.draw_hHaunch();
+    this.draw_plate_main();
+    this.draw_plate_dist();
   }
   protected draw_l_main(): void{
     const fig = this.fig;
@@ -114,12 +116,64 @@ export class PlateSect extends PierHollowSectFigure{
   }
   protected draw_hHaunch(): void{
     const fig = this.fig;
-    const bar = this.rebars.hHa;
+    const bar = this.rebars.sectHa;
     fig.push(
       fig.planeRebar().rebar(bar.shape(-fig.r)).generate(),
       fig.planeRebar().rebar(bar.shape(-fig.r).mirrorByHAxis()).generate(),
       fig.planeRebar().rebar(bar.shape(-fig.r).mirrorByVAxis()).generate(),
       fig.planeRebar().rebar(bar.shape(-fig.r).mirrorByHAxis().mirrorByVAxis()).generate(),
     );
+  }
+  protected draw_plate_main(): void{
+    const fig = this.fig;
+    const t = this.struct;
+    const as = this.rebars.as;
+    const lBar = this.rebars.plateLMain;
+    const wBar = this.rebars.plateWMain;
+    fig.push(
+      fig.linePointRebar()
+        .line(lBar.pos(-t.plate.lHole/2-as))
+        .spec(lBar).count(lBar.pos().points.length)
+        .offset(fig.h)
+        .onlineNote()
+        .generate(),
+      fig.linePointRebar()
+        .line(lBar.pos(t.plate.lHole/2+as))
+        .spec(lBar).count(lBar.pos().points.length)
+        .offset(fig.h, Side.Right)
+        .onlineNote()
+        .generate(),
+      fig.linePointRebar()
+        .line(wBar.pos(-t.plate.wHole/2-as))
+        .spec(wBar).count(wBar.pos().points.length)
+        .offset(fig.h, Side.Right)
+        .onlineNote()
+        .generate(),
+      fig.linePointRebar()
+        .line(wBar.pos(t.plate.wHole/2+as))
+        .spec(wBar).count(wBar.pos().points.length)
+        .offset(fig.h)
+        .onlineNote()
+        .generate(),
+    )
+  }
+  protected draw_plate_dist(): void{
+    const fig = this.fig;
+    const t = this.struct;
+    const as = this.rebars.as;
+    fig.push(
+      fig.planeRebar()
+        .rebar(new Line(vec(-t.l/2+as, t.plate.wHole/2+as+fig.r), vec(t.l/2-as, t.plate.wHole/2+as+fig.r)))
+        .generate(),
+      fig.planeRebar()
+        .rebar(new Line(vec(-t.l/2+as, -t.plate.wHole/2-as-fig.r), vec(t.l/2-as, -t.plate.wHole/2-as-fig.r)))
+        .generate(),
+      fig.planeRebar()
+        .rebar(new Line(vec(-t.plate.lHole/2-as-fig.r, -t.w/2+as), vec(-t.plate.lHole/2-as-fig.r, t.w/2-as)))
+        .generate(),
+      fig.planeRebar()
+        .rebar(new Line(vec(t.plate.lHole/2+as+fig.r, -t.w/2+as), vec(t.plate.lHole/2+as+fig.r, t.w/2-as)))
+        .generate(),
+    )
   }
 }

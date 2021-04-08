@@ -1,4 +1,4 @@
-import { Line, Polyline, Side, vec } from "@/draw";
+import { Line, Polyline, vec } from "@/draw";
 import {Figure, FigureConfig} from "@/struct/utils";
 import { PierHollowRebar } from "../PierHollowRebar";
 import { LMain, WMain } from "../PierHollowRebar/Main";
@@ -31,48 +31,48 @@ export class LView extends Figure{
       new Line(vec(-this.l/2-500, t.h ), vec(this.l/2+500, t.h)).greyLine(),
       new Line(vec(-this.l/2-500, -t.found.h), vec(this.l/2+500, -t.found.h)).greyLine(),
       new Line(vec(-this.l/2-500, 0), vec(this.l/2+500, 0)).greyLine(),
-      new Polyline(-this.l/2+t.t, t.h - t.hTopSolid - t.vHa)
-        .lineBy(t.ha, t.vHa)
-        .lineBy(this.l - 2*t.ha - 2*t.t, 0)
-        .lineBy(t.ha, -t.vHa).dashedLine(),
-      new Polyline(-this.l/2+t.t, t.hBotSolid + t.vHa)
-        .lineBy(t.ha, -t.vHa)
-        .lineBy(this.l - 2*t.ha - 2*t.t, 0)
-        .lineBy(t.ha, t.vHa).dashedLine()
+      new Polyline(-this.l/2+t.t, t.h - t.hTopSolid - t.topBotHa)
+        .lineBy(t.sectHa, t.topBotHa)
+        .lineBy(this.l - 2*t.sectHa - 2*t.t, 0)
+        .lineBy(t.sectHa, -t.topBotHa).dashedLine(),
+      new Polyline(-this.l/2+t.t, t.hBotSolid + t.topBotHa)
+        .lineBy(t.sectHa, -t.topBotHa)
+        .lineBy(this.l - 2*t.sectHa - 2*t.t, 0)
+        .lineBy(t.sectHa, t.topBotHa).dashedLine()
     );
     const n = t.plate_count();
     if (n > 0){
       let h = t.hBotSolid
       for (let i = 0; i < n; i++){
         h += t.vSpace;
-        const botHa = i === 0 ? t.vHa : t.plate.vHa;
+        const botHa = i === 0 ? t.topBotHa : t.plate.vHa;
         fig.addOutline(
           new Line(vec(-this.l / 2 + t.t, h - t.vSpace + botHa), vec(-this.l / 2 + t.t, h - t.plate.vHa)).dashedLine(),
           new Line(vec(this.l / 2 - t.t, h - t.vSpace + botHa), vec(this.l / 2 - t.t, h - t.plate.vHa)).dashedLine(),
           new Polyline(-this.l/2 + t.t, h - t.plate.vHa)
-            .lineBy(t.ha, t.plate.vHa)
-            .lineBy(this.l - 2*t.t - 2*t.ha, 0)
-            .lineBy(t.ha, -t.plate.vHa).dashedLine(),
+            .lineBy(t.sectHa, t.plate.vHa)
+            .lineBy(this.l - 2*t.t - 2*t.sectHa, 0)
+            .lineBy(t.sectHa, -t.plate.vHa).dashedLine(),
           new Polyline(-this.l/2 + t.t, h + t.plate.vHa + t.plate.t)
-            .lineBy(t.ha, -t.plate.vHa)
-            .lineBy(this.l - 2*t.t - 2*t.ha, 0)
-            .lineBy(t.ha, t.plate.vHa).dashedLine(),
+            .lineBy(t.sectHa, -t.plate.vHa)
+            .lineBy(this.l - 2*t.t - 2*t.sectHa, 0)
+            .lineBy(t.sectHa, t.plate.vHa).dashedLine(),
         )
         h += t.plate.t;
       }
       fig.addOutline(
-          new Line(vec(-this.l / 2 + t.t, t.h - t.hTopSolid - t.vHa), vec(-this.l / 2 + t.t, h + t.plate.vHa)).dashedLine(),
-          new Line(vec(this.l / 2 - t.t,  t.h - t.hTopSolid - t.vHa), vec(this.l / 2 - t.t, h + t.plate.vHa)).dashedLine(),
+          new Line(vec(-this.l / 2 + t.t, t.h - t.hTopSolid - t.topBotHa), vec(-this.l / 2 + t.t, h + t.plate.vHa)).dashedLine(),
+          new Line(vec(this.l / 2 - t.t,  t.h - t.hTopSolid - t.topBotHa), vec(this.l / 2 - t.t, h + t.plate.vHa)).dashedLine(),
       )
     }else{
       fig.addOutline(
         new Line(
-          vec(-this.l/2 + t.t, t.h - t.hTopSolid - t.vHa),
-          vec(-this.l/2 + t.t, t.hBotSolid + t.vHa)
+          vec(-this.l/2 + t.t, t.h - t.hTopSolid - t.topBotHa),
+          vec(-this.l/2 + t.t, t.hBotSolid + t.topBotHa)
         ),
         new Line(
-          vec(-this.l/2 + t.t, t.h - t.hTopSolid - t.vHa),
-          vec(-this.l/2 + t.t, t.hBotSolid + t.vHa)
+          vec(-this.l/2 + t.t, t.h - t.hTopSolid - t.topBotHa),
+          vec(-this.l/2 + t.t, t.hBotSolid + t.topBotHa)
         )
       )
     }

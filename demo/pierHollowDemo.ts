@@ -46,8 +46,8 @@ function pier(config: {height: number, id: number}): DrawItem[]{
   pier.l = 3500;
   pier.fr = 200;
   pier.t = 500;
-  pier.ha = 400;
-  pier.vHa = 1500;
+  pier.sectHa = 400;
+  pier.topBotHa = 1500;
   pier.vSpace = 5000;
   pier.hTopSolid = 2000;
   pier.hBotSolid = 2000;
@@ -70,7 +70,13 @@ function pier(config: {height: number, id: number}): DrawItem[]{
   rebar.stir.setSpec('HPB300', 10).setSpace(100);
   rebar.lStir.setSpec('HPB300', 10).setSpace(200, 100);
   rebar.wStir.setSpec('HPB300', 10).setSpace(200, 100);
-  rebar.hHa.setSpec('HPB300', 10).setSpace(200);
+  rebar.sectHa.setSpec('HPB300', 10).setSpace(200);
+  rebar.plateLHa.setSpec('HPB300', 10).setSpace(150);
+  rebar.plateWHa.setSpec('HPB300', 10).setSpace(150);
+  rebar.plateLMain.setSpec('HRB400', 20).setSpace(150);
+  rebar.plateWMain.setSpec('HRB400', 20).setSpace(150);
+  rebar.plateLDist.setSpec('HRB400', 16).setSpace(150);
+  rebar.plateWDist.setSpec('HRB400', 16).setSpace(150);
 
   
 

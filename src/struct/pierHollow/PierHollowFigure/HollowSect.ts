@@ -23,12 +23,12 @@ export class HollowSect extends PierHollowSectFigure{
     const dim = fig.dimBuilder();
     const {right, top} = fig.getBoundingBox();
     dim.hTop(-t.l/2, top + fig.h)
-      .dim(t.t).dim(t.ha).dim(t.l - 2*t.t - 2*t.ha).dim(t.ha).dim(t.t)
+      .dim(t.t).dim(t.sectHa).dim(t.l - 2*t.t - 2*t.sectHa).dim(t.sectHa).dim(t.t)
       .next().dim(t.fr).dim(t.l - 2*t.fr).dim(t.fr)
       .next().dim(t.l);
     
     dim.vRight(right + fig.h, t.w/2)
-      .dim(t.t).dim(t.ha).dim(t.w - 2*t.t - 2*t.ha).dim(t.ha).dim(t.t)
+      .dim(t.t).dim(t.sectHa).dim(t.w - 2*t.t - 2*t.sectHa).dim(t.sectHa).dim(t.t)
       .next().dim(t.fr).dim(t.w - 2*t.fr).dim(t.fr)
       .next().dim(t.w);
 
@@ -117,7 +117,7 @@ export class HollowSect extends PierHollowSectFigure{
   }
   protected draw_hHaunch(): void{
     const fig = this.fig;
-    const bar = this.rebars.hHa;
+    const bar = this.rebars.sectHa;
     const t = this.struct;
     fig.push(
       fig.planeRebar().rebar(bar.shape(-fig.r)).generate(),
@@ -126,7 +126,7 @@ export class HollowSect extends PierHollowSectFigure{
       fig.planeRebar()
         .rebar(bar.shape(-fig.r).mirrorByHAxis().mirrorByVAxis())
         .spec(bar).space(bar.space)
-        .leaderNote(vec(t.l / 2 - t.t - t.ha, -t.w / 2 + t.t + t.ha), vec(1, -1), vec(-1, 0))
+        .leaderNote(vec(t.l / 2 - t.t - t.sectHa, -t.w / 2 + t.t + t.sectHa), vec(1, -1), vec(-1, 0))
         .generate(),
     );
   }

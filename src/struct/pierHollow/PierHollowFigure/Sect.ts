@@ -1,7 +1,9 @@
 import { Line, Polyline, Side, vec } from "@/draw";
 import {SectFigure, FigureConfig} from "@/struct/utils";
 import { PierHollowRebar } from "../PierHollowRebar";
+import { PlateLHaunch, PlateWHaunch } from "../PierHollowRebar/Haunch";
 import { LMain, WMain } from "../PierHollowRebar/Main";
+import { PlateLMain, PlateWMain } from "../PierHollowRebar/Plate";
 import { LStir, WStir } from "../PierHollowRebar/Stir";
 import { PierHollowStruct } from "../PierHollowStruct";
 import { PierHollowFigure } from "./PierHollowFigure";
@@ -36,50 +38,50 @@ export class LSect extends SectFigure{
       new Line(vec(-this.l/2-500, t.h ), vec(this.l/2+500, t.h)).greyLine(),
       new Line(vec(-this.l/2-500, -t.found.h), vec(this.l/2+500, -t.found.h)).greyLine(),
       new Line(vec(-this.l/2-500, 0), vec(this.l/2+500, 0)).greyLine(),
-      new Polyline(-this.l/2+t.t, t.h - t.hTopSolid - t.vHa)
-        .lineBy(t.ha, t.vHa)
-        .lineBy(this.l - 2*t.ha - 2*t.t, 0)
-        .lineBy(t.ha, -t.vHa).greyLine(),
-      new Polyline(-this.l/2+t.t, t.hBotSolid + t.vHa)
-        .lineBy(t.ha, -t.vHa)
-        .lineBy(this.l - 2*t.ha - 2*t.t, 0)
-        .lineBy(t.ha, t.vHa).greyLine()
+      new Polyline(-this.l/2+t.t, t.h - t.hTopSolid - t.topBotHa)
+        .lineBy(t.sectHa, t.topBotHa)
+        .lineBy(this.l - 2*t.sectHa - 2*t.t, 0)
+        .lineBy(t.sectHa, -t.topBotHa).greyLine(),
+      new Polyline(-this.l/2+t.t, t.hBotSolid + t.topBotHa)
+        .lineBy(t.sectHa, -t.topBotHa)
+        .lineBy(this.l - 2*t.sectHa - 2*t.t, 0)
+        .lineBy(t.sectHa, t.topBotHa).greyLine()
     );
     const n = t.plate_count();
     if (n > 0){
       let h = t.hBotSolid
       for (let i = 0; i < n; i++){
         h += t.vSpace;
-        const botHa = i === 0 ? t.vHa : t.plate.vHa;
+        const botHa = i === 0 ? t.topBotHa : t.plate.vHa;
         fig.addOutline(
           new Line(vec(-this.l / 2 + t.t, h - t.vSpace + botHa), vec(-this.l / 2 + t.t, h - t.plate.vHa)).greyLine(),
           new Line(vec(this.l / 2 - t.t, h - t.vSpace + botHa), vec(this.l / 2 - t.t, h - t.plate.vHa)).greyLine(),
           new Polyline(-this.l/2 + t.t, h - t.plate.vHa)
-            .lineBy(t.ha, t.plate.vHa)
-            .lineBy(this.l - 2*t.t - 2*t.ha, 0)
-            .lineBy(t.ha, -t.plate.vHa).greyLine(),
+            .lineBy(t.sectHa, t.plate.vHa)
+            .lineBy(this.l - 2*t.t - 2*t.sectHa, 0)
+            .lineBy(t.sectHa, -t.plate.vHa).greyLine(),
           new Polyline(-this.l/2 + t.t, h + t.plate.vHa + t.plate.t)
-            .lineBy(t.ha, -t.plate.vHa)
-            .lineBy(this.l - 2*t.t - 2*t.ha, 0)
-            .lineBy(t.ha, t.plate.vHa).greyLine(),
+            .lineBy(t.sectHa, -t.plate.vHa)
+            .lineBy(this.l - 2*t.t - 2*t.sectHa, 0)
+            .lineBy(t.sectHa, t.plate.vHa).greyLine(),
           new Line(vec(-this.lHole/2, h), vec(-this.lHole/2, h+t.plate.t)).greyLine(),
           new Line(vec(this.lHole/2, h), vec(this.lHole/2, h+t.plate.t)).greyLine(),
         )
         h += t.plate.t;
       }
       fig.addOutline(
-          new Line(vec(-this.l / 2 + t.t, t.h - t.hTopSolid - t.vHa), vec(-this.l / 2 + t.t, h + t.plate.vHa)).greyLine(),
-          new Line(vec(this.l / 2 - t.t,  t.h - t.hTopSolid - t.vHa), vec(this.l / 2 - t.t, h + t.plate.vHa)).greyLine(),
+          new Line(vec(-this.l / 2 + t.t, t.h - t.hTopSolid - t.topBotHa), vec(-this.l / 2 + t.t, h + t.plate.vHa)).greyLine(),
+          new Line(vec(this.l / 2 - t.t,  t.h - t.hTopSolid - t.topBotHa), vec(this.l / 2 - t.t, h + t.plate.vHa)).greyLine(),
       )
     }else{
       fig.addOutline(
         new Line(
-          vec(-this.l/2 + t.t, t.h - t.hTopSolid - t.vHa),
-          vec(-this.l/2 + t.t, t.hBotSolid + t.vHa)
+          vec(-this.l/2 + t.t, t.h - t.hTopSolid - t.topBotHa),
+          vec(-this.l/2 + t.t, t.hBotSolid + t.topBotHa)
         ),
         new Line(
-          vec(-this.l/2 + t.t, t.h - t.hTopSolid - t.vHa),
-          vec(-this.l/2 + t.t, t.hBotSolid + t.vHa)
+          vec(-this.l/2 + t.t, t.h - t.hTopSolid - t.topBotHa),
+          vec(-this.l/2 + t.t, t.hBotSolid + t.topBotHa)
         )
       )
     }
@@ -122,11 +124,19 @@ export class LSect extends SectFigure{
   get l_stir(): LStir | WStir{
     return this.rebars.wStir;
   }
+  get plate_ha(): PlateLHaunch | PlateWHaunch{
+    return this.rebars.plateLHa;
+  }
+  get plate_main(): PlateLMain | PlateWMain{
+    return this.rebars.plateLMain;
+  }
   protected draw_rebar(): void{
     this.draw_main();
     this.draw_inner();
     this.draw_stir();
     this.draw_lStir();
+    this.draw_plate_ha();
+    this.draw_plate_main();
   }
   protected draw_main(): void{
     const fig = this.fig;
@@ -222,6 +232,47 @@ export class LSect extends SectFigure{
     const right_res = left_res.map(line => line.mirrorByVAxis());
     fig.push(...left_res, ...right_res);
   }
+  protected draw_plate_ha(): void{
+    const t = this.struct;
+    const fig = this.fig;
+    const bar = this.plate_ha;
+    for(let i = 1; i < t.plate_count()+1; i++){
+      const y0 = t.hBotSolid + i*(t.vSpace + t.plate.t) - t.plate.t/2;
+      fig.push(
+        fig.planeRebar()
+          .rebar(bar.shape(y0))
+          .spec(bar).space(bar.space)
+          .leaderNote(vec(-this.l/2+t.t+fig.h, y0+t.plate.t/2+t.plate.vHa), vec(0, 1))
+          .generate(),
+        fig.planeRebar()
+          .rebar(bar.shape(y0).mirrorByHAxis(y0))
+          .generate(),
+        fig.planeRebar()
+          .rebar(bar.shape(y0).mirrorByVAxis())
+          .generate(),
+        fig.planeRebar()
+          .rebar(bar.shape(y0).mirrorByHAxis(y0).mirrorByVAxis())
+          .generate(),
+      )
+    }
+  }
+  protected draw_plate_main(): void{
+    const t = this.struct;
+    const fig = this.fig;
+    const bar = this.plate_main;
+    for(let i = 1; i < t.plate_count()+1; i++){
+      const y0 = t.hBotSolid + i*(t.vSpace + t.plate.t) - t.plate.t/2;
+      fig.push(
+        fig.planeRebar()
+          .rebar(bar.shape(y0))
+          .generate(),
+        fig.planeRebar()
+          .rebar(bar.shape(y0).mirrorByVAxis())
+          .generate(),
+      )
+    }
+
+  }
 }
 
 export class WSect extends LSect{
@@ -239,5 +290,11 @@ export class WSect extends LSect{
   }
   get l_stir(): LStir | WStir{
     return this.rebars.lStir;
+  }
+  get plate_ha(): PlateLHaunch | PlateWHaunch{
+    return this.rebars.plateWHa;
+  }
+  get plate_main(): PlateLMain | PlateWMain{
+    return this.rebars.plateWMain;
   }
 }

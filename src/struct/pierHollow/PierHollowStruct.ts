@@ -6,8 +6,8 @@ export class PierHollowStruct {
   w = 0;
   fr = 0;
   t = 0;
-  ha = 0;
-  vHa = 0;
+  sectHa = 0;
+  topBotHa = 0;
   hTopSolid = 0;
   hBotSolid = 0;
   vSpace = 0;
@@ -27,14 +27,14 @@ export class PierHollowStruct {
         .close();
   }
   inner(): Polyline{
-      return new Polyline(-this.l/2 + this.t, -this.w/2+this.t+this.ha)
-        .lineBy(this.ha, -this.ha)
-        .lineBy(this.l - 2*this.t -2*this.ha, 0)
-        .lineBy(this.ha, this.ha)
-        .lineBy(0, this.w - 2*this.t - 2*this.ha)
-        .lineBy(-this.ha, this.ha)
-        .lineBy(-this.l + 2*this.t + 2*this.ha, 0)
-        .lineBy(-this.ha, -this.ha)
+      return new Polyline(-this.l/2 + this.t, -this.w/2+this.t+this.sectHa)
+        .lineBy(this.sectHa, -this.sectHa)
+        .lineBy(this.l - 2*this.t -2*this.sectHa, 0)
+        .lineBy(this.sectHa, this.sectHa)
+        .lineBy(0, this.w - 2*this.t - 2*this.sectHa)
+        .lineBy(-this.sectHa, this.sectHa)
+        .lineBy(-this.l + 2*this.t + 2*this.sectHa, 0)
+        .lineBy(-this.sectHa, -this.sectHa)
         .close();
   }
   plate_inner(): Polyline{
@@ -46,7 +46,7 @@ export class PierHollowStruct {
       .close()
   }
   plate_count(): number{
-    return Math.floor((this.h - this.hTopSolid - this.hBotSolid-this.vHa-this.plate.vHa)/(this.vSpace+this.plate.t));
+    return Math.floor((this.h - this.hTopSolid - this.hBotSolid-this.topBotHa-this.plate.vHa)/(this.vSpace+this.plate.t));
   }
 }
 

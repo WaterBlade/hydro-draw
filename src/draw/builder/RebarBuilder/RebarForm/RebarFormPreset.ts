@@ -60,6 +60,20 @@ export const RebarFormPreset = {
       .lineBy(0, 1)
       .dimLength(vLen);
   },
+  CShape(
+    dia: RebarDiameter,
+    vLen: number,
+    hLen: number,
+    drawLen = 8
+  ): RebarPathForm {
+    return new RebarPathForm(dia)
+      .lineBy(-drawLen, 0)
+      .dimLength(hLen)
+      .lineBy(0, -1.6)
+      .dimLength(vLen)
+      .lineBy(drawLen, 0)
+      .dimLength(hLen);
+  },
   CorbelDouble(
     dia: RebarDiameter,
     sLen: number,
