@@ -1,4 +1,4 @@
-import { Line, Polyline, vec } from "@/draw";
+import { Line, Polyline, TextAlign, TextDraw, vec } from "@/draw";
 import { SectFigure, FigureConfig } from "@/struct/utils";
 import { PierSolidFigure } from "./PierSolidFigure";
 import { PierSolidRebar } from "../PierSolidRebar";
@@ -12,6 +12,7 @@ export class PierSolidAlong extends SectFigure{
   draw(): void {
     this.buildOutline();
     this.buildRebar();
+    this.buildNote();
     this.buildDim();
   }
   protected buildOutline(): void {
@@ -34,13 +35,31 @@ export class PierSolidAlong extends SectFigure{
         .greyLine()
     );
   }
+  protected buildNote(): void{
+    const t = this.struct;
+    const fig = this.fig;
+    const bar = this.rebars.stir;
+    const { right } = fig.getBoundingBox();
+    let h = t.h;
+    let isDense = true;
+    for(const l of t.partition()){
+      fig.push(new TextDraw(isDense ? `间距${bar.denseSpace}` : `间距${bar.space}`, vec(right, h - l/2), fig.h, TextAlign.TopCenter, 90))
+      h -= l;
+      isDense = !isDense;
+    }
+    fig.push(fig.sectSymbol(this.figures.sect.id, vec(-t.w/2-fig.h, t.h/2), vec(t.w/2+fig.h, t.h/2)));
+  }
   protected buildDim(): void {
     const t = this.struct;
     const fig = this.fig;
     const dim = fig.dimBuilder();
     const { top, right } = fig.getBoundingBox();
+    dim.vRight(right + fig.h, t.h)
+    for(const l of t.partition()){
+      dim.dim(l);
+    }
     dim
-      .vRight(right + fig.h, t.h + t.topBeam.h)
+      .next().back(t.topBeam.h)
       .dim(t.topBeam.h)
       .dim(t.h)
       .dim(t.found.h);
@@ -127,7 +146,7 @@ export class PierSolidAlong extends SectFigure{
             y => new Line(vec(-t.w/2+as, y), vec(t.w/2-as, y))
           )
         )
-        .spec(bar).count(pos.length).space(bar.space)
+        .spec(bar).count(pos.length).space(bar.space, bar.denseSpace)
         .leaderNote(
           vec(0, t.h+ t.topBeam.h+2*fig.h),
           vec(0, 1),

@@ -10,13 +10,13 @@ export default function runFoundDemo(): void{
   const paper = new DXFPaper();
   const layout = new HLayoutBuilder(2000);
   layout.push(
-    ...Baiyandong(note),
-    ...FengxinglingFrame(note),
-    // ...FengxinglingPier(note)
+    // ...Baiyandong(note),
+    // ...FengxinglingFrame(note),
+    ...FengxinglingPier(note)
   );
   paper.push(layout.generate());
 
-  fs.writeFile('白眼洞渡槽扩展基础钢筋图.dxf', paper.generate(), ()=>{
+  fs.writeFile('凤形岭扩展基础钢筋图.dxf', paper.generate(), ()=>{
     console.log('扩展基础钢筋图完成');
   })
   

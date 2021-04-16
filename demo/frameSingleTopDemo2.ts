@@ -19,7 +19,7 @@ export default function runFrameSingleTopDemo2(): void{
     frame(15, 16000),
   ];
 
-  const layout = new HLayoutBuilder(5000);
+  const layout = new HLayoutBuilder(100);
   for(const f of frameList2){
     layout.push(...genFrame(f));
   }
@@ -54,16 +54,16 @@ function genFrame(frame: {id: number, height: number}): DrawItem[]{
   f.vs = 4000;
 
   f.col.w = 500;
-  f.col.h = 800;
+  f.col.h = 700;
 
   f.beam.w = 400;
   f.beam.h = 600;
   f.beam.ha = 250;
 
-  f.topBeam.ws = 400;
-  f.topBeam.wb = 800;
-  f.topBeam.hd = 350;
-  f.topBeam.hs = 400;
+  f.topBeam.ws = 450;
+  f.topBeam.wb = 700;
+  f.topBeam.hd = 400;
+  f.topBeam.hs = 450;
   f.topBeam.l = 5000;
 
   f.found.h = 1500;
@@ -101,5 +101,5 @@ function genFrame(frame: {id: number, height: number}): DrawItem[]{
   bar.beam.tendon.setSpec('HPB300', 8).setSpace(250);
   bar.beam.haunch.setSpec('HRB400', 16).setCount(2);
 
-  return ctrl.generate();
+  return ctrl.generate_table(height);
 }

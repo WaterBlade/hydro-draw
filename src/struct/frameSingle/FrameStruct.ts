@@ -27,6 +27,7 @@ export class FrameSingleStruct {
     tb.l = this.w;
     tb.ln = this.hsn;
     tb.n = 1;
+    tb.isTop = true;
   }
   h = 0;
   hs = 0;

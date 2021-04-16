@@ -72,7 +72,7 @@ export class PierSolidSect extends SectFigure{
     fig.push(
       fig.planeRebar()
         .rebar(bar.shape())
-        .spec(bar).space(bar.space)
+        .spec(bar).space(bar.space, bar.denseSpace)
         .leaderNote(vec(-t.l/2+as+(t.fr-as)/2, t.w/2 + 4*fig.h), vec(0, 1), vec(-1, 0))
         .generate()
     );
@@ -144,7 +144,7 @@ export class PierSolidSect extends SectFigure{
     }
     fig.push(
       rebar
-        .spec(bar).count(n).space(bar.space)
+        .spec(bar).count(n).space(bar.space, bar.denseSpace)
         .leaderNote(vec(t.l/2+fig.h, t.w/2-as-(t.fr-as)/2), vec(1, 0))
         .generate()
     )
@@ -170,7 +170,7 @@ export class PierSolidSect extends SectFigure{
     }
     fig.push(
       rebar
-        .spec(bar).count(n).space(bar.space)
+        .spec(bar).count(n).space(bar.space, bar.denseSpace)
         .leaderNote(vec(-t.l/2+as+(t.fr-as)/2, -t.w/2 - 4*fig.h), vec(0, -1), vec(-1, 0))
         .generate()
     )

@@ -29,7 +29,7 @@ export default function runPileDemoBaiyandong(): void{
 
   ctrl.add('1', 247.585, 241.585, 2);
   ctrl.add('7', 242.041, 235.541, 2);
-  ctrl.add('8', 242.033, 234.041, 2);
+  ctrl.add('8', 242.033, 234.033, 2);
   ctrl.add('11', 242.511, 235.011, 2);
   ctrl.add('14', 242.488, 233.488, 2);
   ctrl.add('15', 242.481, 236.481, 2);

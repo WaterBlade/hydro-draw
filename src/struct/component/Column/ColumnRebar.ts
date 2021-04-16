@@ -104,7 +104,7 @@ class Stir extends SpaceRebar {
   get form(): RebarForm {
     const t = this.struct;
     const as = this.rebars.as;
-    return RebarFormPreset.RectStir(this.diameter, t.w - 2 * as, t.h - 2 * as);
+    return RebarFormPreset.RectStir(this.diameter, t.w - 2 * as+this.diameter, t.h - 2 * as+this.diameter);
   }
 
   pos(): number[] {
@@ -148,7 +148,7 @@ class StirAlong extends Stir {
     const h =
       (t.w - 2 * as - corner.diameter) / (cross.singleCount + 1) +
       cross.diameter;
-    const w = t.h - 2 * as;
+    const w = t.h - 2 * as+this.diameter;
     return RebarFormPreset.RectStir(this.diameter, h, w);
   }
   isExist(): boolean {
@@ -158,7 +158,7 @@ class StirAlong extends Stir {
 
 class TendonAlong extends Stir {
   get form(): RebarForm {
-    const w = this.struct.h - 2 * this.rebars.as;
+    const w = this.struct.h - 2 * this.rebars.as+this.diameter;
     return RebarFormPreset.HookLine(this.diameter, w, 4);
   }
   isExist(): boolean {
@@ -178,7 +178,7 @@ class StirCross extends Stir {
     const h =
       (t.h - 2 * as - corner.diameter) / (along.singleCount + 1) +
       along.diameter;
-    const w = t.w - 2 * as;
+    const w = t.w - 2 * as+this.diameter;
     return RebarFormPreset.RectStir(this.diameter, h, w);
   }
   isExist(): boolean {
@@ -188,7 +188,7 @@ class StirCross extends Stir {
 
 class TendonCross extends Stir {
   get form(): RebarForm {
-    const w = this.struct.w - 2 * this.rebars.as;
+    const w = this.struct.w - 2 * this.rebars.as+this.diameter;
     return RebarFormPreset.HookLine(this.diameter, w, 4);
   }
   isExist(): boolean {

@@ -68,10 +68,18 @@ class BeamTop extends BeamCountRebar {
     return this.singleCount * this.struct.n;
   }
   get form(): RebarForm {
-    return RebarFormPreset.Line(
-      this.diameter,
-      this.struct.l - 2 * this.rebars.as
-    );
+    if (this.struct.isTop){
+      return RebarFormPreset.UShape(
+        this.diameter,
+        1.7 * 40 * this.diameter,
+        this.struct.l - 2* this.rebars.as
+      );
+    }else{
+      return RebarFormPreset.Line(
+        this.diameter,
+        this.struct.l - 2 * this.rebars.as
+      );
+    }
   }
 }
 
@@ -91,13 +99,13 @@ class Stir extends BeamSpaceRebar {
   get count(): number {
     const t = this.struct;
     return (
-      divideBySpace(-t.ln / 2, t.ln / 2, this.space).slice(1, -1).length * t.n
+      divideBySpace(-t.ln / 2+50, t.ln / 2-50, this.space).length * t.n
     );
   }
   get form(): RebarForm {
     const t = this.struct;
     const as = this.rebars.as;
-    return RebarFormPreset.RectStir(this.diameter, t.w - 2 * as, t.h - 2 * as);
+    return RebarFormPreset.RectStir(this.diameter, t.w - 2 * as + this.diameter, t.h - 2 * as+this.diameter);
   }
 }
 
@@ -110,13 +118,13 @@ class Tendon extends BeamSpaceRebar {
   get form(): RebarForm {
     const t = this.struct;
     const as = this.rebars.as;
-    return RebarFormPreset.HookLine(this.diameter, t.w - 2 * as, 4);
+    return RebarFormPreset.HookLine(this.diameter, t.w - 2 * as+this.diameter, 4);
   }
 }
 
 class Haunch extends BeamCountRebar {
   isExist(): boolean {
-    return this.struct.botHa || this.struct.topHa;
+    return super.isExist() && (this.struct.botHa || this.struct.topHa);
   }
   get count(): number {
     const t = this.struct;

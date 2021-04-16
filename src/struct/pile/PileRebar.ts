@@ -89,7 +89,7 @@ class PileRib extends PileSpaceRebar{
     const as = this.rebars.as;
     return RebarFormPreset.Circle(
       this.diameter,
-      t.d - 2 * as - 2 * this.rebars.main.diameter
+      t.d - 2 * as - 2 * this.rebars.main.diameter-2*this.rebars.stir.diameter - this.diameter
     )
   }
   pos(): number[] {

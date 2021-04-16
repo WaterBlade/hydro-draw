@@ -1,4 +1,4 @@
-import { divideBySpace, Polyline, RebarForm, RebarFormPreset, RebarPathForm } from "@/draw";
+import { divideBySpace, Polyline, RebarForm, RebarFormPreset, RebarPathForm, Side } from "@/draw";
 import { RebarRoot, SpaceRebar } from "@/struct/utils";
 import { PierSolidStruct } from "./PierSolidStruct";
 
@@ -16,6 +16,13 @@ abstract class PierSolidSpaceRebar extends SpaceRebar{
 }
 
 class LMain extends PierSolidSpaceRebar{
+  get desp(): string{
+    if(this.multiple > 1){
+      return `${this.multiple}根成束`;
+    }else{
+      return '';
+    }
+  }
   get count(): number{
     return this.pos().length * 2
   }
@@ -38,6 +45,13 @@ class LMain extends PierSolidSpaceRebar{
 }
 
 class WMain extends PierSolidSpaceRebar{
+  get desp(): string{
+    if(this.multiple > 1){
+      return `${this.multiple}根成束`;
+    }else{
+      return '';
+    }
+  }
   get count(): number{
     return this.pos().length * 2
   }
@@ -90,15 +104,20 @@ export class Stir extends PierSolidSpaceRebar {
       .dimLength(lens[i++])
       .lineBy(0, -1.6)
       .dimLength(lens[i++])
+      .moveTo(4.8, 2.4)
+      .lineBy(-1.2, 0.2)
+      .dimLength(40*this.diameter, Side.Right)
   }
   pos(): number[] {
     const hs = this.struct.partition();
     const ys: number[] = [];
-    let h = this.struct.h;
-    for(let i = 0; i < hs.length; i++){
-      const l = hs[i];
-      ys.push(...divideBySpace(h, h-l, i % 2 === 0 ? this.denseSpace : this.space));
-      h -= l;
+    const h = this.struct.h;
+    if(hs.length === 1){
+      ys.push(...divideBySpace(h-50, 50, this.denseSpace));
+    }else{
+      ys.push(...divideBySpace(h-50, h-hs[0], this.denseSpace));
+      ys.push(...divideBySpace(h-hs[0], hs[2], this.space).slice(1, -1));
+      ys.push(...divideBySpace(hs[2], 50, this.space));
     }
 
     return ys;
@@ -123,24 +142,24 @@ export class Stir extends PierSolidSpaceRebar {
 
 export class LStir extends PierSolidSpaceRebar{
   get count(): number{
-    const cnt = divideBySpace(50, this.struct.h - 50, this.space).length;
+    const cnt = this.rebars.stir.pos().length;
     return Math.floor(((this.rebars.wMain.count/2)-2)/3) * cnt;
   }
   get form(): RebarForm{
     const t = this.struct;
     const rebars = this.rebars;
-    return RebarFormPreset.RectStir(this.diameter, 2*rebars.lMain.space, t.w-2*rebars.as);
+    return RebarFormPreset.RectStir(this.diameter, 2*rebars.wMain.space, t.l-2*rebars.as+this.diameter);
   }
 }
 
 export class WStir extends PierSolidSpaceRebar{
   get count(): number{
-    const cnt = divideBySpace(50, this.struct.h - 50, this.space).length;
+    const cnt = this.rebars.stir.pos().length;
     return Math.floor(((this.rebars.lMain.count/2)-2)/3) * cnt;
   }
   get form(): RebarForm{
     const t = this.struct;
     const rebars = this.rebars;
-    return RebarFormPreset.RectStir(this.diameter, 2*rebars.wMain.space, t.l-2*rebars.as);
+    return RebarFormPreset.RectStir(this.diameter, 2*rebars.lMain.space, t.w-2*rebars.as+this.diameter);
   }
 }

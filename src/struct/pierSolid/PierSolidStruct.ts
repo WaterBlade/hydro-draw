@@ -3,13 +3,15 @@ export class PierSolidStruct {
   l = 0;
   w = 0;
   fr = 0;
+  hTopDense = 0;
+  hBotDense = 0;
   topBeam = new TopBeam();
   found = new Found();
   partition(): number[]{
-    if(this.h <= 8000){
+    if(this.h <= this.hTopDense + this.hBotDense){
       return [this.h];
     }else{
-      return [4000, this.h - 8000, 4000];
+      return [this.hTopDense, this.h - this.hTopDense - this.hBotDense, this.hBotDense];
     }
   }
 }

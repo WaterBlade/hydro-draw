@@ -8,6 +8,10 @@ export class RebarPathForm extends RebarForm {
     return this.segments;
   }
   // generate rebar
+  moveTo(x: number, y: number): this{
+    this.pt = vec(x, y).mul(this.baseUnit);
+    return this;
+  }
   lineBy(x: number, y: number): this {
     if (Math.abs(x) > 8 || Math.abs(y) > 8) throw Error("tow large x or y");
     const end = vec(x, y).mul(this.baseUnit).add(this.pt);

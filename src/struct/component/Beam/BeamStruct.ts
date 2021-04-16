@@ -4,6 +4,7 @@ export class BeamStruct {
   ha = 0;
   topHa = false;
   botHa = false;
+  isTop = false;
 
   l = 0;
   ln = 0;

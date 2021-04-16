@@ -6,6 +6,7 @@ import {
   RebarFormPreset,
   RebarPathForm,
   Side,
+  sum,
   vec,
   Vector,
 } from "@/draw";
@@ -115,7 +116,12 @@ class Stir extends BeamSpaceRebar {
       .lineBy(-1.5, 1.5)
       .dimLength(lens[i++])
       .lineBy(0, 1.5)
-      .dimLength(lens[i++]);
+      .dimLength(lens[i++])
+      .moveTo(4.9, 0)
+      .lineBy(-0.4, -0.4)
+      .moveTo(5, -0.1)
+      .lineBy(-0.4, -0.4)
+      .setLength(sum(...lens, 15 * this.diameter));
   }
   pos(): number[] {
     const t = this.struct;
@@ -148,7 +154,8 @@ class StirInner extends Stir {
 
 class Tendon extends BeamSpaceRebar {
   get count(): number {
-    return this.rebars.mid.pos().length;
+    const t = this.struct;
+    return this.rebars.mid.pos().length * divideBySpace(-t.l/2, t.l/2, this.space).length;
   }
   get form(): RebarForm {
     const lens = this.rebars.mid.pos().map((p) => Math.abs(p.x) * 2);

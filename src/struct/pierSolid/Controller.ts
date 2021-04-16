@@ -13,7 +13,7 @@ export class PierSolidController {
   rebar = new PierSolidRebar(this.struct);
   protected figure = new PierSolidFigure(this.struct, this.rebar);
   drawing = new HydroBorderFactory();
-  generate(): DrawItem[] {
+  generate(H?: number): DrawItem[] {
     this.rebar.init();
     this.figure.init();
 
@@ -22,8 +22,15 @@ export class PierSolidController {
 
     const border = this.drawing.border();
     border.add(...items);
-    border.addContent(new RebarTable(...specs).generate());
-    border.addContent(new MaterialTable(...specs).generate());
+
+    const rTable = new RebarTable(...specs);
+    const mTable = new MaterialTable(...specs);
+    if(H){
+      rTable.title(`钢筋表(H=${H.toFixed(0)})`);
+      mTable.title(`材料表(H=${H.toFixed(0)})`);
+    }
+    border.addContent(rTable.generate());
+    border.addContent(mTable.generate());
 
     return border.generate();
   }
