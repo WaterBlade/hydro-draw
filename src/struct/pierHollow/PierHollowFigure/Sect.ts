@@ -3,7 +3,8 @@ import {SectFigure, FigureConfig} from "@/struct/utils";
 import { PierHollowRebar } from "../PierHollowRebar";
 import { PlateLHaunch, PlateWHaunch } from "../PierHollowRebar/Haunch";
 import { LMain, WMain } from "../PierHollowRebar/Main";
-import { PlateLMain, PlateWMain } from "../PierHollowRebar/Plate";
+import { LNetBar, WNetBar } from "../PierHollowRebar/Net";
+import { PlateLDist, PlateLMain, PlateWDist, PlateWMain } from "../PierHollowRebar/Plate";
 import { LStir, WStir } from "../PierHollowRebar/Stir";
 import { PierHollowStruct } from "../PierHollowStruct";
 import { PierHollowFigure } from "./PierHollowFigure";
@@ -130,6 +131,15 @@ export class LSect extends SectFigure{
   get plate_main(): PlateLMain | PlateWMain{
     return this.rebars.plateLMain;
   }
+  get plate_dist(): PlateLDist | PlateWDist{
+    return this.rebars.plateLDist;
+  }
+  get l_net(): LNetBar | WNetBar{
+    return this.rebars.lNet;
+  }
+  get w_net(): LNetBar | WNetBar{
+    return this.rebars.wNet;
+  }
   protected draw_rebar(): void{
     this.draw_main();
     this.draw_inner();
@@ -137,6 +147,10 @@ export class LSect extends SectFigure{
     this.draw_lStir();
     this.draw_plate_ha();
     this.draw_plate_main();
+    this.draw_plate_dist();
+    this.draw_top_bot_dist();
+    this.draw_top_bot_ha();
+    this.draw_net();
   }
   protected draw_main(): void{
     const fig = this.fig;
@@ -271,7 +285,113 @@ export class LSect extends SectFigure{
           .generate(),
       )
     }
-
+  }
+  protected draw_plate_dist(): void{
+    const t = this.struct;
+    const fig = this.fig;
+    const bar = this.plate_dist;
+    for(let i = 1; i < t.plate_count()+1; i++){
+      const y0 = t.hBotSolid + i*(t.vSpace + t.plate.t) - t.plate.t/2;
+      fig.push(
+        fig.polylinePointRebar()
+          .polyline(bar.pos(y0, fig.r))
+          .offset(fig.h)
+          .spec(bar).space(bar.space)
+          .onlineNote(vec(0, y0))
+          .generate(),
+        fig.polylinePointRebar()
+          .polyline(bar.pos(y0, fig.r).mirrorByVAxis())
+          .offset(fig.h, Side.Right)
+          .spec(bar).space(bar.space)
+          .onlineNote(vec(0, y0))
+          .generate(),
+      )
+    }
+  }
+  protected draw_top_bot_dist(): void{
+    const fig = this.fig;
+    const bar = this.plate_dist;
+    fig.push(
+      fig.linePointRebar()
+        .line(bar.top_pos(fig.r))
+        .offset(fig.h, Side.Right)
+        .spec(bar).space(bar.space)
+        .onlineNote()
+        .generate(),
+      fig.linePointRebar()
+        .line(bar.top_pos(fig.r).mirrorByVAxis())
+        .offset(fig.h)
+        .spec(bar).space(bar.space)
+        .onlineNote()
+        .generate(),
+      fig.linePointRebar()
+        .line(bar.bot_pos(fig.r))
+        .offset(fig.h, Side.Right)
+        .spec(bar).space(bar.space)
+        .onlineNote()
+        .generate(),
+      fig.linePointRebar()
+        .line(bar.bot_pos(fig.r).mirrorByVAxis())
+        .offset(fig.h)
+        .spec(bar).space(bar.space)
+        .onlineNote()
+        .generate()
+    );
+  }
+  protected draw_top_bot_ha(): void{
+    const fig = this.fig;
+    const bar = this.rebars.vHa;
+    const t = this.struct;
+    const x0 = -this.l/2+t.t+2*fig.h;
+    const y0 = t.h - t.hTopSolid - t.topBotHa- 3*fig.h;
+    const y1 = t.hBotSolid + t.topBotHa + 3*fig.h;
+    fig.push(
+      fig.planeRebar()
+        .rebar(bar.top_shape(this.l))
+        .spec(bar)
+        .leaderNote(vec(x0, y0), vec(1, 0), vec(0, -1))
+        .generate(),
+      fig.planeRebar()
+        .rebar(bar.bot_shape(this.l))
+        .spec(bar)
+        .leaderNote(vec(x0, y1), vec(1, 0), vec(0, 1))
+        .generate(),
+      fig.planeRebar()
+        .rebar(bar.top_shape(this.l).mirrorByVAxis())
+        .generate(),
+      fig.planeRebar()
+        .rebar(bar.bot_shape(this.l).mirrorByVAxis())
+        .generate(),
+    )
+  }
+  protected draw_net(): void{
+    const fig = this.fig;
+    const lbar = this.l_net;
+    const wbar = this.w_net;
+    const t = this.struct;
+    const as = this.rebars.as;
+    fig.push(
+      fig.planeRebar()
+        .rebar(...lbar.v_top_pos().map(y => new Line(vec(-this.l/2+as, y), vec(this.l/2-as,y ))))
+        .spec(lbar).space(lbar.space)
+        .leaderNote(vec(0, t.h + t.topBeam.h+fig.h), vec(0, 1), vec(-1, 0))
+        .generate(),
+      fig.planeRebar()
+        .rebar(...lbar.v_bot_pos().map(y => new Line(vec(-this.l/2+as, y), vec(this.l/2-as,y ))))
+        .spec(lbar).space(lbar.space)
+        .leaderNote(vec(0, -t.found.h-fig.h), vec(0, 1), vec(-1, 0))
+        .generate(),
+      fig.layerPointRebar()
+        .layers(vec(-this.l/2+t.t, t.h - t.hTopSolid + as+fig.r), vec(this.l/2 - t.t, t.h - t.hTopSolid + as+fig.r), wbar.h_pos().points.length, wbar.space, lbar.v_top_pos().length)
+        .spec(wbar).space(wbar.space)
+        .onlineNote(vec(0, t.h + 2*fig.h), vec(1, 0))
+        .generate(),
+      fig.layerPointRebar()
+        .layers(vec(-this.l/2+t.t, t.hBotSolid - as-fig.r), vec(this.l/2 - t.t, t.hBotSolid- as-fig.r), wbar.h_pos().points.length, wbar.space, lbar.v_top_pos().length, Side.Right)
+        .spec(wbar).space(wbar.space)
+        .onlineNote(vec(0, - 2*fig.h), vec(1, 0))
+        .generate(),
+    )
   }
 }
 
@@ -296,5 +416,14 @@ export class WSect extends LSect{
   }
   get plate_main(): PlateLMain | PlateWMain{
     return this.rebars.plateWMain;
+  }
+  get plate_dist(): PlateLDist | PlateWDist{
+    return this.rebars.plateWDist;
+  }
+  get l_net(): LNetBar | WNetBar{
+    return this.rebars.wNet;
+  }
+  get w_net(): LNetBar | WNetBar{
+    return this.rebars.lNet;
   }
 }

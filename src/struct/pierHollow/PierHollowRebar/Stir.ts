@@ -1,10 +1,7 @@
-import { Line, Polyline, RebarForm, RebarPathForm, Side, vec } from "@/draw";
+import { Line, Polyline, RebarForm, RebarPathForm, Side, sum, vec } from "@/draw";
 import { PierHollowSpaceRebar } from "./PierHollowRebar";
 
 export class Stir extends PierHollowSpaceRebar{
-  shape(d = 0): Polyline{
-    return this.struct.outline().offset(this.rebars.as+d);
-  }
   top_pos(x=0): Line{
     const t = this.struct;
     return new Line(vec(x, t.h-t.hTopSolid+50),  vec(x, t.h-50)).divide(this.space)
@@ -39,6 +36,25 @@ export class Stir extends PierHollowSpaceRebar{
       .dimLength(lens[i++])
       .lineBy(0, -1.6)
       .dimLength(lens[i++])
+      .moveTo(4.8, 2.4)
+      .lineBy(-1.2, 0.2)
+      .dimLength(40*this.diameter, Side.Right)
+  }
+  shape(d=0): Polyline {
+    const t = this.struct;
+    const r = t.fr;
+    const l = t.l - 2 * r;
+    const w = t.w - 2 * r;
+    return new Polyline(-t.l / 2, -w / 2)
+      .arcBy(r, -r, 90)
+      .lineBy(l, 0)
+      .arcBy(r, r, 90)
+      .lineBy(0, w)
+      .arcBy(-r, r, 90)
+      .lineBy(-l, 0)
+      .arcBy(-r, -r, 90)
+      .close()
+      .offset(this.rebars.as+d);
   }
 }
 
@@ -84,6 +100,11 @@ export class WStir extends PierHollowSpaceRebar{
       .dimLength(lens[i++], Side.Right)
       .lineBy(-5.6, 0)
       .dimLength(lens[i++])
+      .moveTo(5.4, 0)
+      .lineBy(-0.2, -0.2)
+      .moveTo(5.6, -0.2)
+      .lineBy(-0.2, -0.2)
+      .setLength(sum(...lens) + 15 * this.diameter)
   }
 }
 

@@ -36,7 +36,7 @@ function genFrame(height: number): DrawItem[]{
   f.vs = 4000;
 
   f.col.w = 500;
-  f.col.h = 800;
+  f.col.h = 700;
 
   f.beam.w = 400;
   f.beam.h = 600;
@@ -60,12 +60,12 @@ function genFrame(height: number): DrawItem[]{
   bar.as = 50;
   if(height <= 12000){
     bar.col.corner.setSpec('HRB400', 25);
-    bar.col.along.setSpec('HRB400', 22).setCount(3);
-    bar.col.cross.setSpec('HRB400', 22).setCount(3);
+    bar.col.along.setSpec('HRB400', 22).setCount(4);
+    bar.col.cross.setSpec('HRB400', 22).setCount(4);
   }else{
     bar.col.corner.setSpec('HRB400', 28);
-    bar.col.along.setSpec('HRB400', 25).setCount(3);
-    bar.col.cross.setSpec('HRB400', 25).setCount(3);
+    bar.col.along.setSpec('HRB400', 25).setCount(4);
+    bar.col.cross.setSpec('HRB400', 25).setCount(4);
   }
   bar.col.stir.setSpec('HPB300', 8).setSpace(200, 100);
   bar.col.stirAlong.setSpec('HPB300', 8).setSpace(200, 100);
