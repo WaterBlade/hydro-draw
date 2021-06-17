@@ -12,7 +12,7 @@ export class FoundFigure extends FigureRoot{
 
 class LSect extends Figure{
   protected unitScale = 1;
-  protected drawScale = 40;
+  protected drawScale = 30;
   protected config = new FigureConfig(true, true);
   protected title = "垂直水流向基础钢筋图";
 

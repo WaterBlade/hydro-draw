@@ -6,13 +6,15 @@ export default function runFrameSingleDemo(): void{
 
   const paper = new DXFPaper();
   const layout = new HLayoutBuilder(100);
-  for(let i = 2; i < 20; i++){
-    layout.push(...genFrame(i*1000));
-  }
+  layout.push(...genFrame(4500));
+  layout.push(...genFrame(4000));
+  layout.push(...genFrame(3000));
+  layout.push(...genFrame(2500));
+  layout.push(...genFrame(1500));
   paper.push(layout.generate());
 
-  fs.writeFile('左三排架标准钢筋图.dxf', paper.generate(), ()=>{
-    console.log('完成左三排架标准钢筋图');
+  fs.writeFile('白芒营排架.dxf', paper.generate(), ()=>{
+    console.log('白芒营');
   })
   
 }
@@ -32,7 +34,7 @@ function genFrame(height: number): DrawItem[]{
 
   const f = ctrl.struct;
   f.h = height;
-  f.hs = 3600;
+  f.hs = 2500;
   f.vs = 4000;
 
   f.col.w = 500;
@@ -49,19 +51,19 @@ function genFrame(height: number): DrawItem[]{
   f.topBeam.ha = 200;
   f.topBeam.botHa = true;
 
-  f.corbel.w = 450;
-  f.corbel.hd = 400;
-  f.corbel.hs = 450;
+  f.corbel.w = 400;
+  f.corbel.hd = 300;
+  f.corbel.hs = 300;
 
-  f.found.h = 1500;
+  f.found.h = 1000;
   f.found.s = 150;
 
   const bar = ctrl.rebar;
   bar.as = 50;
   if(height <= 12000){
-    bar.col.corner.setSpec('HRB400', 25);
-    bar.col.along.setSpec('HRB400', 22).setCount(4);
-    bar.col.cross.setSpec('HRB400', 22).setCount(4);
+    bar.col.corner.setSpec('HRB400', 22);
+    bar.col.along.setSpec('HRB400', 20).setCount(4);
+    bar.col.cross.setSpec('HRB400', 20).setCount(4);
   }else{
     bar.col.corner.setSpec('HRB400', 28);
     bar.col.along.setSpec('HRB400', 25).setCount(4);
@@ -75,21 +77,21 @@ function genFrame(height: number): DrawItem[]{
 
   bar.topBeam.bot.setSpec('HRB400', 20).setCount(4);
   bar.topBeam.top.setSpec('HRB400', 20).setCount(4);
-  bar.topBeam.mid.setSpec('HRB400', 12).setCount(2);
+  bar.topBeam.mid.setSpec('HRB400', 14).setCount(2);
   bar.topBeam.stir.setSpec('HPB300', 8).setSpace(125);
   bar.topBeam.tendon.setSpec('HPB300', 8).setSpace(250);
-  bar.topBeam.haunch.setSpec('HRB400', 16).setCount(2);
+  bar.topBeam.haunch.setSpec('HRB400', 14).setCount(2);
   
   bar.beam.bot.setSpec('HRB400', 20).setCount(4);
   bar.beam.top.setSpec('HRB400', 20).setCount(4);
-  bar.beam.mid.setSpec('HRB400', 12).setCount(2);
+  bar.beam.mid.setSpec('HRB400', 14).setCount(2);
   bar.beam.stir.setSpec('HPB300', 8).setSpace(125);
   bar.beam.tendon.setSpec('HPB300', 8).setSpace(250);
-  bar.beam.haunch.setSpec('HRB400', 16).setCount(2);
+  bar.beam.haunch.setSpec('HRB400', 14).setCount(2);
 
   bar.corbel.main.setSpec('HRB400', 20).setCount(4);
-  bar.corbel.hStir.setSpec('HPB300', 10).setSpace(150);
-  bar.corbel.vStir.setSpec('HPB300', 10).setSpace(200);
+  bar.corbel.hStir.setSpec('HPB300', 8).setSpace(150);
+  bar.corbel.vStir.setSpec('HPB300', 8).setSpace(200);
 
   return ctrl.generate();
 }

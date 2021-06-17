@@ -12,12 +12,13 @@ export default function runFoundDemo(): void{
   layout.push(
     // ...Baiyandong(note),
     // ...FengxinglingFrame(note),
-    ...FengxinglingHollowPier(note),
-    ...FengxinglingSolidPier(note),
+    // ...FengxinglingHollowPier(note),
+    // ...FengxinglingSolidPier(note),
+    ...LiShuPing(note),
   );
   paper.push(layout.generate());
 
-  fs.writeFile('凤形岭实心墩扩展基础钢筋图.dxf', paper.generate(), ()=>{
+  fs.writeFile('左三扩展基础钢筋图.dxf', paper.generate(), ()=>{
     console.log('扩展基础钢筋图完成');
   })
   
@@ -42,6 +43,36 @@ function Baiyandong(note: string[]): DrawItem[]{
   found.lBot = 5700;
   found.wBot = 3000;
   found.hBot = 500;
+
+  const bar = ctrl.rebar;
+  bar.lTop.setSpec('HRB400', 25).setSpace(200);
+  bar.lBot.setSpec('HRB400', 25).setSpace(200);
+  bar.wTop.setSpec('HRB400', 25).setSpace(200);
+  bar.wBot.setSpec('HRB400', 25).setSpace(200);
+  bar.as = 60;
+
+  return ctrl.generate();
+}
+
+function LiShuPing(note: string[]): DrawItem[]{
+  const ctrl = new FoundController();
+
+  const draw = ctrl.drawing;
+  draw.company = '湖南省水利水电勘测设计研究总院';
+  draw.project = '涔天河水库扩建工程';
+  draw.design = '技施';
+  draw.drawingTitle = "左三单排架扩展基础钢筋图";
+  draw.drawingNumberPrefix = "HND/s-4-左三-渡槽-凤形岭";
+  draw.size = 'A2';
+  draw.note = [...note ];
+
+  const found = ctrl.struct;
+  found.lTop = 5100;
+  found.wTop = 1800;
+  found.hTop = 750;
+  found.lBot = 6100;
+  found.wBot = 3000;
+  found.hBot = 750;
 
   const bar = ctrl.rebar;
   bar.lTop.setSpec('HRB400', 25).setSpace(200);

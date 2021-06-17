@@ -10,12 +10,13 @@ export default function runPlatformDemo(): void{
   const paper = new DXFPaper();
   const layout = new HLayoutBuilder(2000);
   layout.push(
-    ...XiGanNongShiDanPaiJia(note),
-    ...XiGanNongShiShiXinDun(note)
+    // ...XiGanNongShiDanPaiJia(note),
+    // ...XiGanNongShiShiXinDun(note),
+    ...BaiMangYing(note)
   );
   paper.push(layout.generate());
 
-  fs.writeFile('demoPlatform.dxf', paper.generate(), ()=>{
+  fs.writeFile('白芒营承台.dxf', paper.generate(), ()=>{
     console.log('platform demo finished');
   })
   
@@ -83,6 +84,42 @@ function XiGanNongShiShiXinDun(note: string[]): DrawItem[]{
   const bar = ctrl.rebar;
   bar.lMain.setSpec('HRB400', 25).setSpace(200).setLayer(2);
   bar.wMain.setSpec('HRB400', 25).setSpace(200).setLayer(2);
+  bar.lTop.setSpec('HRB400', 14).setSpace(200);
+  bar.lBot.setSpec('HRB400', 14).setSpace(200);
+  bar.wTop.setSpec('HRB400', 14).setSpace(200);
+  bar.wBot.setSpec('HRB400', 14).setSpace(200);
+  bar.round.setSpec('HRB400', 14).setSpace(200);
+  bar.as = 60;
+
+  return ctrl.generate();
+}
+
+function BaiMangYing(note: string[]): DrawItem[]{
+  const ctrl = new PlatformController();
+
+  const draw = ctrl.drawing;
+  draw.company = '湖南省水利水电勘测设计研究总院';
+  draw.project = '涔天河水库扩建工程';
+  draw.design = '技施';
+  draw.drawingTitle = "承台钢筋图";
+  draw.drawingNumberPrefix = "HND/s-4-西干-渡槽-弄石-";
+  draw.size = 'A2';
+  draw.note = [...note ];
+
+  const plat = ctrl.struct;
+  plat.d = 800;
+  plat.h = 1000;
+  plat.l = 4100;
+  plat.w = 1600;
+  plat.nl = 2;
+  plat.sl = 2500;
+  plat.nw = 1;
+  plat.sw = 0;
+  plat.hs = 150;
+
+  const bar = ctrl.rebar;
+  bar.lMain.setSpec('HRB400', 22).setSpace(200);
+  bar.wMain.setSpec('HRB400', 22).setSpace(200);
   bar.lTop.setSpec('HRB400', 14).setSpace(200);
   bar.lBot.setSpec('HRB400', 14).setSpace(200);
   bar.wTop.setSpec('HRB400', 14).setSpace(200);

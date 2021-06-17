@@ -16,30 +16,23 @@ export default function runPileDemo(): void{
   ]
 
   const pile = ctrl.struct;
-  pile.d = 1200;
+  pile.d = 800;
   pile.hs = 150;
 
   const bar = ctrl.rebar;
-  bar.main.setSpec('HRB400', 25).setCount(11);
+  bar.main.setSpec('HRB400', 22).setCount(11);
   bar.stir.setSpec('HPB300', 8).setSpace(200, 100);
   bar.stirTop.setSpec('HPB300', 8).setSpace(200);
   bar.rib.setSpec('HRB400', 16).setSpace(2000);
   bar.fix.setSpec('HRB400', 16).setSpace(2000);
   bar.as = 60;
 
-  ctrl.add('5', 241.035, 230.035, 2);
-  ctrl.add('6', 234.728, 223.728, 4);
-  ctrl.add('7', 218.213, 209.213, 4);
-  ctrl.add('8', 230.698, 220.698, 4);
-  ctrl.add('9', 242.683, 231.683, 4);
-  ctrl.add('18', 240.415, 229.415, 2);
-  ctrl.add('19', 229.608, 219.608, 4);
-  ctrl.add('20', 224.593, 214.593, 4);
-  ctrl.add('21', 215.878, 205.878, 4);
-  ctrl.add('22', 197.863, 187.863, 4);
-  ctrl.add('23', 201.848, 191.878, 4);
-  ctrl.add('24', 222.533, 210.533, 4);
-  ctrl.add('25', 237.518, 225.518, 4);
+  ctrl.add('1', 296.810, 284.810, 2);
+  ctrl.add('2', 292.303, 277.303, 2);
+  ctrl.add('3', 292.795, 277.795, 2);
+  ctrl.add('4', 293.788, 276.788, 2);
+  ctrl.add('5', 294.280, 279.280, 2);
+  ctrl.add('6', 296.272, 283.272, 2);
 
   
 
@@ -48,7 +41,7 @@ export default function runPileDemo(): void{
   layout.push(...ctrl.generate());
   paper.push(layout.generate());
 
-  fs.writeFile('demoPile.dxf', paper.generate(), ()=>{
+  fs.writeFile('白芒营.dxf', paper.generate(), ()=>{
     console.log('pile demo finished');
   })
   
